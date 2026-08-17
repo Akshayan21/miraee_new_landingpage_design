@@ -7,10 +7,41 @@ import timelineAgent from "../assets/timeline_agent.webp"
 import ThemeToggle from "../components/ThemeToggle"
 import { useWindowWidth } from "../hooks/useWindowSize"
 import {
-    EO, ES, SmoothScroll, CustomCursor, Magnetic, TiltCard, StaggerWords,
-    FadeUp, SlideIn, WaveLetters, DepthExit, GrainOverlay, ScrambleText,
-    SectionWrapper, ScrollProgress,
+    EO, StaggerWords, GrainOverlay, ScrollProgress,
 } from "../animations"
+
+// NOTE: FadeUp/SlideIn/WaveLetters/DepthExit/Magnetic/TiltCard/ScrambleText/
+// SectionWrapper/ES/SmoothScroll used to be shared primitives in
+// src/animations/. They were removed as dead code (this page is unrouted —
+// see src/App.tsx). A banned mouse-follower cursor component that used to be
+// rendered here was also deleted outright per design audit (no stand-in).
+// Minimal local stand-ins below keep this unrouted file type-checking
+// without reintroducing the deleted modules.
+const ES = EO
+function FadeUp({ children, style }: { children: React.ReactNode; delay?: number; y?: number; style?: React.CSSProperties }) {
+    return <div style={style}>{children}</div>
+}
+function SlideIn({ children, style }: { children: React.ReactNode; from?: "left" | "right" | "bottom"; delay?: number; distance?: number; style?: React.CSSProperties }) {
+    return <div style={style}>{children}</div>
+}
+function WaveLetters({ text }: { text: string; delay?: number; hoverColor?: string }) {
+    return <span>{text}</span>
+}
+function DepthExit({ children }: { children: React.ReactNode }) {
+    return <>{children}</>
+}
+function Magnetic({ children }: { children: React.ReactNode; strength?: number }) {
+    return <>{children}</>
+}
+function TiltCard({ children, style }: { children: React.ReactNode; max?: number; style?: React.CSSProperties }) {
+    return <div style={style}>{children}</div>
+}
+function ScrambleText({ text }: { text: string }) {
+    return <span>{text}</span>
+}
+function SectionWrapper({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
+    return <div style={style}>{children}</div>
+}
 
 const T = {
     // Flipping surfaces/text → CSS vars (see index.css :root / [data-theme=dark])
@@ -1456,9 +1487,7 @@ export default function MiraeeLandingPage({ style }: { style?: React.CSSProperti
     }, [])
     return (
         <div style={{ fontFamily: F, WebkitFontSmoothing: "antialiased", backgroundColor: T.bg, width: "100%", ...style }}>
-            <SmoothScroll />
             <ScrollProgress />
-            <CustomCursor />
             <Nav />
             <IntroCover />
             <GrainOverlay />

@@ -1,7 +1,7 @@
 import { motion, useInView, useScroll, useSpring, useTransform } from "framer-motion"
 import { useRef } from "react"
 import ThemeToggle from "../components/ThemeToggle"
-import { GrainOverlay, ScrollProgress, SmoothScroll } from "../animations"
+import { GrainOverlay, ScrollProgress } from "../animations"
 import { EO } from "../animations/easings"
 
 const stats = [["2M+", "properties"], ["500+", "airlines"], ["20–30%", "typical savings"], ["24/7", "human support"]]
@@ -100,4 +100,4 @@ function CTA() { return <section className="rv-cta"><motion.div className="rv-ct
 
 function Footer() { return <footer className="rv-footer"><div><Logo /><p>AI-native employee travel.<br />A Tabhi company.</p></div><div><a href="/support">Support</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div><div><a href="mailto:hello@miraee.ai">hello@miraee.ai</a><span>© 2026 Miraee</span></div></footer> }
 
-export default function HomeRevamp() { return <main className="rv-site rv-modern"><SmoothScroll /><ScrollProgress /><GrainOverlay /><Nav /><Hero /><Proof /><Problem /><Shift /><Platform /><People /><Process /><Compare /><Security /><CTA /><Footer /></main> }
+export default function HomeRevamp() { return <main className="rv-site rv-modern"><ScrollProgress /><GrainOverlay /><Nav /><Hero /><Proof /><Problem /><Shift /><Platform /><People /><Process /><Compare /><Security /><CTA /><Footer /></main> }

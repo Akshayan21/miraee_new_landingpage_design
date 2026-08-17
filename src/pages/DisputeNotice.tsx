@@ -199,7 +199,7 @@ export default function DisputeNoticePage(props: { style?: React.CSSProperties }
 
                                     {sendError && (
                                         <p style={{ fontSize: 13.5, fontFamily: F, fontWeight: 600, color: "#C0392B", background: "rgba(192,57,43,0.08)", borderRadius: 10, padding: "10px 14px", margin: 0 }}>
-                                            Could not submit right now. Try again, or email legal@tabhi.com directly.
+                                            Could not submit right now. Try again, or email legal@miraee.ai directly.
                                         </p>
                                     )}
                                     <p style={{ fontSize: 12.5, fontFamily: F, color: T.muted, textAlign: "center" as const, margin: "8px 0 0", lineHeight: 1.6 }}>
