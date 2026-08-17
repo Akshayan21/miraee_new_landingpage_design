@@ -31,6 +31,7 @@ export default function ThemeToggle({ size = 34 }: { size?: number }) {
             type="button"
             onClick={toggle}
             aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+            aria-pressed={dark}
             title={dark ? "Light mode" : "Dark mode"}
             style={{
                 width: size, height: size, flexShrink: 0,

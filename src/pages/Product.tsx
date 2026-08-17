@@ -127,34 +127,6 @@ function SmoothScrollStyle() {
     return null
 }
 
-// ─── Custom cursor ────────────────────────────────────────────────────────────
-function CustomCursor() {
-    const cx = useMotionValue(-100)
-    const cy = useMotionValue(-100)
-    const rx = useSpring(cx, { stiffness: 120, damping: 16 })
-    const ry = useSpring(cy, { stiffness: 120, damping: 16 })
-    const [hover, setHover] = useState(false)
-    const [dark, setDark] = useState(false)
-    useEffect(() => {
-        if (typeof window === "undefined") return
-        const move = (e: MouseEvent) => { cx.set(e.clientX); cy.set(e.clientY) }
-        const over = (e: MouseEvent) => {
-            const t = e.target as HTMLElement
-            setHover(!!(t.closest("button") || t.closest("a") || t.closest("[data-cursor='hover']")))
-            setDark(!!(t.closest("[data-dark='true']")))
-        }
-        window.addEventListener("mousemove", move)
-        window.addEventListener("mouseover", over)
-        return () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseover", over) }
-    }, [cx, cy])
-    return (
-        <>
-            <motion.div style={{ position: "fixed", top: 0, left: 0, pointerEvents: "none", zIndex: 9999, x: cx, y: cy, translateX: "-50%", translateY: "-50%", width: hover ? 10 : 6, height: hover ? 10 : 6, borderRadius: "50%", background: dark ? T.orange : T.maroon, transition: "width 0.2s, height 0.2s, background 0.3s" }} />
-            <motion.div style={{ position: "fixed", top: 0, left: 0, pointerEvents: "none", zIndex: 9998, x: rx, y: ry, translateX: "-50%", translateY: "-50%", width: hover ? 52 : 32, height: hover ? 52 : 32, borderRadius: "50%", border: `1.5px solid ${dark ? "rgba(229,86,2,0.5)" : "rgba(69,14,20,0.3)"}`, background: hover ? (dark ? "rgba(229,86,2,0.08)" : "rgba(69,14,20,0.06)") : "transparent", transition: "width 0.3s, height 0.3s, border-color 0.3s" }} />
-        </>
-    )
-}
-
 // ─── Magnetic button ─────────────────────────────────────────────────────────
 function useMagnet(strength = 0.35) {
     const ref = useRef<HTMLDivElement>(null)
@@ -1271,7 +1243,6 @@ export default function MiraeeProductPage(_props: { style?: React.CSSProperties 
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
             <SmoothScrollStyle />
-            <CustomCursor />
             <ScrollProgress />
             <ProductNav />
             <ProductHero />

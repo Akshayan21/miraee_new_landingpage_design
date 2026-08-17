@@ -1,13 +1,15 @@
-import { useState, useRef } from "react"
-import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import { useState, useRef, isValidElement, cloneElement, useId } from "react"
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion"
+import { Link, useLocation } from "react-router-dom"
 import { EO } from "../animations/easings"
 import ThemeToggle from "./ThemeToggle"
 import { useWindowWidth } from "../hooks/useWindowSize"
 
 export const useVW = useWindowWidth
 
-// Shared chrome + form primitives for the legal form pages
-// (arbitration opt-out, informal dispute notice). Mirrors the Support page.
+// Single source of truth for site chrome (nav, footer, logo, color/font tokens)
+// and the legal-form primitives shared by every routed page: home, support,
+// terms, privacy, arbitration opt-out, dispute notice, and book-a-demo.
 export const T = {
     bg: "var(--page-bg)", ink: "var(--text)", maroon: "#450E14", orange: "#E55602",
     accent: "var(--accent-strong)",
@@ -29,71 +31,142 @@ export function MiraeeLogo({ fill = T.orange, height = 26 }: { fill?: string; he
     )
 }
 
+// ─── Anchor resolution ────────────────────────────────────────────────────────
+// Nav/footer links to in-page sections need to work from every route: same-page
+// anchors on "/", and "home, then jump" links everywhere else.
+function useAnchorHref() {
+    const isHome = useLocation().pathname === "/"
+    return (id: string) => (isHome ? `#${id}` : `/#${id}`)
+}
+
+// ─── Site nav (used by every routed page) ────────────────────────────────────
 export function SiteNav() {
     const vw = useWindowWidth()
     const isMobile = vw < 640
+    const isCompact = vw < 900
+    const [open, setOpen] = useState(false)
     return (
-        <motion.nav
-            initial={{ y: -28, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, ease: EO }}
-            style={{ position: "fixed", top: 14, left: "50%", x: "-50%", zIndex: 200, width: "min(1080px, calc(100vw - 24px))", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", padding: isMobile ? "0 10px 0 18px" : "0 10px 0 26px", borderRadius: 100, background: "var(--glass-bg)", backdropFilter: "blur(18px)", border: "1px solid rgba(var(--text-rgb),0.08)", boxShadow: "0 10px 34px rgba(var(--text-rgb),0.08)" }}>
-            <a href="https://app.miraee.ai" style={{ textDecoration: "none", display: "inline-flex" }}><MiraeeLogo fill={T.orange} height={24} /></a>
-            <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 16 }}>
-                <ThemeToggle size={isMobile ? 32 : 34} />
-                {!isMobile && <a href="https://app.miraee.ai"
-                    onMouseEnter={e => (e.currentTarget.style.color = T.ink)}
-                    onMouseLeave={e => (e.currentTarget.style.color = T.muted)}
-                    onFocus={e => (e.currentTarget.style.color = T.ink)}
-                    onBlur={e => (e.currentTarget.style.color = T.muted)}
-                    style={{ fontSize: 13.5, fontFamily: F, fontWeight: 600, color: T.muted, textDecoration: "none", transition: "color 0.25s ease" }}>Sign in</a>}
-                <motion.a href="/book-a-demo" whileHover={{ scale: 1.04, boxShadow: "0 10px 28px rgba(229,86,2,0.28)" }} whileTap={{ scale: 0.96 }}
-                    style={{ display: "inline-flex", alignItems: "center", background: T.accent, color: T.cream, borderRadius: 100, padding: isMobile ? "10px 18px" : "11px 22px", fontSize: 13, fontFamily: F, fontWeight: 700, cursor: "pointer", textDecoration: "none", whiteSpace: "nowrap" }}>
-                    Book a demo
-                </motion.a>
-            </div>
-        </motion.nav>
+        <>
+            <motion.nav
+                initial={{ y: -28, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, ease: EO }}
+                aria-label="Primary"
+                style={{ position: "fixed", top: 14, left: "50%", x: "-50%", zIndex: 200, width: "min(1080px, calc(100vw - 24px))", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", padding: isMobile ? "0 10px 0 18px" : "0 10px 0 26px", borderRadius: 100, background: "var(--glass-bg)", backdropFilter: "blur(18px)", border: "1px solid rgba(var(--text-rgb),0.08)", boxShadow: "0 10px 34px rgba(var(--text-rgb),0.08)" }}>
+                <Link to="/" aria-label="Miraee home" style={{ textDecoration: "none", display: "inline-flex", flexShrink: 0 }}><MiraeeLogo fill={T.orange} height={24} /></Link>
+                <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 8 : 16 }}>
+                    <ThemeToggle size={isMobile ? 32 : 34} />
+                    {!isMobile && !isCompact && <a href="https://app.miraee.ai"
+                        onMouseEnter={e => (e.currentTarget.style.color = T.ink)}
+                        onMouseLeave={e => (e.currentTarget.style.color = T.muted)}
+                        onFocus={e => (e.currentTarget.style.color = T.ink)}
+                        onBlur={e => (e.currentTarget.style.color = T.muted)}
+                        style={{ fontSize: 13.5, fontFamily: F, fontWeight: 600, color: T.muted, textDecoration: "none", transition: "color 0.25s ease" }}>Sign in</a>}
+                    <motion.a href="/book-a-demo" whileHover={{ scale: 1.04, boxShadow: "0 10px 28px rgba(229,86,2,0.28)" }} whileTap={{ scale: 0.96 }}
+                        style={{ display: "inline-flex", alignItems: "center", background: T.accent, color: T.cream, borderRadius: 100, padding: isMobile ? "10px 16px" : "11px 22px", fontSize: 13, fontFamily: F, fontWeight: 700, cursor: "pointer", textDecoration: "none", whiteSpace: "nowrap" }}>
+                        Book a demo
+                    </motion.a>
+                    {isCompact && (
+                        <button type="button" aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} aria-controls="site-nav-mobile-menu" onClick={() => setOpen(v => !v)}
+                            style={{ position: "relative", width: 34, height: 34, flexShrink: 0, border: "1px solid rgba(var(--text-rgb),0.14)", borderRadius: "50%", background: "transparent", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <span aria-hidden="true" style={{ position: "absolute", width: 14, height: 1.5, background: T.ink, borderRadius: 2, transform: open ? "rotate(45deg)" : "translateY(-3px)", transition: "transform 0.25s ease" }} />
+                            <span aria-hidden="true" style={{ position: "absolute", width: 14, height: 1.5, background: T.ink, borderRadius: 2, transform: open ? "rotate(-45deg)" : "translateY(3px)", transition: "transform 0.25s ease" }} />
+                        </button>
+                    )}
+                </div>
+            </motion.nav>
+            <AnimatePresence>
+                {isCompact && open && (
+                    <motion.div id="site-nav-mobile-menu" key="mobile-nav-menu" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.25, ease: EO }}
+                        style={{ position: "fixed", top: 80, left: "50%", x: "-50%", zIndex: 199, width: "min(340px, calc(100vw - 24px))", background: "var(--glass-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(var(--text-rgb),0.08)", borderRadius: 20, boxShadow: "0 20px 50px rgba(var(--text-rgb),0.14)", padding: 10, display: "flex", flexDirection: "column", gap: 2 }}>
+                        <a href="https://app.miraee.ai" onClick={() => setOpen(false)}
+                            style={{ padding: "12px 14px", borderRadius: 12, fontSize: 14, fontFamily: F, fontWeight: 600, color: T.ink, textDecoration: "none" }}>
+                            Sign in
+                        </a>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </>
     )
 }
+
+// ─── Site footer (used by every routed page) ─────────────────────────────────
+type FooterLink = { label: string; href?: string; external?: boolean; disabled?: boolean }
 
 export function SiteFooter() {
     const vw = useWindowWidth()
     const isMobile = vw < 640
+    const toHref = useAnchorHref()
     const footRef = useRef<HTMLElement>(null)
     const { scrollYProgress } = useScroll({ target: footRef, offset: ["start end", "end end"] })
     const wmY = useTransform(scrollYProgress, [0, 1], [160, 0])
     const wmOpacity = useTransform(scrollYProgress, [0.3, 1], [0, 0.06])
-    const COLS = [
-        { title: "Company", links: ["About Tabhi", "Careers", "Newsroom", "Support"] },
-        { title: "Partners", links: ["For airlines", "For suppliers", "Distribution"] },
-        { title: "Legal", links: ["Terms & Conditions", "Privacy", "Security"] },
+
+    const linkStyle: React.CSSProperties = { display: "block", fontSize: 14, fontFamily: F, fontWeight: 500, color: "rgba(251,246,242,0.55)", textDecoration: "none", marginBottom: 10, transition: "color 0.2s" }
+    const disabledStyle: React.CSSProperties = { display: "block", fontSize: 14, fontFamily: F, fontWeight: 500, color: "rgba(251,246,242,0.28)", marginBottom: 10 }
+    const hoverIn = (e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.color = T.cream)
+    const hoverOut = (e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.color = "rgba(251,246,242,0.55)")
+
+    const COLS: { title: string; links: FooterLink[] }[] = [
+        {
+            title: "Explore", links: [
+                { label: "Product", href: toHref("product") },
+                { label: "How it works", href: toHref("how-it-works") },
+                { label: "For teams", href: toHref("outcomes") },
+                { label: "Support", href: "/support" },
+                { label: "Careers", disabled: true },
+                { label: "Newsroom", disabled: true },
+            ],
+        },
+        {
+            title: "Partners & legal", links: [
+                { label: "For airlines", href: toHref("partners") },
+                { label: "For suppliers", href: toHref("partners") },
+                { label: "Distribution", href: toHref("partners") },
+                { label: "Terms & Conditions", href: "/terms" },
+                { label: "Privacy", href: "/privacy" },
+                { label: "Security", href: toHref("security") },
+                { label: "Arbitration opt-out", href: "/arbitration-opt-out" },
+            ],
+        },
+        {
+            title: "Talk to us", links: [
+                { label: "About Tabhi", href: "https://www.tabhi.com/", external: true },
+                { label: "hello@miraee.ai", href: "mailto:hello@miraee.ai" },
+            ],
+        },
     ]
-    const LINK_HREFS: Record<string, string> = {
-        "About Tabhi": "https://www.tabhi.com/",
-        "Support": "/support",
-        "Terms & Conditions": "/terms",
-        "Privacy": "/privacy",
-    }
+
     return (
         <footer ref={footRef} style={{ background: "#0F0407", padding: isMobile ? "60px 20px 40px" : "80px 64px 48px", position: "relative", overflow: "hidden" }}>
-            <motion.div style={{ y: wmY, opacity: wmOpacity, position: "absolute", bottom: isMobile ? -20 : -50, left: 0, right: 0, display: "flex", justifyContent: "center", pointerEvents: "none" }}>
+            <motion.div aria-hidden="true" style={{ y: wmY, opacity: wmOpacity, position: "absolute", bottom: isMobile ? -20 : -50, left: 0, right: 0, display: "flex", justifyContent: "center", pointerEvents: "none" }}>
                 <MiraeeLogo fill={T.cream} height={isMobile ? 120 : 260} />
             </motion.div>
             <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 2 }}>
-                <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 48 : 80, marginBottom: 64 }}>
+                <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 48 : 64, marginBottom: 64, flexWrap: "wrap" as const }}>
                     <div style={{ flex: "0 0 auto", maxWidth: 280 }}>
                         <MiraeeLogo fill={T.orange} height={28} />
-                        <p style={{ fontSize: 14, fontFamily: F, lineHeight: 1.65, color: "rgba(251,246,242,0.45)", marginTop: 20, marginBottom: 0 }}>The AI-native employee travel platform. A Tabhi company.</p>
+                        <p style={{ fontSize: 14, fontFamily: F, lineHeight: 1.65, color: "rgba(251,246,242,0.45)", marginTop: 20, marginBottom: 0 }}>The AI-native corporate travel platform. A Tabhi company.</p>
+                        <div style={{ marginTop: 28, display: "flex", gap: 10, flexWrap: "wrap" }}>
+                            <motion.a href="/book-a-demo" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }} style={{ display: "inline-flex", background: T.orange, color: "#FFFFFF", border: "none", borderRadius: 10, padding: "11px 22px", fontSize: 13, fontFamily: F, fontWeight: 700, cursor: "pointer", textDecoration: "none" }}>Book a demo</motion.a>
+                            <motion.a href="/support" whileHover={{ scale: 1.03, borderColor: "rgba(251,246,242,0.5)" }} whileTap={{ scale: 0.96 }}
+                                style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "transparent", color: T.cream, border: "1.5px solid rgba(251,246,242,0.25)", borderRadius: 10, padding: "11px 20px", fontSize: 13, fontFamily: F, fontWeight: 700, cursor: "pointer", textDecoration: "none" }}>
+                                <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></svg>
+                                Support
+                            </motion.a>
+                        </div>
                     </div>
-                    <div style={{ flex: 1, display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr", gap: 32 }}>
+                    <div style={{ flex: 1, display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr", gap: 32, minWidth: isMobile ? undefined : 320 }}>
                         {COLS.map(col => (
                             <div key={col.title}>
                                 <p style={{ fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "rgba(251,246,242,0.35)", margin: "0 0 16px" }}>{col.title}</p>
-                                {col.links.map(link => (
-                                    <a key={link} href={LINK_HREFS[link] || "#"}
-                                        target={(LINK_HREFS[link] || "").indexOf("http") === 0 ? "_blank" : undefined}
-                                        rel={(LINK_HREFS[link] || "").indexOf("http") === 0 ? "noopener noreferrer" : undefined}
-                                        style={{ display: "block", fontSize: 14, fontFamily: F, fontWeight: 500, color: "rgba(251,246,242,0.55)", textDecoration: "none", marginBottom: 10 }}>{link}</a>
+                                {col.links.map(link => link.disabled ? (
+                                    <span key={link.label} style={disabledStyle}>{link.label} <em style={{ fontStyle: "normal", fontSize: 11 }}>· coming soon</em></span>
+                                ) : (
+                                    <a key={link.label} href={link.href}
+                                        target={link.external ? "_blank" : undefined}
+                                        rel={link.external ? "noopener noreferrer" : undefined}
+                                        style={linkStyle} onMouseEnter={hoverIn} onMouseLeave={hoverOut}>{link.label}</a>
                                 ))}
                             </div>
                         ))}
@@ -101,7 +174,7 @@ export function SiteFooter() {
                 </div>
                 <div style={{ borderTop: "1px solid rgba(251,246,242,0.08)", paddingTop: 28, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
                     <p style={{ fontSize: 13, fontFamily: F, color: "rgba(251,246,242,0.28)", margin: 0 }}>
-                        © 2026 Miraee, a Tabhi company. <a href="/privacy" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Privacy</a> · <a href="/terms" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Terms</a> · Security
+                        © 2026 Miraee, a Tabhi company. <a href="/privacy" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Privacy</a> · <a href="/terms" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Terms</a> · <a href={toHref("security")} style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Security</a>
                     </p>
                     <p style={{ fontSize: 13, fontFamily: F, color: "rgba(251,246,242,0.28)", margin: 0 }}>Built by Tabhi AI</p>
                 </div>
@@ -110,7 +183,7 @@ export function SiteFooter() {
     )
 }
 
-// ─── Form primitives (mirror the Support form) ───────────────────────────────
+// ─── Form primitives (shared by Support, Arbitration Opt-Out, Dispute Notice, Book a Demo) ──
 export const inputBase: React.CSSProperties = {
     width: "100%", boxSizing: "border-box", background: T.card, border: "1.5px solid " + T.border,
     borderRadius: 12, padding: "12px 14px", fontSize: 14, fontFamily: F, color: T.ink, outline: "none",
@@ -119,31 +192,50 @@ export const inputBase: React.CSSProperties = {
 export const labelStyle: React.CSSProperties = { fontSize: 13, fontFamily: F, fontWeight: 600, color: T.ink, marginBottom: 7, display: "block" }
 
 export function Field({ label, required, children, hint }: { label: string; required?: boolean; children: React.ReactNode; hint?: string }) {
+    // Derive a stable id from the wrapped input's own id/name (falling back to a
+    // generated one) and wire it to this label's htmlFor so screen readers
+    // announce the field label — the input itself never has to know its id
+    // ahead of time.
+    const generatedId = useId()
+    const child = isValidElement(children) ? (children as React.ReactElement<any>) : null
+    const fieldId: string = (child?.props?.id) || (child?.props?.name) || generatedId
+    const content = child ? cloneElement(child, { id: fieldId }) : children
     return (
         <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-            <label style={labelStyle}>{label}{required ? <span style={{ color: T.orange }}> *</span> : null}</label>
+            <label htmlFor={fieldId} style={labelStyle}>{label}{required ? <span style={{ color: T.orange }}> *</span> : null}</label>
             <div style={{ marginTop: "auto" }}>
-                {children}
+                {content}
                 {hint ? <p style={{ fontSize: 12, fontFamily: F, color: T.muted, margin: "7px 0 0", lineHeight: 1.5 }}>{hint}</p> : null}
             </div>
         </div>
     )
 }
 
-export function TextInput({ placeholder, type = "text", required, name, defaultValue, readOnly }: { placeholder?: string; type?: string; required?: boolean; name?: string; defaultValue?: string; readOnly?: boolean }) {
+export function TextInput({ placeholder, type = "text", required, name, defaultValue, readOnly, id }: { placeholder?: string; type?: string; required?: boolean; name?: string; defaultValue?: string; readOnly?: boolean; id?: string }) {
     const [focus, setFocus] = useState(false)
     return (
-        <input type={type} name={name} placeholder={placeholder} required={required} defaultValue={defaultValue} readOnly={readOnly}
+        <input id={id ?? name} type={type} name={name} placeholder={placeholder} required={required} defaultValue={defaultValue} readOnly={readOnly}
             onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
             style={{ ...inputBase, borderColor: focus ? T.orange : T.border, boxShadow: focus ? "0 0 0 3px rgba(229,86,2,0.12)" : "none", opacity: readOnly ? 0.75 : 1 }} />
     )
 }
 
-export function TextArea({ placeholder, required, rows = 4, name }: { placeholder?: string; required?: boolean; rows?: number; name?: string }) {
+export function TextArea({ placeholder, required, rows = 4, name, id }: { placeholder?: string; required?: boolean; rows?: number; name?: string; id?: string }) {
     const [focus, setFocus] = useState(false)
     return (
-        <textarea placeholder={placeholder} name={name} required={required} rows={rows} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
+        <textarea id={id ?? name} placeholder={placeholder} name={name} required={required} rows={rows} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
             style={{ ...inputBase, resize: "vertical", minHeight: 96, borderColor: focus ? T.orange : T.border, boxShadow: focus ? "0 0 0 3px rgba(229,86,2,0.12)" : "none" }} />
+    )
+}
+
+export function Select({ options, value, onChange, required, name, id, placeholder }: { options: string[]; value: string; onChange: (v: string) => void; required?: boolean; name?: string; id?: string; placeholder?: string }) {
+    const [focus, setFocus] = useState(false)
+    return (
+        <select id={id ?? name} value={value} name={name} required={required} onChange={e => onChange(e.target.value)} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
+            style={{ ...inputBase, appearance: "auto" as const, cursor: "pointer", borderColor: focus ? T.orange : T.border, boxShadow: focus ? "0 0 0 3px rgba(229,86,2,0.12)" : "none" }}>
+            {placeholder && <option value="" disabled>{placeholder}</option>}
+            {options.map(o => <option key={o} value={o}>{o}</option>)}
+        </select>
     )
 }
 
@@ -164,7 +256,7 @@ export function RadioGroup({ name, options, value, onChange }: { name: string; o
 export function SectionHead({ title }: { title: string }) {
     return (
         <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "14px 0 2px" }}>
-            <span style={{ fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.13em", textTransform: "uppercase" as const, color: T.orange, whiteSpace: "nowrap" }}>{title}</span>
+            <h2 style={{ fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.13em", textTransform: "uppercase" as const, color: T.orange, whiteSpace: "nowrap", margin: 0 }}>{title}</h2>
             <div style={{ flex: 1, height: 1, background: T.border }} />
         </div>
     )
