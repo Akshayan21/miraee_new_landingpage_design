@@ -690,26 +690,17 @@ section.el-business-case .el-business-metrics>div:before{display:none}
   .el-hero__intro{gap:0}
 }
 
-/* Mobile hero — purpose-built composition and balanced actions. */
-@media(max-width:620px){
-  .el-site .el-hero{padding:112px 18px 66px;background:radial-gradient(circle at 82% 10%,rgba(231,90,50,.11),transparent 34%),var(--bg)}
-  .el-site .el-hero:before,.el-site .el-hero__ghost{display:none}
-  .el-hero__intro{display:block;min-height:0}
-  .el-site .el-hero__kicker{justify-content:flex-start}
-  .el-pill{padding:7px 10px;font-size:9px}
-  .el-site .el-hero h1{width:100%;margin:24px 0 22px;font-size:clamp(2.8rem,13vw,3.7rem);line-height:.94;letter-spacing:-.072em;text-align:left}
-  .el-site .el-hero h1 span{width:100%;padding-bottom:.09em;text-align:left;text-wrap:balance}
-  .el-site .el-hero h1 .el-hero__accent{margin-top:4px;font-size:.74em;line-height:1.02;letter-spacing:-.058em}
-  .el-site .el-hero__copy>p{max-width:33rem;margin:0;text-align:left;font-size:14px;line-height:1.62;text-wrap:pretty}
-  .el-site .el-hero__actions{display:grid;width:100%;max-width:360px;margin:28px 0 0;gap:10px}
-  .el-site .el-hero__actions .el-button{width:100%;max-width:none;min-height:52px;padding:14px 17px;border-radius:13px;justify-content:space-between;box-shadow:0 14px 30px rgba(231,90,50,.2)}
-  .el-site .el-hero__actions .el-button:hover{transform:none}
-  .el-site .el-hero__actions .el-text-link{display:flex;align-items:center;justify-content:space-between;min-height:50px;padding:13px 16px;border:1px solid var(--line);border-radius:13px;background:color-mix(in srgb,var(--surface-raised) 70%,transparent);font-size:12px;text-align:left}
-  .el-site .el-hero__actions .el-text-link span{margin-left:12px}
-  .el-site .el-demo-stage{margin-top:64px}
-}
-@media(max-width:360px){
-  .el-site .el-hero{padding-left:14px;padding-right:14px}
-  .el-site .el-hero h1{font-size:2.65rem}
-  .el-site .el-hero h1 .el-hero__accent{font-size:.72em}
-}
+/* Restore the original centered hero composition. */
+.el-site .el-hero{min-height:auto;padding:148px 24px 80px;background:radial-gradient(circle at 50% 0,rgba(231,90,50,.12),transparent 30%),linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px),var(--bg);background-size:auto,64px 64px,64px 64px}
+.el-site .el-hero:before{display:block;top:96px;left:50%;width:min(1160px,94vw);height:520px;transform:translateX(-50%)}
+.el-site .el-hero__ghost{display:block;top:108px;left:50%;transform:translateX(-50%);font-size:clamp(10rem,24vw,24rem);opacity:1}
+.el-site .el-hero__inner{width:100%;max-width:1280px;margin:auto;padding-inline:20px;text-align:center}
+.el-site .el-hero__kicker{width:min(1120px,calc(100vw - 80px));margin:0 auto;justify-content:center}
+.el-site .el-hero h1{width:auto;max-width:1050px;margin:34px auto 24px;font-size:clamp(4rem,7.6vw,8rem);line-height:.94;letter-spacing:-.075em;text-align:center}
+.el-site .el-hero h1 span{width:100%;padding-bottom:.08em;text-align:center;text-wrap:balance}
+.el-site .el-hero h1 .el-hero__accent{margin-top:0;font-size:1em;line-height:inherit;letter-spacing:inherit}
+.el-site .el-hero>div>p{width:min(690px,calc(100vw - 48px));max-width:690px;margin:0 auto;text-align:center;font-size:clamp(16px,1.6vw,20px);line-height:1.65}
+.el-site .el-hero__actions{display:flex;width:auto;max-width:none;justify-content:center;align-items:center;gap:24px;margin:30px 0 0}
+.el-site .el-demo-stage{margin-top:106px}
+@media(max-width:900px){.el-site .el-hero h1{width:min(760px,calc(100vw - 48px));font-size:clamp(3.4rem,10vw,5.8rem)}}
+@media(max-width:620px){.el-site .el-hero{padding:114px 16px 70px;background-size:auto,40px 40px,40px 40px}.el-site .el-hero:before{top:60px;height:360px}.el-site .el-hero__ghost{top:92px;font-size:36vw}.el-site .el-hero__inner{padding-inline:0}.el-site .el-hero__kicker{width:100%}.el-site .el-hero h1{width:100%;margin-top:25px;font-size:clamp(3rem,14vw,4.6rem);line-height:.98;letter-spacing:-.06em}.el-site .el-hero h1 .el-hero__accent{font-size:1em}.el-site .el-hero__actions{flex-direction:column;gap:18px}.el-site .el-hero__actions .el-button{width:min(100%,250px)}.el-site .el-demo-stage{margin-top:50px}}
