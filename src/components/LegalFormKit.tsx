@@ -48,6 +48,7 @@ export function SiteNav() {
     return (
         <>
             <motion.nav
+                className="site-nav"
                 initial={{ y: -28, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, ease: EO }}
@@ -62,7 +63,7 @@ export function SiteNav() {
                         onFocus={e => (e.currentTarget.style.color = T.ink)}
                         onBlur={e => (e.currentTarget.style.color = T.muted)}
                         style={{ fontSize: 13.5, fontFamily: F, fontWeight: 600, color: T.muted, textDecoration: "none", transition: "color 0.25s ease" }}>Sign in</a>}
-                    <motion.a href="/book-a-demo" whileHover={{ scale: 1.04, boxShadow: "0 10px 28px rgba(229,86,2,0.28)" }} whileTap={{ scale: 0.96 }}
+                    <motion.a className="site-nav__demo" href="/book-a-demo" whileHover={{ scale: 1.04, boxShadow: "0 10px 28px rgba(229,86,2,0.28)" }} whileTap={{ scale: 0.96 }}
                         style={{ display: "inline-flex", alignItems: "center", background: T.accent, color: T.cream, borderRadius: 100, padding: isMobile ? "10px 16px" : "11px 22px", fontSize: 13, fontFamily: F, fontWeight: 700, cursor: "pointer", textDecoration: "none", whiteSpace: "nowrap" }}>
                         Book a demo
                     </motion.a>
@@ -82,6 +83,10 @@ export function SiteNav() {
                         <a href="https://app.miraee.ai" onClick={() => setOpen(false)}
                             style={{ padding: "12px 14px", borderRadius: 12, fontSize: 14, fontFamily: F, fontWeight: 600, color: T.ink, textDecoration: "none" }}>
                             Sign in
+                        </a>
+                        <a className="site-nav__menu-demo" href="/book-a-demo" onClick={() => setOpen(false)}
+                            style={{ padding: "12px 14px", borderRadius: 12, fontSize: 14, fontFamily: F, fontWeight: 700, color: T.orange, textDecoration: "none" }}>
+                            Book a demo
                         </a>
                     </motion.div>
                 )}
