@@ -42,21 +42,10 @@ function PromptDemo() { return <motion.div className="el-demo-stage" initial={{ 
 function Hero() {
   const ref = useRef<HTMLElement>(null); const reduce=useReducedMotion(); const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] }); const y = useTransform(scrollYProgress,[0,1],[0,120]); const opacity = useTransform(scrollYProgress,[0,.9],[1,0])
   return <section ref={ref} className="el-hero"><div className="el-hero__ghost" aria-hidden="true">agent</div><motion.div className="el-hero__inner" style={{ y:reduce?0:y, opacity:reduce?1:opacity }}>
-    <div className="el-hero__intro">
-      <div className="el-hero__copy">
-        <motion.div className="el-hero__kicker" initial={{ opacity:0,y:10 }} animate={{ opacity:1,y:0 }}><div className="el-pill"><span/> AI-native corporate travel</div></motion.div>
-        <h1><motion.span initial={{ y:"110%" }} animate={{ y:0 }} transition={{ duration:.9,ease }}>Your entire trip.</motion.span><motion.span className="el-hero__accent" initial={{ y:"110%" }} animate={{ y:0 }} transition={{ duration:.9,delay:.1,ease }}>Handled by one intelligent agent.</motion.span></h1>
-        <motion.p initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.45,duration:.7 }}>Miraee manages every journey end to end, from planning and booking to support and expenses, while keeping travelers happy and businesses in control.</motion.p>
-        <motion.div className="el-hero__actions" initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.58,duration:.7 }}><Link className="el-button" to="/book-a-demo">See Miraee live <span aria-hidden="true">↗</span></Link><a className="el-text-link" href="#product">Explore the platform <span aria-hidden="true">↓</span></a></motion.div>
-      </div>
-      <motion.aside className="el-hero-brief" initial={{opacity:0,x:42,rotate:2}} animate={{opacity:1,x:0,rotate:0}} transition={{duration:1,delay:.3,ease}} aria-label="Example Miraee travel brief">
-        <div className="el-hero-brief__top"><span><i/>Agent working</span><b>MR / 0248</b></div>
-        <div className="el-hero-brief__prompt"><small>You ask</small><p>“Singapore next Tuesday.<br/>Keep me within policy.”</p></div>
-        <div className="el-hero-brief__route"><div><small>From</small><b>SFO</b></div><span><i/><i/><em>7,337 mi</em></span><div><small>To</small><b>SIN</b></div></div>
-        <div className="el-hero-brief__checks"><span><i/>Window seat</span><span><i/>Policy approved</span><span><i/>Hotel matched</span></div>
-        <div className="el-hero-brief__foot"><span>One request</span><strong>Everything handled.</strong></div>
-      </motion.aside>
-    </div>
+    <motion.div className="el-hero__kicker" initial={{ opacity:0,y:10 }} animate={{ opacity:1,y:0 }}><div className="el-pill"><span/> AI-native corporate travel</div></motion.div>
+    <h1><motion.span initial={{ y:"110%" }} animate={{ y:0 }} transition={{ duration:.9,ease }}>Your entire trip.</motion.span><motion.span className="el-hero__accent" initial={{ y:"110%" }} animate={{ y:0 }} transition={{ duration:.9,delay:.1,ease }}>Handled by one intelligent agent.</motion.span></h1>
+    <motion.p initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.45,duration:.7 }}>Miraee manages every journey end to end, from planning and booking to support and expenses, while keeping travelers happy and businesses in control.</motion.p>
+    <motion.div className="el-hero__actions" initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.58,duration:.7 }}><Link className="el-button" to="/book-a-demo">See Miraee live <span aria-hidden="true">↗</span></Link><a className="el-text-link" href="#product">Explore plan for your organisation <span aria-hidden="true">↓</span></a></motion.div>
     <PromptDemo />
     <motion.div className="el-hero__proof" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{delay:1.05,duration:.7,ease}}><span>One thread</span><i/><span>Live inventory</span><i/><span>Policy built in</span><i/><span>Human support when needed</span></motion.div>
   </motion.div></section>
@@ -85,7 +74,7 @@ function Friction(){
           <h3>{title}</h3><div className="el-shard__state"><i/>{state}</div>
           <b aria-hidden="true">{i===0?"SFO":i===4?"SIN":"•••"}</b>
         </motion.article>)}
-        {[1,2,3,4].map(i=><motion.div className={`el-shatter__break el-shatter__break--${i}`} key={i} initial={{scaleY:0}} whileInView={{scaleY:1}} viewport={{once:true}} transition={{duration:.5,delay:.55+i*.1,ease}}><span>context lost</span></motion.div>)}
+        {[1,2,3,4].map(i=><motion.div className={`el-shatter__break el-shatter__break--${i}`} key={i} initial={{scaleY:0}} whileInView={{scaleY:1}} viewport={{once:true}} transition={{duration:.5,delay:.55+i*.1,ease}}/>)}
       </div>
       <div className="el-shatter__verdict"><span>Five owners</span><i/><span>Four broken handoffs</span><i/><strong>No one sees the whole trip</strong></div>
     </Reveal>
