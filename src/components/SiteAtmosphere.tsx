@@ -60,6 +60,7 @@ function RoutePreloader() {
 }
 
 export default function SiteAtmosphere() {
+    const showRoutePreloader = window.location.pathname !== "/v2"
     const pointerX = useMotionValue(-400)
     const pointerY = useMotionValue(-400)
     const x = useSpring(pointerX, { stiffness: 45, damping: 18, mass: 0.8 })
@@ -81,7 +82,7 @@ export default function SiteAtmosphere() {
                 <div className="site-atmosphere__orb site-atmosphere__orb--two" />
                 <motion.div className="site-atmosphere__cursor" style={{ x, y }} />
             </div>
-            <RoutePreloader />
+            {showRoutePreloader && <RoutePreloader />}
         </>
     )
 }

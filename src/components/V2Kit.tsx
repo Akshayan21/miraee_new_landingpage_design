@@ -1,0 +1,178 @@
+import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
+import type { ReactNode } from "react"
+import { Link, useLocation } from "react-router-dom"
+import { MiraeeLogo } from "./LegalFormKit"
+import { useWindowWidth } from "../hooks/useWindowSize"
+
+// Shared chrome and content primitives for the v2 marketing site (home +
+// product / for-teams / security / about / why-miraee) so every page renders
+// off the same design system defined in HomeV2Light.css.
+
+export const ease = [0.16, 1, 0.3, 1] as const
+
+export function Reveal({ children, className = "", delay = 0, id }: { children: ReactNode; className?: string; delay?: number; id?: string }) {
+    const ref = useRef<HTMLDivElement>(null)
+    const visible = useInView(ref, { once: true, margin: "-8% 0px" })
+    const reduced = useReducedMotion()
+    return (
+        <motion.div ref={ref} id={id} className={className} initial={{ opacity: 0, y: reduced ? 0 : 12 }} animate={visible ? { opacity: 1, y: 0 } : {}} transition={{ duration: reduced ? 0 : 0.6, delay, ease }}>
+            {children}
+        </motion.div>
+    )
+}
+
+const NAV_LINKS: [string, string][] = [
+    ["Product", "/product"],
+    ["For teams", "/for-teams"],
+    ["Security", "/security"],
+    ["About", "/about"],
+    ["Why Miraee", "/why-miraee"],
+]
+
+function VersionSwitch({ className = "" }: { className?: string }) {
+    const { pathname } = useLocation()
+    const isV1 = pathname === "/"
+    return (
+        <div className={"m-nav__version " + className} aria-label="Choose site version">
+            <Link to="/" aria-current={isV1 ? "page" : undefined}>v1</Link>
+            <Link to="/v2" aria-current={!isV1 ? "page" : undefined}>v2</Link>
+        </div>
+    )
+}
+
+export function V2Nav({ active }: { active?: string }) {
+    const vw = useWindowWidth()
+    const isCompact = vw < 980
+    const [open, setOpen] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 8)
+        onScroll()
+        window.addEventListener("scroll", onScroll, { passive: true })
+        return () => window.removeEventListener("scroll", onScroll)
+    }, [])
+
+    useEffect(() => {
+        const onResize = () => { if (window.innerWidth >= 980) setOpen(false) }
+        window.addEventListener("resize", onResize, { passive: true })
+        return () => window.removeEventListener("resize", onResize)
+    }, [])
+
+    return (
+        <>
+            <header className={"m-nav" + (scrolled ? " is-scrolled" : "")}>
+                <Link to="/v2" aria-label="Miraee home" className="m-nav__logo" onClick={() => setOpen(false)}><MiraeeLogo fill="#E55602" height={20} /></Link>
+                {!isCompact && (
+                    <nav aria-label="Primary navigation">
+                        {NAV_LINKS.map(([label, href]) => (
+                            <Link key={href} to={href} aria-current={active === href ? "page" : undefined}>{label}</Link>
+                        ))}
+                    </nav>
+                )}
+                <div className="m-nav__actions">
+                    {!isCompact && <VersionSwitch />}
+                    {!isCompact && <a href="https://app.miraee.ai">Sign in</a>}
+                    <Link to="/book-a-demo" className="m-nav__cta">Book a demo</Link>
+                    {isCompact && (
+                        <button type="button" className="m-nav__burger" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="m-nav-mobile" onClick={() => setOpen(v => !v)}>
+                            <span /><span />
+                        </button>
+                    )}
+                </div>
+            </header>
+            <AnimatePresence>
+                {isCompact && open && (
+                    <motion.div id="m-nav-mobile" className="m-nav__mobile" key="m-nav-mobile"
+                        initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: .22, ease }}>
+                        <VersionSwitch className="m-nav__version--mobile" />
+                        {NAV_LINKS.map(([label, href]) => (
+                            <Link key={href} to={href} aria-current={active === href ? "page" : undefined} onClick={() => setOpen(false)}>{label}</Link>
+                        ))}
+                        <a href="https://app.miraee.ai" onClick={() => setOpen(false)}>Sign in</a>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </>
+    )
+}
+
+export function Faq({ items }: { items: [string, string][] }) {
+    const [open, setOpen] = useState(0)
+    return (
+        <div className="m-faq">
+            {items.map(([q, a], i) => (
+                <div className={"m-faq__item" + (open === i ? " is-open" : "")} key={q}>
+                    <button type="button" className="m-faq__q" aria-expanded={open === i} onClick={() => setOpen(open === i ? -1 : i)}>
+                        <span>{q}</span>
+                        <span className="m-faq__icon" aria-hidden="true">{open === i ? "−" : "+"}</span>
+                    </button>
+                    <div className="m-faq__panel">
+                        <p>{a}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
+}
+
+// Borderless, editorial replacement for a bordered data table: a bold title,
+// then either a plain description (2-column data) or a line of small
+// label/value pairs (3+ columns) — divided by hairlines, no boxes or cells.
+export function EditorialRows({ headers, rows, caption, highlightLast = false, checkmark = false, numbered = true, columns = 1 }: { headers: string[]; rows: string[][]; caption: string; highlightLast?: boolean; checkmark?: boolean; numbered?: boolean; columns?: 1 | 2 | 3 }) {
+    const simple = headers.length === 2
+    const metaCols = `repeat(${Math.max(headers.length - 1, 1)}, minmax(120px, 1fr))`
+    return (
+        <div className={"m-edrows" + (numbered ? "" : " m-edrows--plain") + (columns > 1 ? " m-edrows--grid" : "")}
+            style={columns > 1 ? { gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` } : undefined}
+            role="table" aria-label={caption}>
+            {rows.map((r, i) => {
+                const meta = r.slice(1)
+                return (
+                    <div className="m-edrow" role="row" key={i}>
+                        <strong>{r[0]}</strong>
+                        {simple ? (
+                            meta[0] && <p className="m-edrow__desc">{meta[0]}</p>
+                        ) : meta.length > 0 && (
+                            <div className="m-edrow__meta" style={{ gridTemplateColumns: metaCols }}>
+                                {meta.map((cell, j) => {
+                                    const isWin = highlightLast && j === meta.length - 1
+                                    return (
+                                        <div className="m-edrow__cell" key={j}>
+                                            <span className="m-edrow__label">{headers[j + 1]}</span>
+                                            <span className={"m-edrow__value" + (isWin ? " m-edrow__win" : "")}>{isWin && checkmark ? "✓ " : ""}{cell}</span>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        )}
+                    </div>
+                )
+            })}
+        </div>
+    )
+}
+
+// Compact, real multi-column comparison table — used only where content is
+// genuinely tabular (the same few columns repeated across many rows, like a
+// competitor comparison). A proper table here is far shorter than the same
+// data stacked as editorial rows; no borders/backgrounds, hairlines only.
+export function MiniTable({ headers, rows, caption, highlightLast = false, checkmark = false }: { headers: string[]; rows: string[][]; caption: string; highlightLast?: boolean; checkmark?: boolean }) {
+    const cols = `minmax(180px, 1.4fr) repeat(${headers.length - 1}, minmax(90px, 1fr))`
+    return (
+        <div className="m-mini" role="table" aria-label={caption}>
+            <div className="m-mini__row m-mini__head" role="row" style={{ gridTemplateColumns: cols }}>
+                {headers.map(h => <span role="columnheader" key={h}>{h}</span>)}
+            </div>
+            {rows.map((r, i) => (
+                <div className="m-mini__row" role="row" key={i} style={{ gridTemplateColumns: cols }}>
+                    {r.map((c, j) => {
+                        const isWin = highlightLast && j === r.length - 1
+                        return <span key={j} data-label={headers[j]} className={j === 0 ? "m-mini__label" : isWin ? "m-mini__win" : undefined}>{isWin && checkmark ? "✓ " : ""}{c}</span>
+                    })}
+                </div>
+            ))}
+        </div>
+    )
+}

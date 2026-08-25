@@ -322,3 +322,14 @@ main,section,article,aside,header,footer,nav,div{min-width:0}
 body{overflow-x:clip}
 .site-nav__menu-demo{display:none}
 @media(max-width:360px){.site-nav__demo{display:none!important}.site-nav__menu-demo{display:block}}
+#site-nav-mobile-menu{max-height:calc(100dvh - 96px);overflow-y:auto;overscroll-behavior:contain}
+@media(max-width:620px){.site-nav__demo{display:none!important}.site-nav__menu-demo{display:block}.site-version-switch{flex-shrink:0}}
+
+/* Shared form and policy page finish. The page components retain their
+   behavior; this layer gives the inline-layout screens one visual system. */
+.form-page,.legal-page{background:radial-gradient(circle at 82% 8%,rgba(229,86,2,.09),transparent 26rem),linear-gradient(rgba(var(--text-rgb),.025) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--text-rgb),.025) 1px,transparent 1px),var(--page-bg)!important;background-size:auto,72px 72px,72px 72px!important}
+.form-page>div:nth-child(2){max-width:1320px!important;padding-top:132px!important}.form-page form{padding:34px!important;border:1px solid rgba(var(--text-rgb),.09);border-radius:22px;background:color-mix(in srgb,var(--surface) 88%,transparent);box-shadow:0 28px 70px rgba(var(--text-rgb),.07)}
+.form-page form h1{font-size:clamp(2.25rem,4vw,3.8rem)!important;font-weight:650!important;line-height:1.02!important;letter-spacing:-.055em!important;text-wrap:balance}.form-page input:not([type="checkbox"]):not([type="radio"]),.form-page textarea,.form-page select{border-width:1px!important;border-radius:9px!important;background:color-mix(in srgb,var(--surface) 82%,transparent)!important}.form-page textarea{line-height:1.55}.form-page button{transition:transform .22s ease,box-shadow .22s ease,background .22s ease}.form-page button:active{transform:scale(.98)}
+.legal-page>div:nth-child(2){max-width:1180px!important;padding-top:142px!important}.legal-page h1{font-size:clamp(3rem,6vw,6.2rem)!important;font-weight:600!important;line-height:.94!important;letter-spacing:-.065em!important}.legal-page h2{letter-spacing:-.035em}.legal-page p,.legal-page li{max-width:76ch}.legal-page aside{border-radius:16px!important;background:color-mix(in srgb,var(--surface) 84%,transparent)!important;backdrop-filter:blur(12px)}
+@media(max-width:1200px){.form-page form{padding:26px!important}.form-page>div:nth-child(2),.legal-page>div:nth-child(2){padding-top:112px!important}}
+@media(max-width:640px){.form-page,.legal-page{background-size:auto,44px 44px,44px 44px!important}.form-page>div:nth-child(2),.legal-page>div:nth-child(2){padding:100px 14px 56px!important}.form-page form{padding:22px 16px!important;border-radius:16px}.form-page form h1{font-size:2.35rem!important}.legal-page h1{font-size:3rem!important}}
