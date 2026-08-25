@@ -5,7 +5,7 @@ import {
     T, F, SiteNav, SiteFooter, Field, TextInput, TextArea, RadioGroup, SectionHead,
     BulletList, SuccessScreen, TICKET_ENDPOINT, useVW, MediaColumn,
 } from "../components/LegalFormKit"
-import disputeResolutionImg from "../assets/dispute_resolution.png"
+import disputeResolutionImg from "../assets/dispute_resolution.webp"
 import { filesToAttachments, submitForm, validateAttachments } from "../lib/formSubmission"
 
 const CONFERENCE_OPTIONS = [
@@ -69,7 +69,7 @@ export default function DisputeNoticePage(props: { style?: React.CSSProperties }
         }
     }
     return (
-        <div style={{ position: "relative", width: "100%", minHeight: "100vh", background: T.bg, fontFamily: F, ...props.style }}>
+        <div className="form-page form-page--legal-form" style={{ position: "relative", width: "100%", minHeight: "100vh", background: T.bg, fontFamily: F, ...props.style }}>
             <SiteNav />
             <div style={{ maxWidth: 1440, margin: "0 auto", padding: isNarrow ? "100px 20px 64px" : "116px 48px 72px" }}>
                 <div style={{ display: "flex", flexDirection: isNarrow ? "column" : "row", gap: isNarrow ? 48 : 72, alignItems: "flex-start" }}>

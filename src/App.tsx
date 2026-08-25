@@ -7,6 +7,12 @@ import { MiraeeLogo } from "./components/LegalFormKit"
 // Home is routed at "/". Product/Technology/Solutions source files are kept in
 // src/pages/ (unrouted, not deleted) in case they're needed again.
 const Home = lazy(() => import("./pages/HomeElegant"))
+const HomeV2 = lazy(() => import("./pages/HomeV2"))
+const ProductV2 = lazy(() => import("./pages/ProductV2"))
+const ForTeamsV2 = lazy(() => import("./pages/ForTeamsV2"))
+const SecurityV2 = lazy(() => import("./pages/SecurityV2"))
+const AboutV2 = lazy(() => import("./pages/AboutV2"))
+const WhyMiraeeV2 = lazy(() => import("./pages/WhyMiraeeV2"))
 const Support = lazy(() => import("./pages/Support"))
 const Terms = lazy(() => import("./pages/Terms"))
 const Privacy = lazy(() => import("./pages/Privacy"))
@@ -41,6 +47,12 @@ export default function App() {
             <Suspense fallback={<PageFallback />}>
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/v2" element={<HomeV2 />} />
+                    <Route path="/product" element={<ProductV2 />} />
+                    <Route path="/for-teams" element={<ForTeamsV2 />} />
+                    <Route path="/security" element={<SecurityV2 />} />
+                    <Route path="/about" element={<AboutV2 />} />
+                    <Route path="/why-miraee" element={<WhyMiraeeV2 />} />
                     <Route path="/support" element={<Support />} />
                     <Route path="/terms" element={<Terms />} />
                     <Route path="/privacy" element={<Privacy />} />

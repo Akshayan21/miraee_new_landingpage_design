@@ -123,7 +123,7 @@ export default function MiraeeDemoPage(props: { style?: React.CSSProperties }) {
         }
     }
     return (
-        <div style={{ position: "relative", width: "100%", minHeight: "100dvh", background: T.bg, fontFamily: F, ...props.style }}>
+        <div className="form-page form-page--demo" style={{ position: "relative", width: "100%", minHeight: "100dvh", background: T.bg, fontFamily: F, ...props.style }}>
             <SiteNav />
             <div style={{ maxWidth: 1440, margin: "0 auto", padding: isNarrow ? "100px 20px 64px" : "116px 48px 72px" }}>
                 <div style={{ display: "flex", flexDirection: isNarrow ? "column" : "row", gap: isNarrow ? 48 : 72, alignItems: "flex-start" }}>

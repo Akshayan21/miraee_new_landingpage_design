@@ -5,7 +5,7 @@ import {
     T, F, SiteNav, SiteFooter, Field, TextInput, RadioGroup, SectionHead,
     BulletList, SuccessScreen, TICKET_ENDPOINT, useVW, MediaColumn,
 } from "../components/LegalFormKit"
-import optOutImage from "../assets/atribution-opt_out.png"
+import optOutImage from "../assets/atribution-opt_out.webp"
 import { submitForm } from "../lib/formSubmission"
 
 const ELECTION_OPTIONS = [
@@ -57,7 +57,7 @@ export default function ArbitrationOptOutPage(props: { style?: React.CSSProperti
         }
     }
     return (
-        <div style={{ position: "relative", width: "100%", minHeight: "100vh", background: T.bg, fontFamily: F, ...props.style }}>
+        <div className="form-page form-page--legal-form" style={{ position: "relative", width: "100%", minHeight: "100vh", background: T.bg, fontFamily: F, ...props.style }}>
             <SiteNav />
             <div style={{ maxWidth: 1440, margin: "0 auto", padding: isNarrow ? "100px 20px 64px" : "116px 48px 72px" }}>
                 <div style={{ display: "flex", flexDirection: isNarrow ? "column" : "row", gap: isNarrow ? 48 : 72, alignItems: "flex-start" }}>

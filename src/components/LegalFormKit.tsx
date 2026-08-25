@@ -35,16 +35,28 @@ export function MiraeeLogo({ fill = T.orange, height = 26 }: { fill?: string; he
 // Nav/footer links to in-page sections need to work from every route: same-page
 // anchors on "/", and "home, then jump" links everywhere else.
 function useAnchorHref() {
-    const isHome = useLocation().pathname === "/"
-    return (id: string) => (isHome ? `#${id}` : `/#${id}`)
+    const pathname = useLocation().pathname
+    const homePath = pathname === "/v2" ? "/v2" : "/"
+    const isHome = pathname === "/" || pathname === "/v2"
+    return (id: string) => (isHome ? `#${id}` : `${homePath}#${id}`)
 }
 
 // ─── Site nav (used by every routed page) ────────────────────────────────────
 export function SiteNav() {
     const vw = useWindowWidth()
+    const pathname = useLocation().pathname
+    const activeVersion = pathname === "/v2" ? "v2" : "v1"
     const isMobile = vw < 640
     const isCompact = vw < 900
     const [open, setOpen] = useState(false)
+    const toHref = useAnchorHref()
+    const mobileLinks = [
+        ["Product", toHref("product")],
+        ["How it works", toHref("how-it-works")],
+        ["For teams", toHref("outcomes")],
+        ["Security", toHref("security")],
+        ["Support", "/support"],
+    ]
     return (
         <>
             <motion.nav
@@ -53,10 +65,14 @@ export function SiteNav() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, ease: EO }}
                 aria-label="Primary"
-                style={{ position: "fixed", top: 14, left: "50%", x: "-50%", zIndex: 200, width: "min(1080px, calc(100vw - 24px))", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", padding: isMobile ? "0 10px 0 18px" : "0 10px 0 26px", borderRadius: 100, background: "var(--glass-bg)", backdropFilter: "blur(18px)", border: "1px solid rgba(var(--text-rgb),0.08)", boxShadow: "0 10px 34px rgba(var(--text-rgb),0.08)" }}>
-                <Link to="/" aria-label="Miraee home" style={{ textDecoration: "none", display: "inline-flex", flexShrink: 0 }}><MiraeeLogo fill={T.orange} height={24} /></Link>
-                <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 8 : 16 }}>
-                    <ThemeToggle size={isMobile ? 32 : 34} />
+                style={{ position: "fixed", top: 14, left: "50%", x: "-50%", zIndex: 200, width: "min(1080px, calc(100vw - 24px))", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", padding: isMobile ? "0 6px 0 12px" : "0 10px 0 26px", borderRadius: 100, background: "var(--glass-bg)", backdropFilter: "blur(18px)", border: "1px solid rgba(var(--text-rgb),0.08)", boxShadow: "0 10px 34px rgba(var(--text-rgb),0.08)" }}>
+                <Link to="/" aria-label="Miraee home" style={{ textDecoration: "none", display: "inline-flex", flexShrink: 0 }}><MiraeeLogo fill={T.orange} height={isMobile ? 19 : 24} /></Link>
+                <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 4 : 16 }}>
+                    <div className="site-version-switch" aria-label="Choose site version" style={{ display: "flex", alignItems: "center", padding: 3, border: "1px solid rgba(var(--text-rgb),0.10)", borderRadius: 100, background: "rgba(var(--text-rgb),0.035)" }}>
+                        {(["v1", "v2"] as const).map(version => <Link key={version} to={version === "v1" ? "/" : "/v2"} aria-current={activeVersion === version ? "page" : undefined}
+                            style={{ display: "grid", placeItems: "center", minWidth: isMobile ? 26 : 38, height: isMobile ? 26 : 30, padding: isMobile ? "0 4px" : "0 8px", borderRadius: 100, background: activeVersion === version ? T.ink : "transparent", color: activeVersion === version ? T.cream : T.muted, fontSize: isMobile ? 9 : 10, fontFamily: F, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s ease,color .2s ease" }}>{version}</Link>)}
+                    </div>
+                    {!isMobile && <ThemeToggle size={34} />}
                     {!isMobile && !isCompact && <a href="https://app.miraee.ai"
                         onMouseEnter={e => (e.currentTarget.style.color = T.ink)}
                         onMouseLeave={e => (e.currentTarget.style.color = T.muted)}
@@ -69,7 +85,7 @@ export function SiteNav() {
                     </motion.a>
                     {isCompact && (
                         <button type="button" aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} aria-controls="site-nav-mobile-menu" onClick={() => setOpen(v => !v)}
-                            style={{ position: "relative", width: 34, height: 34, flexShrink: 0, border: "1px solid rgba(var(--text-rgb),0.14)", borderRadius: "50%", background: "transparent", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            style={{ position: "relative", width: isMobile ? 30 : 34, height: isMobile ? 30 : 34, flexShrink: 0, border: "1px solid rgba(var(--text-rgb),0.14)", borderRadius: "50%", background: "transparent", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <span aria-hidden="true" style={{ position: "absolute", width: 14, height: 1.5, background: T.ink, borderRadius: 2, transform: open ? "rotate(45deg)" : "translateY(-3px)", transition: "transform 0.25s ease" }} />
                             <span aria-hidden="true" style={{ position: "absolute", width: 14, height: 1.5, background: T.ink, borderRadius: 2, transform: open ? "rotate(-45deg)" : "translateY(3px)", transition: "transform 0.25s ease" }} />
                         </button>
@@ -80,6 +96,10 @@ export function SiteNav() {
                 {isCompact && open && (
                     <motion.div id="site-nav-mobile-menu" key="mobile-nav-menu" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.25, ease: EO }}
                         style={{ position: "fixed", top: 80, left: "50%", x: "-50%", zIndex: 199, width: "min(340px, calc(100vw - 24px))", background: "var(--glass-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(var(--text-rgb),0.08)", borderRadius: 20, boxShadow: "0 20px 50px rgba(var(--text-rgb),0.14)", padding: 10, display: "flex", flexDirection: "column", gap: 2 }}>
+                        {mobileLinks.map(([label, href]) => <a key={label} href={href} onClick={() => setOpen(false)}
+                            style={{ padding: "12px 14px", borderRadius: 12, fontSize: 14, fontFamily: F, fontWeight: 600, color: T.ink, textDecoration: "none" }}>
+                            {label}
+                        </a>)}
                         <a href="https://app.miraee.ai" onClick={() => setOpen(false)}
                             style={{ padding: "12px 14px", borderRadius: 12, fontSize: 14, fontFamily: F, fontWeight: 600, color: T.ink, textDecoration: "none" }}>
                             Sign in
@@ -115,28 +135,27 @@ export function SiteFooter() {
     const COLS: { title: string; links: FooterLink[] }[] = [
         {
             title: "Explore", links: [
-                { label: "Product", href: toHref("product") },
-                { label: "How it works", href: toHref("how-it-works") },
-                { label: "For teams", href: toHref("outcomes") },
+                { label: "Product", href: "/product" },
+                { label: "For teams", href: "/for-teams" },
+                { label: "Why Miraee", href: "/why-miraee" },
                 { label: "Support", href: "/support" },
                 { label: "Careers", disabled: true },
-                { label: "Newsroom", disabled: true },
+                { label: "Newsroom", href: "/about#newsroom" },
             ],
         },
         {
             title: "Partners & legal", links: [
-                { label: "For airlines", href: toHref("partners") },
-                { label: "For suppliers", href: toHref("partners") },
-                { label: "Distribution", href: toHref("partners") },
+                { label: "Partner with us", href: "mailto:partners@miraee.ai" },
                 { label: "Terms & Conditions", href: "/terms" },
                 { label: "Privacy", href: "/privacy" },
-                { label: "Security", href: toHref("security") },
+                { label: "Security", href: "/security" },
                 { label: "Arbitration opt-out", href: "/arbitration-opt-out" },
+                { label: "Dispute notice", href: "/dispute-notice" },
             ],
         },
         {
             title: "Talk to us", links: [
-                { label: "About Tabhi", href: "https://www.tabhi.com/", external: true },
+                { label: "About Miraee", href: "/about" },
                 { label: "hello@miraee.ai", href: "mailto:hello@miraee.ai" },
             ],
         },
@@ -202,7 +221,7 @@ export function Field({ label, required, children, hint }: { label: string; requ
     // announce the field label — the input itself never has to know its id
     // ahead of time.
     const generatedId = useId()
-    const child = isValidElement(children) ? (children as React.ReactElement<any>) : null
+    const child = isValidElement<{ id?: string; name?: string }>(children) ? children : null
     const fieldId: string = (child?.props?.id) || (child?.props?.name) || generatedId
     const content = child ? cloneElement(child, { id: fieldId }) : children
     return (

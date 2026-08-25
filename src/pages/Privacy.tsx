@@ -340,7 +340,7 @@ function Section({ s }: { s: typeof SECTIONS[0] }) {
 export default function MiraeePrivacyPage(props: { style?: React.CSSProperties }) {
     const isNarrow = useVW() < 1024
     return (
-        <div style={{ position: "relative", width: "100%", minHeight: "100vh", background: T.bg, fontFamily: F, ...props.style }}>
+        <div className="legal-page" style={{ position: "relative", width: "100%", minHeight: "100vh", background: T.bg, fontFamily: F, ...props.style }}>
             <SiteNav />
             {/* Document */}
             <div style={{ maxWidth: 880, margin: "0 auto", padding: isNarrow ? "110px 20px 72px" : "140px 24px 96px" }}>

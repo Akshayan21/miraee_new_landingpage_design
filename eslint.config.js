@@ -9,6 +9,9 @@ export default defineConfig([
   // Retained design explorations are not part of the shipped application.
   globalIgnores([
     'dist',
+    '.claude/**',
+    '.codex/**',
+    '.agents/**',
     'src/pages/Home.tsx',
     'src/pages/Product.tsx',
     'src/pages/Solutions.tsx',
@@ -27,7 +30,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['src/components/LegalFormKit.tsx'],
+    files: ['src/components/LegalFormKit.tsx', 'src/components/V2Kit.tsx'],
     rules: { 'react-refresh/only-export-components': 'off' },
   },
   {

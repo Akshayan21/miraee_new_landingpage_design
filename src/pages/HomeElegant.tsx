@@ -35,7 +35,7 @@ function PromptDemo() { return <motion.div className="el-demo-stage" initial={{ 
   <div className="el-demo-stage__note el-demo-stage__note--policy"><span>Policy</span><b>Approved</b></div>
   <div className="el-demo-stage__note el-demo-stage__note--savings"><span>Live savings</span><b>$428</b></div>
   <div className="el-console el-console--image">
-    <img className="el-console__img" src={dashboardImg} alt="Miraee travel dashboard" />
+    <img className="el-console__img" src={dashboardImg} alt="Miraee travel dashboard" width="1911" height="1072" fetchPriority="high" decoding="async" />
   </div>
 </motion.div> }
 
@@ -45,7 +45,7 @@ function Hero() {
     <motion.div className="el-hero__kicker" initial={{ opacity:0,y:10 }} animate={{ opacity:1,y:0 }}><div className="el-pill"><span/> AI-native corporate travel</div></motion.div>
     <h1><motion.span initial={{ y:"110%" }} animate={{ y:0 }} transition={{ duration:.9,ease }}>Your entire trip.</motion.span><motion.span className="el-hero__accent" initial={{ y:"110%" }} animate={{ y:0 }} transition={{ duration:.9,delay:.1,ease }}>Handled by one intelligent agent.</motion.span></h1>
     <motion.p initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.45,duration:.7 }}>Miraee manages every journey end to end, from planning and booking to support and expenses, while keeping travelers happy and businesses in control.</motion.p>
-    <motion.div className="el-hero__actions" initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.58,duration:.7 }}><Link className="el-button" to="/book-a-demo">See Miraee live <span aria-hidden="true">↗</span></Link><a className="el-text-link" href="#product">Explore plan for your organisation <span aria-hidden="true">↓</span></a></motion.div>
+    <motion.div className="el-hero__actions" initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.58,duration:.7 }}><Link className="el-button" to="/book-a-demo">Book a demo <span aria-hidden="true">↗</span></Link><a className="el-text-link" href="#product">Explore the platform <span aria-hidden="true">↓</span></a></motion.div>
     <PromptDemo />
     <motion.div className="el-hero__proof" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{delay:1.05,duration:.7,ease}}><span>One thread</span><i/><span>Live inventory</span><i/><span>Policy built in</span><i/><span>Human support when needed</span></motion.div>
   </motion.div></section>
@@ -63,27 +63,21 @@ function Friction(){
     ["Travel desk","Trip changes","Ticket opened"],
     ["Accounting","Expense","Receipt missing"]
   ]
-  return <section className="el-friction el-handoff">
-    <Reveal className="el-handoff__head"><span className="el-label">The problem</span><h2>Every handoff<br/><em>fragments the journey.</em></h2><p>Every handoff changes the owner, loses the context, and gives the traveler another system to coordinate.</p></Reveal>
-    <Reveal className="el-shatter" delay={.08}>
-      <div className="el-shatter__label"><span>One employee trip</span><b>SFO → SIN</b><i/> <small>Split across five systems</small></div>
-      <div className="el-shatter__document">
-        <div className="el-shatter__ghost" aria-hidden="true">ONE JOURNEY</div>
-        {fragments.map(([owner,title,state],i)=><motion.article className={`el-shard el-shard--${i+1}`} key={title} initial={{opacity:0,y:i%2?30:-30,rotate:i%2?2:-2}} whileInView={{opacity:1,y:0,rotate:0}} viewport={{once:true}} transition={{duration:.72,delay:.18+i*.11,ease}}>
-          <div className="el-shard__top"><span>0{i+1}</span><small>{owner} owns it</small></div>
-          <h3>{title}</h3><div className="el-shard__state"><i/>{state}</div>
-          <b aria-hidden="true">{i===0?"SFO":i===4?"SIN":"•••"}</b>
-        </motion.article>)}
-        {[1,2,3,4].map(i=><motion.div className={`el-shatter__break el-shatter__break--${i}`} key={i} initial={{scaleY:0}} whileInView={{scaleY:1}} viewport={{once:true}} transition={{duration:.5,delay:.55+i*.1,ease}}/>)}
-      </div>
-      <div className="el-shatter__verdict"><span>Five owners</span><i/><span>Four broken handoffs</span><i/><strong>No one sees the whole trip</strong></div>
+  return <section className="el-friction el-handoff el-handoff--revamp">
+    <Reveal className="el-handoff__head"><span className="el-label">The problem</span><h2>One trip.<br/><em>Too many owners.</em></h2><p>Travel gets harder every time context moves between a booking tool, an approver, a travel desk, and finance.</p></Reveal>
+    <Reveal className="el-handoff-ledger" delay={.08}>
+      <header><div><span>Live journey</span><strong>SFO <i/> SIN</strong></div><small>Five systems · one traveler</small></header>
+      <div className="el-handoff-ledger__rows">{fragments.map(([owner,title,state],i)=><article key={title}>
+        <span>{String(i+1).padStart(2,"0")}</span><div><small>{owner}</small><h3>{title}</h3></div><em>{state}</em>
+      </article>)}</div>
+      <footer><span>What gets lost</span><strong>Context, time, and accountability</strong></footer>
     </Reveal>
     <div className="el-handoff__metrics">{pains.map((p,i)=><Reveal key={p[2]} delay={i*.06}><span>0{i+1}</span><strong>{p[0]}</strong><small>{p[1]}</small><p>{p[2]}</p></Reveal>)}</div>
   </section>
 }
 
 const allCapabilities = [["Plan","Describe a trip naturally and get an in-policy itinerary in seconds.","<60s"],["Book","Flights, hotels, rail, and cars from live wholesale inventory.","20–30%"],["Expense","Receipts, coding, reports, and reconciliation prepared automatically.","0 forms"],["Change","The agent proactively rebooks disruptions within policy.","97%"],["Continuous support","Human-in-the-loop backup whenever a trip needs a real person.","24/7"],["Personal travel","The same agent can plan employee trips without mixing company spend.","1 agent"]]
-function CapabilityMatrix(){return <section className="el-capabilities"><SectionSignal/><Reveal className="el-section-head"><span>The complete platform</span><h2>Six capabilities.<br/><em>One continuous context.</em></h2></Reveal><div className="el-cap-grid">{allCapabilities.map((c,i)=><Reveal className={`el-cap-card el-cap-card--${i+1}`} key={c[0]} delay={(i%3)*.07}><span>0{i+1}</span><h3>{c[0]}</h3><p>{c[1]}</p><b>{c[2]}</b><i aria-hidden="true"/></Reveal>)}</div></section>}
+function CapabilityMatrix(){return <section className="el-capabilities el-capabilities--revamp"><SectionSignal/><Reveal className="el-section-head"><span>The complete platform</span><h2>Every part of the trip.<br/><em>One continuous context.</em></h2><p>Instead of adding another tool, Miraee connects the work your team already has to do.</p></Reveal><div className="el-cap-stack">{allCapabilities.map((c,i)=><Reveal className="el-cap-row" key={c[0]} delay={(i%3)*.05}><span>{String(i+1).padStart(2,"0")}</span><h3>{c[0]}</h3><p>{c[1]}</p><b>{c[2]}</b></Reveal>)}</div></section>}
 
 const differentiators=[["Global content, local experiences","Millions of properties and 500+ airlines, plus hyperlocal experiences, no one else has digitized.","2M+ properties"],["A swarm of specialized agents","Booking, policy, negotiation, rebooking, and expense agents that execute, not just answer.","200+ AI agents"],["Human in the loop","Real support and oversight where it matters, so autonomy never means blind trust.","24/7 human support"]]
 function PlatformDifference(){return <section className="el-differentiators"><Reveal className="el-section-head"><span>The platform</span><h2>Global reach.<br/><em>Personal execution.</em></h2></Reveal><div>{differentiators.map((d,i)=><Reveal key={d[0]} delay={i*.1}><span>0{i+1}</span><h3>{d[0]}</h3><p>{d[1]}</p><b>{d[2]}</b></Reveal>)}</div></section>}
@@ -91,7 +85,6 @@ function PlatformDifference(){return <section className="el-differentiators"><Re
 const experiences=["Festivals and culture","Once-in-a-trip moments","Local performances","Markets and makers","The bleisure weekend","Food and discovery"]
 function Experiences(){return <section className="el-experiences"><Reveal><span className="el-label">Experiences</span><h2>Not bookable<br/>anywhere else.</h2><p>The city after 5pm, the festival, or the family weekend bolted onto a work trip—booked separately from company spend, in one tap.</p></Reveal><div>{experiences.map((x,i)=><Reveal key={x} delay={(i%3)*.07}><span>0{i+1}</span><b>{x}</b></Reveal>)}</div></section>}
 
-const workflow = [["01","Plan","Describe the trip in plain language. Miraee builds an in-policy itinerary in seconds."],["02","Book","Flights, hotels, and cars from wholesale inventory—with real savings in one tap."],["03","Expense","Receipts, reports, and reconciliation handled automatically. No forms, no chasing."],["04","Change","Plans shift and the agent rebooks within policy, before you even ask."]]
 function HowItWorks(){
   const actions=[
     ["01","Plan","Policy-safe itinerary","< 60 sec"],
@@ -99,21 +92,12 @@ function HowItWorks(){
     ["03","Protect","Disruption watched","24 / 7"],
     ["04","Expense","Receipt reconciled","0 forms"]
   ]
-  return <section id="how-it-works" className="el-workflow el-journey-flow">
-    <Reveal className="el-journey-flow__head"><span className="el-label">How it works</span><h2>Ask once.<br/><em>Keep moving.</em></h2><p>Miraee carries one continuous context through the entire journey. You never restart, repeat yourself, or manage the process.</p></Reveal>
-    <Reveal className="el-orbit-flow" delay={.08}>
-      <div className="el-orbit-flow__request"><small>Your request</small><p>“Singapore next Tuesday.<br/>Window seat. Within policy.”</p><span><i/>Sent to Miraee</span></div>
-      <div className="el-orbit-flow__stage">
-        <div className="el-orbit-flow__rings" aria-hidden="true"><i/><i/><i/></div>
-        <motion.div className="el-orbit-flow__pulse" aria-hidden="true" animate={{scale:[.82,1.18],opacity:[.34,0]}} transition={{duration:2.6,repeat:Infinity,ease:"easeOut"}}/>
-        <div className="el-orbit-flow__core"><small>One continuous</small><strong>Context</strong><span><i/>Active</span></div>
-        {actions.map(([n,title,state,metric],i)=><motion.article className={`el-orbit-card el-orbit-card--${i+1}`} key={title} initial={{opacity:0,scale:.9}} whileInView={{opacity:1,scale:1}} viewport={{once:true}} transition={{duration:.7,delay:.28+i*.13,ease}}>
-          <span>{n}</span><small>{title}</small><h3>{state}</h3><b>{metric}</b>
-        </motion.article>)}
-        <div className="el-orbit-flow__memory"><span>Always remembered</span><b>Window seat</b><i/> <b>Company policy</b><i/> <b>SFO home airport</b></div>
-      </div>
-      <motion.figure className="el-orbit-flow__result el-orbit-flow__result--image" initial={{opacity:0,x:22}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{duration:.75,delay:.7,ease}}><img src={flightCardImg} alt="Completed SFO to Singapore journey with flight, hotel, and expenses handled"/></motion.figure>
-      <div className="el-orbit-flow__foot"><span>Ask</span><i/><b>Miraee carries the context</b><i/><span>Arrive</span></div>
+  return <section id="how-it-works" className="el-workflow el-journey-flow el-journey-flow--revamp">
+    <Reveal className="el-journey-flow__head"><span className="el-label">How it works</span><h2>Ask once.<br/><em>Keep moving.</em></h2><p>Miraee carries one continuous context through the journey, from the first request to the final receipt.</p></Reveal>
+    <Reveal className="el-journey-board" delay={.08}>
+      <div className="el-journey-board__request"><small>Your request</small><blockquote>“Singapore next Tuesday. Window seat. Within policy.”</blockquote><div><span>Window seat</span><span>Company policy</span><span>SFO home airport</span></div></div>
+      <div className="el-journey-board__steps">{actions.map(([n,title,state,metric])=><article key={title}><span>{n}</span><small>{title}</small><h3>{state}</h3><b>{metric}</b></article>)}</div>
+      <figure><img src={flightCardImg} alt="Completed SFO to Singapore journey with flight, hotel, and expenses handled" width="1635" height="716" loading="lazy" decoding="async"/></figure>
     </Reveal>
   </section>
 }
@@ -121,14 +105,14 @@ function HowItWorks(){
 const compareRows = [["Natural-language planning","—","Included"],["Live policy decisions","Partial","Included"],["Personal + business travel","—","Included"],["Proactive disruption handling","—","Included"],["Expense prepared automatically","Partial","Included"]]
 function Comparison(){return <section className="el-comparison"><SectionSignal/><Reveal className="el-section-head"><span>The difference</span><h2>Not another booking tool.<br/><em>A new operating model.</em></h2><p>Legacy tools wait for clicks. Miraee understands intent, works within your policy, and completes the trip.</p></Reveal><Reveal><div className="el-compare-table" role="table" aria-label="Miraee compared with a legacy travel management company"><div role="row"><b role="columnheader">Capability</b><b role="columnheader">Legacy TMC</b><b role="columnheader">Miraee</b></div>{compareRows.map(r=><div role="row" key={r[0]}><span role="cell">{r[0]}</span><span role="cell">{r[1]}</span><strong role="cell">{r[2]}</strong></div>)}</div></Reveal></section>}
 
-function BusinessCase(){return <section className="el-business-case"><Reveal className="el-section-head"><span>The business case</span><h2>Loved by employees.<br/><em>Trusted by finance.</em></h2></Reveal><div className="el-business-metrics">{[["01","Savings","20–30%","Wholesale savings, validated apples-to-apples versus incumbents"],["02","Automation","97%","Of the journey managed by the agent, end to end"],["03","One system","1","Platform for business and personal travel alike"]].map((x,i)=><Reveal key={x[0]} delay={i*.1}><div className="el-business-metric__label"><span>{x[0]}</span><b>{x[1]}</b></div><strong>{x[2]}</strong><p>{x[3]}</p><i aria-hidden="true"/></Reveal>)}</div></section>}
+function BusinessCase(){return <section className="el-business-case"><Reveal className="el-section-head"><span>The business case</span><h2>Loved by employees.<br/><em>Trusted by finance.</em></h2></Reveal><div className="el-business-metrics">{[["01","Savings","20–30%","Wholesale savings, validated apples-to-apples versus incumbents"],["02","Automation","97%","Of the journey managed by the agent, end to end"],["03","One system","1","Platform for business and personal travel alike"]].map((x,i)=><Reveal key={x[0]} delay={i*.1}><div className="el-business-metric__label"><span>{x[0]}</span><b>{x[1]}</b></div><strong>{x[2]}</strong><p>{x[3]}</p><i aria-hidden="true"/></Reveal>)}</div><p className="el-business-case__note">Illustrative platform outcomes. Actual savings and automation rates vary by travel program, inventory, policy, and adoption.</p></section>}
 
 function Partners(){const points=[["01","Premium travelers","Access a large, engaged traveler base."],["02","Brand-forward NDC","Merchandise rich content in real time."],["03","The whole traveler","Win business and personal travel alike."]];return <section className="el-partners"><Reveal><span className="el-label">For airlines and suppliers</span><h2>Be part of<br/>your travelers’<br/>best experiences.</h2><p>Miraee puts partner brands in front of premium, high-frequency travelers—for the business trip and the personal one—with content they control.</p><Link className="el-button" to="/book-a-demo">Partner with Miraee <span aria-hidden="true">↗</span></Link></Reveal><div className="el-partner-points">{points.map((x,i)=><Reveal key={x[0]} delay={i*.08}><span>{x[0]}</span><b>{x[1]}</b><p>{x[2]}</p></Reveal>)}</div></section>}
 
 function FeatureVisual({ type }: { type: "book"|"change"|"expense" }) {
-  if(type==="book") return <img className="el-visual-img" src={bookingCardImg} alt="Trip options showing a multi-city flight itinerary with pricing"/>
-  if(type==="change") return <img className="el-visual-img" src={changeCardImg} alt="Modification request showing requested flight changes and expected savings"/>
-  return <img className="el-visual-img" src={expensesCardImg} alt="Trip expenses list with policy flags and auto-reconciled totals"/>
+  if(type==="book") return <img className="el-visual-img" src={bookingCardImg} alt="Trip options showing a multi-city flight itinerary with pricing" width="1424" height="1892" loading="lazy" decoding="async"/>
+  if(type==="change") return <img className="el-visual-img" src={changeCardImg} alt="Modification request showing requested flight changes and expected savings" width="1632" height="1768" loading="lazy" decoding="async"/>
+  return <img className="el-visual-img" src={expensesCardImg} alt="Trip expenses list with policy flags and auto-reconciled totals" width="1412" height="1541" loading="lazy" decoding="async"/>
 }
 
 const features = [
