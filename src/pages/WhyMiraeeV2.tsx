@@ -15,13 +15,13 @@ const shift = [
 ]
 
 const capabilityCompare = [
-    ["Natural-language planning", "—", "—", "Included"],
+    ["Natural-language planning", "Not offered", "Not offered", "Included"],
     ["Policy applied before booking", "Partial", "Partial", "Included"],
-    ["Proactive disruption handling", "Reactive", "—", "Included"],
-    ["Expense prepared automatically", "—", "Partial", "Included"],
-    ["Business and personal travel", "—", "—", "Included"],
+    ["Proactive disruption handling", "Reactive", "Not offered", "Included"],
+    ["Expense prepared automatically", "Not offered", "Partial", "Included"],
+    ["Business and personal travel", "Not offered", "Not offered", "Included"],
     ["24/7 human support", "Included", "Ticket queue", "Included"],
-    ["Agents that complete the work", "—", "—", "Included"],
+    ["Agents that complete the work", "Not offered", "Not offered", "Included"],
 ]
 
 const commercials = [
@@ -35,12 +35,12 @@ const commercials = [
 ]
 
 const hardQuestions: [string, string][] = [
-    ["“We just signed with our TMC.”", "Most travel contracts have a volume commitment rather than an exclusivity clause. Companies commonly run Miraee alongside an existing agreement for a single team or region first, then move the rest at renewal. We will read your contract with you and tell you honestly whether now is the right moment — including when it isn't."],
+    ["“We just signed with our TMC.”", "Most travel contracts have a volume commitment rather than an exclusivity clause. Companies commonly run Miraee alongside an existing agreement for a single team or region first, then move the rest at renewal. We will read your contract with you and tell you honestly whether now is the right moment, including when it isn't."],
     ["“Our travelers won't adopt another tool.”", "They are not being asked to learn a tool. They describe the trip in a sentence and it comes back booked. Adoption resistance in corporate travel comes from tools that demand more of the traveler than the workaround does; Miraee demands less than booking it themselves on a consumer site, which is what most people currently do."],
     ["“We can't let AI book without approval.”", "Then don't. Every boundary is configurable and every default can be tightened, including requiring approval on every booking. Most companies start there and loosen the limits once they can see the audit trail. What agents may and may not do is published in full on our security page, not buried in a contract."],
     ["“Our travel policy is too complex.”", "Complex policy is the argument for this, not against it. Rules that vary by route, grade, entity and trip type are exactly what people fail to follow when policy is a document. Applied at the point of search, complexity costs the traveler nothing because they never see the options that don't apply to them."],
-    ["“What happens when a trip goes badly wrong?”", "A human travel specialist, 24/7, in the same thread, with the full trip context already in front of them — included, not billed per call. Automation that cannot escalate is a trap, which is why escalation is a product decision rather than an exception."],
-    ["“You're new.”", "The software is. The company is not. Miraee is built by Tabhi — a group of 23 travel businesses holding direct supplier contracts, institutionally backed, already serving travelers at global scale. We are not reselling someone else's inventory or hoping to raise the next round."],
+    ["“What happens when a trip goes badly wrong?”", "A human travel specialist is available 24/7 in the same thread, with the full trip context already in front of them. It is included, not billed per call. Automation that cannot escalate is a trap, which is why escalation is a product decision rather than an exception."],
+    ["“You're new.”", "The software is. The company is not. Miraee is built by Tabhi, a group of 23 travel businesses holding direct supplier contracts, institutionally backed, and already serving travelers at global scale. We are not reselling someone else's inventory or hoping to raise the next round."],
 ]
 
 const switching = [
@@ -58,7 +58,7 @@ const notTheAnswer = [
 
 export default function WhyMiraeeV2() {
     useEffect(() => {
-        document.title = "Why Miraee — The Alternative to Legacy Corporate Travel"
+        document.title = "Why Miraee | The Alternative to Legacy Corporate Travel"
         const description="Legacy TMCs charge per transaction. First-generation travel and expense tools move the work to employees. Miraee replaces both with one agent that handles the entire trip.";let meta=document.querySelector<HTMLMetaElement>('meta[name="description"]');if(!meta){meta=document.createElement("meta");meta.name="description";document.head.appendChild(meta)};meta.content=description
     }, [])
     return (

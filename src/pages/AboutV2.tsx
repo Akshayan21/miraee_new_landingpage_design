@@ -7,16 +7,16 @@ import "./HomeV2Light.css"
 import "./SubpagesV2.css"
 
 const groupPlatforms = [
-    ["Mondee", "The agentic AI travel marketplace", "Serves travel experts and organisations worldwide with negotiated air and hotel content — the supply layer Miraee books against."],
+    ["Mondee", "The agentic AI travel marketplace", "Serves travel experts and organisations worldwide with negotiated air and hotel content, which forms the supply layer Miraee books against."],
     ["Miraee", "The employee travel platform", "Plans, books, changes and expenses corporate trips end to end on one continuous context."],
-    ["Abhee", "The hyperlocal experiential marketplace", "Hosts and curators offering immersive local experiences — the content behind Miraee's personal travel."],
+    ["Abhee", "The hyperlocal experiential marketplace", "Hosts and curators offering immersive local experiences that power Miraee's personal travel content."],
 ]
 
 const advantage = [
-    ["Direct supply", "Wholesale contracts and direct supplier connections rather than resold inventory — which is why the rates hold rather than being claimed back later.", "500+ airlines"],
+    ["Direct supply", "Wholesale contracts and direct supplier connections rather than resold inventory. That is why the rates hold rather than being claimed back later.", "500+ airlines"],
     ["Global content", "Millions of properties across every market your teams travel to, in one place.", "2M+ properties"],
     ["Volume", "The group's existing traveler base is what makes those rates possible for a company your size.", "125M+ reached"],
-    ["Experience content", "Hyperlocal experiences no other corporate channel carries — because a sister company digitized them.", "Abhee network"],
+    ["Experience content", "Hyperlocal experiences no other corporate channel carries because a sister company digitized them.", "Abhee network"],
     ["Financial stability", "Institutional backing, so the platform running your travel program will still be here next year.", "TCW · Morgan Stanley"],
     ["Shared AI infrastructure", "Agent architecture built and proven across the group, not a first attempt.", "One engineering group"],
 ]
@@ -45,8 +45,8 @@ const orgSchema = {
 
 export default function AboutV2() {
     useEffect(() => {
-        document.title = "About Miraee — Built by Tabhi, the AI-Native Travel Group"
-        const description="Miraee is built by Tabhi — a travel group of 23 companies with direct supplier contracts, institutional backing and a marketplace already serving travelers at global scale.";let meta=document.querySelector<HTMLMetaElement>('meta[name="description"]');if(!meta){meta=document.createElement("meta");meta.name="description";document.head.appendChild(meta)};meta.content=description
+        document.title = "About Miraee | Built by Tabhi, the AI-Native Travel Group"
+        const description="Miraee is built by Tabhi, a travel group of 23 companies with direct supplier contracts, institutional backing and a marketplace already serving travelers at global scale.";let meta=document.querySelector<HTMLMetaElement>('meta[name="description"]');if(!meta){meta=document.createElement("meta");meta.name="description";document.head.appendChild(meta)};meta.content=description
     }, [])
     return (
         <div className="m-site">
@@ -57,7 +57,7 @@ export default function AboutV2() {
                     <Reveal className="m-hero__copy">
                         <p className="m-eyebrow">THE COMPANY</p>
                         <h1 id="about-hero-title">The Agentic Core</h1>
-                        <p className="m-lede">Miraee is built by Tabhi — a travel group with direct supplier contracts, institutional backing, and a marketplace already moving travelers at global scale. The software is new. The supply, the scale and the balance sheet are not.</p>
+                        <p className="m-lede">Miraee is built by Tabhi, a travel group with direct supplier contracts, institutional backing, and a marketplace already moving travelers at global scale. The software is new. The supply, the scale and the balance sheet are not.</p>
                         <div className="m-actions">
                             <Link to="/book-a-demo">See Miraee live <span aria-hidden="true">↗</span></Link>
                             <a href="#tabhi">Meet the group <span aria-hidden="true">↓</span></a>
@@ -76,7 +76,7 @@ export default function AboutV2() {
                         <div className="m-story__text">
                             <p className="m-eyebrow">THE ORIGIN</p>
                             <h2 id="origin-title">We ran the trips.<br />We saw the handoffs.</h2>
-                            <p>Tabhi has been moving travelers for years — through a marketplace, through travel experts, through contracts held directly with airlines and hotels. Corporate travel was the one journey that never got simpler.</p>
+                            <p>Tabhi has been moving travelers for years through a marketplace, travel experts, and contracts held directly with airlines and hotels. Corporate travel was the one journey that never got simpler.</p>
                             <p>We didn't set out to build another booking tool. We had already seen what happens when you connect one to an expense tool and a support desk.</p>
                         </div>
                         <div className="m-story__panel"><span className="m-story__mark">5 owners.<br />4 handoffs.</span></div>

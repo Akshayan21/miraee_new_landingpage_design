@@ -8,23 +8,23 @@ import "./SubpagesV2.css"
 const contextTrio = [
     ["01", "Traveler context", "Preferences, loyalty programs, seat and cabin history, dietary and access needs, the routes they fly most. Asked once. Applied always."],
     ["02", "Company context", "Policy rules, budget owner, approval chain, preferred suppliers, entity and cost centre. Set once. Enforced everywhere."],
-    ["03", "Trip state", "Every search, decision, booking, change, payment and receipt — live, in one place, for the whole life of the trip."],
+    ["03", "Trip state", "Every search, decision, booking, change, payment and receipt stays live in one place for the whole life of the trip."],
 ] as const
 
 const capabilities = [
     {
         id: "plan", num: "01", title: "Describe the trip. Get the itinerary.",
         trigger: "A sentence. “Singapore next Tuesday, back Friday, window seat, within policy.”",
-        does: "Reads the intent, checks the calendar, searches live inventory, applies policy before results are shown, and returns one recommended journey with alternates — each labelled in-policy or not.",
+        does: "Reads the intent, checks the calendar, searches live inventory, applies policy before results are shown, and returns one recommended journey with alternates. Each option is labelled in-policy or not.",
         control: "Policy rules by route, grade and trip type. Approval thresholds. Preferred suppliers. Which trips need sign-off before booking.",
         proof: "< 60s to a policy-safe itinerary",
     },
     {
         id: "book", num: "02", title: "One approval. Everything booked together.",
-        trigger: "Approval of the recommended journey — or automatic booking, if the trip sits inside limits you have already set.",
+        trigger: "Approval of the recommended journey, or automatic booking if the trip sits inside limits you have already set.",
         does: "Books flight, hotel, rail and car as one trip rather than four transactions. Applies wholesale rates, issues a virtual card for the booking, and syncs the itinerary to the traveler's calendar.",
         control: "Payment method and virtual card rules. Entity and cost centre allocation. What may be booked without human review.",
-        proof: "20–30% below published fares*",
+        proof: "20-30% below published fares*",
     },
     {
         id: "expense", num: "03", title: "The report writes itself.",
@@ -36,14 +36,14 @@ const capabilities = [
     {
         id: "change", num: "04", title: "The trip changes. You get one decision.",
         trigger: "A cancellation, a delay, a schedule change, or a message from the traveler.",
-        does: "Detects the disruption — often before the airline notifies — finds alternatives, prices each against cost and policy, and brings back one clear recommendation. Inside pre-agreed limits, it simply rebooks and tells you.",
+        does: "Detects the disruption, often before the airline notifies you, finds alternatives, prices each against cost and policy, and brings back one clear recommendation. Inside pre-agreed limits, it simply rebooks and tells you.",
         control: "What the agent may rebook without asking. Spend ceilings for autonomous changes. Who gets notified, and when.",
         proof: "97% of the journey agent-managed",
     },
     {
         id: "support", num: "05", title: "A real person, in the same thread.",
         trigger: "Anything the traveler would rather hand to a human.",
-        does: "Escalates to a travel specialist with the full trip context already attached — every search, booking, policy check and change. The traveler never re-explains the trip.",
+        does: "Escalates to a travel specialist with the full trip context already attached, including every search, booking, policy check and change. The traveler never re-explains the trip.",
         control: "Escalation rules. Which trip types, travelers or regions always route to a human first.",
         proof: "24/7 human support",
     },
@@ -52,14 +52,14 @@ const capabilities = [
         trigger: "A personal trip request, in the same conversation as the work ones.",
         does: "Plans and books it on the traveler's own card, with corporate rates applied where your agreements permit. Company money is never touched and personal trips never enter company reporting.",
         control: "Whether personal travel is enabled at all, and which negotiated rates extend to it.",
-        proof: "1 agent, two ledgers",
+        proof: "1 agent, 2 ledgers",
     },
 ] as const
 
 const workflow = [
     ["UNDERSTANDS INTENT", "One recommended journey, two alternates, the policy status of each.", "< 60 sec"],
     ["COMPLETES THE WORK", "One approval. Then a confirmed trip in the calendar.", "One approval"],
-    ["STAYS AHEAD", "A notification that it is handled — or one decision if it genuinely needs you.", "24/7"],
+    ["STAYS AHEAD", "A notification that it is handled, or one decision if it genuinely needs you.", "24/7"],
     ["CLOSES THE LOOP", "Nothing. That is the point.", "Zero forms"],
 ] as const
 
@@ -75,8 +75,8 @@ const agents = [
 const foundation = [
     ["Global content", "Millions of properties and 500+ airlines, sourced through direct connections and wholesale agreements rather than resold inventory.", "2M+ properties"],
     ["Wholesale economics", "Negotiated rates that travel with the trip, applied automatically at booking rather than claimed back later.", "500+ airlines"],
-    ["Reach", "The Tabhi network already serves a traveler base at global scale — that volume is what makes the rates possible.", "125M+ reached"],
-    ["Local experiences", "Festivals, performances, markets and makers — content that no corporate channel has ever carried.", "Hyperlocal"],
+    ["Reach", "The Tabhi network already serves a traveler base at global scale. That volume is what makes the rates possible.", "125M+ reached"],
+    ["Local experiences", "Festivals, performances, markets and makers, with content that no corporate channel has ever carried.", "Hyperlocal"],
 ] as const
 
 const integrations = [
@@ -120,7 +120,7 @@ export default function ProductV2() {
                     <Reveal className="m-hero__copy">
                         <p className="m-eyebrow">THE PLATFORM</p>
                         <h1 id="product-hero-title">One system.<br /><em>The entire journey.</em></h1>
-                        <p className="m-lede">Six capabilities running on one continuous context. Miraee doesn't pass your trip between tools — it carries it.</p>
+                        <p className="m-lede">Six capabilities running on one continuous context. Miraee doesn't pass your trip between tools. It carries it.</p>
                         <div className="m-actions">
                             <Link to="/book-a-demo">See Miraee live <span aria-hidden="true">↗</span></Link>
                             <a href="#capabilities">Jump to a capability <span aria-hidden="true">↓</span></a>
@@ -133,7 +133,7 @@ export default function ProductV2() {
                     <Reveal className="m-section__head">
                         <p className="m-eyebrow">ONE CONTINUOUS CONTEXT</p>
                         <h2 id="context-title">The context never resets.</h2>
-                        <p>Integrated tools pass records to each other. Miraee holds a single thread — so the agent that plans your trip is the agent that rebooks it, and the agent that closes the expense.</p>
+                        <p>Integrated tools pass records to each other. Miraee holds a single thread, so the agent that plans your trip also rebooks it and closes the expense.</p>
                     </Reveal>
                     <div className="m-pain-grid">
                         {contextTrio.map(([n, label, body]) => (
@@ -152,7 +152,7 @@ export default function ProductV2() {
                     <Reveal className="m-section__head">
                         <p className="m-eyebrow">SIX CAPABILITIES</p>
                         <h2 id="capabilities-title">Each one owns a job. All read the same trip.</h2>
-                        <p>What triggers it, what the agent does, what you still control, and the proof point — the control story is not optional.</p>
+                        <p>What triggers it, what the agent does, what you still control, and the proof point. The control story is not optional.</p>
                     </Reveal>
                     <div className="m-capabilities">
                         {capabilities.map((c, i) => (
@@ -171,9 +171,9 @@ export default function ProductV2() {
                         ))}
                     </div>
                     <Reveal className="m-callout" delay={.1}>
-                        <p className="m-eyebrow">THE 20–30% FIGURE</p>
+                        <p className="m-eyebrow">THE 20-30% FIGURE</p>
                         <h3>Savings, defined once</h3>
-                        <p>20–30% below published fares on comparable itineraries, achieved through wholesale rates and direct supplier connections. Every appearance of this figure across the site carries the same definition.</p>
+                        <p>20-30% below published fares on comparable itineraries, achieved through wholesale rates and direct supplier connections. Every appearance of this figure across the site carries the same definition.</p>
                         <p className="m-note">* Compared against publicly available fares for the same route, date, cabin and booking window. Individual results vary by route, lead time and travel mix.</p>
                     </Reveal>
                 </section>
@@ -205,7 +205,7 @@ export default function ProductV2() {
                     <Reveal className="m-section__head">
                         <p className="m-eyebrow">THE ARCHITECTURE</p>
                         <h2 id="agents-title">Not one agent. A workforce.</h2>
-                        <p>Specialized agents, each owning a job, all reading the same thread. They don't answer questions — they complete work.</p>
+                        <p>Specialized agents, each owning a job, all reading the same thread. They don't answer questions. They complete work.</p>
                     </Reveal>
                     <Reveal>
                         <EditorialRows caption="Miraee's specialized agents" headers={["Agent", "What it owns"]} rows={agents} columns={2} />
@@ -232,7 +232,7 @@ export default function ProductV2() {
                     <Reveal className="m-section__head">
                         <p className="m-eyebrow">CONNECTED</p>
                         <h2 id="integrations-title">Fits the stack you already run.</h2>
-                        <p>Identity, people, finance and work tools — connected once, then quiet.</p>
+                        <p>Identity, people, finance and work tools, connected once and then quiet.</p>
                     </Reveal>
                     <Reveal><EditorialRows caption="Integrations" headers={["Category", "Connects to", "What it does"]} rows={integrations} columns={2} /></Reveal>
                     <Reveal className="m-callout"><p className="m-eyebrow">AGENTIC INTEROPERABILITY</p><h3>Bring Miraee into the tools your teams already use.</h3><p>Ask for a trip status, approve a booking, or pull a spend report without leaving the assistant you already have open. Everything in one chat, just command.</p></Reveal>
