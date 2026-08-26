@@ -1,7 +1,9 @@
 import { motion, AnimatePresence, useInView } from "framer-motion"
+import teamImg from "../assets/miraee-team.webp"
 import { useRef, useState } from "react"
 import { EO } from "../animations/easings"
 import { filesToAttachments, submitForm, validateAttachments } from "../lib/formSubmission"
+import { usePageMeta } from "../hooks/usePageMeta"
 import {
     T, F, SiteNav, SiteFooter, Field, TextInput, TextArea, Select, SectionHead,
     TICKET_ENDPOINT, useVW,
@@ -45,6 +47,7 @@ const CURRENCIES = ["USD", "EUR", "GBP", "INR", "AED", "SGD", "AUD", "JPY", "Oth
  * @framerSupportedLayoutHeight auto
  */
 export default function MiraeeSupportPage(props: { style?: React.CSSProperties }) {
+    usePageMeta("Miraee Support — Raise a Travel or Expense Request", "Contact Miraee support for booking, disruption, payment, expense, account and technical help.")
     const vw = useVW()
     const isNarrow = vw < 1200
     const [formKey, setFormKey] = useState(0)
@@ -94,7 +97,9 @@ export default function MiraeeSupportPage(props: { style?: React.CSSProperties }
     }
     return (
         <div className="form-page form-page--support" style={{ position: "relative", width: "100%", minHeight: "100vh", background: T.bg, fontFamily: F, ...props.style }}>
+            <a className="legacy-skip" href="#main">Skip to content</a>
             <SiteNav />
+            <main id="main">
             <div style={{ maxWidth: 1440, margin: "0 auto", padding: isNarrow ? "100px 20px 64px" : "116px 48px 72px" }}>
                 <div style={{ display: "flex", flexDirection: isNarrow ? "column" : "row", gap: isNarrow ? 48 : 72, alignItems: "flex-start" }}>
                     {/* Form column */}
@@ -255,7 +260,7 @@ export default function MiraeeSupportPage(props: { style?: React.CSSProperties }
                             <motion.div initial={{ clipPath: "inset(0% 0% 100% 0%)" }} animate={mediaInView ? { clipPath: "inset(0% 0% 0% 0%)" } : {}} transition={{ duration: 1.1, ease: EO }}
                                 onMouseEnter={() => setImgHov(true)} onMouseLeave={() => setImgHov(false)}
                                 style={{ position: "absolute", inset: 0, borderRadius: isNarrow ? "22px 22px 22px 48px" : "40px 40px 40px 120px", overflow: "hidden", willChange: "clip-path" }}>
-                                <motion.img src="https://framerusercontent.com/images/XJ0UIQaI8WpnMrdQZSnYa3QOE3w.jpg" alt="Traveler in the city waiting for his ride"
+                                <motion.img src={teamImg} alt="Travel support team collaborating on a customer request"
                                     initial={{ scale: 1.18 }} animate={mediaInView ? { scale: imgHov ? 1.05 : 1 } : {}} transition={{ duration: 1.1, ease: EO }}
                                     style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.22) 45%, transparent 65%)" }} />
@@ -284,6 +289,7 @@ export default function MiraeeSupportPage(props: { style?: React.CSSProperties }
                     </div>
                 </div>
             </div>
+            </main>
             <SiteFooter />
         </div>
     )

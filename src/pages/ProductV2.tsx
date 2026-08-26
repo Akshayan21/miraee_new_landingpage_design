@@ -86,6 +86,12 @@ const integrations = [
     ["Work", "Calendar, email, chat", "Itineraries and changes appear where people already work."],
 ]
 
+const generations = [
+    ["Legacy TMC", "Expert humans and negotiated rates", "Offline, slow and priced per transaction"],
+    ["First-generation T&E", "Self-serve booking and digital expense", "The work moved to the traveler across four separate stages"],
+    ["Agentic", "One agent carries context from request to reconciliation", "The stages collapse into one continuous journey"],
+]
+
 const faqs: [string, string][] = [
     ["What is Miraee?", "Miraee is an AI-native employee travel platform that plans, books, changes and expenses business trips end to end. Rather than connecting a booking tool to an expense tool, Miraee runs the entire journey on one continuous context, so the same agent that plans a trip also rebooks it during disruption and closes the expense afterwards."],
     ["How is Miraee different from a travel management company?", "A travel management company processes bookings and charges per transaction, with changes and support billed separately. Miraee is software: it understands a request in natural language, applies company policy before showing options, books the whole trip as one item, and handles changes and expenses automatically. Human travel specialists are included rather than charged per call."],
@@ -100,7 +106,11 @@ const faqs: [string, string][] = [
 ]
 
 export default function ProductV2() {
-    useEffect(() => { document.title = "Miraee Product — One Agent for the Entire Business Trip" }, [])
+    useEffect(() => {
+        document.title = "One Agent for the Entire Business Trip"
+        const description = "Miraee unifies corporate travel and expense management, live travel spend analytics, and outcomes into one AI-native platform, so the systems that used to fight each other finally work as one."
+        let meta=document.querySelector<HTMLMetaElement>('meta[name="description"]'); if(!meta){meta=document.createElement("meta");meta.name="description";document.head.appendChild(meta)};meta.content=description
+    }, [])
     return (
         <div className="m-site">
             <a className="m-skip" href="#main">Skip to content</a>
@@ -201,7 +211,7 @@ export default function ProductV2() {
                         <EditorialRows caption="Miraee's specialized agents" headers={["Agent", "What it owns"]} rows={agents} columns={2} />
                     </Reveal>
                     <Reveal delay={.08} className="m-callout">
-                        <p className="m-agent-count"><strong>200+</strong><span>specialized agents in production</span></p>
+                        <p className="m-agent-count"><strong>6</strong><span>specialized agent roles working on one shared context</span></p>
                         <p className="m-note">An agent is a bounded, permissioned worker with one job, its own tools, and a written limit on what it may do alone.</p>
                     </Reveal>
                 </section>
@@ -225,6 +235,18 @@ export default function ProductV2() {
                         <p>Identity, people, finance and work tools — connected once, then quiet.</p>
                     </Reveal>
                     <Reveal><EditorialRows caption="Integrations" headers={["Category", "Connects to", "What it does"]} rows={integrations} columns={2} /></Reveal>
+                    <Reveal className="m-callout"><p className="m-eyebrow">AGENTIC INTEROPERABILITY</p><h3>Bring Miraee into the tools your teams already use.</h3><p>Ask for a trip status, approve a booking, or pull a spend report without leaving the assistant you already have open. Everything in one chat, just command.</p></Reveal>
+                </section>
+
+                <section className="m-section m-tint-band" aria-labelledby="generation-title">
+                    <Reveal className="m-section__head"><p className="m-eyebrow">MIRAEE VS LEGACY TMCS</p><h2 id="generation-title">Built different from the tools you're used to.</h2><p>Each generation removed friction. Miraee removes the handoffs.</p></Reveal>
+                    <Reveal><EditorialRows caption="Travel technology generations" headers={["Generation", "What it solved", "What it left behind"]} rows={generations} columns={2}/></Reveal>
+                    <Reveal><p className="m-note">The new generation of travel planning. Powered by agentic AI.</p></Reveal>
+                </section>
+
+                <section className="m-section" aria-labelledby="surfaces-title">
+                    <Reveal className="m-section__head"><p className="m-eyebrow">ONE PLATFORM · TWO VIEWS</p><h2 id="surfaces-title">A console for the program. An app for the trip.</h2></Reveal>
+                    <Reveal className="m-splitfacts"><div><h3>Web console</h3><p>For finance and travel teams: policy, approvals, live spend, duty of care, reporting and the supplier program.</p></div><div><h3>Mobile app</h3><p>For travelers: ask, book, change, support, receipts, personal trips and the live itinerary.</p></div></Reveal>
                 </section>
 
                 <section className="m-section" aria-labelledby="faq-title">
@@ -238,8 +260,8 @@ export default function ProductV2() {
                 <section className="m-cta">
                     <Reveal>
                         <p className="m-eyebrow">See the agent in action</p>
-                        <h2>See it, handle<br />a real trip, live.</h2>
-                        <p>Bring a real trip. We’ll show you how Miraee handles it in twenty minutes.</p>
+                        <h2>Bring a real trip.</h2>
+                        <p>Twenty minutes. Your route, your policy, your edge cases. We'll run it live.</p>
                         <Link to="/book-a-demo">Book your demo <span aria-hidden="true">↗</span></Link>
                     </Reveal>
                 </section>

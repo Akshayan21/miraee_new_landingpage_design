@@ -7,6 +7,7 @@ import {
 } from "../components/LegalFormKit"
 import optOutImage from "../assets/atribution-opt_out.webp"
 import { submitForm } from "../lib/formSubmission"
+import { usePageMeta } from "../hooks/usePageMeta"
 
 const ELECTION_OPTIONS = [
     "I am opting out of the arbitration provisions applicable when I created my Miraee account.",
@@ -22,6 +23,7 @@ const ACK_ITEMS = [
 ]
 
 export default function ArbitrationOptOutPage(props: { style?: React.CSSProperties }) {
+    usePageMeta("Miraee Arbitration Opt Out Form", "Submit a timely request to opt out of applicable arbitration provisions in the Miraee Terms of Use.")
     const vw = useVW()
     const isNarrow = vw < 1200
     const [formKey, setFormKey] = useState(0)
@@ -58,7 +60,9 @@ export default function ArbitrationOptOutPage(props: { style?: React.CSSProperti
     }
     return (
         <div className="form-page form-page--legal-form" style={{ position: "relative", width: "100%", minHeight: "100vh", background: T.bg, fontFamily: F, ...props.style }}>
+            <a className="legacy-skip" href="#main">Skip to content</a>
             <SiteNav />
+            <main id="main">
             <div style={{ maxWidth: 1440, margin: "0 auto", padding: isNarrow ? "100px 20px 64px" : "116px 48px 72px" }}>
                 <div style={{ display: "flex", flexDirection: isNarrow ? "column" : "row", gap: isNarrow ? 48 : 72, alignItems: "flex-start" }}>
                     {/* Form column */}
@@ -152,6 +156,7 @@ export default function ArbitrationOptOutPage(props: { style?: React.CSSProperti
                     />
                 </div>
             </div>
+            </main>
             <SiteFooter />
         </div>
     )

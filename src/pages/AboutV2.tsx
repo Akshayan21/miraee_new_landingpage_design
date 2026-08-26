@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { SiteFooter } from "../components/LegalFormKit"
 import { Reveal, V2Nav, EditorialRows } from "../components/V2Kit"
+import companyImg from "../assets/miraee-about-company.webp"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
 
@@ -43,7 +44,10 @@ const orgSchema = {
 }
 
 export default function AboutV2() {
-    useEffect(() => { document.title = "About Miraee — Built by Tabhi, the AI-First Travel Group" }, [])
+    useEffect(() => {
+        document.title = "About Miraee — Built by Tabhi, the AI-Native Travel Group"
+        const description="Miraee is built by Tabhi — a travel group of 23 companies with direct supplier contracts, institutional backing and a marketplace already serving travelers at global scale.";let meta=document.querySelector<HTMLMetaElement>('meta[name="description"]');if(!meta){meta=document.createElement("meta");meta.name="description";document.head.appendChild(meta)};meta.content=description
+    }, [])
     return (
         <div className="m-site">
             <a className="m-skip" href="#main">Skip to content</a>
@@ -52,7 +56,7 @@ export default function AboutV2() {
                 <section className="m-hero" aria-labelledby="about-hero-title">
                     <Reveal className="m-hero__copy">
                         <p className="m-eyebrow">THE COMPANY</p>
-                        <h1 id="about-hero-title">New platform.<br /><em>Not a new company.</em></h1>
+                        <h1 id="about-hero-title">The Agentic Core</h1>
                         <p className="m-lede">Miraee is built by Tabhi — a travel group with direct supplier contracts, institutional backing, and a marketplace already moving travelers at global scale. The software is new. The supply, the scale and the balance sheet are not.</p>
                         <div className="m-actions">
                             <Link to="/book-a-demo">See Miraee live <span aria-hidden="true">↗</span></Link>
@@ -61,6 +65,9 @@ export default function AboutV2() {
                         <div className="m-trust-strip">
                             {["23 companies", "3 AI platforms", "500+ airlines", "2M+ properties", "125M+ travelers reached"].map(x => <span key={x}>{x}</span>)}
                         </div>
+                    </Reveal>
+                    <Reveal className="m-hero__visual" delay={.1}>
+                        <img className="m-hero__photo" src={companyImg} alt="Miraee company leaders walking through their collaborative workspace" width="1536" height="1024" fetchPriority="high" />
                     </Reveal>
                 </section>
 
@@ -164,9 +171,9 @@ export default function AboutV2() {
 
                 <section className="m-cta">
                     <Reveal>
-                        <p className="m-eyebrow">See the agent in action</p>
-                        <h2>See it, handle<br />a real trip, live.</h2>
-                        <p>Bring a real trip. We’ll show you how Miraee handles it in twenty minutes.</p>
+                        <p className="m-eyebrow">SEE THE AGENT IN ACTION</p>
+                        <h2>Bring a real trip.</h2>
+                        <p>Twenty minutes. Your route, your policy, your edge cases. We'll run it live.</p>
                         <Link to="/book-a-demo">Book your demo <span aria-hidden="true">↗</span></Link>
                     </Reveal>
                 </section>

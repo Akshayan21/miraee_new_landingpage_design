@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { EO } from "../animations/easings"
 import { T, F, SiteNav, SiteFooter, useVW } from "../components/LegalFormKit"
+import { usePageMeta } from "../hooks/usePageMeta"
 
 
 const pStyle: React.CSSProperties = { fontSize: 15, fontFamily: F, lineHeight: 1.75, color: T.muted, margin: "0 0 16px" }
@@ -338,10 +339,13 @@ function Section({ s }: { s: typeof SECTIONS[0] }) {
  * @framerSupportedLayoutHeight auto
  */
 export default function MiraeePrivacyPage(props: { style?: React.CSSProperties }) {
+    usePageMeta("Miraee Privacy Policy", "How Miraee collects, uses, shares, retains and protects personal information across its travel platform and services.")
     const isNarrow = useVW() < 1024
     return (
         <div className="legal-page" style={{ position: "relative", width: "100%", minHeight: "100vh", background: T.bg, fontFamily: F, ...props.style }}>
+            <a className="legacy-skip" href="#main">Skip to content</a>
             <SiteNav />
+            <main id="main">
             {/* Document */}
             <div style={{ maxWidth: 880, margin: "0 auto", padding: isNarrow ? "110px 20px 72px" : "140px 24px 96px" }}>
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EO }} style={{ marginBottom: 40 }}>
@@ -355,6 +359,10 @@ export default function MiraeePrivacyPage(props: { style?: React.CSSProperties }
                     <p style={pStyle}>Miraee provides an AI-native travel platform that helps companies, organizations, and individual users plan, search, book, modify, support, manage, optimize, approve, and reconcile travel and related workflows. The Services may include agentic artificial intelligence systems that can interpret instructions, retrieve information, make recommendations, coordinate workflows, interact with third-party systems, and take real-world actions within defined parameters. For example, Miraee’s AI agents may help book travel, modify itineraries, initiate approvals, surface policy exceptions, assist with support requests, process expense-related workflows, or escalate matters for human review.</p>
                     <p style={{ ...pStyle, margin: 0 }}>This Privacy Policy is intended to be read together with our Terms of Use, customer agreements, data processing addendum, product documentation, acceptable use terms, and any additional notices presented in the Services. For enterprise Customers, certain processing may be controlled by the Customer, such as an employer, sponsor, company, or other organization that makes the Services available to its users.</p>
                 </motion.div>
+                <details className="legal-toc">
+                    <summary>On this page</summary>
+                    <nav aria-label="Privacy sections">{SECTIONS.map(s => <a key={s.id} href={`#${s.id}`}>{s.num}. {s.title}</a>)}</nav>
+                </details>
                 {SECTIONS.map(s => <Section key={s.id} s={s} />)}
             </div>
             {/* CTA band */}
@@ -370,6 +378,7 @@ export default function MiraeePrivacyPage(props: { style?: React.CSSProperties }
                     <p style={{ fontSize: 12.5, fontFamily: F, color: "rgba(251,246,242,0.45)", margin: "28px 0 0" }}>© 2026 Miraee, a Tabhi company · <a href="mailto:privacy@miraee.ai" style={{ color: "rgba(251,246,242,0.7)", textDecoration: "none" }}>privacy@miraee.ai</a></p>
                 </div>
             </div>
+            </main>
             <SiteFooter />
         </div>
     )

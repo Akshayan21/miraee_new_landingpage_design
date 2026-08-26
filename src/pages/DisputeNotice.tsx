@@ -7,6 +7,7 @@ import {
 } from "../components/LegalFormKit"
 import disputeResolutionImg from "../assets/dispute_resolution.webp"
 import { filesToAttachments, submitForm, validateAttachments } from "../lib/formSubmission"
+import { usePageMeta } from "../hooks/usePageMeta"
 
 const CONFERENCE_OPTIONS = [
     "I request an individual settlement conference.",
@@ -29,6 +30,7 @@ const ACK_ITEMS = [
 ]
 
 export default function DisputeNoticePage(props: { style?: React.CSSProperties }) {
+    usePageMeta("Miraee Informal Dispute Resolution Notice", "Submit an informal dispute resolution notice to Miraee before arbitration or other formal proceedings.")
     const vw = useVW()
     const isNarrow = vw < 1200
     const [formKey, setFormKey] = useState(0)
@@ -70,7 +72,9 @@ export default function DisputeNoticePage(props: { style?: React.CSSProperties }
     }
     return (
         <div className="form-page form-page--legal-form" style={{ position: "relative", width: "100%", minHeight: "100vh", background: T.bg, fontFamily: F, ...props.style }}>
+            <a className="legacy-skip" href="#main">Skip to content</a>
             <SiteNav />
+            <main id="main">
             <div style={{ maxWidth: 1440, margin: "0 auto", padding: isNarrow ? "100px 20px 64px" : "116px 48px 72px" }}>
                 <div style={{ display: "flex", flexDirection: isNarrow ? "column" : "row", gap: isNarrow ? 48 : 72, alignItems: "flex-start" }}>
                     {/* Form column */}
@@ -233,6 +237,7 @@ export default function DisputeNoticePage(props: { style?: React.CSSProperties }
                     />
                 </div>
             </div>
+            </main>
             <SiteFooter />
         </div>
     )

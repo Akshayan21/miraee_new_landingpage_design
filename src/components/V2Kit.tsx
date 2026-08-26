@@ -60,6 +60,18 @@ export function V2Nav({ active }: { active?: string }) {
         return () => window.removeEventListener("resize", onResize)
     }, [])
 
+    useEffect(() => {
+        if (!open) return
+        const previousOverflow = document.body.style.overflow
+        const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false) }
+        document.body.style.overflow = "hidden"
+        window.addEventListener("keydown", onKeyDown)
+        return () => {
+            document.body.style.overflow = previousOverflow
+            window.removeEventListener("keydown", onKeyDown)
+        }
+    }, [open])
+
     return (
         <>
             <header className={"m-nav" + (scrolled ? " is-scrolled" : "")}>
@@ -84,14 +96,23 @@ export function V2Nav({ active }: { active?: string }) {
             </header>
             <AnimatePresence>
                 {isCompact && open && (
-                    <motion.div id="m-nav-mobile" className="m-nav__mobile" key="m-nav-mobile"
-                        initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: .22, ease }}>
-                        <VersionSwitch className="m-nav__version--mobile" />
-                        {NAV_LINKS.map(([label, href]) => (
-                            <Link key={href} to={href} aria-current={active === href ? "page" : undefined} onClick={() => setOpen(false)}>{label}</Link>
-                        ))}
-                        <a href="https://app.miraee.ai" onClick={() => setOpen(false)}>Sign in</a>
-                    </motion.div>
+                    <>
+                        <motion.button type="button" className="m-nav__backdrop" aria-label="Close menu" onClick={() => setOpen(false)}
+                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .2 }} />
+                        <motion.nav id="m-nav-mobile" className="m-nav__mobile" key="m-nav-mobile" aria-label="Mobile navigation"
+                            initial={{ opacity: 0, y: -12, scale: .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8, scale: .99 }} transition={{ duration: .24, ease }}>
+                            <div className="m-nav__mobile-head"><span>Navigate</span><VersionSwitch className="m-nav__version--mobile" /></div>
+                            <div className="m-nav__mobile-links">
+                                {NAV_LINKS.map(([label, href], index) => (
+                                    <Link key={href} to={href} aria-current={active === href ? "page" : undefined} onClick={() => setOpen(false)}><span>0{index + 1}</span>{label}<b aria-hidden="true">↗</b></Link>
+                                ))}
+                            </div>
+                            <div className="m-nav__mobile-foot">
+                                <a href="https://app.miraee.ai" onClick={() => setOpen(false)}>Sign in <span aria-hidden="true">↗</span></a>
+                                <Link to="/book-a-demo" onClick={() => setOpen(false)}>Book a demo</Link>
+                            </div>
+                        </motion.nav>
+                    </>
                 )}
             </AnimatePresence>
         </>

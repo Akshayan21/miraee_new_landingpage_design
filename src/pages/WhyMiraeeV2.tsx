@@ -57,7 +57,10 @@ const notTheAnswer = [
 ]
 
 export default function WhyMiraeeV2() {
-    useEffect(() => { document.title = "Why Miraee — The Alternative to Legacy Corporate Travel" }, [])
+    useEffect(() => {
+        document.title = "Why Miraee — The Alternative to Legacy Corporate Travel"
+        const description="Legacy TMCs charge per transaction. First-generation travel and expense tools move the work to employees. Miraee replaces both with one agent that handles the entire trip.";let meta=document.querySelector<HTMLMetaElement>('meta[name="description"]');if(!meta){meta=document.createElement("meta");meta.name="description";document.head.appendChild(meta)};meta.content=description
+    }, [])
     return (
         <div className="m-site">
             <a className="m-skip" href="#main">Skip to content</a>
@@ -138,9 +141,9 @@ export default function WhyMiraeeV2() {
 
                 <section className="m-cta">
                     <Reveal>
-                        <p className="m-eyebrow">See the agent in action</p>
-                        <h2>See it, handle<br />a real trip, live.</h2>
-                        <p>Bring a real trip. We’ll show you how Miraee handles it in twenty minutes.</p>
+                        <p className="m-eyebrow">SEE THE AGENT IN ACTION</p>
+                        <h2>Bring a real trip.</h2>
+                        <p>Twenty minutes. Your route, your policy, your edge cases. We'll run it live.</p>
                         <Link to="/book-a-demo">Book your demo <span aria-hidden="true">↗</span></Link>
                     </Reveal>
                 </section>
