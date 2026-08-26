@@ -471,6 +471,6 @@
 /* Pages without a photographic hero retain the original full-width editorial grid. */
 .m-site:not(:has(.m-hero__photo)) .m-hero__copy{grid-column:1/-1;display:grid}.m-site:not(:has(.m-hero__photo)) .m-hero .m-eyebrow{grid-column:1/6}.m-site:not(:has(.m-hero__photo)) .m-hero h1{grid-column:1/9;max-width:940px}.m-site:not(:has(.m-hero__photo)) .m-hero .m-lede{grid-column:1/5}.m-site:not(:has(.m-hero__photo)) .m-hero .m-actions{grid-column:5/9}
 .m-site .m-eyebrow{font-size:12px}
-.m-home .m-eyebrow{display:none}
+.m-site .m-eyebrow{display:none}
 .m-site .m-step small,.m-site .m-role>small,.m-site .m-security__marks small,.m-site .m-table__head b{font-size:12px}
 .m-site .m-handoffs__owners small,.m-site .m-handoffs__owners em,.m-site .m-handoffs__trip small{font-size:11.5px}

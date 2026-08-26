@@ -51,8 +51,6 @@ function Hero() {
   </motion.div></section>
 }
 
-const proofStats = [["2M+","Properties"],["500+","Airlines"],["200+","AI agents"],["125M+","Travelers reached"],["20–30%","Wholesale savings"],["24/7","Human support"],["97%","Agent-managed"],["1","Platform"]]
-function ProofStrip(){const reduce=useReducedMotion();return <section className="el-proof" aria-label="Miraee platform coverage"><motion.div className="el-proof__track" animate={reduce?{x:0}:{x:["0%","-50%"]}} transition={reduce?{duration:0}:{duration:32,repeat:Infinity,ease:"linear"}}>{[...proofStats,...proofStats].map((s,i)=><div key={`${s[0]}-${i}`}><b>{s[0]}</b><span>{s[1]}</span></div>)}</motion.div></section>}
 
 const pains = [["5","separate systems","Disconnected systems","Booking, travel desks, payments, expense software, and employee benefits."],["12+","vendors","Vendors to manage","A dozen services stitched together, none sharing the full journey."],["0","built for them","The traveler does the work","The person actually traveling becomes the coordinator."]]
 function Friction(){
@@ -138,4 +136,4 @@ function Security() { return <section id="security" className="el-security"><Sec
 
 function CTA() { return <section className="el-cta"><SectionSignal light/><motion.div className="el-cta__halo" animate={{scale:[1,1.15,1],opacity:[.5,.8,.5]}} transition={{duration:7,repeat:Infinity}}/><Reveal><span className="el-label">See the agent in action</span><h2>See it, handle<br/>a real trip, live.</h2><p>Bring a real trip. We’ll show you how Miraee handles it in twenty minutes.</p><MotionLink whileHover={{y:-4,scale:1.02}} whileTap={{scale:.97}} className="el-button el-button--light" to="/book-a-demo">Book your demo <span aria-hidden="true">↗</span></MotionLink></Reveal></section> }
 
-export default function HomeElegant(){ return <><a className="el-skip-link" href="#main-content">Skip to main content</a><SiteNav/><main id="main-content" className="el-site"><ScrollProgress/><GrainOverlay/><Hero/><ProofStrip/><Product/><Friction/><PlatformDifference/><CapabilityMatrix/><Outcomes/><HowItWorks/><Comparison/><BusinessCase/><Security/><Experiences/><div id="partners"><Partners/></div><CTA/></main><SiteFooter/></> }
+export default function HomeElegant(){ return <><a className="el-skip-link" href="#main-content">Skip to main content</a><SiteNav/><main id="main-content" className="el-site"><ScrollProgress/><GrainOverlay/><Hero/><Product/><Friction/><PlatformDifference/><CapabilityMatrix/><Outcomes/><HowItWorks/><Comparison/><BusinessCase/><Security/><Experiences/><div id="partners"><Partners/></div><CTA/></main><SiteFooter/></> }

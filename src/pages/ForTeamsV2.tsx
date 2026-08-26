@@ -117,7 +117,7 @@ export default function ForTeamsV2() {
 
                 <section className="m-section" aria-labelledby="use-cases-title">
                     <Reveal className="m-section__head"><p className="m-eyebrow">BY USE CASE</p><h2 id="use-cases-title">Every kind of company travel.</h2></Reveal>
-                    <div className="m-list">{useCases.map(([label,title,copy],i) => <Reveal className="m-list__row" key={label}><span>0{i+1}</span><h3>{title}</h3><p>{copy}</p><strong>{label}</strong></Reveal>)}</div>
+                    <div className="m-list m-use-cases">{useCases.map(([label,title,copy],i) => <Reveal className="m-list__row" key={label}><span>0{i+1}</span><h3>{title}</h3><p>{copy}</p><strong>{label}</strong></Reveal>)}</div>
                 </section>
 
                 <section className="m-section m-business" aria-labelledby="fit-title">
