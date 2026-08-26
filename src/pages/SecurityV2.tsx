@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { SiteFooter } from "../components/LegalFormKit"
 import { Reveal, V2Nav, Faq } from "../components/V2Kit"
-import securityHeroImg from "../assets/miraee-security-hero.webp"
+import securityHeroImg from "../assets/security-hero.jpg"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
 
@@ -76,7 +76,7 @@ export default function SecurityV2() {
                         <div className="m-chip-row">{["SOC 2", "GDPR", "SSO / SCIM", "Audit logs"].map(c => <span key={c}>{c}</span>)}</div>
                     </Reveal>
                     <Reveal className="m-hero__visual sec-hero-visual" delay={.12}>
-                        <img className="m-hero__photo sec-hero-photo" src={securityHeroImg} alt="Enterprise security and IT professionals reviewing access controls together" width="1536" height="1024" fetchPriority="high" />
+                        <img className="m-hero__photo sec-hero-photo" src={securityHeroImg} alt="Enterprise security and IT professionals reviewing access controls together" width="1800" height="1202" fetchPriority="high" />
                     </Reveal>
                 </section>
 
