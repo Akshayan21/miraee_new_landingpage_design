@@ -174,7 +174,6 @@ export default function ProductV2() {
                         <p className="m-eyebrow">THE 20-30% FIGURE</p>
                         <h3>Savings, defined once</h3>
                         <p>20-30% below published fares on comparable itineraries, achieved through wholesale rates and direct supplier connections. Every appearance of this figure across the site carries the same definition.</p>
-                        <p className="m-note">* Compared against publicly available fares for the same route, date, cabin and booking window. Individual results vary by route, lead time and travel mix.</p>
                     </Reveal>
                 </section>
 
@@ -198,7 +197,6 @@ export default function ProductV2() {
                             </Reveal>
                         ))}
                     </div>
-                    <p className="m-note m-journey-note">JOURNEY STATE: Everything handled. Plan · book · protect · expense</p>
                 </section>
 
                 <section id="agents" className="m-section" aria-labelledby="agents-title">
@@ -225,7 +223,6 @@ export default function ProductV2() {
                     <Reveal>
                         <EditorialRows caption="The foundation" headers={["Claim", "Detail", "Proof"]} rows={foundation.map(row => [...row])} highlightLast columns={2} />
                     </Reveal>
-                    <Reveal delay={.1}><p className="m-note">Most platforms compete on software. We compete on software and supply.</p></Reveal>
                 </section>
 
                 <section id="integrations" className="m-section" aria-labelledby="integrations-title">
@@ -241,7 +238,6 @@ export default function ProductV2() {
                 <section className="m-section m-tint-band" aria-labelledby="generation-title">
                     <Reveal className="m-section__head"><p className="m-eyebrow">MIRAEE VS LEGACY TMCS</p><h2 id="generation-title">Built different from the tools you're used to.</h2><p>Each generation removed friction. Miraee removes the handoffs.</p></Reveal>
                     <Reveal><EditorialRows caption="Travel technology generations" headers={["Generation", "What it solved", "What it left behind"]} rows={generations} columns={2}/></Reveal>
-                    <Reveal><p className="m-note">The new generation of travel planning. Powered by agentic AI.</p></Reveal>
                 </section>
 
                 <section className="m-section" aria-labelledby="surfaces-title">

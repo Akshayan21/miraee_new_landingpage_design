@@ -7,10 +7,6 @@ import "./SubpagesV2.css"
 
 const SECURITY_EMAIL = "mailto:hello@miraee.ai?subject=Security%20package%20request"
 
-const certifications = [
-    ["GDPR", "EU data protection, privacy by design", "Compliant"],
-]
-
 const mayDoWithoutAsking = [
     ["Search inventory and assemble an itinerary", "Always permitted", "Fixed control"],
     ["Book a trip that is fully within policy", "Permitted", "Can require approval on any dimension"],
@@ -38,12 +34,6 @@ const humanSits = [
     ["Disruption inside the fare band", "The agent, with notification."],
     ["Disruption above the fare band", "A human, with the agent's recommendation attached."],
     ["Escalation to a person", "The traveler, at any point, with full context carried over."],
-]
-
-const retention = [
-    "Trip records, agent conversations and receipts are each retained on a published schedule tied to tax and audit obligations.",
-    "A traveler can request deletion of personal data that falls outside what must legally be retained.",
-    "When a contract ends, your data is returned in a standard exportable format and then removed from active systems.",
 ]
 
 const trustLayers = [
@@ -90,7 +80,7 @@ export default function SecurityV2() {
                     </Reveal>
                 </section>
 
-                <section className="m-security" aria-label="Enterprise foundations">
+                <section id="certifications" className="m-security" aria-label="Enterprise foundations">
                     <Reveal>
                         <p className="m-eyebrow">ENTERPRISE FOUNDATIONS</p>
                         <h2>Governed.<br />Permissioned. Traceable.</h2>
@@ -101,26 +91,6 @@ export default function SecurityV2() {
                         <span><strong>GDPR</strong><small>Compliant</small></span>
                         <span><strong>SSO / SCIM</strong><small>Identity management</small></span>
                         <span><strong>Audit logs</strong><small>Every agent action</small></span>
-                    </div>
-                </section>
-
-                <section id="certifications" className="m-section" aria-labelledby="certs-title">
-                    <Reveal className="m-section__head">
-                        <p className="m-eyebrow">CERTIFICATIONS</p>
-                        <h2 id="certs-title">Independently verified, not self-declared.</h2>
-                        <p>A clear, current view of the standards and controls protecting your travel program.</p>
-                    </Reveal>
-                    <div className="m-edrows m-edrows--grid m-cert-grid">
-                        {certifications.map(([name, what, status]) => {
-                            const cls = status === "Compliant" ? "m-edrow__status--compliant" : status === "In progress" ? "m-edrow__status--progress" : "m-edrow__status--other"
-                            return (
-                                <div className="m-edrow" key={name}>
-                                    <strong>{name}</strong>
-                                    <p className="m-edrow__desc">{what}</p>
-                                    <span className={"m-edrow__status " + cls}>{status}</span>
-                                </div>
-                            )
-                        })}
                     </div>
                 </section>
 
@@ -174,27 +144,6 @@ export default function SecurityV2() {
                         </div>
                     </Reveal>
 
-                    <Reveal delay={.12}>
-                        <div className="sec-data-boundary">
-                            <div><p className="m-eyebrow">DATA BOUNDARY</p><h3>What data trains what</h3><p>Your trip data personalises your organisation’s experience and nothing else.</p></div>
-                            <div className="sec-data-flow" aria-label="Customer data remains inside the organisation's tenant">
-                                <span>Your data</span><b aria-hidden="true">→</b><strong>Your tenant</strong><b className="is-blocked" aria-hidden="true">×</b><span>Foundation models</span>
-                            </div>
-                        </div>
-                    </Reveal>
-
-                    <Reveal delay={.14}>
-                        <div className="m-splitfacts">
-                            <div>
-                                <h3>Retention and deletion</h3>
-                                <ul>{retention.map(x => <li key={x}>{x}</li>)}</ul>
-                            </div>
-                            <div>
-                                <h3>Every action. Every actor. Every reason.</h3>
-                                <p>Each agent action is logged with what was done, which agent did it, when, under which rule, and what it cost. Exportable in full, at any time.</p>
-                            </div>
-                        </div>
-                    </Reveal>
                 </section>
 
                 <section className="m-section m-tint-band" aria-labelledby="access-title">

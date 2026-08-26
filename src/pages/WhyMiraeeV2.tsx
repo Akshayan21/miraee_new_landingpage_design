@@ -92,11 +92,11 @@ export default function WhyMiraeeV2() {
                         <p className="m-eyebrow">SIDE BY SIDE</p>
                         <h2 id="compare-title">Same trip. Different operating model.</h2>
                     </Reveal>
-                    <Reveal>
+                    <Reveal className="m-compare-block">
                         <h3 className="m-subhead">Capability</h3>
                         <MiniTable caption="Capability comparison" headers={["Capability", "Legacy TMC", "First-gen T&E", "Miraee"]} rows={capabilityCompare} highlightLast checkmark />
                     </Reveal>
-                    <Reveal delay={.08}>
+                    <Reveal className="m-compare-block" delay={.08}>
                         <h3 className="m-subhead">Commercials</h3>
                         <MiniTable caption="Commercial terms comparison" headers={["Terms", "Legacy TMC", "First-gen T&E", "Miraee"]} rows={commercials} highlightLast checkmark />
                     </Reveal>
