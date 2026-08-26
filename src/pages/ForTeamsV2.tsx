@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { SiteFooter } from "../components/LegalFormKit"
 import { Reveal, V2Nav, EditorialRows } from "../components/V2Kit"
-import travelerImg from "../assets/miraee-traveler-hero.webp"
+import travelerImg from "../assets/team-travellers.jpg"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
 import { usePageMeta } from "../hooks/usePageMeta"
@@ -106,7 +106,7 @@ export default function ForTeamsV2() {
                         </div>
                     </Reveal>
                     <Reveal className="m-hero__visual" delay={.1}>
-                        <img className="m-hero__photo" src={travelerImg} alt="Business traveler moving confidently through an airport lounge" width="1536" height="1024" fetchPriority="high" />
+                        <img className="m-hero__photo" src={travelerImg} alt="Business traveler moving confidently through an airport lounge" width="1800" height="1202" fetchPriority="high" />
                     </Reveal>
                 </section>
 

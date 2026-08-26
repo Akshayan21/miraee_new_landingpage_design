@@ -2,7 +2,6 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { SiteFooter } from "../components/LegalFormKit"
 import { Reveal, V2Nav, EditorialRows } from "../components/V2Kit"
-import companyImg from "../assets/miraee-about-company.webp"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
 
@@ -65,9 +64,6 @@ export default function AboutV2() {
                         <div className="m-trust-strip">
                             {["23 companies", "3 AI platforms", "500+ airlines", "2M+ properties", "125M+ travelers reached"].map(x => <span key={x}>{x}</span>)}
                         </div>
-                    </Reveal>
-                    <Reveal className="m-hero__visual" delay={.1}>
-                        <img className="m-hero__photo" src={companyImg} alt="Miraee company leaders walking through their collaborative workspace" width="1536" height="1024" fetchPriority="high" />
                     </Reveal>
                 </section>
 
