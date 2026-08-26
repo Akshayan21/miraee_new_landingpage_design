@@ -8,11 +8,11 @@ import "./SubpagesV2.css"
 import { usePageMeta } from "../hooks/usePageMeta"
 
 const employeeBlocks = [
-    ["One request, one trip", "Say where and when. Miraee reads the intent, checks your calendar, and comes back with a journey that is already within policy — flight, hotel, rail and car assembled as one thing, not four."],
+    ["One request, one trip", "Say where and when. Miraee reads the intent, checks your calendar, and comes back with a journey that is already within policy, with flight, hotel, rail and car assembled as one thing, not four."],
     ["It already knows you", "Window seat. The airline you have status with. The hotel near the office, not the one near the airport. Told once, applied to every trip after."],
     ["When something breaks", "You get a notification, not a task. The agent sees the cancellation, finds the alternative, checks it against policy, and either fixes it or brings you one decision."],
     ["A person when you want one", "Ask for a human and you get a travel specialist in the same thread, with your whole trip already in front of them. You never re-explain anything."],
-    ["Your own trips too", "The same agent plans the weekend you bolt onto the work trip — your card, your choice, corporate rates where they apply. Company spend stays untouched."],
+    ["Your own trips too", "The same agent plans the weekend you bolt onto the work trip using your card, your choices, and corporate rates where they apply. Company spend stays untouched."],
 ] as const
 
 const financeBlocks = [
@@ -34,7 +34,7 @@ const financeControls = [
 
 const travelTeamBlocks = [
     ["Policy as a system, not a PDF", "Write the rules once and they are applied at the moment of search, for every traveler, on every route. Nobody has to read the policy to follow it."],
-    ["Exceptions only", "Routine trips book themselves. What reaches you is the genuine exception — the unusual route, the over-threshold fare, the case that needs a judgement call."],
+    ["Exceptions only", "Routine trips book themselves. What reaches you is the genuine exception: the unusual route, the over-threshold fare, or the case that needs a judgement call."],
     ["Duty of care", "Know where every traveler is, in real time. Restrict travel to specific regions, and reach anyone affected by a disruption with one message."],
     ["Groups and guests", "Offsites, conferences and candidate travel run on the same rails, with their own spend controls and their own approval path."],
     ["Non-employee travel", "Contractors, candidates and guests can be invited into a trip without being provisioned as employees or given access to company systems."],
@@ -122,7 +122,7 @@ export default function ForTeamsV2() {
 
                 <section className="m-section m-business" aria-labelledby="fit-title">
                     <Reveal className="m-section__head"><p className="m-eyebrow">BY FIT</p><h2 id="fit-title">Tuned to how your industry travels.</h2><p>Whether travel is driven by client engagement, distributed teams, field operations or events, Miraee adapts policy, supply and workflows to your patterns.</p></Reveal>
-                    <Reveal className="m-splitfacts"><div><h3>Purpose-built for upper-SMB and mid-market.</h3><p>For companies with $500K–$5M in annual travel budgets and 100–3,000 employees, often running on six or more disconnected tools.</p></div><div><h3>Find your fit.</h3><p>Bring your travel pattern, systems and approval model. We'll show how the platform maps to them.</p><Link to="/book-a-demo">Find your fit <span aria-hidden="true">→</span></Link></div></Reveal>
+                    <Reveal className="m-splitfacts"><div><h3>Purpose-built for upper-SMB and mid-market.</h3><p>For companies with $500K-$5M in annual travel budgets and 100-3,000 employees, often running on 6 or more disconnected tools.</p></div><div><h3>Find your fit.</h3><p>Bring your travel pattern, systems and approval model. We'll show how the platform maps to them.</p><Link to="/book-a-demo">Find your fit <span aria-hidden="true">→</span></Link></div></Reveal>
                 </section>
 
                 <section id="team-select" className="m-section" aria-label="Choose your role">
@@ -133,7 +133,7 @@ export default function ForTeamsV2() {
                     <Reveal className="m-section__head">
                         <p className="m-eyebrow">ONE PLATFORM · THREE VIEWS</p>
                         <h2>Same trip. A different problem solved for each of you.</h2>
-                        <p>Pick the role that's yours — the platform underneath never changes.</p>
+                        <p>Pick the role that's yours. The platform underneath never changes.</p>
                     </Reveal>
 
                     <div className="m-roletabs" role="tablist" aria-label="Choose your role">

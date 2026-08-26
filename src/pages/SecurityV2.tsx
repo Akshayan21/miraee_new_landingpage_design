@@ -12,7 +12,7 @@ const certifications = [
 ]
 
 const mayDoWithoutAsking = [
-    ["Search inventory and assemble an itinerary", "Always permitted", "—"],
+    ["Search inventory and assemble an itinerary", "Always permitted", "Fixed control"],
     ["Book a trip that is fully within policy", "Permitted", "Can require approval on any dimension"],
     ["Rebook a disrupted trip within the original fare band", "Permitted", "Ceiling set by you"],
     ["Rebook above the original cost", "Requires approval", "Threshold set by you"],
@@ -54,16 +54,16 @@ const trustLayers = [
 ]
 
 const faqs: [string, string][] = [
-    ["Where is our data stored?", "Miraee stores and processes customer data in the region you select at contract — United States, European Union or India. Data does not leave the selected region except where a booking must be transmitted to a supplier to be fulfilled."],
+    ["Where is our data stored?", "Miraee stores and processes customer data in the region you select at contract: United States, European Union or India. Data does not leave the selected region except where a booking must be transmitted to a supplier to be fulfilled."],
     ["Do Miraee's AI agents use our company data to train models?", "No. Your trip data is used to personalise your own organisation's experience and is not used to train foundation models or to improve outcomes for any other customer. Personalisation is scoped to your tenant."],
     ["What can Miraee's agents do without human approval?", "Miraee's agents can search inventory, assemble itineraries, book trips that fall fully within your policy, rebook disruptions inside a fare band you define, and code expenses to your finance system. Anything out of policy, above your thresholds, or outside pre-authorised payment rails requires a named human approver. Every boundary is configurable and every action is logged."],
     ["Can we see what an agent did and why?", "Yes. Every agent action is recorded with the action taken, the agent responsible, the timestamp, the policy rule applied and the cost involved. The full audit trail is exportable at any time and cannot be altered or deleted by any agent."],
-    ["How does Miraee handle traveler personal data?", "Miraee collects only the traveler data required to book and support a trip — identity details, preferences, loyalty memberships and the itinerary itself. Access is role-based, agents cannot act on personal data beyond the scope of the trip in hand, and retention periods are published."],
+    ["How does Miraee handle traveler personal data?", "Miraee collects only the traveler data required to book and support a trip, including identity details, preferences, loyalty memberships and the itinerary itself. Access is role-based, agents cannot act on personal data beyond the scope of the trip in hand, and retention periods are published."],
 ]
 
 export default function SecurityV2() {
     useEffect(() => {
-        document.title = "Security, Compliance and AI Governance — Miraee"
+        document.title = "Security, Compliance and AI Governance | Miraee"
         const description = "How Miraee secures traveler data, where it is stored, and exactly what our AI agents may and may not do without a human. Certifications, controls and the full governance model."
         let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]')
         if (!meta) { meta = document.createElement("meta"); meta.name = "description"; document.head.appendChild(meta) }
@@ -94,7 +94,7 @@ export default function SecurityV2() {
                     <Reveal>
                         <p className="m-eyebrow">ENTERPRISE FOUNDATIONS</p>
                         <h2>Governed.<br />Permissioned. Traceable.</h2>
-                        <p>Every boundary an agent operates inside is written down, configurable, and logged — see the full governance model below.</p>
+                        <p>Every boundary an agent operates inside is written down, configurable, and logged. See the full governance model below.</p>
                     </Reveal>
                     <div className="m-security__marks">
                         <span><strong>SOC 2</strong><small>In progress</small></span>
@@ -152,7 +152,7 @@ export default function SecurityV2() {
                             const approval = rule.includes("Requires") || rule.includes("Never")
                             return <article className={approval ? "needs-approval" : "is-permitted"} key={action}>
                                 <div className="sec-decision-status"><span aria-hidden="true">{approval ? "↗" : "✓"}</span><small>{approval ? "Human approval" : "Agent permitted"}</small></div>
-                                <h4>{action}</h4><p>{config === "—" ? rule : config}</p>
+                                <h4>{action}</h4><p>{config === "Fixed control" ? rule : config}</p>
                             </article>
                         })}
                     </Reveal>
@@ -176,7 +176,7 @@ export default function SecurityV2() {
 
                     <Reveal delay={.12}>
                         <div className="sec-data-boundary">
-                            <div><p className="m-eyebrow">DATA BOUNDARY</p><h3>What data trains what</h3><p>Your trip data personalises your organisation’s experience—and nothing else.</p></div>
+                            <div><p className="m-eyebrow">DATA BOUNDARY</p><h3>What data trains what</h3><p>Your trip data personalises your organisation’s experience and nothing else.</p></div>
                             <div className="sec-data-flow" aria-label="Customer data remains inside the organisation's tenant">
                                 <span>Your data</span><b aria-hidden="true">→</b><strong>Your tenant</strong><b className="is-blocked" aria-hidden="true">×</b><span>Foundation models</span>
                             </div>
