@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { EO } from "../animations/easings"
 import { T, F, SiteNav, SiteFooter, useVW } from "../components/LegalFormKit"
+import { usePageMeta } from "../hooks/usePageMeta"
 
 
 const pStyle: React.CSSProperties = { fontSize: 15, fontFamily: F, lineHeight: 1.75, color: T.muted, margin: "0 0 16px" }
@@ -249,10 +250,13 @@ function Section({ s }: { s: typeof SECTIONS[0] }) {
  * @framerSupportedLayoutHeight auto
  */
 export default function MiraeeTermsPage(props: { style?: React.CSSProperties }) {
+    usePageMeta("Miraee Terms of Use", "Terms governing access to and use of the Miraee platform, services and related travel workflows.")
     const isNarrow = useVW() < 1024
     return (
         <div className="legal-page" style={{ position: "relative", width: "100%", minHeight: "100vh", background: T.bg, fontFamily: F, ...props.style }}>
+            <a className="legacy-skip" href="#main">Skip to content</a>
             <SiteNav />
+            <main id="main">
             {/* Document: single readable column, Navan-style */}
             <div style={{ maxWidth: 880, margin: "0 auto", padding: isNarrow ? "110px 20px 72px" : "140px 24px 96px" }}>
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EO }} style={{ marginBottom: 40 }}>
@@ -265,6 +269,10 @@ export default function MiraeeTermsPage(props: { style?: React.CSSProperties }) 
                     <p style={pStyle}>These Terms of Use (these “Terms”) govern access to and use of the Miraee Platform (“Platform”) by: (a) individual users accessing the Platform on their own behalf; (b) individual users authorized by a company, organization, or other entity, whether or not that entity has entered into an Enterprise Agreement with Miraee; and (c) companies, organizations, and other entities accessing or using the Platform directly (each, a “Customer”).</p>
                     <p style={{ ...pStyle, margin: 0 }}>If you are using the Platform on behalf of a Customer or other entity, you represent that you are authorized to bind that entity where applicable. By accessing or using the Platform, you agree to these Terms. If you do not agree, do not use the Platform. If you are a Customer or authorized user subject to an Enterprise Agreement, that Enterprise Agreement controls to the extent it conflicts with these Terms.</p>
                 </motion.div>
+                <details className="legal-toc">
+                    <summary>On this page</summary>
+                    <nav aria-label="Terms sections">{SECTIONS.map(s => <a key={s.id} href={`#${s.id}`}>{s.num}. {s.title}</a>)}</nav>
+                </details>
                 {SECTIONS.map(s => <Section key={s.id} s={s} />)}
             </div>
             {/* CTA band, Navan-style close */}
@@ -280,6 +288,7 @@ export default function MiraeeTermsPage(props: { style?: React.CSSProperties }) 
                     <p style={{ fontSize: 12.5, fontFamily: F, color: "rgba(251,246,242,0.45)", margin: "28px 0 0" }}>© 2026 Miraee, a Tabhi company · <a href="mailto:legal@miraee.ai" style={{ color: "rgba(251,246,242,0.7)", textDecoration: "none" }}>legal@miraee.ai</a></p>
                 </div>
             </div>
+            </main>
             <SiteFooter />
         </div>
     )

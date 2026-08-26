@@ -15,6 +15,19 @@ const photos = [
     "timeline-2000.png",
     "timeline_today.png",
     "timeline_agent.png",
+    "miraee-traveler-hero.png",
+    "miraee-team.png",
+    "miraee-experience-market.png",
+    "miraee-supplier-cabin.png",
+    "miraee-role-employee.png",
+    "miraee-role-finance.png",
+    "miraee-role-travel-team.png",
+    "miraee-about-company.png",
+    "miraee-security-hero.png",
+    "dashboard.png",
+    "booking-card.png",
+    "change-card.png",
+    "expenses-card.png",
 ]
 
 for (const file of photos) {

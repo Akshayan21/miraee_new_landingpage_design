@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react"
+import { lazy, Suspense } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ScrollToTop from "./components/ScrollToTop"
 import SiteAtmosphere from "./components/SiteAtmosphere"
@@ -19,16 +19,7 @@ const Privacy = lazy(() => import("./pages/Privacy"))
 const ArbitrationOptOut = lazy(() => import("./pages/ArbitrationOptOut"))
 const DisputeNotice = lazy(() => import("./pages/DisputeNotice"))
 const BookDemo = lazy(() => import("./pages/BookDemo"))
-
-const APP_URL = "https://app.miraee.ai"
-
-// Root path and any route not explicitly listed below bounce out to the web app.
-function RedirectToApp() {
-    useEffect(() => {
-        window.location.replace(APP_URL)
-    }, [])
-    return null
-}
+const NotFound = lazy(() => import("./pages/NotFound"))
 
 function PageFallback() {
     return (
@@ -59,7 +50,7 @@ export default function App() {
                     <Route path="/arbitration-opt-out" element={<ArbitrationOptOut />} />
                     <Route path="/dispute-notice" element={<DisputeNotice />} />
                     <Route path="/book-a-demo" element={<BookDemo />} />
-                    <Route path="*" element={<RedirectToApp />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </Suspense>
         </BrowserRouter>

@@ -1,18 +1,14 @@
 import { useEffect } from "react"
-import { Link } from "react-router-dom"
 import { SiteFooter } from "../components/LegalFormKit"
-import { Reveal, V2Nav, Faq, EditorialRows } from "../components/V2Kit"
+import { Reveal, V2Nav, Faq } from "../components/V2Kit"
+import securityHeroImg from "../assets/miraee-security-hero.webp"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
 
 const SECURITY_EMAIL = "mailto:hello@miraee.ai?subject=Security%20package%20request"
 
 const certifications = [
-    ["SOC 2 Type II", "Operational controls over security, availability and confidentiality", "In progress"],
-    ["ISO 27001", "Information security management system", "In progress"],
     ["GDPR", "EU data protection, privacy by design", "Compliant"],
-    ["India DPDP Act", "Indian personal data protection", "In progress"],
-    ["PCI DSS", "Payment card data handling", "Via payment processor"],
 ]
 
 const mayDoWithoutAsking = [
@@ -50,8 +46,14 @@ const retention = [
     "When a contract ends, your data is returned in a standard exportable format and then removed from active systems.",
 ]
 
+const trustLayers = [
+    ["01", "Identity", "SSO / SCIM", "People and agents get only the access their role requires."],
+    ["02", "Policy", "Configurable", "Every action is checked against your rules before execution."],
+    ["03", "Approval", "Human when needed", "Thresholds route exceptions to the right decision-maker."],
+    ["04", "Evidence", "Always logged", "Actor, rule, time and cost are recorded for every action."],
+]
+
 const faqs: [string, string][] = [
-    ["Is Miraee SOC 2 certified?", "SOC 2 Type II certification is in progress. Ask your account team for the current target date and the interim security documentation available today."],
     ["Where is our data stored?", "Miraee stores and processes customer data in the region you select at contract — United States, European Union or India. Data does not leave the selected region except where a booking must be transmitted to a supplier to be fulfilled."],
     ["Do Miraee's AI agents use our company data to train models?", "No. Your trip data is used to personalise your own organisation's experience and is not used to train foundation models or to improve outcomes for any other customer. Personalisation is scoped to your tenant."],
     ["What can Miraee's agents do without human approval?", "Miraee's agents can search inventory, assemble itineraries, book trips that fall fully within your policy, rebook disruptions inside a fare band you define, and code expenses to your finance system. Anything out of policy, above your thresholds, or outside pre-authorised payment rails requires a named human approver. Every boundary is configurable and every action is logged."],
@@ -60,7 +62,13 @@ const faqs: [string, string][] = [
 ]
 
 export default function SecurityV2() {
-    useEffect(() => { document.title = "Security, Compliance and AI Governance — Miraee" }, [])
+    useEffect(() => {
+        document.title = "Security, Compliance and AI Governance — Miraee"
+        const description = "How Miraee secures traveler data, where it is stored, and exactly what our AI agents may and may not do without a human. Certifications, controls and the full governance model."
+        let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]')
+        if (!meta) { meta = document.createElement("meta"); meta.name = "description"; document.head.appendChild(meta) }
+        meta.content = description
+    }, [])
     return (
         <div className="m-site">
             <a className="m-skip" href="#main">Skip to content</a>
@@ -76,6 +84,9 @@ export default function SecurityV2() {
                             <a href="#governance">See the boundaries <span aria-hidden="true">↓</span></a>
                         </div>
                         <div className="m-chip-row">{["SOC 2", "GDPR", "SSO / SCIM", "Audit logs"].map(c => <span key={c}>{c}</span>)}</div>
+                    </Reveal>
+                    <Reveal className="m-hero__visual sec-hero-visual" delay={.12}>
+                        <img className="m-hero__photo sec-hero-photo" src={securityHeroImg} alt="Enterprise security and IT professionals reviewing access controls together" width="1536" height="1024" fetchPriority="high" />
                     </Reveal>
                 </section>
 
@@ -97,7 +108,7 @@ export default function SecurityV2() {
                     <Reveal className="m-section__head">
                         <p className="m-eyebrow">CERTIFICATIONS</p>
                         <h2 id="certs-title">Independently verified, not self-declared.</h2>
-                        <p>Status stated honestly — an in-progress certification builds more trust than an ambiguous badge procurement later discovers is aspirational.</p>
+                        <p>A clear, current view of the standards and controls protecting your travel program.</p>
                     </Reveal>
                     <div className="m-edrows m-edrows--grid m-cert-grid">
                         {certifications.map(([name, what, status]) => {
@@ -113,6 +124,17 @@ export default function SecurityV2() {
                     </div>
                 </section>
 
+                <section className="m-section sec-residency" aria-labelledby="residency-title">
+                    <Reveal className="m-section__head">
+                        <p className="m-eyebrow">DATA RESIDENCY</p>
+                        <h2 id="residency-title">Your data stays where you need it.</h2>
+                        <p>Choose the region your traveler and transaction data is stored and processed in. For organisations operating across the US, Europe and India, this is a procurement requirement rather than a preference.</p>
+                    </Reveal>
+                    <Reveal className="sec-regions">
+                        {[["US","United States"],["EU","European Union"],["IN","India"]].map(([code,name]) => <div key={code}><span>{code}</span><strong>{name}</strong><small>Regional processing</small></div>)}
+                    </Reveal>
+                </section>
+
                 <section id="governance" className="m-section" aria-labelledby="governance-title">
                     <Reveal className="m-section__head">
                         <p className="m-eyebrow">AI GOVERNANCE</p>
@@ -120,16 +142,27 @@ export default function SecurityV2() {
                         <p>Agents act inside boundaries you set. Here are the boundaries, in writing.</p>
                     </Reveal>
 
-                    <Reveal><h3 className="m-subhead">What agents may do without asking</h3></Reveal>
-                    <Reveal delay={.03}><EditorialRows caption="What agents may do without asking" headers={["Action", "Default", "Configurable"]} rows={mayDoWithoutAsking} numbered={false} columns={2} /></Reveal>
+                    <Reveal className="sec-layers">
+                        {trustLayers.map(([n,title,label,copy]) => <div className="sec-layer" key={title}><span>{n}</span><div><small>{label}</small><h3>{title}</h3><p>{copy}</p></div></div>)}
+                    </Reveal>
 
-                    <Reveal delay={.06}>
-                        <h3 className="m-subhead">What agents never do</h3>
-                        <p className="m-note m-note--flush">Hard limits. Not configurable, in any tenant, under any setting.</p>
+                    <Reveal><div className="sec-section-title"><div><p className="m-eyebrow">DECISION MATRIX</p><h3 className="m-subhead">What the agent can do</h3></div><p>Green actions proceed. Amber actions pause for a named human.</p></div></Reveal>
+                    <Reveal className="sec-decisions" delay={.03}>
+                        {mayDoWithoutAsking.map(([action,rule,config]) => {
+                            const approval = rule.includes("Requires") || rule.includes("Never")
+                            return <article className={approval ? "needs-approval" : "is-permitted"} key={action}>
+                                <div className="sec-decision-status"><span aria-hidden="true">{approval ? "↗" : "✓"}</span><small>{approval ? "Human approval" : "Agent permitted"}</small></div>
+                                <h4>{action}</h4><p>{config === "—" ? rule : config}</p>
+                            </article>
+                        })}
+                    </Reveal>
+
+                    <Reveal className="sec-hard-limits" delay={.06}>
+                        <div className="sec-section-title"><div><p className="m-eyebrow">HARD LIMITS</p><h3 className="m-subhead">What agents never do</h3></div><p>Not configurable in any tenant or under any setting.</p></div>
                         <div className="m-hardstop">{neverDo.map(x => <div key={x}><span aria-hidden="true">✕</span>{x}</div>)}</div>
                     </Reveal>
 
-                    <Reveal delay={.09}><h3 className="m-subhead">Where the human sits</h3></Reveal>
+                    <Reveal delay={.09}><div className="sec-section-title"><div><p className="m-eyebrow">HUMAN IN THE LOOP</p><h3 className="m-subhead">Where the human sits</h3></div><p>Routine work moves automatically. Exceptions arrive with context.</p></div></Reveal>
                     <Reveal delay={.1}>
                         <div className="m-flow">
                             {humanSits.map(([stage, who]) => (
@@ -142,9 +175,11 @@ export default function SecurityV2() {
                     </Reveal>
 
                     <Reveal delay={.12}>
-                        <h3 className="m-subhead">What data trains what</h3>
-                        <div className="m-statement">
-                            <p>Your trip data personalises your organisation's experience and nothing else. It is not used to train foundation models, and it is never used to improve outcomes for another customer. Personalisation is scoped to your tenant.</p>
+                        <div className="sec-data-boundary">
+                            <div><p className="m-eyebrow">DATA BOUNDARY</p><h3>What data trains what</h3><p>Your trip data personalises your organisation’s experience—and nothing else.</p></div>
+                            <div className="sec-data-flow" aria-label="Customer data remains inside the organisation's tenant">
+                                <span>Your data</span><b aria-hidden="true">→</b><strong>Your tenant</strong><b className="is-blocked" aria-hidden="true">×</b><span>Foundation models</span>
+                            </div>
                         </div>
                     </Reveal>
 
@@ -162,15 +197,28 @@ export default function SecurityV2() {
                     </Reveal>
                 </section>
 
-                <section className="m-section m-tint-band" aria-labelledby="ops-title">
+                <section className="m-section m-tint-band" aria-labelledby="access-title">
                     <Reveal className="m-section__head">
-                        <p className="m-eyebrow">OPERATIONS</p>
-                        <h2 id="ops-title">Built to keep running.</h2>
+                        <p className="m-eyebrow">ACCESS</p>
+                        <h2 id="access-title">The right people. The right data. Nothing more.</h2>
                     </Reveal>
-                    <EditorialRows caption="Operations" headers={["Area", "Detail"]} columns={2} rows={[
-                        ["Reliability", "Travel doesn't wait for maintenance windows. A committed uptime SLA, detailed in your service agreement, backed by 24/7 human travel support and a defined incident escalation path for administrators."],
-                        ["Subprocessors", "A current list of every subprocessor, what they process and where — available on request, with advance notice before it changes."],
-                    ]} />
+                    <Reveal className="sec-access-grid">
+                        {[["SAML + OIDC","Single sign-on"],["SCIM","Automatic provisioning and deprovisioning"],["Role based","Traveler, approver, finance and admin access"],["Entity isolated","Segregation for multi-company groups"],["MFA","Session controls and enforced multi-factor authentication"]].map(([mark,copy],i) => <div key={mark}><span>{String(i+1).padStart(2,"0")}</span><strong>{mark}</strong><p>{copy}</p></div>)}
+                    </Reveal>
+                </section>
+
+                <section className="m-section sec-operations" aria-labelledby="reliability-title">
+                    <Reveal className="m-section__head"><p className="m-eyebrow">RELIABILITY</p><h2 id="reliability-title">Travel doesn't wait for maintenance windows.</h2></Reveal>
+                    <Reveal className="sec-ops-grid">
+                        <div><span>01</span><small>Uptime</small><h3>Uptime commitment</h3><p>Defined in your service agreement.</p></div>
+                        <div><span>02</span><small>Live status</small><h3>Public incident history</h3><a href="https://status.miraee.ai">status.miraee.ai <span aria-hidden="true">↗</span></a></div>
+                        <div><span>03</span><small>Support</small><h3>Human help, 24/7</h3><p>A defined incident escalation path for administrators.</p></div>
+                    </Reveal>
+                    <Reveal className="sec-subprocessors">
+                        <div><p className="m-eyebrow">SUBPROCESSORS</p><h3>Who else touches your data.</h3></div>
+                        <p>A current list of every subprocessor, what they process and where. Subscribe to be notified before the list changes.</p>
+                        <a href={SECURITY_EMAIL}>Request the current list <span aria-hidden="true">↗</span></a>
+                    </Reveal>
                 </section>
 
                 <section className="m-section" aria-labelledby="security-faq-title">
@@ -183,10 +231,10 @@ export default function SecurityV2() {
 
                 <section className="m-cta">
                     <Reveal>
-                        <p className="m-eyebrow">See the agent in action</p>
-                        <h2>See it, handle<br />a real trip, live.</h2>
-                        <p>Bring a real trip. We’ll show you how Miraee handles it in twenty minutes.</p>
-                        <Link to="/book-a-demo">Book your demo <span aria-hidden="true">↗</span></Link>
+                        <p className="m-eyebrow">DILIGENCE</p>
+                        <h2>Send us your<br />security questionnaire.</h2>
+                        <p>We'll return it completed, with the documentation attached.</p>
+                        <a href={SECURITY_EMAIL}>Request the security package <span aria-hidden="true">↗</span></a>
                     </Reveal>
                 </section>
             </main>
