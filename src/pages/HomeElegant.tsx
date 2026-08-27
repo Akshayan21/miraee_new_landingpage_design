@@ -1,7 +1,7 @@
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
 import { GrainOverlay, ScrollProgress } from "../animations"
-import { SiteNav, SiteFooter } from "../components/LegalFormKit"
+import { SiteNav, V1Footer } from "../components/LegalFormKit"
 import { Link } from "react-router-dom"
 import dashboardImg from "../assets/dashboard.webp"
 import bookingCardImg from "../assets/booking-card.webp"
@@ -136,4 +136,4 @@ function Security() { return <section id="security" className="el-security"><Sec
 
 function CTA() { return <section className="el-cta"><SectionSignal light/><motion.div className="el-cta__halo" animate={{scale:[1,1.15,1],opacity:[.5,.8,.5]}} transition={{duration:7,repeat:Infinity}}/><Reveal><span className="el-label">See the agent in action</span><h2>See it, handle<br/>a real trip, live.</h2><p>Bring a real trip. We’ll show you how Miraee handles it in twenty minutes.</p><MotionLink whileHover={{y:-4,scale:1.02}} whileTap={{scale:.97}} className="el-button el-button--light" to="/book-a-demo">Book your demo <span aria-hidden="true">↗</span></MotionLink></Reveal></section> }
 
-export default function HomeElegant(){ return <><a className="el-skip-link" href="#main-content">Skip to main content</a><SiteNav/><main id="main-content" className="el-site"><ScrollProgress/><GrainOverlay/><Hero/><Product/><Friction/><PlatformDifference/><CapabilityMatrix/><Outcomes/><HowItWorks/><Comparison/><BusinessCase/><Security/><Experiences/><div id="partners"><Partners/></div><CTA/></main><SiteFooter/></> }
+export default function HomeElegant(){ return <><a className="el-skip-link" href="#main-content">Skip to main content</a><SiteNav/><main id="main-content" className="el-site"><ScrollProgress/><GrainOverlay/><Hero/><Product/><Friction/><PlatformDifference/><CapabilityMatrix/><Outcomes/><HowItWorks/><Comparison/><BusinessCase/><Security/><Experiences/><div id="partners"><Partners/></div><CTA/></main><V1Footer/></> }

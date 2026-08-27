@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { SiteFooter } from "../components/LegalFormKit"
+import { V2Footer } from "../components/LegalFormKit"
 import { EditorialRows, Reveal, V2Nav } from "../components/V2Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
 import "./HomeV2Light.css"
@@ -95,8 +95,17 @@ export default function TechnologyV2() {
                     <Reveal><EditorialRows caption="Developer and integration capabilities" headers={["Capability", "Detail"]} rows={integrations} columns={2} /></Reveal>
                     <Reveal className="m-section-action"><Link to="/book-a-demo">Talk to our integration team <span aria-hidden="true">↗</span></Link></Reveal>
                 </section>
+
+                <section className="m-cta">
+                    <Reveal>
+                        <p className="m-eyebrow">SEE THE AGENT IN ACTION</p>
+                        <h2>Bring a real trip.</h2>
+                        <p>Twenty minutes. Your route, your policy, your edge cases. We'll run it live.</p>
+                        <Link to="/book-a-demo">Book your demo <span aria-hidden="true">↗</span></Link>
+                    </Reveal>
+                </section>
             </main>
-            <SiteFooter />
+            <V2Footer />
         </div>
     )
 }

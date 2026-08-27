@@ -1,7 +1,7 @@
 import { motion, useInView, useReducedMotion } from "framer-motion"
 import { useRef } from "react"
 import { Link } from "react-router-dom"
-import { SiteFooter } from "../components/LegalFormKit"
+import { V2Footer } from "../components/LegalFormKit"
 import { V2Nav } from "../components/V2Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
 import dashboardImg from "../assets/dashboard.webp"
@@ -43,4 +43,4 @@ export default function HomeV2(){usePageMeta("AI-Native Corporate Travel | Mirae
   <section className="m-section m-experiences"><Reveal className="m-section__head"><p className="m-eyebrow">Experiences</p><h2>Not bookable anywhere else.</h2><p>The city after 5pm, the festival, or the family weekend bolted onto a work trip, booked separately from company spend in one tap.</p></Reveal><Reveal className="m-experiences__photo"><img src={experienceImg} alt="Hong Kong skyline and harbor illuminated after dark" width="2000" height="1333" loading="lazy"/></Reveal><div className="m-experience-grid">{experiences.map((x,i)=><Reveal className="m-experience" key={x}><span>{String(i+1).padStart(2,"0")}</span><h3>{x}</h3></Reveal>)}</div></section>
   <section id="partners" className="m-section m-partners"><Reveal><p className="m-eyebrow">For airlines and suppliers</p><h2>Be part of your travelers’ best experiences.</h2><p>Miraee puts partner brands in front of premium, high-frequency travelers across both business and personal trips, with content they control.</p><Link to="/book-a-demo">Partner with Miraee <span aria-hidden="true">↗</span></Link></Reveal><Reveal className="m-partners__photo"><img src={supplierImg} alt="Business traveler receiving attentive service in a premium aircraft cabin" loading="lazy"/></Reveal></section>
   <section className="m-cta"><Reveal><p className="m-eyebrow">See the agent in action</p><h2>See it, handle<br/>a real trip, live.</h2><p>Bring a real trip. We’ll show you how Miraee handles it in twenty minutes.</p><Link to="/book-a-demo">Book your demo <span aria-hidden="true">↗</span></Link></Reveal></section>
-  </main><SiteFooter/></div>}
+  </main><V2Footer/></div>}

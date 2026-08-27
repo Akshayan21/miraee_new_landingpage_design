@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { Link } from "react-router-dom"
-import { SiteFooter } from "../components/LegalFormKit"
+import { V2Footer } from "../components/LegalFormKit"
 import { Faq, Reveal, V2Nav } from "../components/V2Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
 import "./HomeV2Light.css"
@@ -124,9 +124,18 @@ export default function ResourcesV2() {
                         </Reveal>
                     </div>
                 </section>
+
+                <section className="m-cta">
+                    <Reveal>
+                        <p className="m-eyebrow">SEE THE AGENT IN ACTION</p>
+                        <h2>Bring a real trip.</h2>
+                        <p>Twenty minutes. Your route, your policy, your edge cases. We'll run it live.</p>
+                        <Link to="/book-a-demo">Book your demo <span aria-hidden="true">↗</span></Link>
+                    </Reveal>
+                </section>
             </main>
 
-            <SiteFooter />
+            <V2Footer />
         </div>
     )
 }

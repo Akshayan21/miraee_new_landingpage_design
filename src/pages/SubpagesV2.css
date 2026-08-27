@@ -268,6 +268,7 @@
   grid-column: auto;
   min-height: 280px;
 }
+.m-use-cases .m-list__row:nth-child(3)::after { display: none; }
 .m-use-cases .m-list__row:last-child {
   grid-column: 1 / -1;
   min-height: 235px;
