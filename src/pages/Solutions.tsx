@@ -230,7 +230,7 @@ function ByRole() {
     const stickyRef = useRef<HTMLDivElement>(null)  // pinned at top:0
     const tabListRef = useRef<HTMLDivElement>(null)
     const headRef = useRef<HTMLDivElement>(null)
-    const N = ROLES.length  // 5
+    const N = ROLES.length
 
     useGSAP((gsap, ST) => {
         if (!outerRef.current) return
@@ -285,7 +285,7 @@ function ByRole() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                padding: isMobile ? "80px 24px" : "0 80px",
+                padding: isMobile ? "80px 24px" : "clamp(32px, 5vh, 64px) clamp(32px, 5vw, 80px)",
                 background: "var(--page-bg)",
             }}>
                 {/* Progress bar  -  desktop only */}
@@ -313,13 +313,13 @@ function ByRole() {
 
                 <div style={{ maxWidth: 1200, margin: "0 auto", width: "100%" }}>
                     {/* Heading block */}
-                    <div style={{ marginBottom: isMobile ? 48 : 56 }}>
+                    <div style={{ marginBottom: isMobile ? 48 : "clamp(28px, 4vh, 48px)" }}>
                         <motion.span initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
                             style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 14 }}>
                             Solutions by Role
                         </motion.span>
                         <div ref={headRef}>
-                            <h2 style={{ fontSize: isMobile ? 34 : isTablet ? 50 : 62, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.04, letterSpacing: "-0.03em", margin: 0 }}>
+                            <h2 style={{ fontSize: isMobile ? 34 : isTablet ? 50 : "clamp(48px, 4.1vw, 62px)", fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.04, letterSpacing: "-0.03em", margin: 0 }}>
                                 <span style={{ display: "inline-block", overflow: "hidden", verticalAlign: "bottom", lineHeight: 1.18 }}>
                                     <span className="br-w" style={{ display: "inline-block" }}>Who Uses Miraee's AI Travel Platform?</span>
                                 </span>
@@ -334,6 +334,9 @@ function ByRole() {
                             {ROLES.map((role, i) => (
                                 <motion.button key={role.id} className="role-tab"
                                     onClick={() => setActive(i)}
+                                    type="button"
+                                    aria-pressed={active === i}
+                                    aria-label={`Show ${role.label} solutions`}
                                     whileHover={{ x: isMobile ? 0 : 4 }}
                                     style={{
                                         padding: isMobile ? "9px 12px" : "12px 16px",
@@ -367,27 +370,29 @@ function ByRole() {
                                 exit={{ opacity: 0, y: -16, scale: 0.98 }}
                                 transition={{ duration: 0.4, ease: "easeOut" as const }}
                                 style={{ padding: isMobile ? "16px 0 0" : "0" }}>
-                                <div style={{ padding: isMobile ? "28px 20px" : "44px 48px", background: "rgba(255,255,255,0.04)", borderRadius: 20, position: "relative", overflow: "hidden", minHeight: isMobile ? 0 : 360, border: "1px solid rgba(255,255,255,0.08)" }}>
+                                <div style={{ padding: isMobile ? "28px 20px" : "clamp(30px, 4vh, 44px) clamp(30px, 3.2vw, 48px)", background: "var(--surface)", borderRadius: 20, position: "relative", overflow: "hidden", minHeight: isMobile ? 0 : "clamp(340px, 45vh, 410px)", border: "1px solid rgba(var(--text-rgb),0.08)", boxShadow: "0 18px 48px rgba(var(--text-rgb),0.06)", isolation: "isolate" }}>
                                     {/* Corner glow */}
-                                    <div style={{ position: "absolute", top: 0, right: 0, width: 280, height: 280, background: `radial-gradient(circle at top right, ${current.color}11, transparent 60%)`, pointerEvents: "none" }}/>
-                                    {/* Role badge */}
-                                    <div style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "5px 14px", borderRadius: 100, background: `${current.color}12`, marginBottom: 22, border: `1px solid ${current.color}30` }}>
-                                        <RoleIcon id={current.id} color={current.color} size={11}/>
-                                        <span style={{ fontSize: 10, color: current.color, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "Plus Jakarta Sans", fontWeight: 700 }}>{current.label}</span>
-                                    </div>
-                                    <h3 style={{ fontSize: isMobile ? 24 : 34, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 8px" }}>{current.title}</h3>
-                                    <p style={{ fontSize: 15, color: current.color, fontFamily: "Plus Jakarta Sans", fontStyle: "italic", marginBottom: 18, fontWeight: 500 }}>{current.sub}</p>
-                                    <p style={{ fontSize: 14, color: "rgba(251,246,242,0.48)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 0 28px", maxWidth: 500 }}>{current.desc}</p>
-                                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10 }}>
+                                    <div aria-hidden="true" style={{ position: "absolute", zIndex: -1, inset: 0, background: `radial-gradient(circle at 92% 8%, ${current.color}12, transparent 38%)`, pointerEvents: "none" }}/>
+                                    <div style={{ position: "relative", zIndex: 1 }}>
+                                      {/* Role badge */}
+                                      <div style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "5px 14px", borderRadius: 100, background: `${current.color}12`, marginBottom: 18, border: `1px solid ${current.color}30` }}>
+                                          <RoleIcon id={current.id} color={current.color} size={11}/>
+                                          <span style={{ fontSize: 10, color: current.color, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "Plus Jakarta Sans", fontWeight: 700 }}>{current.label}</span>
+                                      </div>
+                                      <h3 style={{ fontSize: isMobile ? 24 : "clamp(27px, 2.2vw, 34px)", fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 8px" }}>{current.title}</h3>
+                                      <p style={{ fontSize: 15, color: current.color, fontFamily: "Plus Jakarta Sans", fontStyle: "italic", margin: "0 0 14px", fontWeight: 500 }}>{current.sub}</p>
+                                      <p style={{ fontSize: 14, color: "rgba(var(--text-rgb),0.62)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.7, margin: "0 0 22px", maxWidth: 610 }}>{current.desc}</p>
+                                      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, minmax(0, 1fr))", gap: "10px 24px" }}>
                                         {current.points.map((pt, i) => (
                                             <motion.div key={pt} initial={{ x: -14, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.06, duration: 0.35 }}
                                                 style={{ display: "flex", alignItems: "flex-start", gap: 9 }}>
                                                 <div style={{ width: 17, height: 17, borderRadius: 5, background: current.color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
                                                     <svg width="8" height="8" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke={T.white} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
                                                 </div>
-                                                <span style={{ fontSize: 13, color: "rgba(251,246,242,0.65)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.6 }}>{pt}</span>
+                                                <span style={{ fontSize: 13, color: "rgba(var(--text-rgb),0.7)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.6 }}>{pt}</span>
                                             </motion.div>
                                         ))}
+                                      </div>
                                     </div>
                                     {/* Scroll hint  -  desktop only, fades after first role */}
                                     {!isMobile && active === 0 && (
