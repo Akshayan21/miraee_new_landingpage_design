@@ -10,6 +10,8 @@ const Home = lazy(() => import("./pages/HomeElegant"))
 const HomeV2 = lazy(() => import("./pages/HomeV2"))
 const ProductV2 = lazy(() => import("./pages/ProductV2"))
 const ForTeamsV2 = lazy(() => import("./pages/ForTeamsV2"))
+const ResourcesV2 = lazy(() => import("./pages/ResourcesV2"))
+const TechnologyV2 = lazy(() => import("./pages/TechnologyV2"))
 const SecurityV2 = lazy(() => import("./pages/SecurityV2"))
 const AboutV2 = lazy(() => import("./pages/AboutV2"))
 const WhyMiraeeV2 = lazy(() => import("./pages/WhyMiraeeV2"))
@@ -41,6 +43,8 @@ export default function App() {
                     <Route path="/v2" element={<HomeV2 />} />
                     <Route path="/product" element={<ProductV2 />} />
                     <Route path="/for-teams" element={<ForTeamsV2 />} />
+                    <Route path="/resources" element={<ResourcesV2 />} />
+                    <Route path="/technology" element={<TechnologyV2 />} />
                     <Route path="/security" element={<SecurityV2 />} />
                     <Route path="/about" element={<AboutV2 />} />
                     <Route path="/why-miraee" element={<WhyMiraeeV2 />} />

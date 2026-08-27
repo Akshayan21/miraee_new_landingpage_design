@@ -2,20 +2,25 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { SiteFooter } from "../components/LegalFormKit"
 import { Reveal, V2Nav, EditorialRows } from "../components/V2Kit"
+import mondeeLogo from "../assets/mondee_logo.png"
+import miraeeLogo from "../assets/Miraee_Logo.png"
+import abheeLogo from "../assets/abhee logo.png"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
 
 const groupPlatforms = [
-    ["Mondee", "The agentic AI travel marketplace", "Serves travel experts and organisations worldwide with negotiated air and hotel content, which forms the supply layer Miraee books against."],
+    ["Mondee", "The agentic AI travel marketplace", "Serves travel experts and organisations worldwide with negotiated air and hotel content - the supply layer Miraee books against."],
     ["Miraee", "The employee travel platform", "Plans, books, changes and expenses corporate trips end to end on one continuous context."],
-    ["Abhee", "The hyperlocal experiential marketplace", "Hosts and curators offering immersive local experiences that power Miraee's personal travel content."],
+    ["Abhee", "The hyperlocal experiential marketplace", "Hosts and curators offering immersive local experiences - the content behind Miraee's personal travel."],
 ]
 
+const groupLogos: Record<string, string> = { Mondee: mondeeLogo, Miraee: miraeeLogo, Abhee: abheeLogo }
+
 const advantage = [
-    ["Direct supply", "Wholesale contracts and direct supplier connections rather than resold inventory. That is why the rates hold rather than being claimed back later.", "500+ airlines"],
+    ["Direct supply", "Wholesale contracts and direct supplier connections rather than resold inventory - which is why the rates hold rather than being claimed back later.", "500+ airlines"],
     ["Global content", "Millions of properties across every market your teams travel to, in one place.", "2M+ properties"],
     ["Volume", "The group's existing traveler base is what makes those rates possible for a company your size.", "125M+ reached"],
-    ["Experience content", "Hyperlocal experiences no other corporate channel carries because a sister company digitized them.", "Abhee network"],
+    ["Experience content", "Hyperlocal experiences no other corporate channel carries - because a sister company digitized them.", "Abhee network"],
     ["Financial stability", "Institutional backing, so the platform running your travel program will still be here next year.", "TCW · Morgan Stanley"],
     ["Shared AI infrastructure", "Agent architecture built and proven across the group, not a first attempt.", "One engineering group"],
 ]
@@ -44,8 +49,8 @@ const orgSchema = {
 
 export default function AboutV2() {
     useEffect(() => {
-        document.title = "About Miraee | Built by Tabhi, the AI-Native Travel Group"
-        const description="Miraee is built by Tabhi, a travel group of 23 companies with direct supplier contracts, institutional backing and a marketplace already serving travelers at global scale.";let meta=document.querySelector<HTMLMetaElement>('meta[name="description"]');if(!meta){meta=document.createElement("meta");meta.name="description";document.head.appendChild(meta)};meta.content=description
+        document.title = "About Miraee - Built by Tabhi, the AI-Native Travel Group"
+        const description="Miraee is an employee travel platform built by Tabhi - a travel group of 23 companies with direct supplier contracts, institutional backing and a marketplace already serving travelers at global scale.";let meta=document.querySelector<HTMLMetaElement>('meta[name="description"]');if(!meta){meta=document.createElement("meta");meta.name="description";document.head.appendChild(meta)};meta.content=description
     }, [])
     return (
         <div className="m-site">
@@ -56,7 +61,7 @@ export default function AboutV2() {
                     <Reveal className="m-hero__copy">
                         <p className="m-eyebrow">THE COMPANY</p>
                         <h1 id="about-hero-title">The Agentic Core</h1>
-                        <p className="m-lede">Miraee is built by Tabhi, a travel group with direct supplier contracts, institutional backing, and a marketplace already moving travelers at global scale. The software is new. The supply, the scale and the balance sheet are not.</p>
+                        <p className="m-lede">Built by Tabhi, a travel group with direct supplier contracts, institutional backing, and a marketplace already moving travelers at global scale.</p>
                         <div className="m-actions">
                             <Link to="/book-a-demo">See Miraee live <span aria-hidden="true">↗</span></Link>
                             <a href="#tabhi">Meet the group <span aria-hidden="true">↓</span></a>
@@ -70,21 +75,21 @@ export default function AboutV2() {
                 <section aria-labelledby="origin-title">
                     <Reveal className="m-story">
                         <div className="m-story__text">
-                            <p className="m-eyebrow">THE ORIGIN</p>
+                            <p className="m-eyebrow">THE ORIGIN STORY</p>
                             <h2 id="origin-title">We ran the trips.<br />We saw the handoffs.</h2>
-                            <p>Tabhi has been moving travelers for years through a marketplace, travel experts, and contracts held directly with airlines and hotels. Corporate travel was the one journey that never got simpler.</p>
-                            <p>We didn't set out to build another booking tool. We had already seen what happens when you connect one to an expense tool and a support desk.</p>
+                            <p>Tabhi has been moving travelers for years, through a marketplace, through travel experts, through contracts held directly with airlines and hotels. Corporate travel was the one journey that never got simpler. Every tool solved a single stage and handed the traveler to the next one.</p>
+                            <p>We didn't set out to build another booking tool. We had already seen what happens when you connect one to an expense tool and a support desk: five owners, four handoffs, and a traveler doing the coordinating.</p>
                         </div>
-                        <div className="m-story__panel"><span className="m-story__mark">5 owners.<br />4 handoffs.</span></div>
+                        <div className="m-story__panel"><span className="m-story__mark"><span style={{ display: "block", whiteSpace: "nowrap" }}>5 owners.</span><span style={{ display: "block", whiteSpace: "nowrap" }}>4 handoffs.</span></span></div>
                     </Reveal>
                     <Reveal className="m-story">
                         <div className="m-story__text">
                             <p className="m-eyebrow">THE ANSWER</p>
                             <h2>One agent.<br />One thread.</h2>
-                            <p>So we built the opposite: one agent, one thread, one continuous context, running on supply we already own. Miraee is what happens when the company that holds the contracts also writes the software.</p>
+                            <p>So we built the opposite. One agent, one thread, one continuous travel and expense management context, running on supply we already own. Miraee is what happens when the company that holds the contracts also writes the software.</p>
                             <p className="m-closing">Most travel software is built on someone else's inventory. Ours isn't.</p>
                         </div>
-                        <div className="m-story__panel"><span className="m-story__mark">1 thread.<br />Zero handoffs.</span></div>
+                        <div className="m-story__panel"><span className="m-story__mark"><span style={{ display: "block", whiteSpace: "nowrap" }}>1 thread.</span><span style={{ display: "block", whiteSpace: "nowrap" }}>0 handoffs.</span></span></div>
                     </Reveal>
                 </section>
 
@@ -101,7 +106,7 @@ export default function AboutV2() {
                             {groupPlatforms.map(([name, what, does]) => (
                                 <div className="m-brandwall__item" key={name}>
                                     <span>{what}</span>
-                                    <strong>{name}</strong>
+                                    {groupLogos[name] ? <img className="m-brandwall__logo" src={groupLogos[name]} alt={name} /> : <strong>{name}</strong>}
                                     <p>{does}</p>
                                 </div>
                             ))}
@@ -145,7 +150,7 @@ export default function AboutV2() {
                     <Reveal className="m-section__head">
                         <p className="m-eyebrow">THE PEOPLE</p>
                         <h2 id="leadership-title">Who's building it.</h2>
-                        <p>Full leadership bios launch alongside the team announcement. Until then, Tabhi's operating track record is the fastest way to evaluate the people behind Miraee.</p>
+                        <p className="m-note">Team bios are on their way - check back soon.</p>
                     </Reveal>
                 </section>
 
@@ -153,7 +158,7 @@ export default function AboutV2() {
                     <Reveal className="m-section__head">
                         <p className="m-eyebrow">GLOBAL</p>
                         <h2 id="global-title">On the ground where your teams travel.</h2>
-                        <p>Miraee operates through Tabhi's existing regional teams, across the geographies its travelers already fly to and from.</p>
+                        <p className="m-note">Office locations and open roles are on their way - check back soon.</p>
                     </Reveal>
                 </section>
 
@@ -161,7 +166,7 @@ export default function AboutV2() {
                     <Reveal className="m-section__head">
                         <p className="m-eyebrow">NEWSROOM</p>
                         <h2 id="newsroom-title">Announcements and press.</h2>
-                        <p>Company news lands here as it happens. For press inquiries, reach the team directly at <a className="m-inline-link" href="mailto:hello@miraee.ai">hello@miraee.ai</a>.</p>
+                        <p className="m-note">No announcements yet - check back soon.</p>
                     </Reveal>
                 </section>
 

@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import { SiteFooter } from "../components/LegalFormKit"
 import { Reveal, V2Nav, Faq } from "../components/V2Kit"
-import securityHeroImg from "../assets/security-hero.jpg"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
 
@@ -53,7 +52,7 @@ const faqs: [string, string][] = [
 
 export default function SecurityV2() {
     useEffect(() => {
-        document.title = "Security, Compliance and AI Governance | Miraee"
+        document.title = "Security, Compliance and AI Governance - Miraee"
         const description = "How Miraee secures traveler data, where it is stored, and exactly what our AI agents may and may not do without a human. Certifications, controls and the full governance model."
         let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]')
         if (!meta) { meta = document.createElement("meta"); meta.name = "description"; document.head.appendChild(meta) }
@@ -75,16 +74,13 @@ export default function SecurityV2() {
                         </div>
                         <div className="m-chip-row">{["SOC 2", "GDPR", "SSO / SCIM", "Audit logs"].map(c => <span key={c}>{c}</span>)}</div>
                     </Reveal>
-                    <Reveal className="m-hero__visual sec-hero-visual" delay={.12}>
-                        <img className="m-hero__photo sec-hero-photo" src={securityHeroImg} alt="Enterprise security and IT professionals reviewing access controls together" width="1800" height="1202" fetchPriority="high" />
-                    </Reveal>
                 </section>
 
-                <section id="certifications" className="m-security" aria-label="Enterprise foundations">
+                <section id="certifications" className="m-security" aria-label="Certifications and compliance">
                     <Reveal>
-                        <p className="m-eyebrow">ENTERPRISE FOUNDATIONS</p>
-                        <h2>Governed.<br />Permissioned. Traceable.</h2>
-                        <p>Every boundary an agent operates inside is written down, configurable, and logged. See the full governance model below.</p>
+                        <p className="m-eyebrow">CERTIFICATIONS</p>
+                        <h2>Independently verified,<br />not self-declared.</h2>
+                        <p>Security controls, data protection, identity management, and agent actions are documented with a clear status for procurement review.</p>
                     </Reveal>
                     <div className="m-security__marks">
                         <span><strong>SOC 2</strong><small>In progress</small></span>
@@ -116,7 +112,7 @@ export default function SecurityV2() {
                         {trustLayers.map(([n,title,label,copy]) => <div className="sec-layer" key={title}><span>{n}</span><div><small>{label}</small><h3>{title}</h3><p>{copy}</p></div></div>)}
                     </Reveal>
 
-                    <Reveal><div className="sec-section-title"><div><p className="m-eyebrow">DECISION MATRIX</p><h3 className="m-subhead">What the agent can do</h3></div><p>Green actions proceed. Amber actions pause for a named human.</p></div></Reveal>
+                    <Reveal><div className="sec-section-title"><div><p className="m-eyebrow">DECISION MATRIX</p><h3 className="m-subhead">What agents may do without asking</h3></div><p>Every one of these defaults is configurable, and every boundary can be tightened.</p></div></Reveal>
                     <Reveal className="sec-decisions" delay={.03}>
                         {mayDoWithoutAsking.map(([action,rule,config]) => {
                             const approval = rule.includes("Requires") || rule.includes("Never")
@@ -142,6 +138,26 @@ export default function SecurityV2() {
                                 </div>
                             ))}
                         </div>
+                    </Reveal>
+
+                    <Reveal className="sec-data-principles" delay={.12}>
+                        <div className="sec-section-title"><div><p className="m-eyebrow">DATA LIFECYCLE</p><h3 className="m-subhead">What data trains what</h3></div><p>Plain-language commitments for security and procurement teams.</p></div>
+                        <div className="m-splitfacts">
+                            <div>
+                                <h3>Your data stays scoped to your organisation.</h3>
+                                <p>Your trip data personalises your organisation's experience and nothing else. It is not used to train foundation models or improve outcomes for another customer. Personalisation is scoped to your tenant.</p>
+                            </div>
+                            <div>
+                                <h3>Retention and deletion are documented.</h3>
+                                <p>Retention periods, traveler deletion rights, tax and audit obligations, and contract-end return formats are defined in the security package for your deployment.</p>
+                            </div>
+                        </div>
+                    </Reveal>
+
+                    <Reveal className="m-callout" delay={.14}>
+                        <p className="m-eyebrow">THE AUDIT TRAIL</p>
+                        <h3>Every action. Every actor. Every reason.</h3>
+                        <p>Each agent action is logged with what was done, which agent did it, when, under which rule, and what it cost. The complete record is exportable at any time.</p>
                     </Reveal>
 
                 </section>
