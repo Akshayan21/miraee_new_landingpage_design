@@ -6,7 +6,7 @@ import "./HomeV2Light.css"
 import "./SubpagesV2.css"
 
 export default function NotFound() {
-    usePageMeta("Page not found — Miraee", "The Miraee page you requested could not be found.")
+    usePageMeta("Page not found - Miraee", "The Miraee page you requested could not be found.")
     return (
         <div className="m-site">
             <a className="m-skip" href="#main">Skip to content</a>

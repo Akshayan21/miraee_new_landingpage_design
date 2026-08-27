@@ -47,7 +47,7 @@ const CURRENCIES = ["USD", "EUR", "GBP", "INR", "AED", "SGD", "AUD", "JPY", "Oth
  * @framerSupportedLayoutHeight auto
  */
 export default function MiraeeSupportPage(props: { style?: React.CSSProperties }) {
-    usePageMeta("Miraee Support — Raise a Travel or Expense Request", "Contact Miraee support for booking, disruption, payment, expense, account and technical help.")
+    usePageMeta("Miraee Support - Raise a Travel or Expense Request", "Contact Miraee support for booking, disruption, payment, expense, account and technical help.")
     const vw = useVW()
     const isNarrow = vw < 1200
     const [formKey, setFormKey] = useState(0)

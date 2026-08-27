@@ -23,11 +23,11 @@ export function Reveal({ children, className = "", delay = 0, id }: { children: 
 }
 
 const NAV_LINKS: [string, string][] = [
-    ["Product", "/product"],
-    ["For teams", "/for-teams"],
-    ["Security", "/security"],
+    ["Home", "/v2"],
+    ["Platform", "/product"],
+    ["Solutions", "/for-teams"],
+    ["AI & Technology", "/technology"],
     ["About", "/about"],
-    ["Why Miraee", "/why-miraee"],
 ]
 
 function VersionSwitch({ className = "" }: { className?: string }) {
@@ -43,7 +43,7 @@ function VersionSwitch({ className = "" }: { className?: string }) {
 
 export function V2Nav({ active }: { active?: string }) {
     const vw = useWindowWidth()
-    const isCompact = vw < 980
+    const isCompact = vw < 1240
     const [open, setOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
 
@@ -55,7 +55,7 @@ export function V2Nav({ active }: { active?: string }) {
     }, [])
 
     useEffect(() => {
-        const onResize = () => { if (window.innerWidth >= 980) setOpen(false) }
+        const onResize = () => { if (window.innerWidth >= 1240) setOpen(false) }
         window.addEventListener("resize", onResize, { passive: true })
         return () => window.removeEventListener("resize", onResize)
     }, [])
@@ -119,7 +119,7 @@ export function V2Nav({ active }: { active?: string }) {
     )
 }
 
-export function Faq({ items }: { items: [string, string][] }) {
+export function Faq({ items }: { items: [string, ReactNode][] }) {
     const [open, setOpen] = useState(0)
     return (
         <div className="m-faq">

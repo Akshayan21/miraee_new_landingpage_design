@@ -91,7 +91,7 @@ const INTERESTS = ["Business travel", "Expenses", "Experiences", "Airline partne
  * @framerSupportedLayoutHeight auto
  */
 export default function MiraeeDemoPage(props: { style?: React.CSSProperties }) {
-    usePageMeta("Book a Miraee Demo — Bring a Real Trip", "See Miraee handle a real company trip, policy and edge cases in a focused 20-minute live product walkthrough.")
+    usePageMeta("Book a Miraee Demo - Bring a Real Trip", "See Miraee handle a real company trip, policy and edge cases in a focused 20-minute live product walkthrough.")
     const vw = useVW()
     const isNarrow = vw < 1200
     const [companySize, setCompanySize] = useState(SIZES[1])

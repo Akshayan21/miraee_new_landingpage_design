@@ -135,8 +135,10 @@ export function SiteFooter() {
     const COLS: { title: string; links: FooterLink[] }[] = [
         {
             title: "Explore", links: [
-                { label: "Product", href: "/product" },
-                { label: "For teams", href: "/for-teams" },
+                { label: "Platform", href: "/product" },
+                { label: "Solutions", href: "/for-teams" },
+                { label: "Resources", href: "/resources" },
+                { label: "AI & Technology", href: "/technology" },
                 { label: "Why Miraee", href: "/why-miraee" },
                 { label: "Support", href: "/support" },
                 { label: "Careers", disabled: true },
@@ -148,7 +150,7 @@ export function SiteFooter() {
                 { label: "Partner with us", href: "mailto:partners@miraee.ai" },
                 { label: "Terms & Conditions", href: "/terms" },
                 { label: "Privacy", href: "/privacy" },
-                { label: "Security", href: "/security" },
+                { label: "Trust & Security", href: "/security" },
                 { label: "Arbitration opt-out", href: "/arbitration-opt-out" },
                 { label: "Dispute notice", href: "/dispute-notice" },
             ],
