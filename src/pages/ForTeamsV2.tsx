@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { SiteFooter } from "../components/LegalFormKit"
+import { V2Footer } from "../components/LegalFormKit"
 import { Reveal, V2Nav, EditorialRows } from "../components/V2Kit"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
@@ -116,8 +116,8 @@ export default function ForTeamsV2() {
                 <section className="m-hero" aria-labelledby="teams-hero-title">
                     <Reveal className="m-hero__copy">
                         <p className="m-eyebrow">DESIGNED FOR EVERYONE</p>
-                        <h1 id="teams-hero-title">Built for everyone behind the journey - from planning and payment to taking the trip.</h1>
-                        <p className="m-lede">Whatever your role, use case or company, Miraee removes the friction between intent and outcome - one travel management software platform for the whole program.</p>
+                        <h1 id="teams-hero-title">Built for everyone behind the journey, from planning and payment to taking the trip.</h1>
+                        <p className="m-lede">Whatever your role, use case or company, Miraee removes the friction between intent and outcome, one travel management software platform for the whole program.</p>
                         <div className="m-jumplinks">
                             <a href="#employees">For employees <span aria-hidden="true">↓</span></a>
                             <a href="#finance">For finance <span aria-hidden="true">↓</span></a>
@@ -247,7 +247,7 @@ export default function ForTeamsV2() {
                     </Reveal>
                 </section>
             </main>
-            <SiteFooter />
+            <V2Footer />
         </div>
     )
 }

@@ -1,5 +1,6 @@
+import type { ReactNode } from "react"
 import { Link } from "react-router-dom"
-import { SiteFooter } from "../components/LegalFormKit"
+import { V2Footer } from "../components/LegalFormKit"
 import { Faq, Reveal, V2Nav } from "../components/V2Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
 import financeDashboard from "../assets/finance_dashboard.png"
@@ -105,9 +106,9 @@ const generations = [
     ["Agentic", "The stages collapse. One agent carries one context from request to reconciliation.", "Nothing is handed off."],
 ] as const
 
-const faqs: [string, string][] = [
-    ["What is Miraee?", "Miraee is an AI-native employee travel platform that plans, books, changes and expenses business trips end to end. Rather than connecting a booking tool to an expense tool, Miraee runs the entire journey as one continuous travel and expense management system, so the same agent that plans a trip also rebooks it during disruption and closes the expense afterwards."],
-    ["How is Miraee different from a travel management company?", "A travel management company processes bookings and charges per transaction, with changes and support billed separately. Miraee is software: it understands a request in natural language, applies company policy before showing options, books the whole trip as one item, and handles changes and expenses automatically. Human travel specialists are included rather than charged per call."],
+const faqs: [string, ReactNode][] = [
+    ["What is Miraee?", <>Miraee is an AI-native <strong>employee travel platform</strong> that plans, books, changes and expenses business trips end to end. Rather than connecting a booking tool to an expense tool, Miraee runs the entire journey as one continuous travel and expense management system, so the same agent that plans a trip also rebooks it during disruption and closes the expense afterwards.</>],
+    ["How is Miraee different from a travel management company?", <>A <strong>travel management company</strong> processes bookings and charges per transaction, with changes and support billed separately. Miraee is software: it understands a request in natural language, applies company policy before showing options, books the whole trip as one item, and handles changes and expenses automatically. Human travel specialists are included rather than charged per call.</>],
     ["What does it mean that Miraee uses AI agents?", "Miraee runs a multi agent AI system: bounded, permissioned workers that complete tasks rather than answer questions. Separate agents own booking, policy, negotiation, rebooking, expense and support, and all of them read the same trip thread. Each agent has a written limit on what it may do without human approval, and every action it takes is logged."],
     ["Does Miraee enforce our travel policy automatically?", "Yes. Miraee enforces travel policy compliance automatically, applying company policy before search results are shown, so travelers see options that are already in policy rather than discovering violations at approval. Policy can be set by route, grade, trip type and entity, and out-of-policy requests are either flagged for review or blocked, depending on how the rules are configured."],
     ["Do travelers still have to file expense reports?", "No. Miraee captures the receipt at the point of transaction, codes it to the correct category, entity and cost centre, matches it against the original booking, and posts it to the finance system, making the expense reimbursement process easier. Travelers do not submit reports and finance teams do not chase receipts - this is automated expense reporting, not a task travelers manage."],
@@ -234,7 +235,7 @@ export default function ProductV2() {
 
                 <section className="m-cta pv2-cta"><Reveal><p className="m-eyebrow">SEE THE AGENT IN ACTION</p><h2>Bring a real trip.</h2><p>Twenty minutes. Your route, your policy, your edge cases. We'll run it live.</p><Link to="/book-a-demo">Book your demo <span aria-hidden="true">↗</span></Link></Reveal></section>
             </main>
-            <SiteFooter />
+            <V2Footer />
         </div>
     )
 }

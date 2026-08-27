@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import { SiteFooter } from "../components/LegalFormKit"
+import { V2Footer } from "../components/LegalFormKit"
 import { Reveal, V2Nav, Faq, EditorialRows, MiniTable } from "../components/V2Kit"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
@@ -131,7 +131,7 @@ export default function WhyMiraeeV2() {
                     </Reveal>
                 </section>
             </main>
-            <SiteFooter />
+            <V2Footer />
         </div>
     )
 }

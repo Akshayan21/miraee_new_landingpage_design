@@ -1,8 +1,8 @@
 import { motion, useMotionValue, useSpring, useTransform, useInView, AnimatePresence } from "framer-motion"
-import ThemeToggle from "../components/ThemeToggle"
 import { useRef, useEffect, useState, useCallback } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { SiteNav, V1Footer } from "../components/LegalFormKit"
 gsap.registerPlugin(ScrollTrigger)
 
 const T = {
@@ -48,142 +48,10 @@ function SmoothScrollStyle() {
         if (existing) return
         const s = document.createElement("style")
         s.id = "tech-scroll-style"
-        s.textContent = `html{scroll-behavior:smooth;} *{-webkit-font-smoothing:antialiased;} body{cursor:none;}`
+        s.textContent = `html{scroll-behavior:smooth;} *{-webkit-font-smoothing:antialiased;}`
         document.head.appendChild(s)
     }, [])
     return null
-}
-
-function MiraeeLogo({ fill = T.orange, height = 28 }: { fill?: string; height?: number }) {
-    const w = height * (338 / 84)
-    return (
-        <svg width={w} height={height} viewBox="0 0 338 84" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M113.255 83.0098C112.156 83.0098 111.078 82.8081 110.021 82.4154C102.147 79.4749 101.207 66.7045 102.95 55.7387C103.807 50.3886 105.846 37.5439 105.413 31.7797C104.25 32.82 102.496 34.6352 100.033 37.788C93.6499 45.9513 86.2095 53.8917 79.3504 50.8344C74.0977 48.4884 72.5229 40.9514 74.679 28.4464L74.7001 28.3084C76.9407 15.2833 76.3805 11.0159 75.683 9.63587C74.2456 9.9331 68.1792 12.3216 52.4106 31.1746C50.6033 33.3402 48.9651 35.4102 47.4749 37.374C52.1041 40.8134 53.2244 47.1933 50.8147 56.3332C47.3481 69.4751 40.8272 78.1692 33.8095 79.0078C30.1844 79.443 26.9398 77.7127 25.1537 74.3795C22.4375 69.3265 22.9765 59.9955 30.0259 46.8005C23.0188 49.4862 13.9825 54.295 5.36894 60.2185L0 52.3312C6.29899 48.0001 24.1391 36.4823 37.2761 35.2085C39.5589 31.9814 42.1694 28.5951 45.1498 25.0389C62.3769 4.40245 72.4172 -2.60374 79.7837 0.835664C88.3972 4.85892 85.6916 20.5485 84.0746 29.922L84.0535 30.06C83.0811 35.7074 83.1763 39.444 83.5039 41.323C84.9518 40.3676 87.7948 37.9579 92.5402 31.8858C97.962 24.954 103.785 18.8819 109.704 21.4827C116.965 24.6673 115.548 37.1193 112.336 57.2461C110.962 65.8871 112.166 72.0016 113.318 73.371C114.291 73.1056 118.878 71.0674 128.231 55.8661L135.872 43.4567L143.968 48.4778L136.327 60.8872C127.047 75.9718 119.765 83.0098 113.255 83.0098ZM42.0003 45.2188C38.2061 51.1741 36.0712 55.8343 34.8875 59.1675C32.89 64.7619 33.0169 67.9571 33.3233 69.2522C35.1306 68.2119 38.9988 63.8702 41.6304 53.8704C43.0466 48.5096 42.6027 46.015 42.0003 45.2188Z" fill={fill}/>
-            <path d="M134.191 18.6482C134.191 15.1132 136.855 12.5337 140.659 12.5337C144.464 12.5337 147.128 15.1132 147.128 18.6482C147.128 22.1831 144.559 24.7627 140.659 24.7627C136.76 24.7627 134.191 22.1831 134.191 18.6482ZM135.713 30.9727H145.511V82.5638H135.713V30.9727Z" fill={fill}/>
-            <path d="M152.75 30.9725H162.547C162.547 34.3164 162.547 36.3227 162.452 39.571H162.547C165.496 33.8387 170.537 30.877 176.625 30.877C177.481 30.877 178.432 30.877 179.383 30.9725V39.9532H175.864C167.113 39.9532 162.547 46.6409 162.547 54.7617V82.5635H152.75V30.9725Z" fill={fill}/>
-            <path d="M179.31 56.9592C179.31 41.4819 189.392 29.8262 202.899 29.8262C210.794 29.8262 216.882 33.0745 220.306 39.3801H220.496C220.401 36.4184 220.401 34.5076 220.401 30.9726H230.198V82.5637H220.401C220.401 79.0288 220.401 77.6912 220.496 74.3473H220.306C216.691 80.2708 210.128 83.9012 202.899 83.9012C189.107 83.9012 179.31 72.5321 179.31 56.9592ZM220.781 56.8637C220.781 46.2589 214.408 38.8068 204.801 38.8068C195.194 38.8068 189.107 46.7366 189.107 56.9592C189.107 67.1819 195.385 74.9206 204.801 74.9206C214.218 74.9206 220.781 67.6596 220.781 56.8637Z" fill={fill}/>
-            <path d="M235.388 56.864C235.388 41.1001 245.756 29.4443 261.07 29.4443C276.384 29.4443 285.23 39.667 285.23 55.3354C285.23 56.7685 285.135 58.0105 284.945 59.4436H244.9C245.946 68.6153 252.129 75.2075 261.355 75.2075C267.823 75.2075 272.865 72.0547 275.813 66.1313L283.993 70.2395C279.428 79.5068 271.152 83.9971 260.975 83.9971C245.661 83.9971 235.388 72.5324 235.388 56.864ZM276.099 51.6094C274.957 43.4886 269.821 38.2339 261.07 38.2339C252.794 38.2339 247.087 43.7752 245.28 51.6094H276.099Z" fill={fill}/>
-            <path d="M288.157 56.864C288.157 41.1001 298.525 29.4443 313.839 29.4443C329.153 29.4443 338 39.667 338 55.3354C338 56.7685 337.904 58.0105 337.714 59.4436H297.669C298.715 68.6153 304.898 75.2075 314.125 75.2075C320.593 75.2075 325.634 72.0547 328.583 66.1313L336.763 70.2395C332.197 79.5068 323.922 83.9971 313.744 83.9971C298.43 83.9971 288.157 72.5324 288.157 56.864ZM328.858 51.6094C327.716 43.4886 322.58 38.2339 313.829 38.2339C305.553 38.2339 299.846 43.7752 298.039 51.6094H328.858Z" fill={fill}/>
-        </svg>
-    )
-}
-
-function NavLinks() {
-    const [hovered, setHovered] = useState<string | null>(null)
-    const links = [
-        { label: "Product", href: "/product" },
-        { label: "Technology", href: "/technology" },
-        { label: "Solutions", href: "/solutions" },
-        { label: "Resources", href: "/resources" },
-    ]
-    return (
-        <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
-                        <ThemeToggle size={34} />
-            {links.map(({ label, href }) => (
-                <a key={label} href={href} onMouseEnter={() => setHovered(label)} onMouseLeave={() => setHovered(null)} style={{ position: "relative", cursor: "pointer", paddingBottom: 4, textDecoration: "none" }}>
-                    <motion.span animate={{ color: hovered === label ? T.maroon : "rgba(var(--text-rgb),0.55)" }} transition={{ duration: 0.2 }} style={{ fontSize: 14, fontFamily: "Plus Jakarta Sans", fontWeight: 500, display: "block" }}>
-                        {label}
-                    </motion.span>
-                    {hovered === label && (
-                        <motion.div layoutId="tech-nav-underline" style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 1.5, background: T.orange, borderRadius: 2 }} transition={{ type: "spring", stiffness: 500, damping: 35 }} />
-                    )}
-                </a>
-            ))}
-        </div>
-    )
-}
-
-function TechNav() {
-    const [scrolled, setScrolled] = useState(false)
-    const [menuOpen, setMenuOpen] = useState(false)
-    const w = useWindowWidth()
-    const isMobile = w < 768
-    useEffect(() => {
-        const fn = () => setScrolled(window.scrollY > 32)
-        window.addEventListener("scroll", fn, { passive: true })
-        return () => window.removeEventListener("scroll", fn)
-    }, [])
-    return (
-        <>
-            <nav style={{
-                position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
-                height: 68, display: "flex", alignItems: "center", justifyContent: "space-between",
-                padding: isMobile ? "0 20px" : "0 80px",
-                background: scrolled ? "var(--glass-bg)" : "rgba(251,246,242,0)",
-                backdropFilter: scrolled ? "blur(16px)" : "none",
-                borderBottom: scrolled ? "1px solid rgba(var(--text-rgb),0.06)" : "1px solid transparent",
-                transition: "all 0.4s ease", boxSizing: "border-box",
-            }}>
-                <a href="https://app.miraee.ai" style={{ textDecoration: "none" }}>
-                    <MiraeeLogo fill={T.orange} height={26} />
-                </a>
-                {!isMobile && (
-                    <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
-                        <NavLinks />
-                        <a href="#demo" style={{ display: "inline-flex", alignItems: "center", height: 40, padding: "0 20px", background: T.accent, color: T.cream, borderRadius: 8, fontSize: 14, fontFamily: "Plus Jakarta Sans", fontWeight: 700, textDecoration: "none", cursor: "pointer" }}>
-                            Book a demo
-                        </a>
-                    </div>
-                )}
-                {isMobile && (
-                    <button onClick={() => setMenuOpen(o => !o)} style={{ background: "none", border: "none", cursor: "pointer", padding: 8 }}>
-                        <div style={{ width: 22, height: 2, background: T.ink, marginBottom: 5, transition: "all 0.3s", transform: menuOpen ? "rotate(45deg) translate(5px,5px)" : "none" }} />
-                        <div style={{ width: 22, height: 2, background: T.ink, marginBottom: 5, opacity: menuOpen ? 0 : 1, transition: "all 0.3s" }} />
-                        <div style={{ width: 22, height: 2, background: T.ink, transition: "all 0.3s", transform: menuOpen ? "rotate(-45deg) translate(5px,-5px)" : "none" }} />
-                    </button>
-                )}
-            </nav>
-            <AnimatePresence>
-                {isMobile && menuOpen && (
-                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.25 }}
-                        style={{ position: "fixed", top: 68, left: 0, right: 0, zIndex: 199, background: "var(--glass-bg)", backdropFilter: "blur(16px)", borderBottom: "1px solid rgba(var(--text-rgb),0.06)", padding: "20px 20px 28px", display: "flex", flexDirection: "column", gap: 20 }}>
-                        {[{ label: "Product", href: "/product" }, { label: "Technology", href: "/technology" }, { label: "Solutions", href: "/solutions" }, { label: "Resources", href: "/resources" }].map(({ label, href }) => (
-                            <a key={label} href={href} onClick={() => setMenuOpen(false)} style={{ fontSize: 18, fontFamily: "Plus Jakarta Sans", fontWeight: 500, color: T.ink, textDecoration: "none", opacity: 0.75 }}>{label}</a>
-                        ))}
-                        <a href="#demo" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", height: 44, background: T.accent, color: T.cream, borderRadius: 8, fontSize: 15, fontFamily: "Plus Jakarta Sans", fontWeight: 700, textDecoration: "none", marginTop: 4 }}>Book a demo</a>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </>
-    )
-}
-
-function TechFooter() {
-    const w = useWindowWidth()
-    const isMobile = w < 768
-    return (
-        <footer data-dark="true" style={{ background: "#0F0407", padding: `${isMobile ? 48 : 64}px ${isMobile ? 20 : 80}px 40px`, boxSizing: "border-box" }}>
-            <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-                <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: "flex-start", gap: isMobile ? 40 : 0, marginBottom: 48 }}>
-                    <div>
-                        <div style={{ marginBottom: 12 }}>
-                            <MiraeeLogo fill={T.cream} height={22} />
-                        </div>
-                        <p style={{ margin: 0, fontSize: 14, fontFamily: "Plus Jakarta Sans", color: "rgba(251,246,242,0.3)", maxWidth: 240, lineHeight: 1.65 }}>
-                            The AI-native employee travel platform. One conversation. Every trip, automated.
-                        </p>
-                    </div>
-                    <div style={{ display: "flex", gap: isMobile ? 40 : 64 }}>
-                        {[
-                            { title: "PRODUCT", links: ["Features", "Integrations", "Security", "Pricing"] },
-                            { title: "COMPANY", links: ["About", "Blog", "Careers", "Contact"] },
-                        ].map((col) => (
-                            <div key={col.title}>
-                                <p style={{ margin: "0 0 20px", fontSize: 11, fontFamily: "Plus Jakarta Sans", fontWeight: 700, color: "rgba(251,246,242,0.2)", letterSpacing: "0.1em" }}>{col.title}</p>
-                                {col.links.map(l => (
-                                    <motion.p key={l} whileHover={{ x: 4, color: "rgba(251,246,242,0.75)" }} transition={{ duration: 0.18 }} style={{ margin: "0 0 12px", fontSize: 14, fontFamily: "Plus Jakarta Sans", color: "rgba(251,246,242,0.4)", cursor: "pointer" }}>{l}</motion.p>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div style={{ borderTop: "1px solid rgba(251,246,242,0.06)", paddingTop: 24, display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 8 : 0, justifyContent: "space-between" }}>
-                    <span style={{ fontSize: 13, fontFamily: "Plus Jakarta Sans", color: "rgba(251,246,242,0.2)" }}>© 2025 Miraee. All rights reserved.</span>
-                    <span style={{ fontSize: 13, fontFamily: "Plus Jakarta Sans", color: "rgba(251,246,242,0.2)" }}>Privacy Policy · Terms of Service</span>
-                </div>
-            </div>
-        </footer>
-    )
 }
 
 function ScrollBar() {
@@ -219,16 +87,15 @@ function SolutionsHero() {
             scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 1.5 } })
     }, [])
 
-    const line1 = ["AI-Native", "Employee", "Travel"]
-    const line2 = ["Solutions", "for", "Every"]
-    const line3 = ["Team."]
-    const allWords = [...line1, ...line2, ...line3]
-    const roles = ["CEO", "CFO", "CHRO", "Travel Manager", "Traveller"]
+    const line1 = ["Built", "for", "Everyone"]
+    const line2 = ["Behind", "the", "Journey."]
+    const allWords = [...line1, ...line2]
+    const roles = ["Employees", "Finance", "Admins", "Travel Leads", "Managers"]
     const floatPos = [
         { top: "16%", left: "7%" }, { top: "74%", left: "5%" },
         { top: "12%", right: "8%" }, { top: "66%", right: "6%" }, { top: "40%", right: "3%" },
     ]
-    const accentWords = new Set(["Team."])
+    const accentWords = new Set(["Journey."])
 
     let wordIdx = 0
     const renderLine = (words: string[]) => words.map((word) => {
@@ -237,7 +104,7 @@ function SolutionsHero() {
             <span key={idx} style={{ display: "inline-block", overflow: "hidden", verticalAlign: "bottom", lineHeight: 1.15, perspective: 1000, marginRight: "0.22em" }}>
                 <motion.span custom={idx} variants={wordVariants} initial="hidden" animate="visible"
                     style={{ display: "inline-block", backfaceVisibility: "hidden",
-                        color: accentWords.has(word) ? T.orange : T.cream }}>
+                        color: accentWords.has(word) ? T.orange : T.ink }}>
                     {word}
                 </motion.span>
             </span>
@@ -245,14 +112,11 @@ function SolutionsHero() {
     })
 
     return (
-        <section ref={heroRef} style={{ position: "relative", minHeight: "100vh", background: "#0F0407", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+        <section ref={heroRef} style={{ position: "relative", minHeight: "100vh", background: "var(--page-bg)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+            {/* Warm orange glow */}
+            <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", background: "radial-gradient(ellipse 60% 55% at 50% 8%, rgba(229,86,2,0.09), transparent 65%)" }}/>
             {/* Grid overlay */}
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(251,246,242,0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(251,246,242,0.038) 1px, transparent 1px)", backgroundSize: "72px 72px", pointerEvents: "none" }}/>
-            {/* Vignette */}
-            <div style={{
-                position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
-                background: `radial-gradient(ellipse 72% 68% at 50% 50%, transparent 0%, rgba(var(--text-rgb),0.48) 38%, rgba(var(--text-rgb),0.88) 65%, ${T.ink} 88%)`,
-            }} />
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.035) 1px, transparent 1px)", backgroundSize: "72px 72px", pointerEvents: "none" }}/>
             {/* Orange corner accents */}
             <div style={{ position: "absolute", top: 0, left: 0, width: 120, height: 120, borderTop: "1px solid rgba(229,86,2,0.15)", borderLeft: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }}/>
             <div style={{ position: "absolute", bottom: 0, right: 0, width: 120, height: 120, borderBottom: "1px solid rgba(229,86,2,0.15)", borderRight: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }}/>
@@ -261,31 +125,30 @@ function SolutionsHero() {
                 <motion.div key={role} initial={{ opacity: 0, y: 16, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ delay: 1.6 + i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                     style={{ position: "absolute", ...floatPos[i] as any, padding: "8px 18px",
-                        border: "1px solid rgba(255,255,255,0.1)", borderRadius: 100,
-                        background: "rgba(var(--text-rgb),0.55)", pointerEvents: "none" }}>
-                    <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans", fontWeight: 600, color: "rgba(251,246,242,0.55)", letterSpacing: "0.09em" }}>{role}</span>
+                        border: "1px solid rgba(var(--text-rgb),0.08)", borderRadius: 100,
+                        background: "var(--surface)", boxShadow: "0 6px 22px rgba(var(--text-rgb),0.08)", pointerEvents: "none" }}>
+                    <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans", fontWeight: 600, color: "rgba(var(--text-rgb),0.62)", letterSpacing: "0.09em" }}>{role}</span>
                 </motion.div>
             ))}
             {/* Main content */}
-            <div ref={heroInnerRef} style={{ position: "relative", zIndex: 3, maxWidth: 900, textAlign: "center", padding: isMobile ? "120px 24px 80px" : isTablet ? "100px 48px 80px" : "0 64px", willChange: "transform" }}>
+            <div ref={heroInnerRef} style={{ position: "relative", top: isMobile ? 0 : isTablet ? 36 : 48, zIndex: 3, maxWidth: 900, textAlign: "center", padding: isMobile ? "120px 24px 80px" : isTablet ? "100px 48px 80px" : "0 64px", willChange: "transform" }}>
                 {/* Badge */}
                 <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" as const }}
-                    style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 20px", border: "1px solid rgba(251,246,242,0.15)", borderRadius: 100, marginBottom: 48, background: "rgba(251,246,242,0.08)" }}>
+                    style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 20px", border: `1px solid ${T.mutedLight}`, borderRadius: 100, marginBottom: 48, background: "rgba(var(--text-rgb),0.04)" }}>
                     <motion.div animate={{ scale: [1,1.6,1], opacity: [0.7,1,0.7] }} transition={{ duration: 2, repeat: Infinity }}
                         style={{ width: 6, height: 6, borderRadius: "50%", background: T.orange, flexShrink: 0 }}/>
-                    <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans", color: T.cream, letterSpacing: "0.13em", textTransform: "uppercase", fontWeight: 700 }}>Employee Travel Solutions · Miraee</span>
+                    <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans", color: T.ink, letterSpacing: "0.13em", textTransform: "uppercase", fontWeight: 700 }}>Designed for Everyone · Miraee</span>
                 </motion.div>
                 {/* Heading  -  framer-motion word reveal, no GSAP dependency */}
-                <h1 style={{ fontSize: isMobile ? 38 : isTablet ? 58 : 78, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.04, letterSpacing: "-0.035em", margin: "0 0 36px", textAlign: "center" }}>
+                <h1 style={{ fontSize: isMobile ? 38 : isTablet ? 58 : 78, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.04, letterSpacing: "-0.035em", margin: "0 0 36px", textAlign: "center" }}>
                     <span style={{ display: "block", textAlign: "center" }}>{renderLine(line1)}</span>
                     <span style={{ display: "block", textAlign: "center" }}>{renderLine(line2)}</span>
-                    <span style={{ display: "block", textAlign: "center" }}>{renderLine(line3)}</span>
                 </h1>
                 {/* Subhead */}
                 <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 1.05, ease: "easeOut" as const }}
-                    style={{ fontSize: isMobile ? 16 : 19, color: "rgba(251,246,242,0.48)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, maxWidth: 560, margin: "0 auto 52px", fontWeight: 400 }}>
-                    Miraee is the AI-native employee travel platform that adapts to every role — from CFO to road warrior — and scales from startup to enterprise without adding headcount.
+                    style={{ fontSize: isMobile ? 16 : 19, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, maxWidth: 560, margin: "0 auto 52px", fontWeight: 400 }}>
+                    Whatever your role, use case or company, Miraee removes the friction between intent and outcome — one travel management software platform for the whole program, from planning and payment to taking the trip.
                 </motion.p>
                 {/* CTAs */}
                 <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
@@ -295,8 +158,8 @@ function SolutionsHero() {
                         style={{ padding: isMobile ? "14px 30px" : "17px 42px", background: T.orange, color: T.white, borderRadius: 12, fontSize: 15, fontFamily: "Plus Jakarta Sans", fontWeight: 700, textDecoration: "none", display: "inline-block", letterSpacing: "0.01em" }}>
                         Book a demo
                     </motion.a>
-                    <motion.a href="#roles" whileHover={{ borderColor: "rgba(251,246,242,0.5)", color: T.cream, background: "rgba(251,246,242,0.05)" }} whileTap={{ scale: 0.97 }}
-                        style={{ padding: isMobile ? "14px 30px" : "17px 42px", border: "1px solid rgba(251,246,242,0.25)", color: "rgba(251,246,242,0.65)", borderRadius: 12, fontSize: 15, fontFamily: "Plus Jakarta Sans", fontWeight: 500, textDecoration: "none", display: "inline-block", transition: "all 0.22s" }}>
+                    <motion.a href="#roles" whileHover={{ borderColor: "rgba(var(--text-rgb),0.4)", color: T.ink, background: "rgba(var(--text-rgb),0.04)" }} whileTap={{ scale: 0.97 }}
+                        style={{ padding: isMobile ? "14px 30px" : "17px 42px", border: "1px solid rgba(var(--text-rgb),0.18)", color: "rgba(var(--text-rgb),0.65)", borderRadius: 12, fontSize: 15, fontFamily: "Plus Jakarta Sans", fontWeight: 500, textDecoration: "none", display: "inline-block", transition: "all 0.22s" }}>
                         Talk to sales
                     </motion.a>
                 </motion.div>
@@ -304,7 +167,7 @@ function SolutionsHero() {
             {/* Scroll indicator */}
             <motion.div style={{ position: "absolute", bottom: 36, left: 0, right: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 6, zIndex: 4 }}
                 animate={{ y: [0, 10, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}>
-                <span style={{ fontSize: 9, fontFamily: "Plus Jakarta Sans", color: "rgba(251,246,242,0.2)", letterSpacing: "0.14em", textTransform: "uppercase" }}>Scroll</span>
+                <span style={{ fontSize: 9, fontFamily: "Plus Jakarta Sans", color: "rgba(var(--text-rgb),0.3)", letterSpacing: "0.14em", textTransform: "uppercase" }}>Scroll</span>
                 <div style={{ width: 1, height: 52, background: "linear-gradient(to bottom,rgba(229,86,2,0.7),transparent)" }}/>
             </motion.div>
         </section>
@@ -314,40 +177,45 @@ function SolutionsHero() {
 // --- BY ROLE -----------------------------------------------------------------
 // SVG icon paths  -  avoids Unicode encoding issues
 const ROLE_ICONS: Record<string, string> = {
-    ceo:  "M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 2a8 8 0 1 1 0 16A8 8 0 0 1 12 4zm0 3a5 5 0 1 0 0 10A5 5 0 0 0 12 7zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z",
-    cfo:  "M3 19l9-16 9 16H3zm9-12.5L5.5 17h13L12 6.5z",
-    chro: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-4.42 0-8 1.79-8 4v1h16v-1c0-2.21-3.58-4-8-4z",
-    tm:   "M3 3h18v2H3V3zm0 4h12v2H3V7zm0 4h18v2H3v-2zm0 4h12v2H3v-2zm0 4h18v2H3v-2z",
-    traveller: "M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z",
+    employees: "M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z",
+    finance:   "M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6",
+    admins:    "M3 3h18v2H3V3zm0 4h12v2H3V7zm0 4h18v2H3v-2zm0 4h12v2H3v-2zm0 4h18v2H3v-2z",
+    travelleads: "M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 2a8 8 0 1 1 0 16A8 8 0 0 1 12 4zm0 3a5 5 0 1 0 0 10A5 5 0 0 0 12 7zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z",
+    chros:     "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-4.42 0-8 1.79-8 4v1h16v-1c0-2.21-3.58-4-8-4z",
+    managers:  "M9 12.5l2.2 2.2L20 6M21 12v6.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5v-13A1.5 1.5 0 0 1 4.5 4H15",
 }
 
 const ROLES = [
-    { id: "ceo", label: "CEO", title: "For CEOs", sub: "Visibility without the overhead",
+    { id: "employees", label: "Employees", title: "Your personal AI travel agent.", sub: "Book a trip from a single sentence",
       color: T.orange,
-      desc: "Keep travel efficient, compliant, and cost-controlled — without getting pulled into day-to-day coordination. Executive-level spend visibility, policy guardrails, and minimal oversight.",
-      points: ["Executive-level spend visibility in real time", "Policy guardrails that enforce themselves", "Zero day-to-day coordination required"] },
-    { id: "cfo", label: "CFO", title: "For CFOs", sub: "Travel spend you can actually forecast",
+      desc: "Describe your trip in plain language and Miraee handles planning, booking, policy and expenses. No forms. No portals. No end-of-month receipt hunt.",
+      points: ["Trip planning from a single sentence", "Auto-applied policy on every booking", "Real-time rebooking when flights change", "Automated expense reporting"] },
+    { id: "finance", label: "Finance", title: "Every dollar tracked. Every trip measured.", sub: "Real-time visibility, not month-end reconciliation",
       color: "#C94A00",
-      desc: "Every booking becomes structured financial data the moment it's made. Real-time spend visibility, automatic reconciliation, audit-ready reporting, cost-center mapping.",
-      points: ["Real-time spend vs. budget dashboard", "Automatic three-way reconciliation", "Audit-ready reporting, always on", "Cost-center and GL mapping"] },
-    { id: "chro", label: "CHRO", title: "For CHROs", sub: "Business travel people actually enjoy",
+      desc: "Miraee gives finance real-time visibility into travel spend as part of a broader spend management approach, with automated reconciliation and ROI reporting — closing the 40% of spend that normally goes untracked.",
+      points: ["Real-time travel spend analytics", "Automated reconciliation and ERP sync", "AI spend management and measurable travel ROI", "Full audit trail and policy governance"] },
+    { id: "admins", label: "Admins", title: "Set the rules once. Let the platform enforce them.", sub: "Policy that enforces itself, program-wide",
       color: T.maroon,
-      desc: "A faster, less stressful way to book and manage travel. Seamless booking, post-5PM recommendations, bleisure extensions — and happier teams.",
-      points: ["Booking done in under 60 seconds", "Post-5PM and bleisure handled natively", "Duty-of-care monitoring built in", "Traveller satisfaction scores"] },
-    { id: "tm", label: "Travel Manager", title: "For Travel Managers", sub: "One dashboard for the whole program",
+      desc: "Configure policy, approvals and budgets, then let Miraee apply them automatically across every traveler and every booking, keeping travel policy compliance consistent program-wide.",
+      points: ["Per diem policy enforcement", "Automatic approval routing with instant exception handling", "Unified employee profiles and permissions", "One dashboard for the entire travel program"] },
+    { id: "travelleads", label: "Travel Leads", title: "Run a modern travel program without the busywork.", sub: "One intelligent system for the whole program",
       color: T.orange,
-      desc: "Bookings, approvals, disruptions, and group travel from a single place. Centralised control, approval workflows, consolidated reporting.",
-      points: ["All bookings in one view", "Configurable approval workflows", "Group travel and MICE in one workflow", "Consolidated spend and policy reports"] },
-    { id: "traveller", label: "Traveller", title: "For Travellers", sub: "Book in seconds, focus on the trip",
+      desc: "Consolidate booking, spend, rewards and events into one intelligent system with the supply depth of a global marketplace behind it.",
+      points: ["Owned global inventory and exclusive corporate rates", "Program-wide analytics and optimization", "Group travel and corporate event travel management built in", "Reliability backed by Tabhi and Mondee"] },
+    { id: "chros", label: "CHROs", title: "Travel that supports your people, not just your policy.", sub: "Duty-of-care and consumer-grade experience, together",
       color: "#C94A00",
-      desc: "Flights, hotels, cabs, itineraries, and expenses  -  all in one conversation. AI booking, live updates, instant rebooking, loyalty tracking.",
-      points: ["Full trip booked in one sentence", "Live gate and delay notifications", "Auto-rebook on cancellations", "Loyalty points tracked automatically"] },
+      desc: "Miraee delivers a seamless traveler experience while keeping duty-of-care, compliance and wellbeing front and center, so travel becomes a talent advantage, not a friction point.",
+      points: ["Frictionless, consumer-grade experience for every employee", "Duty-of-care through real-time disruption support", "Policy applied fairly and consistently", "Employee incentives for cost-efficient choices"] },
+    { id: "managers", label: "Managers", title: "Approvals that don't sit in your inbox.", sub: "Only exceptions reach you, with full context",
+      color: T.maroon,
+      desc: "Policy-compliant trips are auto-approved; only genuine exceptions reach you, with the context to decide in seconds.",
+      points: ["Instant, context-rich exception routing", "Team-level visibility into travel and spend", "No more approval bottlenecks"] },
 ]
 
 function RoleIcon({ id, color, size = 16 }: { id: string; color: string; size?: number }) {
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-            <path d={ROLE_ICONS[id] || ROLE_ICONS.ceo} fill={color} fillRule="evenodd"/>
+            <path d={ROLE_ICONS[id] || ROLE_ICONS.employees} fill={color} fillRule="evenodd"/>
         </svg>
     )
 }
@@ -546,18 +414,18 @@ function BySize() {
     const sectionRef = useRef<HTMLDivElement>(null)
 
     const sizes = [
-        { label: "Startups", range: "5 - 100 people", dots: 1, color: T.orange,
-          headline: "Enterprise-grade travel, none of the overhead.",
-          desc: "Founder-friendly cost controls. No dedicated travel team required. Full compliance from day one.",
+        { label: "Growth-Stage", range: "100 - 500 people", dots: 1, color: T.orange,
+          headline: "Right-sized travel, without enterprise overhead.",
+          desc: "Replace spreadsheets and 6+ disconnected tools with one program built for a $500K+ annual travel budget.",
           features: ["Fast onboarding", "Auto policy enforcement", "Zero admin overhead"] },
-        { label: "Mid-sized", range: "100 - 1,000 people", dots: 4, color: T.maroon,
-          headline: "Scale your program with confidence.",
-          desc: "Department-level visibility. Offsites and client travel, sorted. Approval chains that match your org chart.",
+        { label: "Mid-Market", range: "500 - 1,500 people", dots: 4, color: T.maroon,
+          headline: "Purpose-built for the segment incumbents underserve.",
+          desc: "Upper-SMB and mid-market programs get the depth of an enterprise platform, without the enterprise price tag or implementation drag.",
           features: ["Dept-level dashboards", "Offsite coordination", "Configurable approvals"] },
-        { label: "Enterprise", range: "1,000+ people", dots: 9, color: "#C94A00",
-          headline: "Built for complex operations.",
-          desc: "High volumes, multiple approvers, global programs. Advanced workflows, cross-border support, large-scale MICE.",
-          features: ["Multi-region support", "Advanced MICE", "Enterprise reporting", "API access"] },
+        { label: "Established Mid-Market", range: "1,500 - 3,000 people", dots: 9, color: "#C94A00",
+          headline: "Scale to the top of the mid-market, and beyond.",
+          desc: "Programs with up to $5M in annual travel spend run on the same platform, inside a $255B serviceable market Miraee is built to serve.",
+          features: ["Multi-region support", "Advanced MICE", "Consolidated reporting", "API access"] },
     ]
 
     useGSAP((gsap, ST) => {
@@ -573,10 +441,13 @@ function BySize() {
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
                 <Reveal>
                     <div style={{ textAlign: "center", marginBottom: isMobile ? 56 : 80 }}>
-                        <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>Solutions by Company Size</span>
-                        <h2 style={{ fontSize: isMobile ? 32 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.06, letterSpacing: "-0.03em", margin: "0 auto", maxWidth: 560 }}>
-                            Built for your stage.<br/>Ready for the next one.
+                        <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>Solutions by Fit</span>
+                        <h2 style={{ fontSize: isMobile ? 32 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.06, letterSpacing: "-0.03em", margin: "0 auto 20px", maxWidth: 620 }}>
+                            Purpose-built for upper-SMB and mid-market.
                         </h2>
+                        <p style={{ fontSize: 15, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 auto", maxWidth: 620 }}>
+                            Miraee is travel management software built for the segment incumbents underserve: companies with $500K–$5M in annual travel budgets and 100–3,000 employees, often running on 6+ disconnected tools with no optimization. That's a $255B serviceable market, and it's our home.
+                        </p>
                     </div>
                 </Reveal>
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 20 }}>
@@ -622,16 +493,16 @@ function ByUseCase() {
     const gridRef = useRef<HTMLDivElement>(null)
 
     const cases = [
-        { num: "01", title: "Everyday business travel", tag: "Daily ops", featured: true, emergency: false,
-          body: "The sales rep flying to a client, the engineer to an office. 'Book me to Mumbai Wednesday, back Thursday, hotel near BKC.' Done in 60 seconds, in policy, expenses auto-filed. The rep never opens a portal." },
-        { num: "02", title: "Meetings & events (MICE)", tag: "Group travel", featured: false, emergency: false,
-          body: "Group travel without the spreadsheets. Venue sourcing, group flights, hotel blocks, transport, and a live event budget  -  all as one workflow, from RFP to post-event ROI." },
-        { num: "03", title: "Executive travel", tag: "Premium", featured: false, emergency: false,
-          body: "Tighter calendars, premium cabins, last-minute changes, privacy by default. The same AI  -  turned up for the trips that matter most. EAs delegate with full context." },
-        { num: "04", title: "Global mobility", tag: "Complex trips", featured: false, emergency: false,
-          body: "Five cities, two colleagues joining mid-trip, a visa for one country, a board call mid-flight. Miraee plans, books, and re-routes the whole thing as one journey." },
-        { num: "05", title: "Emergency travel", tag: "Crisis response", featured: false, emergency: true,
-          body: "Flight canceled. Hotel overbooked. Country in lockdown. Miraee detects it, picks the best in-policy alternative, books it, and sends one notification telling the traveller it's sorted." },
+        { num: "01", title: "Every business trip, end to end.", tag: "Business travel", featured: true, emergency: false,
+          body: "Miraee manages business travel and expense management end to end — from booking flights, hotels, cars and rail to managing business travel expenses, policies, budgets and real-time disruptions." },
+        { num: "02", title: "Group travel and events, intelligently managed.", tag: "Meetings & events", featured: false, emergency: false,
+          body: "Miraee is the only platform that unifies corporate event travel management with MICE, automated group booking, intelligent venue sourcing and rate negotiation, real-time event expense tracking, and seamless attendee and itinerary management." },
+        { num: "03", title: "White-glove travel, automated.", tag: "Executive travel", featured: false, emergency: false,
+          body: "High-touch itineraries, preference learning and proactive disruption management give executives a premium executive travel experience without a dedicated human handler." },
+        { num: "04", title: "Cross-border travel for a distributed workforce.", tag: "Global mobility", featured: false, emergency: false,
+          body: "Remote-first and hybrid teams generate constant cross-border and inter-office travel. Miraee handles it at scale with global supply, local rates and consistent policy everywhere." },
+        { num: "05", title: "When plans break, Miraee doesn't.", tag: "Emergency & disruption", featured: false, emergency: true,
+          body: "Cancellations, delays and reroutes are managed proactively through a single chat. The best alternative is coordinated and confirmed before the traveler is stranded." },
     ]
 
     useGSAP((gsap, ST) => {
@@ -661,16 +532,13 @@ function ByUseCase() {
                         Solutions by Use Case
                     </motion.span>
                     <h2 className="uc-heading" style={{ fontSize: isMobile ? 28 : isTablet ? 44 : 60, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.06, letterSpacing: "-0.03em", margin: "0 0 12px" }}>
-                        {["From", "everyday", "employee", "travel", "to", "the", "trip", "from"].map((word, i) => (
+                        {["Every", "kind", "of", "company"].map((word, i) => (
                             <span key={i} style={{ display: "inline-block", overflow: "hidden", marginRight: "0.22em", verticalAlign: "bottom", lineHeight: 1.18 }}>
                                 <span className="uc-w" style={{ display: "inline-block" }}>{word}</span>
                             </span>
                         ))}
                         <span style={{ display: "inline-block", overflow: "hidden", marginRight: "0.22em", verticalAlign: "bottom", lineHeight: 1.18 }}>
-                            <span className="uc-w" style={{ display: "inline-block", color: T.orange, fontStyle: "italic" }}>hell.</span>
-                        </span>
-                        <span style={{ display: "inline-block", overflow: "hidden", marginRight: "0.22em", verticalAlign: "bottom", lineHeight: 1.18 }}>
-                            <span className="uc-w" style={{ display: "inline-block" }}>Handled.</span>
+                            <span className="uc-w" style={{ display: "inline-block", color: T.orange, fontStyle: "italic" }}>travel.</span>
                         </span>
                     </h2>
                 </div>
@@ -1197,19 +1065,19 @@ export default function MiraeeSolutionsPage(_props: any) {
         meta.content = 'width=device-width, initial-scale=1, maximum-scale=5'
     }, [])
     return (
-        <div style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", background: "var(--page-bg)", fontFamily: "Plus Jakarta Sans, sans-serif", cursor: "none" }}>
+        <div style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", background: "var(--page-bg)", fontFamily: "Plus Jakarta Sans, sans-serif" }}>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
             <SmoothScrollStyle/>
             <ScrollBar/>
-            <TechNav/>
+            <SiteNav />
             <SolutionsHero/>
             <ByRole/>
             <BySize/>
             <ByUseCase/>
             <DutyOfCare/>
             <TrustedSectors/>
-            <TechFooter/>
+            <V1Footer />
         </div>
     )
 }

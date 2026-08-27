@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import { SiteFooter } from "../components/LegalFormKit"
+import { V2Footer } from "../components/LegalFormKit"
 import { Reveal, V2Nav, EditorialRows } from "../components/V2Kit"
 import mondeeLogo from "../assets/mondee_logo.png"
 import miraeeLogo from "../assets/Miraee_Logo.png"
@@ -179,7 +179,7 @@ export default function AboutV2() {
                     </Reveal>
                 </section>
             </main>
-            <SiteFooter />
+            <V2Footer />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
         </div>
     )

@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { SiteFooter } from "../components/LegalFormKit"
+import { V2Footer } from "../components/LegalFormKit"
 import { Reveal, V2Nav, Faq } from "../components/V2Kit"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
@@ -203,7 +203,7 @@ export default function SecurityV2() {
                     </Reveal>
                 </section>
             </main>
-            <SiteFooter />
+            <V2Footer />
         </div>
     )
 }

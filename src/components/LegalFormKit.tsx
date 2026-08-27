@@ -31,32 +31,23 @@ export function MiraeeLogo({ fill = T.orange, height = 26 }: { fill?: string; he
     )
 }
 
-// ─── Anchor resolution ────────────────────────────────────────────────────────
-// Nav/footer links to in-page sections need to work from every route: same-page
-// anchors on "/", and "home, then jump" links everywhere else.
-function useAnchorHref() {
-    const pathname = useLocation().pathname
-    const homePath = pathname === "/v2" ? "/v2" : "/"
-    const isHome = pathname === "/" || pathname === "/v2"
-    return (id: string) => (isHome ? `#${id}` : `${homePath}#${id}`)
-}
-
 // ─── Site nav (used by every routed page) ────────────────────────────────────
+const SITE_NAV_LINKS: [string, string][] = [
+    ["Home", "/"],
+    ["Platform", "/v1/product"],
+    ["Solutions", "/v1/solutions"],
+    ["AI & Technology", "/v1/technology"],
+    ["About", "/v1/about"],
+]
+
 export function SiteNav() {
     const vw = useWindowWidth()
     const pathname = useLocation().pathname
     const activeVersion = pathname === "/v2" ? "v2" : "v1"
     const isMobile = vw < 640
-    const isCompact = vw < 900
+    const isCompact = vw < 1180
     const [open, setOpen] = useState(false)
-    const toHref = useAnchorHref()
-    const mobileLinks = [
-        ["Product", toHref("product")],
-        ["How it works", toHref("how-it-works")],
-        ["For teams", toHref("outcomes")],
-        ["Security", toHref("security")],
-        ["Support", "/support"],
-    ]
+    const mobileLinks = SITE_NAV_LINKS
     return (
         <>
             <motion.nav
@@ -65,8 +56,18 @@ export function SiteNav() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, ease: EO }}
                 aria-label="Primary"
-                style={{ position: "fixed", top: 14, left: "50%", x: "-50%", zIndex: 200, width: "min(1080px, calc(100vw - 24px))", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", padding: isMobile ? "0 6px 0 12px" : "0 10px 0 26px", borderRadius: 100, background: "var(--glass-bg)", backdropFilter: "blur(18px)", border: "1px solid rgba(var(--text-rgb),0.08)", boxShadow: "0 10px 34px rgba(var(--text-rgb),0.08)" }}>
+                style={{ position: "fixed", top: 14, left: "50%", x: "-50%", zIndex: 200, width: isCompact ? "min(1080px, calc(100vw - 24px))" : "min(1280px, calc(100vw - 24px))", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", padding: isMobile ? "0 6px 0 12px" : "0 10px 0 26px", borderRadius: 100, background: "var(--glass-bg)", backdropFilter: "blur(18px)", border: "1px solid rgba(var(--text-rgb),0.08)", boxShadow: "0 10px 34px rgba(var(--text-rgb),0.08)" }}>
                 <Link to="/" aria-label="Miraee home" style={{ textDecoration: "none", display: "inline-flex", flexShrink: 0 }}><MiraeeLogo fill={T.orange} height={isMobile ? 19 : 24} /></Link>
+                {!isCompact && (
+                    <div aria-label="Primary" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        {SITE_NAV_LINKS.map(([label, href]) => (
+                            <Link key={href} to={href} aria-current={pathname === href ? "page" : undefined}
+                                style={{ padding: "8px 13px", borderRadius: 100, fontSize: 13, fontFamily: F, fontWeight: 600, whiteSpace: "nowrap", textDecoration: "none", color: pathname === href ? T.ink : T.muted, background: pathname === href ? "rgba(var(--text-rgb),0.06)" : "transparent", transition: "color .2s ease,background .2s ease" }}>
+                                {label}
+                            </Link>
+                        ))}
+                    </div>
+                )}
                 <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 4 : 16 }}>
                     <div className="site-version-switch" aria-label="Choose site version" style={{ display: "flex", alignItems: "center", padding: 3, border: "1px solid rgba(var(--text-rgb),0.10)", borderRadius: 100, background: "rgba(var(--text-rgb),0.035)" }}>
                         {(["v1", "v2"] as const).map(version => <Link key={version} to={version === "v1" ? "/" : "/v2"} aria-current={activeVersion === version ? "page" : undefined}
@@ -117,11 +118,15 @@ export function SiteNav() {
 
 // ─── Site footer (used by every routed page) ─────────────────────────────────
 type FooterLink = { label: string; href?: string; external?: boolean; disabled?: boolean }
+type SiteVersion = "v1" | "v2"
 
-export function SiteFooter() {
+export function SiteFooter({ version }: { version?: SiteVersion } = {}) {
     const vw = useWindowWidth()
     const isMobile = vw < 640
-    const toHref = useAnchorHref()
+    const pathname = useLocation().pathname
+    const isV1 = version ? version === "v1" : pathname === "/" || pathname.startsWith("/v1/")
+    const resolvedVersion: SiteVersion = isV1 ? "v1" : "v2"
+    const versionHref = (v1: string, v2: string) => isV1 ? v1 : v2
     const footRef = useRef<HTMLElement>(null)
     const { scrollYProgress } = useScroll({ target: footRef, offset: ["start end", "end end"] })
     const wmY = useTransform(scrollYProgress, [0, 1], [160, 0])
@@ -135,14 +140,14 @@ export function SiteFooter() {
     const COLS: { title: string; links: FooterLink[] }[] = [
         {
             title: "Explore", links: [
-                { label: "Platform", href: "/product" },
-                { label: "Solutions", href: "/for-teams" },
-                { label: "Resources", href: "/resources" },
-                { label: "AI & Technology", href: "/technology" },
-                { label: "Why Miraee", href: "/why-miraee" },
+                { label: "Platform", href: versionHref("/v1/product", "/product") },
+                { label: "Solutions", href: versionHref("/v1/solutions", "/for-teams") },
+                { label: "Resources", href: versionHref("/v1/resources", "/resources") },
+                { label: "AI & Technology", href: versionHref("/v1/technology", "/technology") },
+                { label: "Why Miraee", href: versionHref("/v1/why-miraee", "/why-miraee") },
                 { label: "Support", href: "/support" },
                 { label: "Careers", disabled: true },
-                { label: "Newsroom", href: "/about#newsroom" },
+                { label: "Newsroom", href: versionHref("/v1/about#newsroom", "/about#newsroom") },
             ],
         },
         {
@@ -150,21 +155,21 @@ export function SiteFooter() {
                 { label: "Partner with us", href: "mailto:partners@miraee.ai" },
                 { label: "Terms & Conditions", href: "/terms" },
                 { label: "Privacy", href: "/privacy" },
-                { label: "Trust & Security", href: "/security" },
+                { label: "Trust & Security", href: versionHref("/v1/security", "/security") },
                 { label: "Arbitration opt-out", href: "/arbitration-opt-out" },
                 { label: "Dispute notice", href: "/dispute-notice" },
             ],
         },
         {
             title: "Talk to us", links: [
-                { label: "About Miraee", href: "/about" },
+                { label: "About Miraee", href: versionHref("/v1/about", "/about") },
                 { label: "hello@miraee.ai", href: "mailto:hello@miraee.ai" },
             ],
         },
     ]
 
     return (
-        <footer ref={footRef} style={{ background: "#0F0407", padding: isMobile ? "60px 20px 40px" : "80px 64px 48px", position: "relative", overflow: "hidden" }}>
+        <footer ref={footRef} data-site-version={resolvedVersion} style={{ background: "#0F0407", padding: isMobile ? "60px 20px 40px" : "80px 64px 48px", position: "relative", overflow: "hidden" }}>
             <motion.div aria-hidden="true" style={{ y: wmY, opacity: wmOpacity, position: "absolute", bottom: isMobile ? -20 : -50, left: 0, right: 0, display: "flex", justifyContent: "center", pointerEvents: "none" }}>
                 <MiraeeLogo fill={T.cream} height={isMobile ? 120 : 260} />
             </motion.div>
@@ -200,13 +205,21 @@ export function SiteFooter() {
                 </div>
                 <div style={{ borderTop: "1px solid rgba(251,246,242,0.08)", paddingTop: 28, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
                     <p style={{ fontSize: 13, fontFamily: F, color: "rgba(251,246,242,0.28)", margin: 0 }}>
-                        © 2026 Miraee, a Tabhi company. <a href="/privacy" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Privacy</a> · <a href="/terms" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Terms</a> · <a href={toHref("security")} style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Security</a>
+                        © 2026 Miraee, a Tabhi company. <a href="/privacy" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Privacy</a> · <a href="/terms" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Terms</a> · <a href={versionHref("/v1/security", "/security")} style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Security</a>
                     </p>
                     <p style={{ fontSize: 13, fontFamily: F, color: "rgba(251,246,242,0.28)", margin: 0 }}>Built by Tabhi AI</p>
                 </div>
             </div>
         </footer>
     )
+}
+
+export function V1Footer() {
+    return <SiteFooter version="v1" />
+}
+
+export function V2Footer() {
+    return <SiteFooter version="v2" />
 }
 
 // ─── Form primitives (shared by Support, Arbitration Opt-Out, Dispute Notice, Book a Demo) ──
