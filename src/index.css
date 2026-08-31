@@ -49,6 +49,19 @@
   --glass-border: rgba(15, 4, 7, 0.08);
   --accent-strong: #450E14; /* maroon — deep accent on light surfaces */
 
+  /* Shared section roles for V1 and V2. */
+  --section-canvas: #FBF6F2;
+  --section-surface: #FFFFFF;
+  --section-tint: #FFF0E6;
+  --section-tint-strong: #F5E9E2;
+  --section-ink: #0F0407;
+  --section-muted: #786C69;
+  --section-brand: #E55602;
+  --section-brand-strong: #C74400;
+  --section-dark: #450E14;
+  --section-dark-deep: #0F0407;
+  --section-line: rgba(69, 14, 20, 0.14);
+
   /* ─── Z-index scale ────────────────────────────────────────────────
      A documented stacking order so future layers don't guess at magic
      numbers. Lower = further back. */
@@ -75,6 +88,19 @@ html[data-theme="dark"] {
   --glass-bg: rgba(46, 23, 32, 0.9);
   --glass-border: rgba(251, 246, 242, 0.12);
   --accent-strong: #E55602; /* maroon is unreadable on dark → brand orange accent */
+
+  /* V1/V2 keep their branded section palette in either application theme. */
+  --section-canvas: #FBF6F2;
+  --section-surface: #FFFFFF;
+  --section-tint: #FFF0E6;
+  --section-tint-strong: #F5E9E2;
+  --section-ink: #0F0407;
+  --section-muted: #786C69;
+  --section-brand: #E55602;
+  --section-brand-strong: #C74400;
+  --section-dark: #450E14;
+  --section-dark-deep: #0F0407;
+  --section-line: rgba(69, 14, 20, 0.14);
 }
 
 html {
