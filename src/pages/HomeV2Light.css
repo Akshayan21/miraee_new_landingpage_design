@@ -1,15 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 
 :root {
-  --m-paper: #fbf6f2;
-  --m-surface: #fffdfb;
-  --m-soft: #fff0e6;
-  --m-maroon: #450e14;
-  --m-ink: #16070a;
-  --m-orange-brand: #e55602;
-  --m-orange: #c74400;
-  --m-muted: #786c69;
-  --m-line: rgba(69, 14, 20, 0.14);
+  --m-paper: var(--section-canvas);
+  --m-surface: var(--section-surface);
+  --m-soft: var(--section-tint);
+  --m-maroon: var(--section-dark);
+  --m-ink: var(--section-ink);
+  --m-orange-brand: var(--section-brand);
+  --m-orange: var(--section-brand-strong);
+  --m-muted: var(--section-muted);
+  --m-line: var(--section-line);
   --m-width: 1160px;
   --m-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -157,7 +157,7 @@
 .m-step > strong { margin-top: auto; color: #ffcab2; font-size: 15px; }
 .m-step:hover { background: rgba(255,255,255,.055); transform: translateY(-4px); }
 
-.m-problem { width: 100%; padding-inline: max(24px, calc((100% - var(--m-width)) / 2)); background: #f5e9e2; }
+.m-problem { width: 100%; padding-inline: max(24px, calc((100% - var(--m-width)) / 2)); background: var(--section-tint-strong); }
 .m-handoffs { display: grid; grid-template-columns: .68fr 1.32fr; overflow: hidden; margin-bottom: 18px; border-radius: 10px; background: var(--m-maroon); color: var(--m-paper); }
 .m-handoffs__trip { display: flex; min-height: 420px; flex-direction: column; justify-content: center; padding: 42px; border-right: 1px solid rgba(255, 255, 255, .14); }
 .m-handoffs__trip span, .m-handoffs__trip small { color: rgba(255, 255, 255, .6); font-size: 10px; letter-spacing: .09em; text-transform: uppercase; }
@@ -233,7 +233,7 @@
 .m-comparison__more span { transition: transform .3s var(--m-ease); display: inline-block; }
 .m-comparison__more:hover span { transform: translate(2px, -2px); }
 
-.m-comparison { width: 100%; padding-inline: max(24px, calc((100% - var(--m-width)) / 2)); background: #fffaf6; border-block: 1px solid var(--m-line); }
+.m-comparison { width: 100%; padding-inline: max(24px, calc((100% - var(--m-width)) / 2)); background: var(--section-tint); border-block: 1px solid var(--m-line); }
 .m-comparison .m-section__head { max-width: var(--m-width); }
 .m-table { display: grid; width: 100%; max-width: 1120px; gap: 8px; margin: 0 auto; }
 .m-table > div { display: grid; grid-template-columns: minmax(260px, 1.45fr) minmax(170px, .62fr) minmax(190px, .7fr); align-items: stretch; overflow: hidden; border: 1px solid var(--m-line); border-radius: 8px; background: rgba(255, 255, 255, .82); transition: border-color .3s var(--m-ease), transform .3s var(--m-ease), box-shadow .3s var(--m-ease); }
