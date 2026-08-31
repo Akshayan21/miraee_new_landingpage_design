@@ -8,6 +8,12 @@ import { MiraeeLogo } from "./components/LegalFormKit"
 // src/pages/ (unrouted, not deleted) in case they're needed again.
 const Home = lazy(() => import("./pages/HomeElegant"))
 const HomeV2 = lazy(() => import("./pages/HomeV2"))
+const HomeV3 = lazy(() => import("./pages/HomeV3"))
+const ProductV3 = lazy(() => import("./pages/ProductV3"))
+const SavingsV3 = lazy(() => import("./pages/SavingsV3"))
+const HrV3 = lazy(() => import("./pages/HrV3"))
+const EnterpriseV3 = lazy(() => import("./pages/EnterpriseV3"))
+const DemoV3 = lazy(() => import("./pages/DemoV3"))
 const V1Product = lazy(() => import("./pages/Product"))
 const V1Technology = lazy(() => import("./pages/Technology"))
 const V1Solutions = lazy(() => import("./pages/Solutions"))
@@ -48,6 +54,12 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/v2" element={<HomeV2 />} />
+                    <Route path="/v3" element={<HomeV3 />} />
+                    <Route path="/v3/product" element={<ProductV3 />} />
+                    <Route path="/v3/savings" element={<SavingsV3 />} />
+                    <Route path="/v3/hr" element={<HrV3 />} />
+                    <Route path="/v3/enterprise" element={<EnterpriseV3 />} />
+                    <Route path="/v3/demo" element={<DemoV3 />} />
                     <Route path="/v1/product" element={<V1Product />} />
                     <Route path="/v1/technology" element={<V1Technology />} />
                     <Route path="/v1/solutions" element={<V1Solutions />} />

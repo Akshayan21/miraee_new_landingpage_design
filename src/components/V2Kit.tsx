@@ -32,11 +32,12 @@ const NAV_LINKS: [string, string][] = [
 
 function VersionSwitch({ className = "" }: { className?: string }) {
     const { pathname } = useLocation()
-    const isV1 = pathname === "/"
+    const activeVersion = pathname.startsWith("/v3") ? "v3" : pathname === "/" || pathname.startsWith("/v1/") ? "v1" : "v2"
     return (
         <div className={"m-nav__version " + className} aria-label="Choose site version">
-            <Link to="/" aria-current={isV1 ? "page" : undefined}>v1</Link>
-            <Link to="/v2" aria-current={!isV1 ? "page" : undefined}>v2</Link>
+            <Link to="/" aria-current={activeVersion === "v1" ? "page" : undefined}>v1</Link>
+            <Link to="/v2" aria-current={activeVersion === "v2" ? "page" : undefined}>v2</Link>
+            <Link to="/v3" aria-current={activeVersion === "v3" ? "page" : undefined}>v3</Link>
         </div>
     )
 }

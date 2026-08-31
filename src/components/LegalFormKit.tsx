@@ -43,7 +43,7 @@ const SITE_NAV_LINKS: [string, string][] = [
 export function SiteNav() {
     const vw = useWindowWidth()
     const pathname = useLocation().pathname
-    const activeVersion = pathname === "/v2" ? "v2" : "v1"
+    const activeVersion = pathname.startsWith("/v3") ? "v3" : pathname === "/v2" || (!pathname.startsWith("/v1/") && pathname !== "/") ? "v2" : "v1"
     const isMobile = vw < 640
     const isCompact = vw < 1180
     const [open, setOpen] = useState(false)
@@ -70,7 +70,7 @@ export function SiteNav() {
                 )}
                 <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 4 : 16 }}>
                     <div className="site-version-switch" aria-label="Choose site version" style={{ display: "flex", alignItems: "center", padding: 3, border: "1px solid rgba(var(--text-rgb),0.10)", borderRadius: 100, background: "rgba(var(--text-rgb),0.035)" }}>
-                        {(["v1", "v2"] as const).map(version => <Link key={version} to={version === "v1" ? "/" : "/v2"} aria-current={activeVersion === version ? "page" : undefined}
+                        {(["v1", "v2", "v3"] as const).map(version => <Link key={version} to={version === "v1" ? "/" : `/${version}`} aria-current={activeVersion === version ? "page" : undefined}
                             style={{ display: "grid", placeItems: "center", minWidth: isMobile ? 26 : 38, height: isMobile ? 26 : 30, padding: isMobile ? "0 4px" : "0 8px", borderRadius: 100, background: activeVersion === version ? T.ink : "transparent", color: activeVersion === version ? T.cream : T.muted, fontSize: isMobile ? 9 : 10, fontFamily: F, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s ease,color .2s ease" }}>{version}</Link>)}
                     </div>
                     {!isMobile && <ThemeToggle size={34} />}
