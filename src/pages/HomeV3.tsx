@@ -31,8 +31,8 @@ export default function HomeV3() {
                 <div className="wrap">
                     <div className="hero-grid">
                         <Reveal className="hero-copy">
-                            <h1>Travel <em className="accent-word">limitless</em> with Miraee.</h1>
-                            <p className="sub">One intelligent AI travel companion that understands the traveler, understands the company, and manages every journey end to end — search, booking, changes, support, and expenses in a single conversation.</p>
+                            <h1>Travel <em className="accent-word">Limitless</em></h1>
+                            <p className="sub">Meet your AI travel partner. Every trip, effortless. Every choice, rewarded.</p>
                             <div className="cta-row">
                                 <Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link>
                                 <Link className="btn btn-line" to="/v3/product">See how it works</Link>

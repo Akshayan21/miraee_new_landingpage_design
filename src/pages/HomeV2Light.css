@@ -475,3 +475,8 @@
 .m-site .m-hero__photo--home{object-position:left center}
 .m-site .m-step small,.m-site .m-role>small,.m-site .m-security__marks small,.m-site .m-table__head b{font-size:12px}
 .m-site .m-handoffs__owners small,.m-site .m-handoffs__owners em,.m-site .m-handoffs__trip small{font-size:11.5px}
+
+/* V2 homepage hero only: stronger display scale for the shorter headline. */
+.m-home .m-hero h1{max-width:1100px;font-size:clamp(5rem,6.8vw,8rem);line-height:.9;letter-spacing:-.065em}
+@media(max-width:900px){.m-home .m-hero h1{font-size:clamp(4rem,9vw,6rem)}}
+@media(max-width:640px){.m-home .m-hero h1{font-size:clamp(3.25rem,14vw,4.5rem);line-height:.94}}
