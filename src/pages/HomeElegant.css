@@ -718,3 +718,8 @@ section.el-business-case .el-business-metrics>div:before{display:none}
 .el-site .el-outcomes,.el-site .el-cta{background:var(--section-dark)}
 .el-footer{background:var(--section-dark-deep);color:var(--section-canvas)}
 [data-theme="dark"] .el-site{--bg:var(--section-canvas);--panel:var(--section-surface);--ink:var(--section-ink);--muted:var(--section-muted);--line:var(--section-line);--dark:var(--section-dark)}
+
+/* V1 hero headline: loosen the display tracking so "Li" remains distinct. */
+.el-site .el-hero h1{letter-spacing:-.035em}
+.el-site .el-hero h1 span{word-spacing:.1em;font-kerning:normal}
+@media(max-width:620px){.el-site .el-hero h1{letter-spacing:-.025em}.el-site .el-hero h1 span{word-spacing:.07em}}
