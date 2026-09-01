@@ -3,11 +3,11 @@ import { useRef } from "react"
 import { GrainOverlay, ScrollProgress } from "../animations"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
 import { Link } from "react-router-dom"
-import dashboardImg from "../assets/dashboard.webp"
-import bookingCardImg from "../assets/booking-card.webp"
-import changeCardImg from "../assets/change-card.webp"
-import expensesCardImg from "../assets/expenses-card.webp"
-import flightCardImg from "../assets/Flight_card.png"
+import dashboardImg from "../assets/ui-flight-card.png"
+import bookingCardImg from "../assets/ui-hotel-card.png"
+import changeCardImg from "../assets/ui-changes-card.png"
+import expensesCardImg from "../assets/ui-expenses-card.png"
+import flightCardImg from "../assets/ui-flight-card.png"
 import "./HomeElegant.css"
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -35,7 +35,7 @@ function PromptDemo() { return <motion.div className="el-demo-stage" initial={{ 
   <div className="el-demo-stage__note el-demo-stage__note--policy"><span>Policy</span><b>Approved</b></div>
   <div className="el-demo-stage__note el-demo-stage__note--savings"><span>Live savings</span><b>$428</b></div>
   <div className="el-console el-console--image">
-    <img className="el-console__img" src={dashboardImg} alt="Miraee travel dashboard" width="1911" height="1072" fetchPriority="high" decoding="async" />
+    <img className="el-console__img" src={dashboardImg} alt="Miraee best-value flight selection card" width="1635" height="716" fetchPriority="high" decoding="async" />
   </div>
 </motion.div> }
 
@@ -43,8 +43,8 @@ function Hero() {
   const ref = useRef<HTMLElement>(null); const reduce=useReducedMotion(); const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] }); const y = useTransform(scrollYProgress,[0,1],[0,120]); const opacity = useTransform(scrollYProgress,[0,.9],[1,0])
   return <section ref={ref} className="el-hero"><div className="el-hero__ghost" aria-hidden="true">agent</div><motion.div className="el-hero__inner" style={{ y:reduce?0:y, opacity:reduce?1:opacity }}>
     <motion.div className="el-hero__kicker" initial={{ opacity:0,y:10 }} animate={{ opacity:1,y:0 }}><div className="el-pill"><span/> AI-native corporate travel</div></motion.div>
-    <h1><motion.span initial={{ y:"110%" }} animate={{ y:0 }} transition={{ duration:.9,ease }}>Travel Limitless</motion.span></h1>
-    <motion.p initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.45,duration:.7 }}>Meet your AI travel partner. Every trip, effortless. Every choice, rewarded.</motion.p>
+    <h1><motion.span initial={{ y:"110%" }} animate={{ y:0 }} transition={{ duration:.9,ease }}>AI-native employee travel Platform</motion.span></h1>
+    <motion.p initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.45,duration:.7 }}>One intelligent platform for booking, travel management, and expenses. Miraee is built for business travel, and the personal trips people love.</motion.p>
     <motion.div className="el-hero__actions" initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.58,duration:.7 }}><Link className="el-button" to="/book-a-demo">Book a demo <span aria-hidden="true">↗</span></Link><a className="el-text-link" href="#product">Explore the platform <span aria-hidden="true">↓</span></a></motion.div>
     <PromptDemo />
     <motion.div className="el-hero__proof" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{delay:1.05,duration:.7,ease}}><span>One thread</span><i/><span>Live inventory</span><i/><span>Policy built in</span><i/><span>Human support when needed</span></motion.div>
@@ -95,7 +95,7 @@ function HowItWorks(){
     <Reveal className="el-journey-board" delay={.08}>
       <div className="el-journey-board__request"><small>Your request</small><blockquote>“Singapore next Tuesday. Window seat. Within policy.”</blockquote><div><span>Window seat</span><span>Company policy</span><span>SFO home airport</span></div></div>
       <div className="el-journey-board__steps">{actions.map(([n,title,state,metric])=><article key={title}><span>{n}</span><small>{title}</small><h3>{state}</h3><b>{metric}</b></article>)}</div>
-      <figure><img src={flightCardImg} alt="Completed SFO to Singapore journey with flight, hotel, and expenses handled" width="1635" height="716" loading="lazy" decoding="async"/></figure>
+      <figure><img src={flightCardImg} alt="Miraee best-value flight selection card" width="1635" height="716" loading="lazy" decoding="async"/></figure>
     </Reveal>
   </section>
 }
@@ -108,7 +108,7 @@ function BusinessCase(){return <section className="el-business-case"><Reveal cla
 function Partners(){const points=[["01","Premium travelers","Access a large, engaged traveler base."],["02","Brand-forward NDC","Merchandise rich content in real time."],["03","The whole traveler","Win business and personal travel alike."]];return <section className="el-partners"><Reveal><span className="el-label">For airlines and suppliers</span><h2>Be part of<br/>your travelers’<br/>best experiences.</h2><p>Miraee puts partner brands in front of premium, high-frequency travelers - for the business trip and the personal one - with content they control.</p><Link className="el-button" to="/book-a-demo">Partner with Miraee <span aria-hidden="true">↗</span></Link></Reveal><div className="el-partner-points">{points.map((x,i)=><Reveal key={x[0]} delay={i*.08}><span>{x[0]}</span><b>{x[1]}</b><p>{x[2]}</p></Reveal>)}</div></section>}
 
 function FeatureVisual({ type }: { type: "book"|"change"|"expense" }) {
-  if(type==="book") return <img className="el-visual-img" src={bookingCardImg} alt="Trip options showing a multi-city flight itinerary with pricing" width="1424" height="1892" loading="lazy" decoding="async"/>
+  if(type==="book") return <img className="el-visual-img" src={bookingCardImg} alt="Miraee hotel selection card for The Savoy London" width="1136" height="1469" loading="lazy" decoding="async"/>
   if(type==="change") return <img className="el-visual-img" src={changeCardImg} alt="Modification request showing requested flight changes and expected savings" width="1632" height="1768" loading="lazy" decoding="async"/>
   return <img className="el-visual-img" src={expensesCardImg} alt="Trip expenses list with policy flags and auto-reconciled totals" width="1412" height="1541" loading="lazy" decoding="async"/>
 }

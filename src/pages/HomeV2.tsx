@@ -4,10 +4,9 @@ import { Link } from "react-router-dom"
 import { V2Footer } from "../components/LegalFormKit"
 import { V2Nav } from "../components/V2Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
-import dashboardImg from "../assets/dashboard.webp"
-import bookingImg from "../assets/booking-card.webp"
-import changeImg from "../assets/change-card.webp"
-import expenseImg from "../assets/expenses-card.webp"
+import bookingImg from "../assets/ui-multi-city-card.png"
+import changeImg from "../assets/ui-changes-card.png"
+import expenseImg from "../assets/ui-expenses-card.png"
 import employeeImg from "../assets/role-traveller.jpg"
 import financeImg from "../assets/role-finance-manager.jpg"
 import travelTeamImg from "../assets/role-travel-team.jpg"
@@ -31,7 +30,7 @@ const compare=[["Natural-language planning","Not offered","Included"],["Live pol
 const experiences=["Festivals and culture","Once-in-a-trip moments","Local performances","Markets and makers","The bleisure weekend","Food and discovery"]
 
 export default function HomeV2(){usePageMeta("AI-Native Corporate Travel | Miraee","Miraee brings corporate travel management, expense automation, live policy and 24/7 support into one AI-native journey.");return <div className="m-site m-home"><a className="m-skip" href="#main">Skip to content</a><V2Nav active="/v2"/><main id="main">
-  <section className="m-hero" aria-labelledby="v2-hero-title"><Reveal className="m-hero__copy"><p className="m-eyebrow">AI-native corporate travel</p><h1 id="v2-hero-title">Travel Limitless</h1><p className="m-lede">Meet your AI travel partner. Every trip, effortless. Every choice, rewarded.</p><div className="m-actions"><Link to="/book-a-demo">Book a demo</Link><a href="#product">Explore the platform <span aria-hidden="true">↓</span></a></div></Reveal></section>
+  <section className="m-hero" aria-labelledby="v2-hero-title"><Reveal className="m-hero__copy"><p className="m-eyebrow">AI-native corporate travel</p><h1 id="v2-hero-title">AI-native employee travel Platform</h1><p className="m-lede">One intelligent platform for booking, travel management, and expenses. Miraee is built for business travel, and the personal trips people love.</p><div className="m-actions"><Link to="/book-a-demo">Book a demo</Link><a href="#product">Explore the platform <span aria-hidden="true">↓</span></a></div></Reveal></section>
   <section id="product" className="m-section"><Reveal className="m-section__head"><p className="m-eyebrow">One continuous system</p><h2>From “I need to go” to everything handled.</h2><p>A personal travel agent for employees. A real-time operating layer for finance and travel teams.</p></Reveal><div className="m-chapters">{productChapters.map(([title,copy,img,alt,href],i)=><Reveal className="m-chapter" key={title} delay={i*.05}><div className="m-chapter__copy"><span>0{i+1}</span><h3>{title}</h3><p>{copy}</p><Link to={href}>See how it works</Link></div><div className="m-chapter__media"><img src={img} alt={alt} loading="lazy"/></div></Reveal>)}</div></section>
   <section id="how-it-works" className="m-section m-how"><Reveal className="m-section__head"><p className="m-eyebrow">How it works</p><h2>Ask once. Keep moving.</h2><p>Miraee carries one continuous context through the entire journey. You never restart, repeat yourself, or manage the process.</p></Reveal><Reveal className="m-request"><span>Your request</span><blockquote>“Singapore next Tuesday. Window seat. Within policy.”</blockquote></Reveal><div className="m-workflow">{workflow.map(([t,c,m],i)=><Reveal className="m-step" key={t} delay={i*.07}><span>0{i+1}</span><small>{t}</small><h3>{c}</h3><strong>{m}</strong></Reveal>)}</div></section>
   <section className="m-section m-problem"><Reveal className="m-section__head"><p className="m-eyebrow">The problem</p><h2>Every handoff fragments the journey.</h2><p>Every handoff loses context and adds another system for the traveler to manage.</p></Reveal><Reveal className="m-handoffs"><div className="m-handoffs__trip"><span>One employee trip</span><strong>SFO <i aria-hidden="true">→</i> SIN</strong><small>No one sees the whole trip</small></div><div className="m-handoffs__owners">{handoffs.map(([owner,job,state,icon],i)=><div key={job}><span>0{i+1}</span><b aria-hidden="true">{icon}</b><small>{owner}</small><strong>{job}</strong><em>{state}</em></div>)}</div></Reveal><div className="m-pain-grid">{pains.map(([n,l,t,c])=><Reveal className="m-pain" key={t}><strong>{n}</strong><small>{l}</small><h3>{t}</h3><p>{c}</p></Reveal>)}</div></section>

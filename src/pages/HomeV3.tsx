@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { Reveal, V3Nav, V3Footer, Transcript } from "../components/V3Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
 import travelerHero from "../assets/miraee-traveler-hero.webp"
-import bookingCard from "../assets/booking-card.webp"
+import bookingCard from "../assets/ui-multi-city-card.png"
 import "./V3.css"
 
 const outcomes = [
@@ -25,14 +25,14 @@ const loop = [
 export default function HomeV3() {
     usePageMeta("Travel Limitless with Miraee", "One intelligent AI travel companion that understands the traveler, understands the company, and manages every journey end to end — search, booking, changes, support, and expenses in a single conversation.")
     return (
-        <div className="v3-page">
+        <div className="v3-page home-v3-page">
             <V3Nav />
             <header className="hero">
                 <div className="wrap">
                     <div className="hero-grid">
                         <Reveal className="hero-copy">
-                            <h1>Travel <em className="accent-word">Limitless</em></h1>
-                            <p className="sub">Meet your AI travel partner. Every trip, effortless. Every choice, rewarded.</p>
+                            <h1>AI-native employee <em className="accent-word">travel Platform</em></h1>
+                            <p className="sub">One intelligent platform for booking, travel management, and expenses. Miraee is built for business travel, and the personal trips people love.</p>
                             <div className="cta-row">
                                 <Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link>
                                 <Link className="btn btn-line" to="/v3/product">See how it works</Link>

@@ -723,3 +723,6 @@ section.el-business-case .el-business-metrics>div:before{display:none}
 .el-site .el-hero h1{letter-spacing:-.035em}
 .el-site .el-hero h1 span{word-spacing:.1em;font-kerning:normal}
 @media(max-width:620px){.el-site .el-hero h1{letter-spacing:-.025em}.el-site .el-hero h1 span{word-spacing:.07em}}
+.el-site .el-hero h1{max-width:1100px;line-height:1;letter-spacing:-.035em;text-wrap:balance}
+.el-site .el-hero h1 span{padding-bottom:.1em;word-spacing:.08em}
+.el-site .el-hero>div>p{max-width:760px;line-height:1.7;letter-spacing:-.005em;text-wrap:balance}
