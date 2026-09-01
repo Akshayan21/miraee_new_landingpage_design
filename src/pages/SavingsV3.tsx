@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import type { CSSProperties } from "react"
 import { Reveal, V3Nav, V3Footer, Rows } from "../components/V3Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
-import dashboardImage from "../assets/ui-expenses-card.png"
+import dashboardImage from "../assets/ui-admin-dashboard.png"
 import "./V3.css"
 
 const engines = [
@@ -37,7 +37,7 @@ export default function SavingsV3() {
                         <div className="cta-row"><Link className="btn btn-solid" to="/v3/demo">See your savings <span className="arr">→</span></Link></div>
                     </Reveal>
                     <Reveal className="hero-proof-panel savings-proof" delay={0.08}>
-                        <img className="savings-proof__image" src={dashboardImage} alt="Miraee automated travel expense summary" />
+                        <img className="savings-proof__image" src={dashboardImage} alt="Miraee admin dashboard showing travel spend and savings" />
                             <span className="hero-proof-panel__label">Savings, wallet &amp; rewards</span>
                         <div className="savings-proof__total"><small>Captured on one trip</small><strong>$353</strong><span>saved</span></div>
                         <div className="savings-proof__bars"><span style={{ "--bar": "82%" } as CSSProperties}><b>Negotiated fares</b><i /></span><span style={{ "--bar": "58%" } as CSSProperties}><b>Better alternatives</b><i /></span><span style={{ "--bar": "72%" } as CSSProperties}><b>Company rates</b><i /></span></div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { V2Footer } from "../components/LegalFormKit"
 import { Faq, Reveal, V2Nav } from "../components/V2Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
-import financeDashboard from "../assets/ui-expenses-card.png"
+import financeDashboard from "../assets/ui-admin-dashboard.png"
 import miraeeMobileUi from "../assets/ui-flight-card.png"
 import supplierCabin from "../assets/miraee-supplier-cabin.webp"
 import "./HomeV2Light.css"
@@ -223,7 +223,7 @@ export default function ProductV2() {
                     <div className="pv2-shell">
                         <Reveal className="pv2-heading"><div><p className="m-eyebrow">ONE PLATFORM · TWO VIEWS</p><h2 id="surfaces-title">A console for the program.<br />An app for the trip.</h2></div><p>The same journey context, shaped around the work each person needs to do.</p></Reveal>
                         <div className="pv2-surfaces__layout">
-                            <Reveal className="pv2-surface pv2-surface--console"><div><span>01 · WEB CONSOLE</span><h3>For finance and travel teams</h3><p>Policy, approvals, live spend, duty of care, reporting, and the supplier program.</p></div><img src={financeDashboard} alt="Miraee automated travel expense summary" loading="lazy" /></Reveal>
+                            <Reveal className="pv2-surface pv2-surface--console"><div><span>01 · WEB CONSOLE</span><h3>For finance and travel teams</h3><p>Policy, approvals, live spend, duty of care, reporting, and the supplier program.</p></div><img src={financeDashboard} alt="Miraee admin dashboard showing travel spend, compliance, and active trips" loading="lazy" /></Reveal>
                             <Reveal className="pv2-surface pv2-surface--app" delay={.08}><div><span>02 · MOBILE APP</span><h3>For travelers</h3><p>Ask, book, change, support, receipts, personal trips, and the live itinerary.</p></div><img src={miraeeMobileUi} alt="Miraee best-value flight selection card" loading="lazy" /></Reveal>
                         </div>
                     </div>

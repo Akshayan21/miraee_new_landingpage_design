@@ -3,7 +3,7 @@ import { useRef } from "react"
 import { GrainOverlay, ScrollProgress } from "../animations"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
 import { Link } from "react-router-dom"
-import dashboardImg from "../assets/ui-flight-card.png"
+import dashboardImg from "../assets/ui-admin-dashboard.png"
 import bookingCardImg from "../assets/ui-hotel-card.png"
 import changeCardImg from "../assets/ui-changes-card.png"
 import expensesCardImg from "../assets/ui-expenses-card.png"
@@ -35,7 +35,7 @@ function PromptDemo() { return <motion.div className="el-demo-stage" initial={{ 
   <div className="el-demo-stage__note el-demo-stage__note--policy"><span>Policy</span><b>Approved</b></div>
   <div className="el-demo-stage__note el-demo-stage__note--savings"><span>Live savings</span><b>$428</b></div>
   <div className="el-console el-console--image">
-    <img className="el-console__img" src={dashboardImg} alt="Miraee best-value flight selection card" width="1635" height="716" fetchPriority="high" decoding="async" />
+    <img className="el-console__img" src={dashboardImg} alt="Miraee admin dashboard showing travel spend, compliance, and active trips" width="1917" height="1077" fetchPriority="high" decoding="async" />
   </div>
 </motion.div> }
 

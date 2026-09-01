@@ -241,3 +241,5 @@
 @media(max-width:720px){.v3-page.home-v3-page .hero h1{font-size:clamp(44px,12.5vw,64px);line-height:1.03;letter-spacing:-.025em}.v3-page.home-v3-page .hero .sub{font-size:16px;line-height:1.65}}
 .v3-page .savings-proof__image{height:auto;max-height:18rem;padding:.45rem;background:#fff;object-fit:contain;object-position:center}
 @media(max-width:620px){.v3-page .savings-proof__image{height:auto;max-height:14rem}}
+.v3-page.home-v3-page .journey-console__product{height:auto;max-height:28rem;padding:.5rem;background:#fff;object-fit:contain;object-position:center}
+@media(max-width:720px){.v3-page.home-v3-page .journey-console__product{height:auto;max-height:20rem}}

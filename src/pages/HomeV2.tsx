@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { V2Footer } from "../components/LegalFormKit"
 import { V2Nav } from "../components/V2Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
-import bookingImg from "../assets/ui-multi-city-card.png"
+import bookingImg from "../assets/ui-admin-dashboard.png"
 import changeImg from "../assets/ui-changes-card.png"
 import expenseImg from "../assets/ui-expenses-card.png"
 import employeeImg from "../assets/role-traveller.jpg"
@@ -17,7 +17,7 @@ import "./HomeV2Light.css"
 const ease = [0.16, 1, 0.3, 1] as const
 function Reveal({children,className="",delay=0}:{children:React.ReactNode;className?:string;delay?:number}){const ref=useRef<HTMLDivElement>(null),visible=useInView(ref,{once:true,margin:"-8% 0px"}),reduced=useReducedMotion();return <motion.div ref={ref} className={className} initial={{opacity:0,y:reduced?0:12}} animate={visible?{opacity:1,y:0}:{}} transition={{duration:reduced?0:.6,delay,ease}}>{children}</motion.div>}
 
-const productChapters=[["Plan and book","Ask naturally. Miraee searches live inventory, understands preferences, and applies policy before presenting the right journey.",bookingImg,"Trip options showing a multi-city flight itinerary with pricing","/product#plan"],["Handle every change","When plans change, the agent finds alternatives, checks cost and policy, and brings you one clear decision.",changeImg,"Modification request showing requested flight changes and expected savings","/product#change"],["Close the expense loop","Bookings, payments, receipts, and policy stay connected so expense management becomes seamless.",expenseImg,"Trip expenses list with policy flags and auto-reconciled totals","/product#expense"]] as const
+const productChapters=[["Plan and book","Ask naturally. Miraee searches live inventory, understands preferences, and applies policy before presenting the right journey.",bookingImg,"Miraee admin dashboard showing travel spend, compliance, and active trips","/product#plan"],["Handle every change","When plans change, the agent finds alternatives, checks cost and policy, and brings you one clear decision.",changeImg,"Modification request showing requested flight changes and expected savings","/product#change"],["Close the expense loop","Bookings, payments, receipts, and policy stay connected so expense management becomes seamless.",expenseImg,"Trip expenses list with policy flags and auto-reconciled totals","/product#expense"]] as const
 const workflow=[["Plan","Policy-safe itinerary","Under 60 sec"],["Book","Flight + hotel confirmed","1 approval"],["Protect","Disruption watched","Always on"],["Expense","Receipt reconciled","0 forms"]]
 const roles=[["For employees","Ask once. Get a complete, policy-safe trip.","A trip that feels personal, not procedural.","4.8/5","traveler experience","/for-teams#employees"],["For finance","See committed spend before it becomes an expense.","Complete transparency over company expenditure.","Live","committed spend","/for-teams#finance"],["For travel teams","Set the rules once and run the program by exception.","No more managing every single booking and update.","24/7","agent + human care","/for-teams#travel-teams"]]
 const roleImages=[employeeImg,financeImg,travelTeamImg]
