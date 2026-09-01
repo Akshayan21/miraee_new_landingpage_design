@@ -91,7 +91,7 @@ const INTERESTS = ["Business travel", "Expenses", "Experiences", "Airline partne
  * @framerSupportedLayoutHeight auto
  */
 export default function MiraeeDemoPage(props: { style?: React.CSSProperties }) {
-    usePageMeta("Book a Miraee Demo - Bring a Real Trip", "See Miraee handle a real company trip, policy and edge cases in a focused 20-minute live product walkthrough.")
+    usePageMeta("Book a Miraee Demo - Bring a Real Trip", "See Miraee handle a real company trip, policy and edge cases in a focused 20-minute walkthrough.")
     const vw = useVW()
     const isNarrow = vw < 1200
     const [companySize, setCompanySize] = useState(SIZES[1])
@@ -152,7 +152,7 @@ export default function MiraeeDemoPage(props: { style?: React.CSSProperties }) {
                                 <h1 style={{ fontFamily: F, fontSize: isNarrow ? 26 : 30, fontWeight: 800, lineHeight: 1.2, letterSpacing: "-0.02em", color: T.ink, margin: "0 0 4px" }}>
                                     Experience Miraee<br />across your travel program.
                                 </h1>
-                                <p style={{ fontSize: 15, fontFamily: F, lineHeight: 1.65, color: T.muted, margin: "0 0 8px" }}>20 minutes, live product, your real trip. No slides. No dashboards.</p>
+                                <p style={{ fontSize: 15, fontFamily: F, lineHeight: 1.65, color: T.muted, margin: "0 0 8px" }}>20 minutes, your real trip. No slides. No generic walkthroughs.</p>
                                 <SectionHead title="About you" />
                                 <div style={{ display: "grid", gridTemplateColumns: isNarrow ? "1fr" : "1fr 1fr", gap: 14 }}>
                                     <Field label="Full name" htmlFor="fullName" required><TextInput name="fullName" placeholder="Your full name" required /></Field>
@@ -219,7 +219,7 @@ export default function MiraeeDemoPage(props: { style?: React.CSSProperties }) {
                     </div>
                     {/* Media column (sticky on desktop) */}
                     <div style={{ flex: 1, minWidth: 0, position: isNarrow ? "relative" : "sticky", top: isNarrow ? undefined : 92, alignSelf: "flex-start" }}>
-                        <div ref={mediaRef} style={{ position: "relative", height: isNarrow ? 420 : "calc(100vh - 124px)", minHeight: 420 }}>
+                        <div ref={mediaRef} style={{ position: "relative", height: isNarrow ? 420 : "calc(100dvh - 124px)", minHeight: 420 }}>
                             <motion.div initial={{ clipPath: "inset(0% 0% 100% 0%)" }} animate={mediaInView ? { clipPath: "inset(0% 0% 0% 0%)" } : {}} transition={{ duration: 1.1, ease: EO }}
                                 onMouseEnter={() => setImgHov(true)} onMouseLeave={() => setImgHov(false)}
                                 style={{ position: "absolute", inset: 0, borderRadius: isNarrow ? "22px 22px 48px 22px" : "40px 40px 120px 40px", overflow: "hidden", willChange: "clip-path" }}>
@@ -239,7 +239,7 @@ export default function MiraeeDemoPage(props: { style?: React.CSSProperties }) {
                                         Your travel program,<br />run by an agent.
                                     </motion.p>
                                     <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-                                        {["Live product, your use cases", "Pilot live in 90 days"].map((chip, i) => (
+                                        {["Your trip, your use cases", "Pilot live in 90 days"].map((chip, i) => (
                                             <motion.div key={chip} initial={{ opacity: 0, y: 14 }} animate={mediaInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.55, delay: 0.75 + i * 0.12, ease: EO }}
                                                 style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(10px)", borderRadius: 12, padding: "10px 16px", fontSize: 12.5, fontFamily: F, fontWeight: 600, color: "rgba(255,255,255,0.9)" }}>
                                                 {chip}

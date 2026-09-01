@@ -419,7 +419,7 @@ function Hero() {
                 mx.set((e.clientX / window.innerWidth - 0.5) * 48)
                 my.set((e.clientY / window.innerHeight - 0.5) * 48)
             }}
-            style={{ position: "sticky", top: 0, height: "100vh", background: T.bg, display: "flex", flexDirection: "column", justifyContent: "center", padding: isMobile ? "120px 20px 80px" : isTablet ? "120px 40px 80px" : "100px 64px 80px", overflow: "hidden" }}>
+            style={{ position: "sticky", top: 0, height: "100dvh", background: T.bg, display: "flex", flexDirection: "column", justifyContent: "center", padding: isMobile ? "120px 20px 80px" : isTablet ? "120px 40px 80px" : "100px 64px 80px", overflow: "hidden" }}>
             {/* Parallax ambient blob (scroll + pointer reactive) */}
             <motion.div style={{ position: "absolute", top: "5%", right: "-8%", width: "60vw", height: "60vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(229,86,2,0.08) 0%, transparent 60%)", filter: "blur(60px)", pointerEvents: "none", scale: bgScale, opacity: bgOpacity, x: blobPX, y: blobPY }} />
             <motion.div style={{ position: "absolute", bottom: "10%", left: "-5%", width: "30vw", height: "30vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(69,14,20,0.05) 0%, transparent 60%)", filter: "blur(40px)", pointerEvents: "none" }} />
@@ -614,7 +614,7 @@ function ZTunnel() {
     const pad = isMobile ? 24 : 56
     return (
         <div ref={ref} style={{ height: "820vh", position: "relative", background: T.bg, paddingTop: 56 }}>
-            <div style={{ position: "sticky", top: 12, height: "calc(100vh - 24px)", margin: "0 12px", borderRadius: 32, background: "#140305", overflow: "hidden" }}>
+            <div style={{ position: "sticky", top: 12, height: "calc(100dvh - 24px)", margin: "0 12px", borderRadius: 32, background: "#140305", overflow: "hidden" }}>
                 {TIMELINE_ERAS.map((era, i) => (
                     <EraPanel key={i} index={i} total={total} progress={smooth} era={era} isMobile={isMobile} />
                 ))}
@@ -768,7 +768,7 @@ function Solution() {
     const item = SOLUTION_ITEMS[active]
     return (
         <section ref={sectionRef} style={{ position: "relative", height: "300vh", background: T.bg }}>
-            <div style={{ position: "sticky", top: 0, height: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", overflow: "hidden" }}>
+            <div style={{ position: "sticky", top: 0, height: "100dvh", display: "grid", gridTemplateColumns: "1fr 1fr", overflow: "hidden" }}>
                 {/* LEFT — item list */}
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 clamp(32px,5vw,64px)", borderRight: "1px solid " + T.border, background: T.bg }}>
                     <SectionLabel>The platform</SectionLabel>
@@ -941,7 +941,7 @@ function Capabilities() {
         <SectionWrapper>
             {/* Tall container drives scroll progress */}
             <div ref={containerRef} style={{ height: CAPS.length * 100 + "vh", position: "relative" }}>
-                <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", background: T.bg, display: "flex", alignItems: "center", paddingTop: 110 }}>
+                <div style={{ position: "sticky", top: 0, height: "100dvh", overflow: "hidden", background: T.bg, display: "flex", alignItems: "center", paddingTop: 110 }}>
                     {/* Header pinned top-left (below fixed nav) */}
                     <div style={{ position: "absolute", top: 92, left: "clamp(32px,5vw,64px)", right: "clamp(32px,5vw,64px)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", zIndex: 3 }}>
                         <div>
@@ -1110,8 +1110,8 @@ function Roles() {
     // Section height = panPx + 100vh. scrollable = offsetHeight - innerHeight = panPx exactly.
     // panPx = 0 (all cards fit): height = 100vh, sticky never engages, zero dead scroll.
     return (
-        <section ref={sectionRef} style={{ position: "relative", height: panPx === 0 ? "100vh" : `calc(${panPx}px + 100vh)`, background: T.bg }}>
-            <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <section ref={sectionRef} style={{ position: "relative", height: panPx === 0 ? "100dvh" : `calc(${panPx}px + 100dvh)`, background: T.bg }}>
+            <div style={{ position: "sticky", top: 0, height: "100dvh", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "center" }}>
                 <div style={{ paddingLeft: "clamp(32px,5vw,64px)", paddingRight: "clamp(32px,5vw,64px)", marginBottom: 48 }}>
                     <SectionLabel>Experiences</SectionLabel>
                     <h2 style={{ fontFamily: F, fontSize: "clamp(2rem,3.5vw,3.2rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: T.ink, margin: 0 }}>
@@ -1153,7 +1153,7 @@ function StepPanel({ num, title, body, accent, bg, tag, index, total }: typeof S
     const isMobile = w < 640
     const isTablet = w >= 640 && w < 1024
     return (
-        <div ref={ref} style={{ position: "sticky", top: 0, height: "100vh", background: bg, display: "flex", alignItems: "center", overflow: "hidden", zIndex: index + 1 }}>
+        <div ref={ref} style={{ position: "sticky", top: 0, height: "100dvh", background: bg, display: "flex", alignItems: "center", overflow: "hidden", zIndex: index + 1 }}>
             {/* Massive ghost number */}
             <motion.div
                 initial={{ opacity: 0, x: 60 }}
@@ -1373,7 +1373,7 @@ function CTA() {
     const contentScale = useTransform(smooth, [0.48, 0.72], [0.95, 1])
     return (
         <div ref={ref} style={{ height: "380vh", position: "relative", background: T.bg, paddingBottom: 48 }}>
-            <div style={{ position: "sticky", top: 12, height: "calc(100vh - 24px)", margin: "0 12px", borderRadius: 32, background: T.maroon, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ position: "sticky", top: 12, height: "calc(100dvh - 24px)", margin: "0 12px", borderRadius: 32, background: T.maroon, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <div style={{ position: "absolute", top: "-20%", right: "-10%", width: "50vw", height: "50vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(229,86,2,0.22) 0%, transparent 65%)", filter: "blur(60px)", pointerEvents: "none" }} />
                 <div style={{ position: "absolute", bottom: "-15%", left: "-8%", width: "35vw", height: "35vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(251,246,242,0.06) 0%, transparent 65%)", filter: "blur(40px)", pointerEvents: "none" }} />
                 <CtaRoutes />

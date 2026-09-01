@@ -3,6 +3,8 @@ import { useRef, useEffect, useState, useCallback, useLayoutEffect } from "react
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
+import V11PageImage from "../components/V11PageImage"
+import productPageImg from "../../images/weavy/v1/v1-home-hero.webp"
 gsap.registerPlugin(ScrollTrigger)
 
 // ─── Design tokens ───────────────────────────────────────────────────────────
@@ -1436,13 +1438,14 @@ export default function MiraeeProductPage(_props: { style?: React.CSSProperties 
         return () => cancelAnimationFrame(raf)
     }, [])
     return (
-        <div style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", fontFamily: "Plus Jakarta Sans, sans-serif", background: "var(--page-bg)" }}>
+        <div className="v1-type-page" style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", fontFamily: "Plus Jakarta Sans, sans-serif", background: "var(--page-bg)" }}>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
             <SmoothScrollStyle />
             <ScrollProgress />
             <SiteNav />
             <ProductHero />
+            <V11PageImage src={productPageImg} alt="Business traveler using Miraee during a journey" label="One connected journey" caption="Planning, booking, changes, support, and expenses stay connected from the first request to the final receipt." position="center 42%" mobilePosition="58% center" />
             <WhatIsMiraee />
             <UnifiedExperience />
             <PersonalisationEngine />

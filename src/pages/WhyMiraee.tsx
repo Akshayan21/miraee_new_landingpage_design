@@ -4,6 +4,8 @@ import { Link } from "react-router-dom"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
+import V11PageImage from "../components/V11PageImage"
+import whyPageImg from "../../images/weavy/v1/solutions/v1-solutions-employees.webp"
 gsap.registerPlugin(ScrollTrigger)
 
 // --- Design tokens & shared local helpers (self-contained per V1 page pattern) --
@@ -526,10 +528,11 @@ export default function MiraeeWhyMiraeePage() {
     }, [])
 
     return (
-        <div style={{ background: "var(--page-bg)" }}>
+        <div className="v1-type-page" style={{ background: "var(--page-bg)" }}>
             <SmoothScrollStyle />
             <SiteNav />
             <WhyHero />
+            <V11PageImage src={whyPageImg} alt="Employee beginning a business journey with confidence" label="A better way to travel" caption="Employees get a personal experience while the business gains one continuous view of the journey." position="center 38%" mobilePosition="56% center" />
             <TheShift />
             <SideBySide />
             <HardQuestions />

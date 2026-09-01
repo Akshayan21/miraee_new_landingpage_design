@@ -5,6 +5,8 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
 import { usePageMeta } from "../hooks/usePageMeta"
+import V11PageImage from "../components/V11PageImage"
+import resourcesPageImg from "../../images/weavy/v1/solutions/v1-solutions-travelleads.webp"
 gsap.registerPlugin(ScrollTrigger)
 
 const T = {
@@ -452,13 +454,14 @@ export default function MiraeeResourcesPage(_props: any) {
     }, [])
 
     return (
-        <div style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", background: "var(--page-bg)", fontFamily: "Plus Jakarta Sans, sans-serif" }}>
+        <div className="v1-type-page" style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", background: "var(--page-bg)", fontFamily: "Plus Jakarta Sans, sans-serif" }}>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
             <SmoothScrollStyle/>
             <ScrollBar/>
             <SiteNav />
             <ResourcesHero/>
+            <V11PageImage src={resourcesPageImg} alt="Travel leader moving through an airport with live journey context" label="Guidance for modern travel teams" caption="Practical thinking for teams building a more connected, responsive, and human travel program." position="center 42%" mobilePosition="42% center" />
             <Guides/>
             <Calculators/>
             <WebinarsAndHelp/>

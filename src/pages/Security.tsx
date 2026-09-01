@@ -3,6 +3,8 @@ import { useRef, useEffect, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
+import V11PageImage from "../components/V11PageImage"
+import securityPageImg from "../../images/weavy/v1/solutions/v1-solutions-finance.webp"
 gsap.registerPlugin(ScrollTrigger)
 
 const T = {
@@ -683,13 +685,14 @@ export default function MiraeeSecurityPage(_props: any) {
     }, [])
 
     return (
-        <div style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", background: "var(--page-bg)", fontFamily: "Plus Jakarta Sans, sans-serif" }}>
+        <div className="v1-type-page" style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", background: "var(--page-bg)", fontFamily: "Plus Jakarta Sans, sans-serif" }}>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
             <SmoothScrollStyle/>
             <ScrollBar/>
             <SiteNav />
             <SecurityHero/>
+            <V11PageImage src={securityPageImg} alt="Finance team reviewing governed travel information" label="Control without friction" caption="Permissions, policy, auditability, and human oversight are built into the same workflow employees use to travel." position="center 40%" mobilePosition="57% center" />
             <Certifications/>
             <DataResidency/>
             <AIGovernance/>

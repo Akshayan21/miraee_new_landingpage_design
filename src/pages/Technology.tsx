@@ -1,8 +1,11 @@
 import { motion, useMotionValue, useSpring, useTransform, useInView, AnimatePresence } from "framer-motion"
 import { useRef, useEffect, useState, useCallback } from "react"
+import { useLocation } from "react-router-dom"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
+import V11PageImage from "../components/V11PageImage"
+import technologyPageImg from "../../images/weavy/v1/solutions/v1-solutions-admins.webp"
 gsap.registerPlugin(ScrollTrigger)
 
 const T = {
@@ -83,6 +86,8 @@ function TechHero() {
     const w = useWindowWidth()
     const isMobile = w < 768
     const isTablet = w < 1024
+    const pathname = useLocation().pathname
+    const isV11 = pathname === "/v1.1" || pathname.startsWith("/v1.1/")
     const mouse = useMouseParallax()
     const titleRef = useRef<HTMLHeadingElement>(null)
     const badgeRef = useRef<HTMLDivElement>(null)
@@ -160,6 +165,10 @@ function TechHero() {
 
     // Scroll parallax (scrub)
     useGSAP((gsap, ST) => {
+        if (isV11) {
+            if (heroInnerRef.current) gsap.set(heroInnerRef.current, { clearProps: "transform" })
+            return
+        }
         if (!heroRef.current) return
         if (heroInnerRef.current) {
             gsap.to(heroInnerRef.current, {
@@ -173,19 +182,19 @@ function TechHero() {
                 scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 2.5 }
             })
         }
-    }, [])
+    }, [isV11])
 
     const words = "The Intelligence Engine Beneath Every Trip.".split(" ")
 
     return (
-        <section ref={heroRef} style={{ position: "relative", minHeight: "100vh", background: "radial-gradient(circle at 50% 0%, rgba(229,86,2,0.10), transparent 45%), linear-gradient(rgba(var(--text-rgb),0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.035) 1px, transparent 1px), var(--page-bg)", backgroundSize: "auto, 64px 64px, 64px 64px", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+        <section ref={heroRef} style={{ position: "relative", minHeight: "100dvh", background: "radial-gradient(circle at 50% 0%, rgba(229,86,2,0.10), transparent 45%), linear-gradient(rgba(var(--text-rgb),0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.035) 1px, transparent 1px), var(--page-bg)", backgroundSize: "auto, 64px 64px, 64px 64px", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
             {/* horizontal scan line */}
             <div ref={scanLineRef} style={{ position: "absolute", top: "50%", left: 0, right: 0, height: 1, background: "linear-gradient(to right, transparent 0%, rgba(229,86,2,0.5) 40%, rgba(229,86,2,0.5) 60%, transparent 100%)", pointerEvents: "none", zIndex: 5, opacity: 0 }}/>
             <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.75 }} />
             <motion.div style={{ position: "absolute", width: 1000, height: 1000, borderRadius: "50%", background: `radial-gradient(ellipse 72% 68% at 50% 50%, transparent 0%, rgba(229,86,2,0.10) 40%, rgba(229,86,2,0.05) 65%, transparent 88%)`, top: "50%", left: "50%", translateX: "-50%", translateY: "-50%", x: mouse.x, y: mouse.y, zIndex: 1, pointerEvents: "none" }}/>
             {/* subtle vignette bottom, blends into next section's surface */}
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 220, background: `linear-gradient(to bottom, transparent, var(--surface-2))`, zIndex: 2, pointerEvents: "none" }}/>
-            <div ref={heroInnerRef} style={{ position: "relative", zIndex: 3, maxWidth: 900, textAlign: "center", padding: isMobile ? "120px 24px 80px" : "0 48px", willChange: "transform" }}>
+            <div ref={heroInnerRef} style={{ position: "relative", zIndex: 3, maxWidth: 900, textAlign: "center", padding: isMobile ? "124px 24px 80px" : isV11 ? "124px 48px 72px" : "0 48px", willChange: isV11 ? "auto" : "transform" }}>
                 <div ref={badgeRef} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "7px 18px", border: "1px solid rgba(var(--text-rgb),0.12)", borderRadius: 100, marginBottom: 40, backdropFilter: "blur(8px)", background: "rgba(var(--text-rgb),0.04)" }}>
                     <motion.div animate={{ scale: [1, 1.5, 1] }} transition={{ duration: 2, repeat: Infinity }} style={{ width: 6, height: 6, borderRadius: "50%", background: T.orange }}/>
                     <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans", color: "rgba(var(--text-rgb),0.65)", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 600 }}>AI-Native Technology · Miraee</span>
@@ -868,13 +877,14 @@ export default function MiraeeTechnologyPage(_props: any) {
         meta.content = 'width=device-width, initial-scale=1, maximum-scale=5'
     }, [])
     return (
-        <div style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", background: "#0F0407", fontFamily: "Plus Jakarta Sans, sans-serif" }}>
+        <div className="v1-type-page" style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", background: "#0F0407", fontFamily: "Plus Jakarta Sans, sans-serif" }}>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
             <SmoothScrollStyle/>
             <ScrollBar/>
             <SiteNav />
             <TechHero/>
+            <V11PageImage src={technologyPageImg} alt="Administrator working with the Miraee platform" label="Intelligence in context" caption="The platform connects live travel context with company controls so every action remains useful, governed, and visible." position="center top" mobilePosition="center top" />
             <AgenticAI/>
             <WhatAgentsDo/>
             <BrainAndHeart/>

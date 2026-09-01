@@ -136,7 +136,6 @@
 .m-chapter:nth-child(3) .m-chapter__media::before { content: "03"; }
 .m-chapter:nth-child(2) .m-chapter__media { background: #f7e8e3; }
 .m-chapter:nth-child(3) .m-chapter__media { background: #fff8f3; }
-.m-chapter__media::after { content: "LIVE PRODUCT"; position: absolute; top: 20px; right: 22px; color: rgba(69, 14, 20, .42); font-size: 8px; font-weight: 700; letter-spacing: .14em; }
 .m-chapter__media img { transition: transform .55s var(--m-ease), filter .55s var(--m-ease); }
 .m-chapter:hover .m-chapter__media img { transform: translateY(-6px); filter: drop-shadow(0 18px 24px rgba(69, 14, 20, .14)); }
 
