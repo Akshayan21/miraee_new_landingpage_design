@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
 import { Reveal, V3Nav, V3Footer, Rows, Transcript } from "../components/V3Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
-import bookingCard from "../assets/booking-card.webp"
-import changeCard from "../assets/change-card.webp"
-import expensesCard from "../assets/expenses-card.webp"
+import bookingCard from "../assets/ui-multi-city-card.png"
+import changeCard from "../assets/ui-changes-card.png"
+import expensesCard from "../assets/ui-expenses-card.png"
 import "./V3.css"
 
 const knows = ["Who the traveler is", "Company travel policy", "Seat preferences", "Airline & hotel preferences", "Loyalty programs", "Previous behavior", "Office & location context", "Preferred timings"]

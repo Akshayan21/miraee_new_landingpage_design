@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { Reveal, V3Nav, V3Footer, Rows } from "../components/V3Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
-import mobileUi from "../assets/miraee_mob_ui.png"
+import mobileUi from "../assets/ui-car-card.png"
 import "./V3.css"
 
 const perks = [
@@ -25,7 +25,7 @@ export default function HrV3() {
                         <p className="sub">Your frequent travelers give up evenings, weekends, and sleep for the company. Miraee gives them back time, care, and rewards — and gives HR a benefit that costs less than the tools it replaces.</p>
                         <div className="cta-row"><Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link></div>
                     </Reveal>
-                    <Reveal className="product-mobile-stage" delay={0.08}><img src={mobileUi} alt="Miraee mobile travel assistant interface" /></Reveal>
+                    <Reveal className="product-mobile-stage" delay={0.08}><img src={mobileUi} alt="Miraee rewards car selection card" /></Reveal>
                 </div>
             </header>
 
