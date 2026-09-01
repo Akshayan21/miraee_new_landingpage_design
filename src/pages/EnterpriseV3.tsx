@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { Reveal, V3Nav, V3Footer, Rows } from "../components/V3Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
-import financeDashboard from "../assets/ui-expenses-card.png"
+import financeDashboard from "../assets/ui-admin-dashboard.png"
 import "./V3.css"
 
 const consoleItems = [
@@ -38,7 +38,7 @@ export default function EnterpriseV3() {
                         <p className="sub">Everything the traveler never has to think about — spend, policy, approvals, risk — is exactly what the admin console makes visible, in real time.</p>
                         <div className="cta-row"><Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link></div>
                     </Reveal>
-                    <Reveal className="product-dashboard-stage" delay={0.08}><img src={financeDashboard} alt="Miraee automated travel expense summary" /></Reveal>
+                    <Reveal className="product-dashboard-stage" delay={0.08}><img src={financeDashboard} alt="Miraee admin dashboard showing travel spend, compliance, and active trips" /></Reveal>
                 </div>
             </header>
 

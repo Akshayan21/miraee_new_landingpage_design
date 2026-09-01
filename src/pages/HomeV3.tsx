@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { Reveal, V3Nav, V3Footer, Transcript } from "../components/V3Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
 import travelerHero from "../assets/miraee-traveler-hero.webp"
-import bookingCard from "../assets/ui-multi-city-card.png"
+import dashboardImage from "../assets/ui-admin-dashboard.png"
 import "./V3.css"
 
 const outcomes = [
@@ -84,7 +84,7 @@ export default function HomeV3() {
                     </Reveal>
 
                     <Reveal className="journey-console" delay={0.08}>
-                        <img className="journey-console__product" src={bookingCard} alt="Miraee multi-city booking interface" />
+                        <img className="journey-console__product" src={dashboardImage} alt="Miraee admin dashboard showing travel spend, compliance, and active trips" />
                         <Transcript lines={[
                             { from: "ask", text: "Get me to Chicago Monday, back Wednesday evening." },
                             { from: "reply", text: <>United 6:10a in your aisle seat, Hyatt two blocks from the client — both in policy, on your company rate. The 7:05a departure <strong>saves $61</strong> and still lands before your 9:30. Take it?</> },
