@@ -256,7 +256,7 @@ export default function MiraeeSupportPage(props: { style?: React.CSSProperties }
                     </div>
                     {/* Media column (sticky on desktop) */}
                     <div style={{ flex: 1, minWidth: 0, position: isNarrow ? "relative" : "sticky", top: isNarrow ? undefined : 92, alignSelf: "flex-start" }}>
-                        <div ref={mediaRef} style={{ position: "relative", height: isNarrow ? 420 : "calc(100vh - 124px)", minHeight: 420 }}>
+                        <div ref={mediaRef} style={{ position: "relative", height: isNarrow ? 420 : "calc(100dvh - 124px)", minHeight: 420 }}>
                             <motion.div initial={{ clipPath: "inset(0% 0% 100% 0%)" }} animate={mediaInView ? { clipPath: "inset(0% 0% 0% 0%)" } : {}} transition={{ duration: 1.1, ease: EO }}
                                 onMouseEnter={() => setImgHov(true)} onMouseLeave={() => setImgHov(false)}
                                 style={{ position: "absolute", inset: 0, borderRadius: isNarrow ? "22px 22px 22px 48px" : "40px 40px 40px 120px", overflow: "hidden", willChange: "clip-path" }}>

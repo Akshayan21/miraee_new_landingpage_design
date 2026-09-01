@@ -3,6 +3,9 @@ import { useRef, useEffect, useState, useCallback } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
+import AudienceShowcase from "../components/AudienceShowcase"
+import V11PageImage from "../components/V11PageImage"
+import solutionsPageImg from "../../images/weavy/v1/solutions/v1-solutions-managers.webp"
 gsap.registerPlugin(ScrollTrigger)
 
 const T = {
@@ -1070,14 +1073,16 @@ export default function MiraeeSolutionsPage(_props: any) {
         meta.content = 'width=device-width, initial-scale=1, maximum-scale=5'
     }, [])
     return (
-        <div style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", background: "var(--page-bg)", fontFamily: "Plus Jakarta Sans, sans-serif" }}>
+        <div className="v1-type-page" style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", background: "var(--page-bg)", fontFamily: "Plus Jakarta Sans, sans-serif" }}>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
             <SmoothScrollStyle/>
             <ScrollBar/>
             <SiteNav />
             <SolutionsHero/>
+            <V11PageImage src={solutionsPageImg} alt="Manager collaborating with colleagues around business travel" label="Built around people" caption="One connected experience gives employees freedom while managers, finance, and travel teams retain the context they need." position="center 38%" mobilePosition="50% center" />
             <ByRole/>
+            <AudienceShowcase/>
             <BySize/>
             <ByUseCase/>
             <DutyOfCare/>

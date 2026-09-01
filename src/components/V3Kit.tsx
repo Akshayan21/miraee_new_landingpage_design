@@ -34,8 +34,8 @@ const NAV_LINKS: [string, string][] = [
 
 function V3VersionSwitch({ className = "" }: { className?: string }) {
     const { pathname } = useLocation()
-    const active = pathname.startsWith("/v3") ? "v3" : pathname === "/v2" ? "v2" : "v1"
-    const versions = [["v1", "/"], ["v2", "/v2"], ["v3", "/v3"]] as const
+    const active = pathname === "/v1.1" ? "v1.1" : pathname.startsWith("/v3") ? "v3" : pathname === "/v2" ? "v2" : "v1"
+    const versions = [["v1", "/"], ["v1.1", "/v1.1"], ["v2", "/v2"], ["v3", "/v3"]] as const
     return (
         <div className={`v3-version-switch ${className}`.trim()} aria-label="Choose site version">
             {versions.map(([version, href]) => <Link key={version} to={href} aria-current={active === version ? "page" : undefined}>{version}</Link>)}

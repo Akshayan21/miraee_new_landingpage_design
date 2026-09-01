@@ -4,6 +4,8 @@ import { Link } from "react-router-dom"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
+import V11PageImage from "../components/V11PageImage"
+import aboutPageImg from "../../images/weavy/v1/v1-experiences-culture.webp"
 gsap.registerPlugin(ScrollTrigger)
 
 const T = {
@@ -133,7 +135,7 @@ function AboutHero() {
     })
 
     return (
-        <section ref={heroRef} style={{ position: "relative", minHeight: "100vh", background: "radial-gradient(circle at 50% 0%, rgba(229,86,2,0.12), transparent 30%), var(--page-bg)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+        <section ref={heroRef} style={{ position: "relative", minHeight: "100dvh", background: "radial-gradient(circle at 50% 0%, rgba(229,86,2,0.12), transparent 30%), var(--page-bg)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
             <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.035) 1px, transparent 1px)", backgroundSize: "72px 72px", pointerEvents: "none" }}/>
             <div style={{
                 position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
@@ -142,7 +144,7 @@ function AboutHero() {
             }} />
             <div style={{ position: "absolute", top: 0, left: 0, width: 120, height: 120, borderTop: "1px solid rgba(229,86,2,0.15)", borderLeft: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }}/>
             <div style={{ position: "absolute", bottom: 0, right: 0, width: 120, height: 120, borderBottom: "1px solid rgba(229,86,2,0.15)", borderRight: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }}/>
-            <div ref={heroInnerRef} style={{ position: "relative", top: isMobile ? 0 : isTablet ? 36 : 48, zIndex: 3, maxWidth: 900, textAlign: "center", padding: isMobile ? "120px 24px 80px" : isTablet ? "100px 48px 80px" : "0 64px", willChange: "transform" }}>
+            <div ref={heroInnerRef} style={{ position: "relative", zIndex: 3, width: "100%", maxWidth: 900, textAlign: "center", padding: isMobile ? "120px 24px 96px" : isTablet ? "132px 48px 124px" : "144px 64px 132px", willChange: "transform" }}>
                 <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" as const }}
                     style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 20px", border: "1px solid rgba(var(--text-rgb),0.15)", borderRadius: 100, marginBottom: 48, background: "rgba(var(--text-rgb),0.05)" }}>
                     <motion.div animate={{ scale: [1,1.6,1], opacity: [0.7,1,0.7] }} transition={{ duration: 2, repeat: Infinity }}
@@ -179,7 +181,7 @@ function AboutHero() {
                     ))}
                 </motion.div>
             </div>
-            <motion.div style={{ position: "absolute", bottom: 36, left: 0, right: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 6, zIndex: 4 }}
+            <motion.div style={{ position: "absolute", bottom: 18, left: 0, right: 0, display: isMobile ? "none" : "flex", flexDirection: "column", alignItems: "center", gap: 6, zIndex: 4, pointerEvents: "none" }}
                 animate={{ y: [0, 10, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}>
                 <span style={{ fontSize: 9, fontFamily: "Plus Jakarta Sans", color: "rgba(var(--text-rgb),0.3)", letterSpacing: "0.14em", textTransform: "uppercase" }}>Scroll</span>
                 <div style={{ width: 1, height: 52, background: "linear-gradient(to bottom,rgba(229,86,2,0.7),transparent)" }}/>
@@ -486,11 +488,12 @@ export default function MiraeeAboutPage() {
     }, [])
 
     return (
-        <div style={{ background: "var(--page-bg)", minHeight: "100vh" }}>
+        <div className="v1-type-page" style={{ background: "var(--page-bg)", minHeight: "100vh" }}>
             <SmoothScrollStyle />
             <ScrollBar />
             <SiteNav />
             <AboutHero />
+            <V11PageImage src={aboutPageImg} alt="Business traveler discovering a local cultural experience" label="Travel beyond the itinerary" caption="Miraee is built around the full experience of travel, including the moments people remember after the workday ends." position="center top" mobilePosition="center 18%" />
             <OriginStory />
             <TabhiGroup />
             <TheAdvantage />

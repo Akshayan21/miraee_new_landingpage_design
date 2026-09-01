@@ -32,22 +32,24 @@ export function MiraeeLogo({ fill = T.orange, height = 26 }: { fill?: string; he
 }
 
 // ─── Site nav (used by every routed page) ────────────────────────────────────
-const SITE_NAV_LINKS: [string, string][] = [
-    ["Home", "/"],
-    ["Platform", "/v1/product"],
-    ["Solutions", "/v1/solutions"],
-    ["AI & Technology", "/v1/technology"],
-    ["About", "/v1/about"],
+const v1NavLinks = (prefix: "" | "/v1.1"): [string, string][] => [
+    ["Home", prefix || "/"],
+    ["Platform", `${prefix || "/v1"}/product`],
+    ["Solutions", `${prefix || "/v1"}/solutions`],
+    ["AI & Technology", `${prefix || "/v1"}/technology`],
+    ["About", `${prefix || "/v1"}/about`],
 ]
 
 export function SiteNav() {
     const vw = useWindowWidth()
     const pathname = useLocation().pathname
-    const activeVersion = pathname.startsWith("/v3") ? "v3" : pathname === "/v2" || (!pathname.startsWith("/v1/") && pathname !== "/") ? "v2" : "v1"
+    const isV11 = pathname === "/v1.1" || pathname.startsWith("/v1.1/")
+    const activeVersion = isV11 ? "v1.1" : pathname.startsWith("/v3") ? "v3" : pathname === "/v2" || (!pathname.startsWith("/v1/") && pathname !== "/") ? "v2" : "v1"
     const isMobile = vw < 640
     const isCompact = vw < 1180
     const [open, setOpen] = useState(false)
-    const mobileLinks = SITE_NAV_LINKS
+    const siteNavLinks = v1NavLinks(isV11 ? "/v1.1" : "")
+    const mobileLinks = siteNavLinks
     return (
         <>
             <motion.nav
@@ -57,10 +59,10 @@ export function SiteNav() {
                 transition={{ duration: 0.5, ease: EO }}
                 aria-label="Primary"
                 style={{ position: "fixed", top: 14, left: "50%", x: "-50%", zIndex: 200, width: isCompact ? "min(1080px, calc(100vw - 24px))" : "min(1280px, calc(100vw - 24px))", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", padding: isMobile ? "0 6px 0 12px" : "0 10px 0 26px", borderRadius: 100, background: "var(--glass-bg)", backdropFilter: "blur(18px)", border: "1px solid rgba(var(--text-rgb),0.08)", boxShadow: "0 10px 34px rgba(var(--text-rgb),0.08)" }}>
-                <Link to="/" aria-label="Miraee home" style={{ textDecoration: "none", display: "inline-flex", flexShrink: 0 }}><MiraeeLogo fill={T.orange} height={isMobile ? 19 : 24} /></Link>
+                <Link to={isV11 ? "/v1.1" : "/"} aria-label="Miraee home" style={{ textDecoration: "none", display: "inline-flex", flexShrink: 0 }}><MiraeeLogo fill={T.orange} height={isMobile ? 19 : 24} /></Link>
                 {!isCompact && (
                     <div aria-label="Primary" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                        {SITE_NAV_LINKS.map(([label, href]) => (
+                        {siteNavLinks.map(([label, href]) => (
                             <Link key={href} to={href} aria-current={pathname === href ? "page" : undefined}
                                 style={{ padding: "8px 13px", borderRadius: 100, fontSize: 13, fontFamily: F, fontWeight: 600, whiteSpace: "nowrap", textDecoration: "none", color: pathname === href ? T.ink : T.muted, background: pathname === href ? "rgba(var(--text-rgb),0.06)" : "transparent", transition: "color .2s ease,background .2s ease" }}>
                                 {label}
@@ -70,7 +72,7 @@ export function SiteNav() {
                 )}
                 <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 4 : 16 }}>
                     <div className="site-version-switch" aria-label="Choose site version" style={{ display: "flex", alignItems: "center", padding: 3, border: "1px solid rgba(var(--text-rgb),0.10)", borderRadius: 100, background: "rgba(var(--text-rgb),0.035)" }}>
-                        {(["v1", "v2", "v3"] as const).map(version => <Link key={version} to={version === "v1" ? "/" : `/${version}`} aria-current={activeVersion === version ? "page" : undefined}
+                        {(["v1", "v1.1", "v2", "v3"] as const).map(version => <Link key={version} to={version === "v1" ? "/" : `/${version}`} aria-current={activeVersion === version ? "page" : undefined}
                             style={{ display: "grid", placeItems: "center", minWidth: isMobile ? 26 : 38, height: isMobile ? 26 : 30, padding: isMobile ? "0 4px" : "0 8px", borderRadius: 100, background: activeVersion === version ? T.ink : "transparent", color: activeVersion === version ? T.cream : T.muted, fontSize: isMobile ? 9 : 10, fontFamily: F, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s ease,color .2s ease" }}>{version}</Link>)}
                     </div>
                     {!isMobile && <ThemeToggle size={34} />}
@@ -97,10 +99,10 @@ export function SiteNav() {
                 {isCompact && open && (
                     <motion.div id="site-nav-mobile-menu" key="mobile-nav-menu" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.25, ease: EO }}
                         style={{ position: "fixed", top: 80, left: "50%", x: "-50%", zIndex: 199, width: "min(340px, calc(100vw - 24px))", background: "var(--glass-bg)", backdropFilter: "blur(20px)", border: "1px solid rgba(var(--text-rgb),0.08)", borderRadius: 20, boxShadow: "0 20px 50px rgba(var(--text-rgb),0.14)", padding: 10, display: "flex", flexDirection: "column", gap: 2 }}>
-                        {mobileLinks.map(([label, href]) => <a key={label} href={href} onClick={() => setOpen(false)}
+                        {mobileLinks.map(([label, href]) => <Link key={label} to={href} onClick={() => setOpen(false)}
                             style={{ padding: "12px 14px", borderRadius: 12, fontSize: 14, fontFamily: F, fontWeight: 600, color: T.ink, textDecoration: "none" }}>
                             {label}
-                        </a>)}
+                        </Link>)}
                         <a href="https://app.miraee.ai" onClick={() => setOpen(false)}
                             style={{ padding: "12px 14px", borderRadius: 12, fontSize: 14, fontFamily: F, fontWeight: 600, color: T.ink, textDecoration: "none" }}>
                             Sign in
@@ -118,15 +120,19 @@ export function SiteNav() {
 
 // ─── Site footer (used by every routed page) ─────────────────────────────────
 type FooterLink = { label: string; href?: string; external?: boolean; disabled?: boolean }
-type SiteVersion = "v1" | "v2"
+type SiteVersion = "v1" | "v1.1" | "v2"
 
 export function SiteFooter({ version }: { version?: SiteVersion } = {}) {
     const vw = useWindowWidth()
     const isMobile = vw < 640
     const pathname = useLocation().pathname
-    const isV1 = version ? version === "v1" : pathname === "/" || pathname.startsWith("/v1/")
-    const resolvedVersion: SiteVersion = isV1 ? "v1" : "v2"
-    const versionHref = (v1: string, v2: string) => isV1 ? v1 : v2
+    const isV11 = pathname === "/v1.1" || pathname.startsWith("/v1.1/")
+    const isV1 = isV11 || (version ? version === "v1" || version === "v1.1" : pathname === "/" || pathname.startsWith("/v1/"))
+    const resolvedVersion: SiteVersion = isV11 ? "v1.1" : isV1 ? "v1" : "v2"
+    const versionHref = (v1: string, v2: string) => {
+        if (!isV1) return v2
+        return isV11 ? v1.replace(/^\/v1(?=\/|$)/, "/v1.1") : v1
+    }
     const footRef = useRef<HTMLElement>(null)
     const { scrollYProgress } = useScroll({ target: footRef, offset: ["start end", "end end"] })
     const wmY = useTransform(scrollYProgress, [0, 1], [160, 0])
@@ -333,7 +339,7 @@ export function MediaColumn({ isNarrow, imageSrc, imageAlt, quote, chips, badgeL
     const [imgHov, setImgHov] = useState(false)
     return (
         <div style={{ flex: 1, minWidth: 0, position: isNarrow ? "relative" : "sticky", top: isNarrow ? undefined : 92, alignSelf: "flex-start" }}>
-            <div ref={mediaRef} style={{ position: "relative", height: isNarrow ? 420 : "calc(100vh - 124px)", minHeight: 420 }}>
+            <div ref={mediaRef} style={{ position: "relative", height: isNarrow ? 420 : "calc(100dvh - 124px)", minHeight: 420 }}>
                 <motion.div initial={{ clipPath: "inset(0% 0% 100% 0%)" }} animate={mediaInView ? { clipPath: "inset(0% 0% 0% 0%)" } : {}} transition={{ duration: 1.1, ease: EO }}
                     onMouseEnter={() => setImgHov(true)} onMouseLeave={() => setImgHov(false)}
                     style={{ position: "absolute", inset: 0, borderRadius: isNarrow ? "22px 22px 22px 48px" : "40px 40px 40px 120px", overflow: "hidden", willChange: "clip-path" }}>

@@ -32,6 +32,28 @@
   box-sizing: border-box;
 }
 
+/* V1 and V1.1 share the V1 homepage typography. The legacy interior pages
+   contain inline Cardo/monospace declarations, so this scoped rule is
+   intentionally important while leaving the V2 and V3 systems untouched. */
+.v1-type-page,
+.v1-type-page * {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
+}
+
+/* Plus Jakarta Sans has deeper descenders than the former display face.
+   Reveal wrappers intentionally clip animated text, so reserve enough space
+   for letters such as g, j, p, q and y instead of trimming their bottoms. */
+.v1-type-page :is(h1, h2, h3) {
+  overflow: visible !important;
+}
+
+.v1-type-page :is(h1, h2, h3) > span,
+.v1-type-page :is(h1, h2, h3) > span > span,
+.el-site :is(h1, h2, h3) > span,
+.el-site :is(h1, h2, h3) > span > span {
+  padding-bottom: 0.14em;
+}
+
 /* ─── Theme tokens (brand colors only) ────────────────────────────────
    Brand palette is fixed: orange #E55602, maroon #450E14, ink #0F0407,
    cream #FBF6F2, white #FFFFFF. Only page *surfaces* and *text* flip
@@ -275,6 +297,76 @@ input[type="date"],
 input[type="time"],
 input[type="datetime-local"] {
   color-scheme: light dark;
+}
+
+/* ── Cross-version responsive foundation ─────────────────────────
+   Keep each version's art direction intact while preventing the common
+   viewport failures: horizontal drift, unshrinkable grid children, clipped
+   copy, and iOS form zoom. Component styles remain free to override this. */
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body {
+  min-width: 320px;
+}
+
+:where(.el-site, .v1-type-page, .m-site, .v3-page, .form-page, .legal-page)
+  :where(main, header, footer, section, article, aside, nav, figure, div) {
+  min-width: 0;
+}
+
+:where(.el-site, .v1-type-page, .m-site, .v3-page, .form-page, .legal-page)
+  :where(h1, h2, h3, h4, p, a, span, strong) {
+  overflow-wrap: break-word;
+}
+
+:where(.el-site, .v1-type-page, .m-site, .v3-page, .form-page, .legal-page)
+  :where(img, video, canvas, iframe) {
+  max-width: 100%;
+}
+
+/* Dynamic viewport units avoid mobile browser chrome cutting off heroes. */
+.v1-type-page > section:first-of-type {
+  min-height: max(42rem, 100dvh) !important;
+}
+
+@media (min-width: 721px) and (max-height: 760px) {
+  .v1-type-page > section:first-of-type {
+    min-height: 42rem !important;
+  }
+
+  .el-site .el-hero,
+  .m-site .m-hero,
+  .v3-page header.hero {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .v1-type-page > section:first-of-type {
+    min-height: auto !important;
+  }
+
+  :where(.el-site, .v1-type-page, .m-site, .v3-page, .form-page, .legal-page)
+    :where(input, select, textarea) {
+    font-size: 16px;
+  }
+
+  :where(.el-site, .v1-type-page, .m-site, .v3-page)
+    :where(button, [role="button"], input, select, textarea) {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  :where(.el-site, .v1-type-page, .m-site, .v3-page)
+    :where(h1, h2, h3) {
+    text-wrap: pretty;
+  }
 }
 
 /* autofill override — prevent browser yellow/blue from breaking themed inputs */
