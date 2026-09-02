@@ -6,6 +6,8 @@ import { SiteNav, V1Footer } from "../components/LegalFormKit"
 import V11PageImage from "../components/V11PageImage"
 import productPageImg from "../../images/weavy/v1/v1-home-hero.webp"
 import miraeeFavicon from "../assets/favicon-180.png"
+import financeDashboard from "../assets/ui-admin-dashboard.png"
+import miraeeMobileUi from "../assets/miraee-mobile-phone.png"
 gsap.registerPlugin(ScrollTrigger)
 
 // ─── Design tokens ───────────────────────────────────────────────────────────
@@ -235,7 +237,7 @@ function ProductHero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7, duration: 0.65, ease: [0.16,1,0.3,1] }}
                     style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 19, lineHeight: 1.7, color: T.muted, margin: "0 auto 48px", maxWidth: 620 }}>
-                    Six capabilities running on one continuous context inside a single corporate travel platform. Miraee doesn't pass your trip between tools. It carries it.
+                    One platform. All in one place.<br />Miraee manages your business travel end-to-end.
                 </motion.p>
 
                 {/* CTAs */}
@@ -277,7 +279,7 @@ function ProductHero() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.1, duration: 0.6 }}
                     style={{ display: "flex", gap: 28, marginTop: 48, flexWrap: "wrap", justifyContent: "center" }}>
-                    {[["500+", "Airlines"], ["2M+", "Properties"], ["<60s", "To itinerary"], ["97%", "Journey agent-managed"]].map(([n, l]) => (
+                    {[["500+", "Airlines"], ["2M+", "Hotels"], ["<60s", "To itinerary"], ["97%", "Journey agent-managed"]].map(([n, l]) => (
                         <div key={l} style={{ borderLeft: "1px solid rgba(69,14,20,0.12)", paddingLeft: 16, textAlign: "left" }}>
                             <div style={{ fontFamily: "Cardo, serif", fontSize: 22, fontWeight: 700, color: T.ink, letterSpacing: "-0.02em" }}>{n}</div>
                             <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 11, color: T.muted, marginTop: 2, textTransform: "uppercase", letterSpacing: "0.06em" }}>{l}</div>
@@ -301,11 +303,11 @@ function WhatStats() {
         <div style={{ display: "flex", gap: 40 }}>
             {[
                 { ref: r1, label: "Airlines" },
-                { ref: r2, label: "Properties" },
+                { ref: r2, label: "Hotels" },
                 { ref: r3, label: "To itinerary" },
             ].map(({ ref, label }) => (
                 <div key={label}>
-                    <div style={{ fontFamily: "Cardo, serif", fontSize: 36, fontWeight: 700, color: T.maroon, letterSpacing: "-0.03em" }}>
+                    <div style={{ fontFamily: "Cardo, serif", fontSize: 36, fontWeight: 700, color: T.accent, letterSpacing: "-0.03em" }}>
                         <span ref={ref}>0</span>
                     </div>
                     <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, color: T.muted, marginTop: 2 }}>{label}</div>
@@ -327,7 +329,7 @@ function WhatIsMiraee() {
                         <Label text="What is Miraee" />
                         <h2 style={{ fontFamily: "Cardo, serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 0 28px" }}>
                             One system.<br />
-                            <span style={{ color: T.maroon, fontStyle: "italic" }}>The entire journey.</span>
+                            <span style={{ color: T.accent, fontStyle: "italic" }}>The entire journey.</span>
                         </h2>
                     </Reveal>
                     <Reveal direction="left" delay={0.1}>
@@ -497,12 +499,12 @@ function PersonalisationEngine() {
             tag: "Traveler context",
             icon: (
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="8" r="3.5" stroke={T.maroon} strokeWidth="1.8"/>
-                    <path d="M5 19c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke={T.maroon} strokeWidth="1.8" strokeLinecap="round"/>
+                    <circle cx="12" cy="8" r="3.5" stroke={T.accent} strokeWidth="1.8"/>
+                    <path d="M5 19c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke={T.accent} strokeWidth="1.8" strokeLinecap="round"/>
                 </svg>
             ),
             body: "Preferences, loyalty programs, seat and cabin history, dietary and access needs, the routes they fly most, seat preferences. Asked once. Applied always.",
-            accent: T.maroon,
+            accent: T.accent,
         },
         {
             num: "02",
@@ -537,7 +539,7 @@ function PersonalisationEngine() {
                     <Reveal direction="none">
                         <Label text="One Continuous Context" />
                         <h2 style={{ fontFamily: "Cardo, serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 auto 20px" }}>
-                            The context <span style={{ color: T.maroon }}>never resets.</span>
+                            The context <span style={{ color: T.accent }}>never resets.</span>
                         </h2>
                         <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 18, lineHeight: 1.7, color: T.muted, maxWidth: 640, margin: "0 auto" }}>
                             Integrated tools pass records to each other. Miraee holds a single thread as one travel and expense management system, so the agent that plans your trip is the agent that rebooks it, and the same agent that closes the expense.
@@ -549,14 +551,14 @@ function PersonalisationEngine() {
                         <Reveal key={c.tag} direction="up" delay={i * 0.12}>
                             <TiltCard style={{ height: "100%" }}>
                                 <div style={{ background: "var(--page-bg)", borderRadius: 20, padding: "40px 36px", border: `1px solid ${T.mutedLight}`, height: "100%", boxSizing: "border-box", position: "relative", overflow: "hidden" }}>
-                                    <div style={{ position: "absolute", top: -20, right: -20, width: 120, height: 120, borderRadius: "50%", background: `${c.accent}10` }} />
+                                    <div style={{ position: "absolute", top: -20, right: -20, width: 120, height: 120, borderRadius: "50%", background: `color-mix(in srgb, ${c.accent} 6%, transparent)` }} />
                                     <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
-                                        <div style={{ width: 52, height: 52, borderRadius: 14, background: `${c.accent}15`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                                        <div style={{ width: 52, height: 52, borderRadius: 14, background: `color-mix(in srgb, ${c.accent} 8%, transparent)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                                             {c.icon}
                                         </div>
                                         <span style={{ fontFamily: "Cardo, serif", fontSize: 22, fontWeight: 700, color: c.accent, opacity: 0.7 }}>{c.num}</span>
                                     </div>
-                                    <div style={{ display: "inline-block", background: `${c.accent}15`, color: c.accent, fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "4px 10px", borderRadius: 100, marginBottom: 16 }}>
+                                    <div style={{ display: "inline-block", background: `color-mix(in srgb, ${c.accent} 8%, transparent)`, color: c.accent, fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "4px 10px", borderRadius: 100, marginBottom: 16 }}>
                                         {c.tag}
                                     </div>
                                     <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 15, lineHeight: 1.65, color: T.muted, margin: 0 }}>{c.body}</p>
@@ -569,8 +571,8 @@ function PersonalisationEngine() {
                 {/* Closing strip */}
                 <Reveal delay={0.3} direction="none">
                     <div style={{ marginTop: 56, textAlign: "center" }}>
-                        <div style={{ display: "inline-flex", flexWrap: "wrap", justifyContent: "center", gap: 14, padding: "14px 28px", borderRadius: 100, background: `${T.maroon}0D`, border: `1px solid ${T.mutedLight}`, marginBottom: 20 }}>
-                            <span style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: T.maroon }}>
+                        <div style={{ display: "inline-flex", flexWrap: "wrap", justifyContent: "center", gap: 14, padding: "14px 28px", borderRadius: 100, background: `color-mix(in srgb, ${T.accent} 5%, transparent)`, border: `1px solid ${T.mutedLight}`, marginBottom: 20 }}>
+                            <span style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: T.accent }}>
                                 One thread · One policy layer · One data layer
                             </span>
                         </div>
@@ -590,13 +592,13 @@ function CapabilityCard({ cap, index, open, onToggle }: { cap: any; index: numbe
         <div style={{ background: "var(--surface)", borderRadius: 20, border: `1px solid ${T.mutedLight}`, overflow: "hidden" }}>
             <button onClick={onToggle} aria-expanded={open}
                 style={{ width: "100%", display: "flex", alignItems: "center", gap: 24, padding: "28px 32px", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
-                <span style={{ fontFamily: "Cardo, serif", fontSize: 32, fontWeight: 700, color: T.maroon, opacity: 0.55, flexShrink: 0, minWidth: 48 }}>{cap.num}</span>
+                <span style={{ fontFamily: "Cardo, serif", fontSize: 32, fontWeight: 700, color: T.accent, opacity: 0.55, flexShrink: 0, minWidth: 48 }}>{cap.num}</span>
                 <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: T.orange, marginBottom: 6 }}>{cap.tag}</div>
                     <h3 style={{ fontFamily: "Cardo, serif", fontSize: "clamp(19px, 2vw, 24px)", fontWeight: 700, color: T.ink, margin: 0, lineHeight: 1.25 }}>{cap.headline}</h3>
                 </div>
                 <div style={{ textAlign: "right", flexShrink: 0, display: "flex", alignItems: "center", gap: 20 }}>
-                    <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, fontWeight: 700, color: T.maroon, whiteSpace: "nowrap" }}>{cap.proof}</div>
+                    <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, fontWeight: 700, color: T.accent, whiteSpace: "nowrap" }}>{cap.proof}</div>
                     <motion.span animate={{ rotate: open ? 45 : 0 }} transition={{ duration: 0.25 }} style={{ fontSize: 24, color: T.orange, lineHeight: 1 }}>+</motion.span>
                 </div>
             </button>
@@ -687,7 +689,7 @@ function SixCapabilities() {
                     <Reveal direction="none">
                         <Label text="Six Capabilities" />
                         <h2 style={{ fontFamily: "Cardo, serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 auto 20px" }}>
-                            One agent. <span style={{ color: T.maroon, fontStyle: "italic" }}>Six jobs.</span>
+                            One agent. <span style={{ color: T.accent, fontStyle: "italic" }}>Six jobs.</span>
                         </h2>
                         <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 18, color: T.muted, maxWidth: 560, margin: "0 auto" }}>
                             Plan, book, expense, change, support, personal — each with its own trigger, its own work, and a proof point behind it.
@@ -810,12 +812,12 @@ function AnalyticsInsights() {
     const chartRef = useRef<HTMLDivElement>(null)
     const inView = useInView(chartRef, { once: true, amount: 0.4 })
     const bars = [
-        { label: "Jan", value: 45, color: T.maroon },
-        { label: "Feb", value: 62, color: T.maroon },
-        { label: "Mar", value: 38, color: T.maroon },
+        { label: "Jan", value: 45, color: T.accent },
+        { label: "Feb", value: 62, color: T.accent },
+        { label: "Mar", value: 38, color: T.accent },
         { label: "Apr", value: 78, color: T.orange },
-        { label: "May", value: 55, color: T.maroon },
-        { label: "Jun", value: 88, color: T.maroon },
+        { label: "May", value: 55, color: T.accent },
+        { label: "Jun", value: 88, color: T.accent },
     ]
     const m1 = useScrollCounter(30, "%")
     const m2 = useScrollCounter(97, "%")
@@ -823,8 +825,8 @@ function AnalyticsInsights() {
     const metricRefs = [m1, m2, m3]
     const metrics = [
         { label: "Below published fares", sub: "wholesale rates, applied automatically", accent: T.orange },
-        { label: "Of the journey", sub: "agent-managed, end to end", accent: T.maroon },
-        { label: "Segments monitored", sub: "disruption caught before you ask", accent: T.maroon },
+        { label: "Of the journey", sub: "agent-managed, end to end", accent: T.accent },
+        { label: "Segments monitored", sub: "disruption caught before you ask", accent: T.accent },
     ]
     return (
         <section style={{ background: "var(--page-bg)", padding: isMobile ? "80px 20px" : "120px 80px" }}>
@@ -835,7 +837,7 @@ function AnalyticsInsights() {
                             <Label text="Analytics & Insights" />
                             <h2 style={{ fontFamily: "Cardo, serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 0 24px" }}>
                                 Every trip,<br />
-                                <span style={{ color: T.maroon, fontStyle: "italic" }}>visible in real time.</span>
+                                <span style={{ color: T.accent, fontStyle: "italic" }}>visible in real time.</span>
                             </h2>
                             <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 17, lineHeight: 1.75, color: T.muted, margin: "0 0 48px" }}>
                                 A console built for finance and travel teams — policy, approvals, live spend, duty of care, reporting, and the supplier program. Catch issues while you can still act, not at month-end when it's too late.
@@ -1068,7 +1070,7 @@ function MondeeAdvantage() {
                     <Reveal direction="none">
                         <Label text="The Mondee Advantage" />
                         <h2 style={{ fontFamily: "Cardo, serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 auto 20px" }}>
-                            Global reach. <span style={{ color: T.maroon, fontStyle: "italic" }}>Personal execution.</span>
+                            Global reach. <span style={{ color: T.accent, fontStyle: "italic" }}>Personal execution.</span>
                         </h2>
                         <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 18, lineHeight: 1.7, color: T.muted, maxWidth: 720, margin: "0 auto" }}>
                             Miraee runs on Tabhi's own supply marketplace, Mondee, the supply depth behind enterprise travel solutions that others resell rather than own. An inventory full of wholesale contracts, direct connections, and hyperlocal content that nobody else has digitized.
@@ -1081,7 +1083,7 @@ function MondeeAdvantage() {
                             <TiltCard style={{ height: "100%" }}>
                                 <div style={{ background: "var(--page-bg)", borderRadius: 20, padding: "34px 32px", border: `1px solid ${T.mutedLight}`, height: "100%", boxSizing: "border-box" }}>
                                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-                                        <span style={{ fontFamily: "Cardo, serif", fontSize: 24, fontWeight: 700, color: T.maroon, opacity: 0.6 }}>{r.num}</span>
+                                        <span style={{ fontFamily: "Cardo, serif", fontSize: 24, fontWeight: 700, color: T.accent, opacity: 0.6 }}>{r.num}</span>
                                         <span style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, fontWeight: 700, color: T.orange }}>{r.proof}</span>
                                     </div>
                                     <h3 style={{ fontFamily: "Cardo, serif", fontSize: 21, fontWeight: 700, color: T.ink, margin: "0 0 12px" }}>{r.title}</h3>
@@ -1135,7 +1137,7 @@ function Integrations() {
                         <Label text="Connected Systems" />
                         <h2 style={{ fontFamily: "Cardo, serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 auto 20px" }}>
                             Fits the stack<br />
-                            <span style={{ color: T.maroon, fontStyle: "italic" }}>you already run.</span>
+                            <span style={{ color: T.accent, fontStyle: "italic" }}>you already run.</span>
                         </h2>
                         <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 18, color: T.muted, maxWidth: 480, margin: "0 auto" }}>
                             Identity, people, finance and work tools, connected once, then quiet.
@@ -1196,7 +1198,7 @@ function LegacyComparison() {
                     <Reveal direction="none">
                         <Label text="Miraee vs Legacy TMCs" />
                         <h2 style={{ fontFamily: "Cardo, serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 auto 20px" }}>
-                            Built different from<br /><span style={{ color: T.maroon, fontStyle: "italic" }}>the tools you're used to.</span>
+                            Built different from<br /><span style={{ color: T.accent, fontStyle: "italic" }}>the tools you're used to.</span>
                         </h2>
                         <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 18, color: T.muted, maxWidth: 560, margin: "0 auto" }}>
                             While there are other tools in the market, Miraee sits distinctly away. Let's show you how:
@@ -1226,7 +1228,7 @@ function LegacyComparison() {
                 </div>
                 <Reveal delay={0.25} direction="none">
                     <p style={{ textAlign: "center", marginTop: 48, fontFamily: "Cardo, serif", fontSize: 22, fontWeight: 700, color: T.ink }}>
-                        The New Generation of Travel Planning. <span style={{ color: T.maroon, fontStyle: "italic" }}>Powered by Agentic AI.</span>
+                        The New Generation of Travel Planning. <span style={{ color: T.accent, fontStyle: "italic" }}>Powered by Agentic AI.</span>
                     </p>
                 </Reveal>
             </div>
@@ -1245,31 +1247,55 @@ function TwoViews() {
                     <Reveal direction="none">
                         <Label text="One Platform, Two Views" />
                         <h2 style={{ fontFamily: "Cardo, serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 auto 0" }}>
-                            A console for the program.<br /><span style={{ color: T.maroon, fontStyle: "italic" }}>An app for the trip.</span>
+                            A console for the program.<br /><span style={{ color: T.accent, fontStyle: "italic" }}>An app for the trip.</span>
                         </h2>
                     </Reveal>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 28 }}>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.5fr 1fr", gap: 24, alignItems: "stretch" }}>
                     <Reveal direction="left">
-                        <div style={{ background: "var(--page-bg)", borderRadius: 20, padding: "40px 36px", border: `1px solid ${T.mutedLight}`, height: "100%", boxSizing: "border-box" }}>
-                            <div style={{ display: "inline-block", background: `${T.maroon}15`, color: T.maroon, fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "4px 10px", borderRadius: 100, marginBottom: 20 }}>Web console</div>
-                            <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, color: T.muted, marginBottom: 6 }}>Who</div>
-                            <div style={{ fontFamily: "Cardo, serif", fontSize: 20, fontWeight: 700, color: T.ink, marginBottom: 24 }}>Finance and travel teams</div>
-                            <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, color: T.muted, marginBottom: 6 }}>Holds</div>
-                            <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 16, lineHeight: 1.75, color: T.ink, margin: 0 }}>
-                                Policy, approvals, live spend, <strong>duty of care</strong>, reporting, supplier program.
-                            </p>
+                        <div style={{ background: "var(--page-bg)", borderRadius: 20, border: `1px solid ${T.mutedLight}`, height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+                            <div style={{ padding: "40px 36px 0" }}>
+                                <div style={{ display: "inline-block", background: `color-mix(in srgb, ${T.accent} 8%, transparent)`, color: T.accent, fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "4px 10px", borderRadius: 100, marginBottom: 20 }}>Web console</div>
+                                <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, color: T.muted, marginBottom: 6 }}>Who</div>
+                                <div style={{ fontFamily: "Cardo, serif", fontSize: 20, fontWeight: 700, color: T.ink, marginBottom: 24 }}>Finance and travel teams</div>
+                                <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, color: T.muted, marginBottom: 6 }}>Holds</div>
+                                <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 16, lineHeight: 1.75, color: T.ink, margin: 0 }}>
+                                    Policy, approvals, live spend, <strong>duty of care</strong>, reporting, supplier program.
+                                </p>
+                            </div>
+                            <div style={{ flex: 1, minHeight: 300, marginTop: 32, padding: "0 28px 28px", display: "flex" }}>
+                                <div style={{ width: "100%", borderRadius: 14, overflow: "hidden", border: `1px solid ${T.mutedLight}`, boxShadow: "0 24px 48px rgba(15,4,7,0.16)", display: "flex", flexDirection: "column" }}>
+                                    <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "10px 14px", background: "#EDEAE6" }}>
+                                        <div style={{ display: "flex", gap: 6 }}>
+                                            <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#ED6A5E" }} />
+                                            <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#F4BF4F" }} />
+                                            <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#61C454" }} />
+                                        </div>
+                                        <div style={{ flex: 1, background: "#fff", borderRadius: 6, padding: "4px 10px", fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 11, color: T.muted }}>app.miraee.ai/overview</div>
+                                    </div>
+                                    <div style={{ position: "relative", flex: 1, overflow: "hidden", background: "#F4F1EC" }}>
+                                        <img src={financeDashboard} alt="Miraee admin dashboard showing travel spend, compliance, and active trips" loading="lazy"
+                                            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", objectPosition: "center top" }} />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </Reveal>
                     <Reveal direction="right" delay={0.1}>
-                        <div style={{ background: T.maroon, borderRadius: 20, padding: "40px 36px", height: "100%", boxSizing: "border-box" }}>
-                            <div style={{ display: "inline-block", background: "rgba(251,246,242,0.15)", color: T.cream, fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "4px 10px", borderRadius: 100, marginBottom: 20 }}>Mobile app</div>
-                            <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, color: "rgba(251,246,242,0.55)", marginBottom: 6 }}>Who</div>
-                            <div style={{ fontFamily: "Cardo, serif", fontSize: 20, fontWeight: 700, color: T.cream, marginBottom: 24 }}>Travelers</div>
-                            <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, color: "rgba(251,246,242,0.55)", marginBottom: 6 }}>Holds</div>
-                            <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 16, lineHeight: 1.75, color: T.cream, margin: 0 }}>
-                                Ask, book, change, support, receipts, personal trips, live itinerary.
-                            </p>
+                        <div style={{ background: T.maroon, borderRadius: 20, height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+                            <div style={{ padding: "40px 36px 0" }}>
+                                <div style={{ display: "inline-block", background: "rgba(251,246,242,0.15)", color: T.cream, fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "4px 10px", borderRadius: 100, marginBottom: 20 }}>Mobile app</div>
+                                <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, color: "rgba(251,246,242,0.55)", marginBottom: 6 }}>Who</div>
+                                <div style={{ fontFamily: "Cardo, serif", fontSize: 20, fontWeight: 700, color: T.cream, marginBottom: 24 }}>Travelers</div>
+                                <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 13, color: "rgba(251,246,242,0.55)", marginBottom: 6 }}>Holds</div>
+                                <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 16, lineHeight: 1.75, color: T.cream, margin: 0 }}>
+                                    Ask, book, change, support, receipts, personal trips, live itinerary.
+                                </p>
+                            </div>
+                            <div style={{ flex: 1, minHeight: 300, marginTop: 24, padding: "0 28px 28px", display: "flex", alignItems: "flex-end", justifyContent: "center", overflow: "hidden" }}>
+                                <img src={miraeeMobileUi} alt="Miraee mobile app showing an AI travel assistant and flight options" loading="lazy"
+                                    style={{ width: "min(64%, 210px)", height: "auto", maxHeight: "100%", objectFit: "contain", objectPosition: "center bottom", filter: "drop-shadow(0 20px 30px rgba(0,0,0,0.35))" }} />
+                            </div>
                         </div>
                     </Reveal>
                 </div>
@@ -1359,7 +1385,7 @@ function DemoCTA() {
                     <Label text="See The Agent In Action" />
                     <h2 style={{ fontFamily: "Cardo, serif", fontSize: "clamp(36px, 5vw, 68px)", fontWeight: 700, color: T.ink, lineHeight: 1.05, letterSpacing: "-0.03em", margin: "0 0 24px" }}>
                         Bring a<br />
-                        <span style={{ color: T.maroon }}>real trip.</span>
+                        <span style={{ color: T.accent }}>real trip.</span>
                     </h2>
                     <p style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontSize: 18, lineHeight: 1.65, color: T.muted, maxWidth: 480, margin: "0 auto 56px" }}>
                         Twenty minutes. Your route, your policy, your edge cases. We'll run it live.

@@ -239,15 +239,15 @@ function Calculators() {
     }, [])
 
     return (
-        <section ref={sectionRef} id="calculators" style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "#0F0407", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(251,246,242,0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(251,246,242,0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }}/>
+        <section ref={sectionRef} id="calculators" style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "var(--page-bg)", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }}/>
             <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
                 <div style={{ marginBottom: isMobile ? 48 : 64 }}>
                     <motion.span initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
                         style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>
                         02 / Calculators
                     </motion.span>
-                    <h2 className="cc-heading" style={{ fontSize: isMobile ? 30 : isTablet ? 44 : 54, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.08, letterSpacing: "-0.03em", margin: 0, maxWidth: 640 }}>
+                    <h2 className="cc-heading" style={{ fontSize: isMobile ? 30 : isTablet ? 44 : 54, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: 0, maxWidth: 640 }}>
                         {["Put", "numbers", "to", "the", "opportunity."].map((word, i) => (
                             <span key={i} style={{ display: "inline-block", overflow: "hidden", marginRight: "0.22em", verticalAlign: "bottom", lineHeight: 1.2 }}>
                                 <span className="cc-w" style={{ display: "inline-block" }}>{word}</span>
@@ -260,10 +260,10 @@ function Calculators() {
                     {CALCULATORS.map(([title, description], index) => (
                         <motion.div key={title} className="cc-card"
                             whileHover={{ borderColor: "rgba(229,86,2,0.5)", y: -4 }}
-                            style={{ padding: isMobile ? "26px 22px" : "32px 28px", borderRadius: 20, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                            style={{ padding: isMobile ? "26px 22px" : "32px 28px", borderRadius: 20, background: "rgba(var(--text-rgb),0.04)", border: "1px solid rgba(var(--text-rgb),0.08)" }}>
                             <span style={{ fontSize: 12, fontFamily: "monospace", color: T.orange, fontWeight: 700, letterSpacing: "0.04em" }}>0{index + 1}</span>
-                            <h3 style={{ fontSize: isMobile ? 18 : 20, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.25, letterSpacing: "-0.01em", margin: "14px 0 10px" }}>{title}</h3>
-                            <p style={{ fontSize: 13.5, color: "rgba(251,246,242,0.48)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.7, margin: 0 }}>
+                            <h3 style={{ fontSize: isMobile ? 18 : 20, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.25, letterSpacing: "-0.01em", margin: "14px 0 10px" }}>{title}</h3>
+                            <p style={{ fontSize: 13.5, color: "rgba(var(--text-rgb),0.48)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.7, margin: 0 }}>
                                 <span aria-hidden="true">- </span>{description}
                             </p>
                         </motion.div>
@@ -403,14 +403,14 @@ function ClosingCTA() {
     }, [])
 
     return (
-        <section ref={sectionRef} id="demo" style={{ padding: isMobile ? "90px 24px" : "150px 80px", background: "#0F0407", position: "relative", overflow: "hidden", textAlign: "center" }}>
+        <section ref={sectionRef} id="demo" style={{ padding: isMobile ? "90px 24px" : "150px 80px", background: "var(--page-bg)", position: "relative", overflow: "hidden", textAlign: "center" }}>
             <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 800, height: 400, background: "radial-gradient(ellipse, rgba(229,86,2,0.08) 0%, transparent 70%)", pointerEvents: "none" }}/>
             <div style={{ maxWidth: 700, margin: "0 auto", position: "relative" }}>
                 <motion.span initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
                     style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 20 }}>
                     See the agent in action
                 </motion.span>
-                <h2 className="rcta-heading" style={{ fontSize: isMobile ? 34 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 22px" }}>
+                <h2 className="rcta-heading" style={{ fontSize: isMobile ? 34 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 22px" }}>
                     {["Bring", "a", "real", "trip."].map((word, i) => (
                         <span key={i} style={{ display: "inline-block", overflow: "hidden", marginRight: "0.22em", verticalAlign: "bottom", lineHeight: 1.2 }}>
                             <span className="rcta-w" style={{ display: "inline-block" }}>{word}</span>
@@ -418,7 +418,7 @@ function ClosingCTA() {
                     ))}
                 </h2>
                 <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}
-                    style={{ fontSize: isMobile ? 15 : 17, color: "rgba(251,246,242,0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.75, margin: "0 auto 40px", maxWidth: 460 }}>
+                    style={{ fontSize: isMobile ? 15 : 17, color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.75, margin: "0 auto 40px", maxWidth: 460 }}>
                     Twenty minutes. Your route, your policy, your edge cases. We'll run it live.
                 </motion.p>
                 <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.32 }}>

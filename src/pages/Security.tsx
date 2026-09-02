@@ -285,16 +285,16 @@ function DataResidency() {
     }, [])
 
     return (
-        <section ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "120px 80px", background: "#0F0407", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(251,246,242,0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(251,246,242,0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }}/>
+        <section ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "120px 80px", background: "var(--page-bg)", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }}/>
             <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
                 <Reveal>
                     <div style={{ marginBottom: isMobile ? 48 : 64 }}>
                         <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>Data Residency</span>
-                        <h2 style={{ fontSize: isMobile ? 28 : isTablet ? 42 : 50, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 0 18px", maxWidth: 640 }}>
+                        <h2 style={{ fontSize: isMobile ? 28 : isTablet ? 42 : 50, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 0 18px", maxWidth: 640 }}>
                             Your data stays where you need it.
                         </h2>
-                        <p style={{ fontSize: 15, color: "rgba(251,246,242,0.48)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, maxWidth: 620, margin: 0 }}>
+                        <p style={{ fontSize: 15, color: "rgba(var(--text-rgb),0.48)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, maxWidth: 620, margin: 0 }}>
                             Choose the region your traveler and transaction data is stored and processed in. For organisations operating across the US, Europe and India, this is a procurement requirement rather than a preference.
                         </p>
                     </div>
@@ -302,10 +302,10 @@ function DataResidency() {
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 16 }}>
                     {regions.map((r) => (
                         <div key={r.code} className="region-card"
-                            style={{ padding: isMobile ? "28px 24px" : "36px 32px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20 }}>
+                            style={{ padding: isMobile ? "28px 24px" : "36px 32px", background: "rgba(var(--text-rgb),0.04)", border: "1px solid rgba(var(--text-rgb),0.08)", borderRadius: 20 }}>
                             <div style={{ fontSize: 13, fontFamily: "monospace", color: T.orange, fontWeight: 700, letterSpacing: "0.08em", marginBottom: 16 }}>{r.code}</div>
-                            <div style={{ fontSize: isMobile ? 20 : 24, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, marginBottom: 8 }}>{r.name}</div>
-                            <div style={{ fontSize: 13, color: "rgba(251,246,242,0.4)", fontFamily: "Plus Jakarta Sans" }}>Regional processing</div>
+                            <div style={{ fontSize: isMobile ? 20 : 24, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, marginBottom: 8 }}>{r.name}</div>
+                            <div style={{ fontSize: 13, color: "rgba(var(--text-rgb),0.4)", fontFamily: "Plus Jakarta Sans" }}>Regional processing</div>
                         </div>
                     ))}
                 </div>
@@ -538,13 +538,13 @@ function Reliability() {
     }, [])
 
     return (
-        <section ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "120px 80px", background: "#0F0407", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(251,246,242,0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(251,246,242,0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }}/>
+        <section ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "120px 80px", background: "var(--page-bg)", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }}/>
             <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
                 <Reveal>
                     <div style={{ marginBottom: isMobile ? 48 : 64 }}>
                         <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>Reliability</span>
-                        <h2 style={{ fontSize: isMobile ? 28 : isTablet ? 42 : 50, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.1, letterSpacing: "-0.03em", margin: 0, maxWidth: 640 }}>
+                        <h2 style={{ fontSize: isMobile ? 28 : isTablet ? 42 : 50, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: 0, maxWidth: 640 }}>
                             Travel doesn't wait for maintenance windows.
                         </h2>
                     </div>
@@ -555,11 +555,11 @@ function Reliability() {
                         { n: "02", label: "Live status", title: "Public incident history", link: "https://status.miraee.ai", linkLabel: "status.miraee.ai" },
                         { n: "03", label: "Support", title: "Human help, 24/7", body: "A defined incident escalation path for administrators." },
                     ].map((c) => (
-                        <div key={c.n} className="ops-card" style={{ padding: isMobile ? "26px 22px" : "32px 28px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 18 }}>
+                        <div key={c.n} className="ops-card" style={{ padding: isMobile ? "26px 22px" : "32px 28px", background: "rgba(var(--text-rgb),0.04)", border: "1px solid rgba(var(--text-rgb),0.08)", borderRadius: 18 }}>
                             <div style={{ fontSize: 12, fontFamily: "monospace", color: T.orange, fontWeight: 700, marginBottom: 14 }}>{c.n}</div>
                             <div style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: T.orange, marginBottom: 8 }}>{c.label}</div>
-                            <h3 style={{ fontSize: 19, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, margin: "0 0 10px" }}>{c.title}</h3>
-                            {c.body && <p style={{ fontSize: 13.5, color: "rgba(251,246,242,0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.65, margin: 0 }}>{c.body}</p>}
+                            <h3 style={{ fontSize: 19, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, margin: "0 0 10px" }}>{c.title}</h3>
+                            {c.body && <p style={{ fontSize: 13.5, color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.65, margin: 0 }}>{c.body}</p>}
                             {c.link && (
                                 <a href={c.link} target="_blank" rel="noreferrer" style={{ fontSize: 13.5, color: T.orange, fontFamily: "Plus Jakarta Sans", fontWeight: 600, textDecoration: "none" }}>
                                     {c.linkLabel} <span aria-hidden="true">{"↗"}</span>
@@ -569,13 +569,13 @@ function Reliability() {
                     ))}
                 </div>
                 <Reveal>
-                    <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", gap: 20, padding: isMobile ? "26px 22px" : "32px 40px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 18 }}>
+                    <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", gap: 20, padding: isMobile ? "26px 22px" : "32px 40px", background: "rgba(var(--text-rgb),0.03)", border: "1px solid rgba(var(--text-rgb),0.08)", borderRadius: 18 }}>
                         <div>
                             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 10 }}>Subprocessors</span>
-                            <h3 style={{ fontSize: 20, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, margin: "0 0 8px" }}>Who else touches your data.</h3>
-                            <p style={{ fontSize: 13.5, color: "rgba(251,246,242,0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.65, margin: 0, maxWidth: 480 }}>A current list of every subprocessor, what they process and where. Subscribe to be notified before the list changes.</p>
+                            <h3 style={{ fontSize: 20, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, margin: "0 0 8px" }}>Who else touches your data.</h3>
+                            <p style={{ fontSize: 13.5, color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.65, margin: 0, maxWidth: 480 }}>A current list of every subprocessor, what they process and where. Subscribe to be notified before the list changes.</p>
                         </div>
-                        <a href={SECURITY_EMAIL} style={{ flexShrink: 0, padding: "13px 26px", border: "1px solid rgba(251,246,242,0.25)", color: T.cream, borderRadius: 10, fontSize: 14, fontFamily: "Plus Jakarta Sans", fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap" }}>
+                        <a href={SECURITY_EMAIL} style={{ flexShrink: 0, padding: "13px 26px", border: "1px solid rgba(var(--text-rgb),0.25)", color: T.ink, borderRadius: 10, fontSize: 14, fontFamily: "Plus Jakarta Sans", fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap" }}>
                             Request the current list <span aria-hidden="true">{"↗"}</span>
                         </a>
                     </div>
@@ -642,15 +642,15 @@ function SecurityCTA() {
     const isMobile = w < 768
 
     return (
-        <section id="demo" style={{ padding: isMobile ? "80px 24px 96px" : "130px 80px 150px", background: "#0F0407", position: "relative", overflow: "hidden" }}>
+        <section id="demo" style={{ padding: isMobile ? "80px 24px 96px" : "130px 80px 150px", background: "var(--page-bg)", position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%,-50%)", width: 800, height: 400, background: "radial-gradient(ellipse, rgba(229,86,2,0.06) 0%, transparent 70%)", pointerEvents: "none" }}/>
             <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center", position: "relative" }}>
                 <Reveal>
                     <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 20 }}>Diligence</span>
-                    <h2 style={{ fontSize: isMobile ? 30 : 50, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 0 22px" }}>
+                    <h2 style={{ fontSize: isMobile ? 30 : 50, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 0 22px" }}>
                         Send us your<br/>security questionnaire.
                     </h2>
-                    <p style={{ fontSize: 16, color: "rgba(251,246,242,0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 0 40px" }}>
+                    <p style={{ fontSize: 16, color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 0 40px" }}>
                         We'll return it completed, with the documentation attached.
                     </p>
                     <motion.a href={SECURITY_EMAIL} whileHover={{ scale: 1.04, boxShadow: "0 14px 48px rgba(229,86,2,0.55)" }} whileTap={{ scale: 0.97 }}

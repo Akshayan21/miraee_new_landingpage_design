@@ -343,39 +343,39 @@ function TheAdvantage() {
     const headingWords = ["Why", "this", "matters", "to", "your", "travel", "program."]
 
     return (
-        <section ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "#0F0407", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(251,246,242,0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(251,246,242,0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }}/>
+        <section ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "var(--page-bg)", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }}/>
             <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
                 <div style={{ marginBottom: isMobile ? 56 : 80 }}>
                     <motion.span initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
                         style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 20 }}>
                         The Advantage
                     </motion.span>
-                    <h2 className="adv-heading" style={{ fontSize: isMobile ? 28 : isTablet ? 44 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 0 20px", maxWidth: 780 }}>
+                    <h2 className="adv-heading" style={{ fontSize: isMobile ? 28 : isTablet ? 44 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: "0 0 20px", maxWidth: 780 }}>
                         {headingWords.map((word, i) => (
                             <span key={i} style={{ display: "inline-block", overflow: "hidden", marginRight: "0.22em", verticalAlign: "bottom", lineHeight: 1.2 }}>
                                 <span className="adv-w" style={{ display: "inline-block" }}>{word}</span>
                             </span>
                         ))}
                     </h2>
-                    <p style={{ fontSize: 15, color: "rgba(251,246,242,0.45)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, maxWidth: 560, margin: 0 }}>
+                    <p style={{ fontSize: 15, color: "rgba(var(--text-rgb),0.45)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, maxWidth: 560, margin: 0 }}>
                         Group ownership only matters to a buyer if it changes what they get.
                     </p>
                 </div>
-                <div ref={gridRef} style={{ display: "flex", flexDirection: "column", gap: 1, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                <div ref={gridRef} style={{ display: "flex", flexDirection: "column", gap: 1, borderTop: "1px solid rgba(var(--text-rgb),0.08)" }}>
                     {advantage.map(([what, means, proof]) => (
                         <div key={what} className="adv-row" style={{
                             display: "grid", gridTemplateColumns: isMobile ? "1fr" : "220px 1fr 200px", gap: isMobile ? 8 : 32,
-                            padding: isMobile ? "22px 4px" : "28px 8px", borderBottom: "1px solid rgba(255,255,255,0.08)", alignItems: isMobile ? "flex-start" : "center",
+                            padding: isMobile ? "22px 4px" : "28px 8px", borderBottom: "1px solid rgba(var(--text-rgb),0.08)", alignItems: isMobile ? "flex-start" : "center",
                         }}>
-                            <h3 style={{ fontSize: isMobile ? 17 : 18, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, margin: 0, letterSpacing: "-0.01em" }}>{what}</h3>
-                            <p style={{ fontSize: 14, color: "rgba(251,246,242,0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.7, margin: 0 }}>{means}</p>
+                            <h3 style={{ fontSize: isMobile ? 17 : 18, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, margin: 0, letterSpacing: "-0.01em" }}>{what}</h3>
+                            <p style={{ fontSize: 14, color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.7, margin: 0 }}>{means}</p>
                             <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.06em", color: T.orange, fontFamily: "Plus Jakarta Sans", textTransform: "uppercase", justifySelf: isMobile ? "flex-start" : "flex-end", textAlign: isMobile ? "left" : "right" }}>{proof}</span>
                         </div>
                     ))}
                 </div>
                 <Reveal delay={0.1}>
-                    <p style={{ fontSize: 14, color: "rgba(251,246,242,0.4)", fontFamily: "Plus Jakarta Sans", fontStyle: "italic", margin: "32px 0 0" }}>
+                    <p style={{ fontSize: 14, color: "rgba(var(--text-rgb),0.4)", fontFamily: "Plus Jakarta Sans", fontStyle: "italic", margin: "32px 0 0" }}>
                         Most platforms compete on software. We compete on software and supply.
                     </p>
                 </Reveal>
@@ -462,15 +462,15 @@ function AboutCTA() {
     const w = useWindowWidth()
     const isMobile = w < 768
     return (
-        <section style={{ padding: isMobile ? "80px 24px" : "150px 80px", background: "#0F0407", position: "relative", overflow: "hidden", textAlign: "center" }}>
+        <section style={{ padding: isMobile ? "80px 24px" : "150px 80px", background: "var(--page-bg)", position: "relative", overflow: "hidden", textAlign: "center" }}>
             <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse 60% 60% at 50% 50%, rgba(229,86,2,0.1), transparent 70%)`, pointerEvents: "none" }}/>
             <Reveal>
                 <div style={{ position: "relative", maxWidth: 640, margin: "0 auto" }}>
                     <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 20 }}>See The Agent In Action</span>
-                    <h2 style={{ fontSize: isMobile ? 34 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 20px" }}>
+                    <h2 style={{ fontSize: isMobile ? 34 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 20px" }}>
                         Bring a real trip.
                     </h2>
-                    <p style={{ fontSize: 16, color: "rgba(251,246,242,0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 0 40px" }}>
+                    <p style={{ fontSize: 16, color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 0 40px" }}>
                         Twenty minutes. Your route, your policy, your edge cases. We'll run it live.
                     </p>
                     <motion.div whileHover={{ scale: 1.04, boxShadow: "0 14px 48px rgba(229,86,2,0.55)" }} whileTap={{ scale: 0.97 }} style={{ display: "inline-block" }}>
