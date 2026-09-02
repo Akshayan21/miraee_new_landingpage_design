@@ -6,7 +6,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
 import V11PageImage from "../components/V11PageImage"
 import aboutPageImg from "../../images/weavy/v1/v1-experiences-culture.webp"
+import miraeeLogo from "../assets/Miraee_Logo.png"
+import mondeeLogo from "../assets/mondee_logo.png"
+import abheeLogo from "../assets/abhee-logo-dark.png"
 gsap.registerPlugin(ScrollTrigger)
+
+const groupLogos: Record<string, string> = { Mondee: mondeeLogo, Miraee: miraeeLogo, Abhee: abheeLogo }
 
 const T = {
     ink: "var(--text)", maroon: "#450E14", orange: "#E55602",
@@ -292,7 +297,9 @@ function TabhiGroup() {
                             <div style={{ height: 4, background: T.orange }}/>
                             <div style={{ padding: isMobile ? "28px 24px" : "36px 32px" }}>
                                 <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", marginBottom: 14 }}>{what}</div>
-                                <h3 style={{ fontSize: isMobile ? 24 : 28, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.2, letterSpacing: "-0.015em", margin: "0 0 14px" }}>{name}</h3>
+                                {groupLogos[name]
+                                    ? <img src={groupLogos[name]} alt={name} style={{ height: isMobile ? 26 : 30, width: "auto", display: "block", marginBottom: 16, objectFit: "contain" }} />
+                                    : <h3 style={{ fontSize: isMobile ? 24 : 28, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.2, letterSpacing: "-0.015em", margin: "0 0 14px" }}>{name}</h3>}
                                 <p style={{ fontSize: 14, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.75, margin: 0 }}>{does}</p>
                             </div>
                         </motion.div>

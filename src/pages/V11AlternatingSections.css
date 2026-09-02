@@ -43,11 +43,14 @@
   color: var(--v11-accent) !important;
 }
 
-.v11-site > section:nth-of-type(even) .el-journey-flow__head h2 {
+/* .el-journey-flow always carries its own fixed dark background regardless of
+   its odd/even position in the alternating sequence, so its heading must stay
+   light-on-dark either way — not just on even instances. */
+.v11-site > section .el-journey-flow__head h2 {
   color: var(--v11-dark-text) !important;
 }
 
-.v11-site > section:nth-of-type(even) .el-journey-flow__head h2 em {
+.v11-site > section .el-journey-flow__head h2 em {
   color: var(--v11-accent) !important;
 }
 
