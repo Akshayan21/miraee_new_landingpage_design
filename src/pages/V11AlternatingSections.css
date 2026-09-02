@@ -93,10 +93,50 @@
   box-shadow: none;
 }
 
-.v11-site > section.el-product .el-visual-img {
-  width: auto;
-  max-width: min(100%, 390px);
-  max-height: 530px;
+.v11-site > section.el-product .v11-human-ui {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  isolation: isolate;
+}
+
+.v11-site > section.el-product .v11-human-ui__photo {
+  position: absolute;
+  inset: 4% 0 4% 12%;
+  z-index: 0;
+  width: 88%;
+  height: 92%;
+  object-fit: cover;
+  border-radius: 42px;
+  filter: saturate(.88) contrast(.96);
+}
+
+.v11-site > section.el-product .v11-human-ui__screen {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  bottom: 9%;
+  width: 48%;
+  max-height: 68%;
+  object-fit: contain;
+  object-position: left bottom;
+  border-radius: 18px;
+  filter: drop-shadow(0 18px 24px rgba(24, 4, 8, .24));
+}
+
+.v11-site > section.el-product .v11-human-ui--change .v11-human-ui__photo {
+  inset-inline: 0 12%;
+}
+
+.v11-site > section.el-product .v11-human-ui--change .v11-human-ui__screen {
+  right: 0;
+  left: auto;
+  object-position: right bottom;
+}
+
+.v11-site > section.el-product .v11-human-ui--expense .v11-human-ui__screen {
+  width: 50%;
 }
 
 /* Experiences was authored as a dark section; reset only its copy when it lands on light. */
@@ -140,7 +180,59 @@
     padding: 0;
   }
 
-  .v11-site > section.el-product .el-visual-img {
-    max-height: 460px;
+  .v11-site > section.el-product .v11-human-ui {
+    aspect-ratio: 1 / 1.14;
   }
+
+  .v11-site > section.el-product .v11-human-ui__photo {
+    inset-block: 3%;
+    border-radius: 28px;
+  }
+
+  .v11-site > section.el-product .v11-human-ui__screen {
+    bottom: 7%;
+    width: 52%;
+    border-radius: 12px;
+  }
+}
+
+/* V1.1 subpages: alternate at the section boundary through the pages' own
+   color tokens. This preserves component-specific foregrounds and motion. */
+.v11-alternating-route .v1-type-page > section:nth-child(odd of section:not(.v11-page-image)) {
+  --text: #0f0407;
+  --text-rgb: 15, 4, 7;
+  --page-bg: var(--v11-light);
+  --surface: #fffdfb;
+  --surface-2: #f4ece7;
+  background-color: var(--v11-light) !important;
+  color: #0f0407;
+}
+
+.v11-alternating-route .v1-type-page > section:nth-child(even of section:not(.v11-page-image)) {
+  --text: var(--v11-dark-text);
+  --text-rgb: 255, 250, 246;
+  --page-bg: var(--v11-dark);
+  --surface: rgba(255, 255, 255, .07);
+  --surface-2: rgba(255, 255, 255, .1);
+  background: radial-gradient(circle at 88% 8%, rgba(229, 86, 2, .18), transparent 34%), var(--v11-dark) !important;
+  color: var(--v11-dark-text);
+}
+
+/* Components with an explicitly white canvas keep dark ink inside dark sections. */
+.v11-alternating-route .v1-type-page > section:nth-child(even of section:not(.v11-page-image)) [style*="background: rgb(255, 255, 255)"],
+.v11-alternating-route .v1-type-page > section:nth-child(even of section:not(.v11-page-image)) [style*="background-color: rgb(255, 255, 255)"] {
+  --text: #0f0407;
+  --text-rgb: 15, 4, 7;
+  color: #0f0407;
+}
+
+/* The first section is always the light hero, across every V1.1 page. */
+.v11-alternating-route .v1-type-page > section:first-of-type {
+  --text: #0f0407;
+  --text-rgb: 15, 4, 7;
+  --page-bg: var(--v11-light);
+  --surface: #fffdfb;
+  --surface-2: #f4ece7;
+  background: var(--v11-light) !important;
+  color: #0f0407;
 }
