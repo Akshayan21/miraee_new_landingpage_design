@@ -1,11 +1,11 @@
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion"
 import { useRef, useState } from "react"
 import employeesImg from "../../images/weavy/v1/solutions/v1-solutions-employees.webp"
-import managersImg from "../../images/weavy/v1/solutions/v1-solutions-managers.webp"
-import financeImg from "../../images/weavy/v1/solutions/v1-solutions-finance.webp"
-import adminsImg from "../../images/weavy/v1/solutions/v1-solutions-admins.webp"
-import chrosImg from "../../images/weavy/v1/solutions/v1-solutions-chros.webp"
-import travelLeadsImg from "../../images/weavy/v1/solutions/v1-solutions-travelleads.webp"
+import managersImg from "../assets/Manager Image.jpg"
+import financeImg from "../assets/Finance .jpg"
+import adminsImg from "../assets/Admin.jpg"
+import chrosImg from "../assets/HR.jpg"
+import travelLeadsImg from "../assets/Travel Lead.jpg"
 import "./AudienceShowcase.css"
 
 const audiences = [

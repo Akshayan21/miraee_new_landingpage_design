@@ -1,4 +1,4 @@
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion"
+import { motion, useInView, useReducedMotion } from "framer-motion"
 import { useRef } from "react"
 import { GrainOverlay, ScrollProgress } from "../animations"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
@@ -9,13 +9,15 @@ import bookingCardImg from "../assets/ui-hotel-card.png"
 import changeCardImg from "../assets/ui-changes-card.png"
 import expensesCardImg from "../assets/ui-expenses-card.png"
 import flightCardImg from "../assets/ui-flight-card.png"
-import employeePhoto from "../assets/miraee-role-employee.webp"
-import travelTeamPhoto from "../assets/miraee-role-travel-team.webp"
-import financePhoto from "../assets/miraee-role-finance.webp"
-import homeHeroImg from "../../images/weavy/v1/v1-home-hero.webp"
+import employeePhoto from "../assets/Plan_Book.jpg"
+import travelTeamPhoto from "../assets/Handle_every_change.jpg"
+import financePhoto from "../assets/Expense_loop.jpg"
 import experiencesImg from "../../images/weavy/v1/v1-experiences-culture.webp"
 import closingCtaImg from "../../images/weavy/v1/v1-closing-cta.webp"
+import mobilePhoneImg from "../assets/miraee-mobile-phone.png"
+import homeHeroImg from "../../images/weavy/v1/v1-home-hero.webp"
 import "./HomeElegant.css"
+import "./HomeV12.css"
 
 const ease = [0.16, 1, 0.3, 1] as const
 const MotionLink = motion.create(Link)
@@ -37,26 +39,26 @@ function MotionSection({ children, className, id, effect = "rise" }: { children:
 
 function SectionSignal({ light = false }: { light?: boolean }) { return <motion.div className={`el-section-signal${light ? " el-section-signal--light" : ""}`} aria-hidden="true" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, amount: .6 }} transition={{ duration: 1.15, ease }}><motion.i initial={{ left: "0%" }} whileInView={{ left: "100%" }} viewport={{ once: true }} transition={{ duration: 1.2, delay: .12, ease }}/></motion.div> }
 
-function PromptDemo() { return <motion.div className="el-demo-stage" initial={{ opacity: 0, scale: .94, y: 60 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 1.1, delay: .35, ease }}>
-  <img className="v11-hero-photo" src={homeHeroImg} alt="Business traveler arriving at a bright international airport" width="1536" height="1024" fetchPriority="high" decoding="async" />
-  <div className="el-demo-stage__route" aria-hidden="true"><span>SFO</span><i/><b>7,337 mi</b><i/><span>SIN</span></div>
-  <div className="el-demo-stage__note el-demo-stage__note--policy"><span>Policy</span><b>Approved</b></div>
-  <div className="el-demo-stage__note el-demo-stage__note--savings"><span>Live savings</span><b>$428</b></div>
-  <div className="el-console el-console--image">
-    <img className="el-console__img" src={dashboardImg} alt="Miraee admin dashboard showing travel spend, compliance, and active trips" width="1917" height="1077" fetchPriority="high" decoding="async" />
-  </div>
-</motion.div> }
-
 function Hero() {
-  const ref = useRef<HTMLElement>(null); const reduce=useReducedMotion(); const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] }); const y = useTransform(scrollYProgress,[0,1],[0,120]); const opacity = useTransform(scrollYProgress,[0,.9],[1,0])
-  return <section ref={ref} className="el-hero"><div className="el-hero__ghost" aria-hidden="true">agent</div><motion.div className="el-hero__inner" style={{ y:reduce?0:y, opacity:reduce?1:opacity }}>
-    <motion.div className="el-hero__kicker" initial={{ opacity:0,y:10 }} animate={{ opacity:1,y:0 }}><div className="el-pill"><span/> AI-native corporate travel</div></motion.div>
-    <h1><motion.span initial={{ y:"110%" }} animate={{ y:0 }} transition={{ duration:.9,ease }}>AI-native employee travel Platform</motion.span></h1>
-    <motion.p initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.45,duration:.7 }}>One intelligent platform for booking, travel management, and expenses. Miraee is built for business travel, and the personal trips people love.</motion.p>
-    <motion.div className="el-hero__actions" initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ delay:.58,duration:.7 }}><Link className="el-button" to="/book-a-demo">Book a demo <span aria-hidden="true">↗</span></Link><a className="el-text-link" href="#product">Explore the platform <span aria-hidden="true">↓</span></a></motion.div>
-    <PromptDemo />
-    <motion.div className="el-hero__proof" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{delay:1.05,duration:.7,ease}}><span>One thread</span><i/><span>Live inventory</span><i/><span>Policy built in</span><i/><span>Human support when needed</span></motion.div>
-  </motion.div></section>
+  return <section className="v12-hero">
+    <div className="v12-hero__row">
+      <div className="v12-hero__copy">
+        <h1>AI-native employee<br />travel <em>Platform</em></h1>
+        <p>One intelligent platform for booking, travel management, and expenses. Built for business travel, and the personal trips people love.</p>
+        <div className="v12-hero__actions">
+          <Link className="v12-btn v12-btn--primary" to="/book-a-demo">Book a demo <span aria-hidden="true">→</span></Link>
+          <a className="v12-btn v12-btn--ghost" href="#product">Explore the platform</a>
+        </div>
+      </div>
+      <div className="v12-hero__media">
+        <img src={homeHeroImg} alt="Business traveler arriving at a bright international airport" width="1536" height="1024" fetchPriority="high" decoding="async" />
+      </div>
+    </div>
+    <div className="v12-preview">
+      <img className="v12-preview__main" src={dashboardImg} alt="Miraee admin dashboard showing trips and spend overview" width="1917" height="1077" fetchPriority="high" decoding="async" />
+      <img className="v12-preview__floating" src={mobilePhoneImg} alt="Miraee mobile app showing an active trip" loading="lazy" decoding="async" />
+    </div>
+  </section>
 }
 
 
@@ -85,7 +87,7 @@ function Friction(){
 const allCapabilities = [["Plan","Describe a trip naturally and get an in-policy itinerary in seconds.","<60s"],["Book","Flights, hotels, rail, and cars from live wholesale inventory.","20–30%"],["Expense","Receipts, coding, reports, and reconciliation prepared automatically.","0 forms"],["Change","The agent proactively rebooks disruptions within policy.","97%"],["Continuous support","Human-in-the-loop backup whenever a trip needs a real person.","24/7"],["Personal travel","The same agent can plan employee trips without mixing company spend.","1 agent"]]
 function CapabilityMatrix(){return <section className="el-capabilities el-capabilities--revamp"><SectionSignal/><Reveal className="el-section-head"><span>The complete platform</span><h2>Every part of the trip.<br/><em>One continuous context.</em></h2><p>Instead of adding another tool, Miraee connects the work your team already has to do.</p></Reveal><div className="el-cap-stack">{allCapabilities.map((c,i)=><Reveal className="el-cap-row" key={c[0]} delay={(i%3)*.05}><span>{String(i+1).padStart(2,"0")}</span><h3>{c[0]}</h3><p>{c[1]}</p><b>{c[2]}</b></Reveal>)}</div></section>}
 
-const differentiators=[["Global content, local experiences","Millions of properties and 500+ airlines, plus hyperlocal experiences, no one else has digitized.","2M+ properties"],["A swarm of specialized agents","Booking, policy, negotiation, rebooking, and expense agents that execute, not just answer.","200+ AI agents"],["Human in the loop","Real support and oversight where it matters, so autonomy never means blind trust.","24/7 human support"]]
+const differentiators=[["Global content, local experiences","Millions of properties and 500+ airlines, plus hyperlocal experiences, no one else has digitized.","2M+ hotels"],["A swarm of specialized agents","Booking, policy, negotiation, rebooking, and expense agents that execute, not just answer.","200+ AI agents"],["Human in the loop","Real support and oversight where it matters, so autonomy never means blind trust.","24/7 human support"]]
 function PlatformDifference(){return <section className="el-differentiators"><Reveal className="el-section-head"><span>The platform</span><h2>Global reach.<br/><em>Personal execution.</em></h2></Reveal><div>{differentiators.map((d,i)=><Reveal key={d[0]} delay={i*.1}><span>0{i+1}</span><h3>{d[0]}</h3><p>{d[1]}</p><b>{d[2]}</b></Reveal>)}</div></section>}
 
 const experiences=["Festivals and culture","Once-in-a-trip moments","Local performances","Markets and makers","The bleisure weekend","Food and discovery"]
@@ -145,7 +147,7 @@ function FeatureVisual({ type }: { type: "book"|"change"|"expense" }) {
 }
 
 const features = [
-  ["01","Plan and book","Ask naturally. Miraee searches live inventory, understands preferences, and applies policy before presenting the right journey.","book"],
+  ["01","Plan and book","Tell us your plans. Miraee searches live inventory, understands your preferences, and applies policy to find the journey that's right for you.","book"],
   ["02","Handle every change","When plans change, the agent finds alternatives, checks cost and policy, and brings you one clear decision.","change"],
   ["03","Close the expense loop","Bookings, payments, receipts, and policy stay connected so expense management becomes seamless.","expense"]
 ] as const

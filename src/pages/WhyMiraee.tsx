@@ -262,7 +262,7 @@ function CompareTable({ caption, headers, rows }: { caption: string; headers: st
     const w = useWindowWidth()
     const isMobile = w < 768
     return (
-        <div style={{ overflowX: "auto", borderRadius: 16, border: "1px solid rgba(251,246,242,0.08)" }}>
+        <div style={{ overflowX: "auto", borderRadius: 16, border: "1px solid rgba(var(--text-rgb),0.08)" }}>
             <table style={{ width: "100%", minWidth: isMobile ? 560 : 0, borderCollapse: "collapse" }} aria-label={caption}>
                 <caption style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)" }}>{caption}</caption>
                 <thead>
@@ -271,8 +271,8 @@ function CompareTable({ caption, headers, rows }: { caption: string; headers: st
                             <th key={h} scope="col" style={{
                                 textAlign: "left", padding: isMobile ? "14px 16px" : "16px 22px", fontSize: 11, fontWeight: 700,
                                 letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "Plus Jakarta Sans",
-                                color: i === headers.length - 1 ? T.orange : "rgba(251,246,242,0.45)",
-                                background: "rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(251,246,242,0.08)",
+                                color: i === headers.length - 1 ? T.orange : "rgba(var(--text-rgb),0.45)",
+                                background: "rgba(var(--text-rgb),0.04)", borderBottom: "1px solid rgba(var(--text-rgb),0.08)",
                                 whiteSpace: "nowrap",
                             }}>{h}</th>
                         ))}
@@ -280,14 +280,14 @@ function CompareTable({ caption, headers, rows }: { caption: string; headers: st
                 </thead>
                 <tbody>
                     {rows.map((row, ri) => (
-                        <tr key={ri} style={{ borderBottom: ri < rows.length - 1 ? "1px solid rgba(251,246,242,0.06)" : "none" }}>
+                        <tr key={ri} style={{ borderBottom: ri < rows.length - 1 ? "1px solid rgba(var(--text-rgb),0.06)" : "none" }}>
                             {row.map((cell, ci) => {
                                 const isLast = ci === row.length - 1
                                 const isDash = cell === "-"
                                 return (
                                     <td key={ci} style={{
                                         padding: isMobile ? "14px 16px" : "16px 22px", fontSize: 13.5, fontFamily: "Plus Jakarta Sans",
-                                        color: isDash ? "rgba(251,246,242,0.22)" : isLast ? T.cream : "rgba(251,246,242,0.55)",
+                                        color: isDash ? "rgba(var(--text-rgb),0.22)" : isLast ? T.ink : "rgba(var(--text-rgb),0.55)",
                                         fontWeight: ci === 0 ? 600 : isLast ? 700 : 400,
                                         background: isLast ? "rgba(229,86,2,0.06)" : "transparent",
                                     }}>
@@ -325,26 +325,26 @@ function SideBySide() {
     }, [])
 
     return (
-        <section id="compare" ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "#0F0407", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(251,246,242,0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(251,246,242,0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }} />
+        <section id="compare" ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "var(--page-bg)", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }} />
             <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
                 <div style={{ marginBottom: isMobile ? 48 : 72 }}>
                     <motion.span initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
                         style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>
                         Side by Side
                     </motion.span>
-                    <h2 style={{ fontSize: isMobile ? 28 : isTablet ? 44 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.08, letterSpacing: "-0.03em", margin: 0, maxWidth: 700 }}>
+                    <h2 style={{ fontSize: isMobile ? 28 : isTablet ? 44 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: 0, maxWidth: 700 }}>
                         Same trip. Different operating model.
                     </h2>
                 </div>
 
                 <div className="compare-block" style={{ marginBottom: 48 }}>
-                    <h3 style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(251,246,242,0.5)", fontFamily: "Plus Jakarta Sans", margin: "0 0 18px" }}>Capability</h3>
+                    <h3 style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", margin: "0 0 18px" }}>Capability</h3>
                     <CompareTable caption="Capability comparison" headers={["Capability", "Legacy TMC", "First-gen T&E", "Miraee"]} rows={capabilityCompare} />
                 </div>
 
                 <div className="compare-block">
-                    <h3 style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(251,246,242,0.5)", fontFamily: "Plus Jakarta Sans", margin: "0 0 18px" }}>Commercials</h3>
+                    <h3 style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", margin: "0 0 18px" }}>Commercials</h3>
                     <CompareTable caption="Commercial terms comparison" headers={["Terms", "Legacy TMC", "First-gen T&E", "Miraee"]} rows={commercials} />
                 </div>
             </div>
@@ -482,8 +482,8 @@ function WhyCTA() {
     }, [])
 
     return (
-        <section ref={sectionRef} style={{ padding: isMobile ? "100px 24px" : "160px 80px", background: "#0F0407", position: "relative", overflow: "hidden", textAlign: "center" }}>
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(251,246,242,0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(251,246,242,0.038) 1px, transparent 1px)", backgroundSize: "72px 72px", pointerEvents: "none" }} />
+        <section ref={sectionRef} style={{ padding: isMobile ? "100px 24px" : "160px 80px", background: "var(--page-bg)", position: "relative", overflow: "hidden", textAlign: "center" }}>
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.038) 1px, transparent 1px)", backgroundSize: "72px 72px", pointerEvents: "none" }} />
             <div style={{
                 position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
                 background: "radial-gradient(ellipse 60% 60% at 50% 50%, rgba(229,86,2,0.1) 0%, transparent 60%)",
@@ -492,10 +492,10 @@ function WhyCTA() {
                 <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 20 }}>
                     See the Agent in Action
                 </span>
-                <h2 style={{ fontSize: isMobile ? 32 : isTablet ? 48 : 60, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 24px" }}>
+                <h2 style={{ fontSize: isMobile ? 32 : isTablet ? 48 : 60, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 24px" }}>
                     Experience the agentic travel.
                 </h2>
-                <p style={{ fontSize: isMobile ? 15 : 17, color: "rgba(251,246,242,0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 auto 44px", maxWidth: 560 }}>
+                <p style={{ fontSize: isMobile ? 15 : 17, color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 auto 44px", maxWidth: 560 }}>
                     Twenty minutes. The multi-city one, the one that always gets changed, the one nobody spends correctly. We'll run it live.
                 </p>
                 <motion.div style={{ display: "inline-block" }} whileHover={{ scale: 1.04, boxShadow: "0 14px 48px rgba(229,86,2,0.55)" }} whileTap={{ scale: 0.97 }}>

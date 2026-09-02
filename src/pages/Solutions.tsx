@@ -531,15 +531,15 @@ function ByUseCase() {
     }, [])
 
     return (
-        <section ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "#0F0407", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(251,246,242,0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(251,246,242,0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }}/>
+        <section ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "var(--page-bg)", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.038) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none" }}/>
             <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
                 <div style={{ marginBottom: isMobile ? 56 : 80 }}>
                     <motion.span initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
                         style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 20 }}>
                         Solutions by Use Case
                     </motion.span>
-                    <h2 className="uc-heading" style={{ fontSize: isMobile ? 28 : isTablet ? 44 : 60, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.06, letterSpacing: "-0.03em", margin: "0 0 12px" }}>
+                    <h2 className="uc-heading" style={{ fontSize: isMobile ? 28 : isTablet ? 44 : 60, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.06, letterSpacing: "-0.03em", margin: "0 0 12px" }}>
                         {["Every", "kind", "of", "company"].map((word, i) => (
                             <span key={i} style={{ display: "inline-block", overflow: "hidden", marginRight: "0.22em", verticalAlign: "bottom", lineHeight: 1.18 }}>
                                 <span className="uc-w" style={{ display: "inline-block" }}>{word}</span>
@@ -558,17 +558,17 @@ function ByUseCase() {
                                 gridColumn: (!isMobile && !isTablet && c.featured) ? "span 2" : "span 1",
                                 padding: isMobile ? "28px 22px" : "36px 32px",
                                 borderRadius: 20,
-                                background: c.emergency ? "rgba(229,86,2,0.07)" : "rgba(255,255,255,0.04)",
-                                border: c.emergency ? "1px solid rgba(229,86,2,0.3)" : "1px solid rgba(255,255,255,0.08)",
+                                background: c.emergency ? "rgba(229,86,2,0.07)" : "rgba(var(--text-rgb),0.04)",
+                                border: c.emergency ? "1px solid rgba(229,86,2,0.3)" : "1px solid rgba(var(--text-rgb),0.08)",
                                 position: "relative", overflow: "hidden",
                             }}>
                             {c.emergency && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: T.orange }}/>}
                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                                <span style={{ fontSize: 11, fontFamily: "monospace", color: c.emergency ? T.orange : "rgba(251,246,242,0.2)", fontWeight: 700 }}>{c.num}</span>
-                                <span style={{ fontSize: 10, padding: "4px 10px", borderRadius: 100, background: c.emergency ? "rgba(229,86,2,0.12)" : "rgba(251,246,242,0.06)", color: c.emergency ? T.orange : "rgba(251,246,242,0.4)", fontFamily: "Plus Jakarta Sans", fontWeight: 600, letterSpacing: "0.07em", textTransform: "uppercase" }}>{c.tag}</span>
+                                <span style={{ fontSize: 11, fontFamily: "monospace", color: c.emergency ? T.orange : "rgba(var(--text-rgb),0.2)", fontWeight: 700 }}>{c.num}</span>
+                                <span style={{ fontSize: 10, padding: "4px 10px", borderRadius: 100, background: c.emergency ? "rgba(229,86,2,0.12)" : "rgba(var(--text-rgb),0.06)", color: c.emergency ? T.orange : "rgba(var(--text-rgb),0.4)", fontFamily: "Plus Jakarta Sans", fontWeight: 600, letterSpacing: "0.07em", textTransform: "uppercase" }}>{c.tag}</span>
                             </div>
-                            <h3 style={{ fontSize: isMobile ? 18 : (c.featured && !isMobile && !isTablet) ? 28 : 20, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.2, letterSpacing: "-0.015em", margin: "0 0 14px" }}>{c.title}</h3>
-                            <p style={{ fontSize: 14, color: c.emergency ? "rgba(251,246,242,0.55)" : "rgba(251,246,242,0.45)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.75, margin: 0, maxWidth: c.featured && !isMobile ? 480 : "none" }}>{c.body}</p>
+                            <h3 style={{ fontSize: isMobile ? 18 : (c.featured && !isMobile && !isTablet) ? 28 : 20, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.2, letterSpacing: "-0.015em", margin: "0 0 14px" }}>{c.title}</h3>
+                            <p style={{ fontSize: 14, color: c.emergency ? "rgba(var(--text-rgb),0.55)" : "rgba(var(--text-rgb),0.45)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.75, margin: 0, maxWidth: c.featured && !isMobile ? 480 : "none" }}>{c.body}</p>
                         </motion.div>
                     ))}
                 </div>
@@ -918,7 +918,7 @@ function DutyOfCare() {
     }, [])
 
     return (
-        <section ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: T.maroon, position: "relative", overflow: "hidden" }}>
+        <section ref={sectionRef} style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "var(--page-bg)", position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: "50%", left: "25%", transform: "translate(-50%,-50%)", width: 700, height: 700, background: "radial-gradient(circle, rgba(229,86,2,0.08) 0%, transparent 65%)", pointerEvents: "none" }}/>
             <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
                 <motion.span initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
@@ -927,7 +927,7 @@ function DutyOfCare() {
                 </motion.span>
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 48 : 80, marginBottom: 56 }}>
                     <div>
-                        <h2 className="doc-heading" style={{ fontSize: isMobile ? 30 : 48, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.1, letterSpacing: "-0.025em", margin: "0 0 28px" }}>
+                        <h2 className="doc-heading" style={{ fontSize: isMobile ? 30 : 48, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.025em", margin: "0 0 28px" }}>
                             {[["Always", "know", "where"], ["your", "people", "are."]].map((line, li) => (
                                 <span key={li} style={{ display: "block" }}>
                                     {line.map((word, wi) => (
@@ -942,7 +942,7 @@ function DutyOfCare() {
                             </span>
                         </h2>
                         <motion.p initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}
-                            style={{ fontSize: 15, color: "rgba(251,246,242,0.48)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 0 36px", maxWidth: 440 }}>
+                            style={{ fontSize: 15, color: "rgba(var(--text-rgb),0.48)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 0 36px", maxWidth: 440 }}>
                             Duty of care used to mean a spreadsheet of itineraries and a phone tree. Miraee turns it into a live, AI-monitored safety layer.
                         </motion.p>
                         <div ref={pointsRef} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
@@ -957,8 +957,8 @@ function DutyOfCare() {
                                         </motion.div>
                                     </div>
                                     <div>
-                                        <div style={{ fontSize: 15, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, marginBottom: 4 }}>{f.title}</div>
-                                        <div style={{ fontSize: 13, color: "rgba(251,246,242,0.48)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.65 }}>{f.desc}</div>
+                                        <div style={{ fontSize: 15, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, marginBottom: 4 }}>{f.title}</div>
+                                        <div style={{ fontSize: 13, color: "rgba(var(--text-rgb),0.48)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.65 }}>{f.desc}</div>
                                     </div>
                                 </motion.div>
                             ))}
@@ -970,8 +970,8 @@ function DutyOfCare() {
                 </div>
                 <motion.div initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }} whileInView={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
                     viewport={{ once: true }} transition={{ duration: 1, ease: "easeOut" as const }}
-                    style={{ padding: isMobile ? "28px 24px" : "36px 48px", background: "rgba(255,255,255,0.04)", borderRadius: 20, border: "1px solid rgba(255,255,255,0.08)", borderLeft: `3px solid ${T.orange}` }}>
-                    <p style={{ fontSize: isMobile ? 18 : 24, fontFamily: "Cardo,serif", fontStyle: "italic", color: T.cream, margin: 0, lineHeight: 1.55 }}>
+                    style={{ padding: isMobile ? "28px 24px" : "36px 48px", background: "rgba(var(--text-rgb),0.04)", borderRadius: 20, border: "1px solid rgba(var(--text-rgb),0.08)", borderLeft: `3px solid ${T.orange}` }}>
+                    <p style={{ fontSize: isMobile ? 18 : 24, fontFamily: "Cardo,serif", fontStyle: "italic", color: T.ink, margin: 0, lineHeight: 1.55 }}>
                         "Your people travel everywhere. Miraee makes sure no one's ever alone out there."
                     </p>
                 </motion.div>
@@ -998,7 +998,7 @@ function TrustedSectors() {
     const cols = isMobile ? 2 : w < 1024 ? 3 : 4
 
     return (
-        <section id="demo" style={{ padding: isMobile ? "80px 24px 96px" : "110px 80px 130px", background: "#0F0407", position: "relative", overflow: "hidden" }}>
+        <section id="demo" style={{ padding: isMobile ? "80px 24px 96px" : "110px 80px 130px", background: "var(--page-bg)", position: "relative", overflow: "hidden" }}>
             {/* Background glow */}
             <div style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%,-50%)", width: 800, height: 400, background: "radial-gradient(ellipse, rgba(229,86,2,0.04) 0%, transparent 70%)", pointerEvents: "none" }}/>
 
@@ -1007,7 +1007,7 @@ function TrustedSectors() {
                 <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
                     style={{ textAlign: "center", marginBottom: isMobile ? 48 : 64 }}>
                     <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans" }}>Trusted Across</span>
-                    <h2 style={{ fontSize: isMobile ? 28 : 44, fontFamily: "Cardo,serif", color: T.cream, margin: "14px 0 0", letterSpacing: "-0.025em", fontWeight: 700, lineHeight: 1.1 }}>
+                    <h2 style={{ fontSize: isMobile ? 28 : 44, fontFamily: "Cardo,serif", color: T.ink, margin: "14px 0 0", letterSpacing: "-0.025em", fontWeight: 700, lineHeight: 1.1 }}>
                         Travel-heavy sectors.
                     </h2>
                 </motion.div>
@@ -1023,8 +1023,8 @@ function TrustedSectors() {
                             whileHover={{ y: -4, borderColor: "rgba(229,86,2,0.5)" }}
                             style={{
                                 padding: isMobile ? "20px 16px" : "28px 24px",
-                                background: "rgba(255,255,255,0.04)",
-                                border: "1px solid rgba(255,255,255,0.08)",
+                                background: "rgba(var(--text-rgb),0.04)",
+                                border: "1px solid rgba(var(--text-rgb),0.08)",
                                 borderRadius: 16,
                                 display: "flex",
                                 flexDirection: "column",
@@ -1039,7 +1039,7 @@ function TrustedSectors() {
                                 </svg>
                             </div>
                             {/* Name */}
-                            <span style={{ fontSize: isMobile ? 12 : 14, fontFamily: "Plus Jakarta Sans", fontWeight: 600, color: T.cream, lineHeight: 1.4, letterSpacing: "0.01em" }}>
+                            <span style={{ fontSize: isMobile ? 12 : 14, fontFamily: "Plus Jakarta Sans", fontWeight: 600, color: T.ink, lineHeight: 1.4, letterSpacing: "0.01em" }}>
                                 {sector.name}
                             </span>
                         </motion.div>
@@ -1048,7 +1048,7 @@ function TrustedSectors() {
 
                 {/* Bottom note */}
                 <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }}
-                    style={{ textAlign: "center", marginTop: isMobile ? 40 : 56, fontSize: 13, color: "rgba(251,246,242,0.3)", fontFamily: "Plus Jakarta Sans" }}>
+                    style={{ textAlign: "center", marginTop: isMobile ? 40 : 56, fontSize: 13, color: "rgba(var(--text-rgb),0.3)", fontFamily: "Plus Jakarta Sans" }}>
                     Any industry where employees travel. Miraee handles the rest.
                 </motion.p>
             </div>

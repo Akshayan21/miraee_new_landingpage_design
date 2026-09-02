@@ -199,6 +199,35 @@
   }
 }
 
+.v11-site .el-comparison .el-section-head > p {
+  max-width: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .v11-site .el-comparison .el-section-head > p {
+    white-space: normal;
+  }
+}
+
+.v11-site .el-journey-board figure {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 10px;
+}
+
+.v11-site .el-journey-board figure img {
+  width: auto;
+  max-width: 420px;
+}
+
+@media (max-width: 680px) {
+  .v11-site .el-journey-board figure img {
+    max-width: 78%;
+  }
+}
+
 /* V1.1 subpages: alternate at the section boundary through the pages' own
    color tokens. This preserves component-specific foregrounds and motion. */
 .v11-alternating-route .v1-type-page > section:nth-child(odd of section:not(.v11-page-image)) {
@@ -217,6 +246,8 @@
   --page-bg: var(--v11-dark);
   --surface: rgba(255, 255, 255, .07);
   --surface-2: rgba(255, 255, 255, .1);
+  /* Maroon (the light-surface accent) is unreadable on this dark bg — swap to orange, same as html[data-theme="dark"]. */
+  --accent-strong: #E55602;
   background: radial-gradient(circle at 88% 8%, rgba(229, 86, 2, .18), transparent 34%), var(--v11-dark) !important;
   color: var(--v11-dark-text);
 }

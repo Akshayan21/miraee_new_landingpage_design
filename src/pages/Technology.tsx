@@ -12,6 +12,7 @@ const T = {
     ink: "var(--text)", maroon: "#450E14", orange: "#E55602",
     cream: "#FBF6F2", white: "#FFFFFF",
     muted: "rgba(var(--text-rgb),0.45)", mutedLight: "rgba(var(--text-rgb),0.12)",
+    accent: "var(--accent-strong)",
 }
 
 function useGSAP(cb: (gsap: any, ST: any) => void | (() => void), deps: any[] = []) {
@@ -258,7 +259,7 @@ function AgenticAI() {
 
     const headWords = [
         { text: "From", s: {} }, { text: "assistants", s: {} }, { text: "that", s: {} },
-        { text: "talk", s: { fontStyle: "italic" as const, color: T.maroon } },
+        { text: "talk", s: { fontStyle: "italic" as const, color: T.accent } },
         { text: "to", s: {} }, { text: "agents", s: {} }, { text: "that", s: {} },
         { text: "do.", s: { fontStyle: "italic" as const, color: T.orange } },
     ]
@@ -535,9 +536,9 @@ function WhatAgentsDo() {
     const cols = isMobile ? 1 : isTablet ? 2 : 4
 
     return (
-        <section ref={sectionRef} id="agents" style={{ padding: isMobile ? "80px 24px" : isTablet ? "130px 48px" : "130px 80px", background: "#0F0407", position: "relative", overflow: "hidden" }}>
+        <section ref={sectionRef} id="agents" style={{ padding: isMobile ? "80px 24px" : isTablet ? "130px 48px" : "130px 80px", background: "var(--page-bg)", position: "relative", overflow: "hidden" }}>
             {/* grid background */}
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(251,246,242,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(251,246,242,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }}/>
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }}/>
             {/* ambient scan sweep */}
             <div className="grid-scan" style={{ position: "absolute", top: 0, bottom: 0, width: "25%", background: "linear-gradient(to right, transparent, rgba(229,86,2,0.04), transparent)", pointerEvents: "none", zIndex: 1 }}/>
 
@@ -549,7 +550,7 @@ function WhatAgentsDo() {
                         What the Agents Do, Daily
                     </motion.span>
                     <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "flex-end", gap: 20 }}>
-                        <h2 ref={headRef} style={{ fontSize: isMobile ? 32 : 54, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.06, letterSpacing: "-0.025em", margin: 0, maxWidth: 520 }}>
+                        <h2 ref={headRef} style={{ fontSize: isMobile ? 32 : 54, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.06, letterSpacing: "-0.025em", margin: 0, maxWidth: 520 }}>
                             {["Eight", "AI", "agents."].map((word, i) => (
                                 <span key={i} style={{ display: "inline-block", overflow: "hidden", marginRight: "0.22em", verticalAlign: "bottom", lineHeight: 1.15 }}>
                                     <span className="wd-w" style={{ display: "inline-block" }}>{word}</span>
@@ -563,7 +564,7 @@ function WhatAgentsDo() {
                             ))}
                         </h2>
                         <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
-                            style={{ fontSize: 15, color: "rgba(251,246,242,0.45)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.7, maxWidth: 320, margin: 0 }}>
+                            style={{ fontSize: 15, color: "rgba(var(--text-rgb),0.45)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.7, maxWidth: 320, margin: 0 }}>
                             Each agent runs a discrete part of the travel workflow, bounded by policy, budget, and human judgment where it matters. Together, they run the whole thing.
                         </motion.p>
                     </div>
@@ -581,8 +582,8 @@ function WhatAgentsDo() {
                             transition={{ type: "spring", stiffness: 300, damping: 22 }}
                             style={{
                                 padding: isMobile ? "22px 18px" : "28px 24px", borderRadius: 20,
-                                background: activeAgent === i ? "rgba(229,86,2,0.05)" : "rgba(251,246,242,0.04)",
-                                border: activeAgent === i ? "1px solid rgba(229,86,2,0.5)" : "1px solid rgba(251,246,242,0.08)",
+                                background: activeAgent === i ? "rgba(229,86,2,0.05)" : "rgba(var(--text-rgb),0.04)",
+                                border: activeAgent === i ? "1px solid rgba(229,86,2,0.5)" : "1px solid rgba(var(--text-rgb),0.08)",
                                 cursor: "pointer", transition: "border-color 0.2s, background 0.2s",
                                 position: "relative", overflow: "hidden", outline: "none",
                             }}
@@ -591,18 +592,18 @@ function WhatAgentsDo() {
                             {activeAgent === i && <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% -10%,rgba(229,86,2,0.15),transparent 65%)", pointerEvents: "none" }}/>}
                             {/* hover shimmer */}
                             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, transparent 40%, rgba(229,86,2,0.03) 100%)", pointerEvents: "none" }}/>
-                            <div style={{ position: "absolute", top: 14, right: 14, fontSize: 11, fontFamily: "monospace", color: "rgba(251,246,242,0.2)", fontWeight: 700 }}>{agent.num}</div>
+                            <div style={{ position: "absolute", top: 14, right: 14, fontSize: 11, fontFamily: "monospace", color: "rgba(var(--text-rgb),0.2)", fontWeight: 700 }}>{agent.num}</div>
                             <motion.div whileHover={{ scale: 1.2, rotate: 10 }} transition={{ type: "spring", stiffness: 400 }}
                                 style={{ fontSize: 28, marginBottom: 16, color: agent.color, lineHeight: 1, display: "inline-block" }}>
                                 {agent.icon}
                             </motion.div>
-                            <div style={{ fontSize: 15, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, marginBottom: 8, letterSpacing: "-0.01em" }}>{agent.name}</div>
-                            <div style={{ fontSize: 13, color: "rgba(251,246,242,0.45)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.65 }}>{agent.desc}</div>
+                            <div style={{ fontSize: 15, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, marginBottom: 8, letterSpacing: "-0.01em" }}>{agent.name}</div>
+                            <div style={{ fontSize: 13, color: "rgba(var(--text-rgb),0.45)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.65 }}>{agent.desc}</div>
                             <AnimatePresence>
                                 {activeAgent === i && (
                                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }}
                                         style={{ overflow: "hidden" }}>
-                                        <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid rgba(229,86,2,0.2)", fontSize: 13, color: "rgba(251,246,242,0.65)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.7 }}>
+                                        <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid rgba(229,86,2,0.2)", fontSize: 13, color: "rgba(var(--text-rgb),0.65)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.7 }}>
                                             {agent.detail}
                                         </div>
                                     </motion.div>
@@ -614,7 +615,7 @@ function WhatAgentsDo() {
 
                 <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 }}
                     style={{ marginTop: 48, textAlign: "center" }}>
-                    <p style={{ fontSize: 14, color: "rgba(251,246,242,0.3)", fontFamily: "Plus Jakarta Sans", fontStyle: "italic" }}>Click any agent to learn more</p>
+                    <p style={{ fontSize: 14, color: "rgba(var(--text-rgb),0.3)", fontFamily: "Plus Jakarta Sans", fontStyle: "italic" }}>Click any agent to learn more</p>
                 </motion.div>
             </div>
         </section>
@@ -689,7 +690,7 @@ function BrainAndHeart() {
     }
     const mondee = {
         label: "Mondee", role: "The Heart",
-        color: T.maroon, bg: T.ink, text: T.cream,
+        color: T.orange, bg: "#0F0407", text: T.cream,
         tagline: "The agentic AI travel marketplace — the supply layer Miraee books against.",
         points: [
             "500+ airlines and 2M+ properties via direct supplier connections, not resold inventory",
@@ -703,7 +704,7 @@ function BrainAndHeart() {
     const current = active === "tabhi" ? tabhi : mondee
 
     return (
-        <section ref={sectionRef} id="demo" style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "#0F0407", overflow: "hidden" }}>
+        <section ref={sectionRef} id="demo" style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "var(--page-bg)", overflow: "hidden" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto" }}>
                 {/* Heading */}
                 <div style={{ textAlign: "center", marginBottom: isMobile ? 56 : 80 }}>
@@ -711,7 +712,7 @@ function BrainAndHeart() {
                         style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 18 }}>
                         The Foundation
                     </motion.span>
-                    <h2 ref={headWordsRef} style={{ fontSize: isMobile ? 32 : isTablet ? 46 : 64, fontFamily: "Cardo,serif", fontWeight: 700, color: T.cream, lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 auto 20px", maxWidth: 640 }}>
+                    <h2 ref={headWordsRef} style={{ fontSize: isMobile ? 32 : isTablet ? 46 : 64, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.04, letterSpacing: "-0.03em", margin: "0 auto 20px", maxWidth: 640 }}>
                         {["Brain", "meets", "heart."].map((word, i) => (
                             <span key={i} style={{ display: "inline-block", overflow: "hidden", marginRight: "0.22em", verticalAlign: "bottom", lineHeight: 1.2 }}>
                                 <span className="bh-w" style={{ display: "inline-block" }}>{word}</span>
@@ -725,7 +726,7 @@ function BrainAndHeart() {
                         ))}
                     </h2>
                     <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.35 }}
-                        style={{ fontSize: 17, color: "rgba(251,246,242,0.55)", fontFamily: "Plus Jakarta Sans", maxWidth: 480, margin: "0 auto", lineHeight: 1.7 }}>
+                        style={{ fontSize: 17, color: "rgba(var(--text-rgb),0.55)", fontFamily: "Plus Jakarta Sans", maxWidth: 480, margin: "0 auto", lineHeight: 1.7 }}>
                         Miraee is powered by two forces: Tabhi's coordinated multi-agent AI system and Mondee's owned global supply.
                     </motion.p>
                 </div>
@@ -735,7 +736,7 @@ function BrainAndHeart() {
                     {([["tabhi", "Tabhi — Brain"], ["mondee", "Mondee — Heart"]] as const).map(([key, lbl]) => (
                         <motion.button key={key} onClick={() => setActive(key)}
                             whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-                            style={{ padding: "11px 28px", borderRadius: 40, border: `1.5px solid ${active === key ? T.orange : "rgba(251,246,242,0.12)"}`, background: active === key ? T.orange : "transparent", color: active === key ? T.white : "rgba(251,246,242,0.45)", fontSize: 14, fontFamily: "Plus Jakarta Sans", fontWeight: 600, cursor: "pointer", transition: "all 0.25s" }}>
+                            style={{ padding: "11px 28px", borderRadius: 40, border: `1.5px solid ${active === key ? T.orange : "rgba(var(--text-rgb),0.16)"}`, background: active === key ? T.orange : "transparent", color: active === key ? T.white : "rgba(var(--text-rgb),0.55)", fontSize: 14, fontFamily: "Plus Jakarta Sans", fontWeight: 600, cursor: "pointer", transition: "all 0.25s" }}>
                             {lbl}
                         </motion.button>
                     ))}
@@ -785,7 +786,7 @@ function BrainAndHeart() {
                                 </motion.div>
                             </div>
                             {/* Right: visual with parallax */}
-                            <div ref={visualPanelRef} style={{ background: active === "tabhi" ? "rgba(251,246,242,0.04)" : "rgba(var(--text-rgb),0.35)", display: "flex", alignItems: "center", justifyContent: "center", minHeight: isMobile ? 240 : "auto", position: "relative", overflow: "hidden", willChange: "transform" }}>
+                            <div ref={visualPanelRef} style={{ background: "rgba(251,246,242,0.04)", display: "flex", alignItems: "center", justifyContent: "center", minHeight: isMobile ? 240 : "auto", position: "relative", overflow: "hidden", willChange: "transform" }}>
                                 {active === "tabhi" ? <NeuralOrbit /> : <MondeeGlobe />}
                             </div>
                         </div>
