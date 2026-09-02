@@ -4,11 +4,12 @@ import { V2Footer } from "../components/LegalFormKit"
 import { Faq, Reveal, V2Nav } from "../components/V2Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
 import financeDashboard from "../assets/ui-admin-dashboard.png"
-import miraeeMobileUi from "../assets/ui-flight-card.png"
+import miraeeMobileUi from "../assets/miraee-mobile-phone.png"
 import supplierCabin from "../assets/miraee-supplier-cabin.webp"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
 import "./ProductV2.css"
+import "./V2AlternatingSections.css"
 
 const contextLayers = [
     { number: "01", title: "Traveler context", copy: "Preferences, loyalty programs, seat and cabin history, dietary and access needs, the routes they fly most, and seat preferences. Asked once. Applied always." },
@@ -130,7 +131,7 @@ export default function ProductV2() {
             <a className="m-skip" href="#main">Skip to content</a>
             <V2Nav active="/product" />
             <main id="main">
-                <section className="pv2-hero" aria-labelledby="platform-hero-title">
+<section className="pv2-hero m-section--light" aria-labelledby="platform-hero-title">
                     <div className="pv2-shell pv2-hero__grid">
                         <Reveal className="pv2-hero__copy">
                             <p className="m-eyebrow">THE PLATFORM</p>
@@ -175,7 +176,7 @@ export default function ProductV2() {
                     </div>
                 </section>
 
-                <section id="how-it-works" className="pv2-how" aria-labelledby="how-title">
+<section id="how-it-works" className="pv2-how m-section--dark" aria-labelledby="how-title">
                     <div className="pv2-shell">
                         <Reveal className="pv2-how__head"><div><p className="m-eyebrow">HOW IT WORKS</p><h2 id="how-title">Ask once.<br />Keep moving.</h2></div><p>One request. Four stages. No restarts, no repeating yourself, no managing the process.</p></Reveal>
                         <Reveal className="pv2-how__ask"><span>The ask</span><blockquote>“Singapore next Tuesday. Window seat. Within policy.”</blockquote></Reveal>
@@ -224,7 +225,7 @@ export default function ProductV2() {
                         <Reveal className="pv2-heading"><div><p className="m-eyebrow">ONE PLATFORM · TWO VIEWS</p><h2 id="surfaces-title">A console for the program.<br />An app for the trip.</h2></div><p>The same journey context, shaped around the work each person needs to do.</p></Reveal>
                         <div className="pv2-surfaces__layout">
                             <Reveal className="pv2-surface pv2-surface--console"><div><span>01 · WEB CONSOLE</span><h3>For finance and travel teams</h3><p>Policy, approvals, live spend, duty of care, reporting, and the supplier program.</p></div><img src={financeDashboard} alt="Miraee admin dashboard showing travel spend, compliance, and active trips" loading="lazy" /></Reveal>
-                            <Reveal className="pv2-surface pv2-surface--app" delay={.08}><div><span>02 · MOBILE APP</span><h3>For travelers</h3><p>Ask, book, change, support, receipts, personal trips, and the live itinerary.</p></div><img src={miraeeMobileUi} alt="Miraee best-value flight selection card" loading="lazy" /></Reveal>
+                            <Reveal className="pv2-surface pv2-surface--app" delay={.08}><div><span>02 · MOBILE APP</span><h3>For travelers</h3><p>Ask, book, change, support, receipts, personal trips, and the live itinerary.</p></div><img className="pv2-mobile-mockup" src={miraeeMobileUi} alt="Miraee mobile app showing an AI travel assistant and flight options" loading="eager" decoding="async" /></Reveal>
                         </div>
                     </div>
                 </section>

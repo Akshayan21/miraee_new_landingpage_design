@@ -4,6 +4,7 @@ import { V2Footer } from "../components/LegalFormKit"
 import { Reveal, V2Nav, EditorialRows } from "../components/V2Kit"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
+import "./V2AlternatingSections.css"
 import { usePageMeta } from "../hooks/usePageMeta"
 
 const employeeBlocks = [
@@ -113,7 +114,7 @@ export default function ForTeamsV2() {
             <a className="m-skip" href="#main">Skip to content</a>
             <V2Nav active="/for-teams" />
             <main id="main">
-                <section className="m-hero" aria-labelledby="teams-hero-title">
+                <section className="m-hero m-section--light" aria-labelledby="teams-hero-title">
                     <Reveal className="m-hero__copy">
                         <p className="m-eyebrow">DESIGNED FOR EVERYONE</p>
                         <h1 id="teams-hero-title">Built for everyone behind the journey, from planning and payment to taking the trip.</h1>
@@ -136,7 +137,7 @@ export default function ForTeamsV2() {
                     <div className="m-list m-use-cases">{useCases.map(([label,title,copy],i) => <Reveal className="m-list__row" key={label}><span>0{i+1}</span><h3>{title}</h3><p>{copy}</p><strong>{label}</strong></Reveal>)}</div>
                 </section>
 
-                <section className="m-section m-business" aria-labelledby="fit-title">
+                <section className="m-section m-business m-section--dark" aria-labelledby="fit-title">
                     <Reveal className="m-section__head"><p className="m-eyebrow">BY FIT</p><h2 id="fit-title">Tuned to how your industry travels.</h2><p>Whether your travel is driven by client engagement, distributed teams, field operations or events, Miraee adapts policy, supply and workflows to your patterns.</p></Reveal>
                     <Reveal className="m-splitfacts"><div><h3>Purpose-built for upper-SMB and mid-market.</h3><p>Miraee is travel management software built for the segment incumbents underserve: companies with $500K–$5M in annual travel budgets and 100–3,000 employees, often running on 6+ disconnected tools with no optimization. That's a $255B serviceable market, and it's our home.</p></div><div><h3>Find your fit.</h3><p>Bring your travel pattern, systems and approval model. We'll show how the platform maps to them.</p><Link to="/book-a-demo">Find your fit <span aria-hidden="true">→</span></Link></div></Reveal>
                 </section>

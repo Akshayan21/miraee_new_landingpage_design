@@ -181,7 +181,7 @@
 .pv2-surface--app p { color: rgba(255, 255, 255, .62); }
 .pv2-surface--app img { width: min(78%, 330px); max-height: 520px; margin: 0 auto; object-fit: contain; object-position: center top; filter: drop-shadow(0 24px 35px rgba(0, 0, 0, .28)); }
 .pv2-surface--console img { min-height: 0; padding: 24px; object-fit: contain; object-position: center; }
-.pv2-surface--app img { width: min(92%, 720px); max-height: none; padding: 24px; }
+.pv2-surface--app img.pv2-mobile-mockup { display: block; width: min(88%, 460px); height: auto; max-height: none; margin: 8px auto 0; padding: 0 20px 28px; object-fit: contain; object-position: center top; }
 
 /* FAQ and final CTA */
 .pv2-faq { background: #fffdfa; }
@@ -227,7 +227,7 @@
   .pv2-generation__grid > div:last-child { border-bottom: 0; }
   .pv2-surfaces__layout { grid-template-columns: 1fr; }
   .pv2-surface > div { min-height: auto; }
-  .pv2-surface--app img { width: min(56%, 360px); }
+  .pv2-surface--app img.pv2-mobile-mockup { width: min(56%, 360px); }
   .pv2-faq__intro { position: static; }
 }
 
@@ -287,7 +287,7 @@
   .pv2-surface { border-radius: 18px; }
   .pv2-surface > div { padding: 24px 20px; }
   .pv2-surface--console img { min-height: 300px; }
-  .pv2-surface--app img { width: 74%; }
+  .pv2-surface--app img.pv2-mobile-mockup { width: min(78%, 360px); }
 }
 
 @media (prefers-reduced-motion: reduce) { .pv2-capability-nav { backdrop-filter: none; } }

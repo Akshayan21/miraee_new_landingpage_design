@@ -4,6 +4,12 @@
    Import HomeV2Light.css first, then this file, on every page that uses it. */
 
 .m-tint-band { width: 100%; padding-inline: max(24px, calc((100% - var(--m-width)) / 2)); background: var(--section-tint-strong); }
+.m-tint-band.m-section--dark { background: radial-gradient(circle at 88% 8%, rgba(229, 86, 2, .2), transparent 32%), #310a10; }
+.m-section--dark .m-splitfacts { border-color: rgba(255,255,255,.16); }
+.m-section--dark .m-splitfacts > div { border-color: rgba(255,255,255,.16); }
+.m-section--dark .m-splitfacts a { color: #ffad89; }
+.m-section--dark .m-rowlist, .m-section--dark .m-rowrow { border-color: rgba(255,255,255,.16); }
+.m-section--dark .m-rowrow > span, .m-section--dark .m-note { color: #ffad89; }
 .m-anchor { scroll-margin-top: 110px; }
 
 /* Editorial rows — the site-wide replacement for bordered data tables and

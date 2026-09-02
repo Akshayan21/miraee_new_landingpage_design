@@ -7,6 +7,7 @@ import miraeeLogo from "../assets/Miraee_Logo.png"
 import abheeLogo from "../assets/abhee logo.png"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
+import "./V2AlternatingSections.css"
 
 const groupPlatforms = [
     ["Mondee", "The agentic AI travel marketplace", "Serves travel experts and organisations worldwide with negotiated air and hotel content - the supply layer Miraee books against."],
@@ -57,7 +58,7 @@ export default function AboutV2() {
             <a className="m-skip" href="#main">Skip to content</a>
             <V2Nav active="/about" />
             <main id="main">
-                <section className="m-hero" aria-labelledby="about-hero-title">
+                <section className="m-hero m-section--light" aria-labelledby="about-hero-title">
                     <Reveal className="m-hero__copy">
                         <p className="m-eyebrow">THE COMPANY</p>
                         <h1 id="about-hero-title">The Agentic Core</h1>
@@ -93,7 +94,7 @@ export default function AboutV2() {
                     </Reveal>
                 </section>
 
-                <section id="tabhi" aria-labelledby="group-title" className="m-brandwall">
+                <section id="tabhi" aria-labelledby="group-title" className="m-brandwall m-section--dark">
                     <div className="m-brandwall__head">
                         <Reveal>
                             <p className="m-eyebrow">BACKED BY TABHI</p>
