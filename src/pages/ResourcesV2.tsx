@@ -6,6 +6,7 @@ import { usePageMeta } from "../hooks/usePageMeta"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
 import "./ResourcesV2.css"
+import "./V2AlternatingSections.css"
 
 const guides = [
     ["The $255B Opportunity in Unmanaged Travel", "why the mid-market is the next battleground."],
@@ -40,7 +41,7 @@ export default function ResourcesV2() {
             <V2Nav active="/resources" />
 
             <main id="main">
-                <section className="rv2-hero" aria-labelledby="resources-hero-title">
+                <section className="rv2-hero m-section--light" aria-labelledby="resources-hero-title">
                     <Reveal className="rv2-hero__copy">
                         <h1 id="resources-hero-title">Everything you need to shape the future of corporate travel.</h1>
                         <p>Research, tools, and guidance for finance, travel, and people leaders building the <strong>agentic travel</strong> program.</p>
@@ -66,7 +67,7 @@ export default function ResourcesV2() {
                     </div>
                 </section>
 
-                <section id="calculators" className="rv2-calculators" aria-labelledby="calculators-title">
+                <section id="calculators" className="rv2-calculators m-section--dark" aria-labelledby="calculators-title">
                     <div className="rv2-shell">
                         <Reveal className="rv2-section-head rv2-section-head--dark">
                             <span>02 / Calculators</span>

@@ -13,6 +13,7 @@ import travelTeamImg from "../assets/role-travel-team.jpg"
 import experienceImg from "../assets/post-5pm.jpg"
 import supplierImg from "../assets/partner-with-miraee.jpg"
 import "./HomeV2Light.css"
+import "./V2AlternatingSections.css"
 
 const ease = [0.16, 1, 0.3, 1] as const
 function Reveal({children,className="",delay=0}:{children:React.ReactNode;className?:string;delay?:number}){const ref=useRef<HTMLDivElement>(null),visible=useInView(ref,{once:true,margin:"-8% 0px"}),reduced=useReducedMotion();return <motion.div ref={ref} className={className} initial={{opacity:0,y:reduced?0:12}} animate={visible?{opacity:1,y:0}:{}} transition={{duration:reduced?0:.6,delay,ease}}>{children}</motion.div>}

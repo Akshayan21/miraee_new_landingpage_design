@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
-import type { CSSProperties } from "react"
 import { Reveal, V3Nav, V3Footer, Rows } from "../components/V3Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
-import dashboardImage from "../assets/ui-admin-dashboard.png"
+import heroPhoto from "../assets/miraee-team.png"
+import ctaPhoto from "../assets/partner-with-miraee.jpg"
 import "./V3.css"
 
 const engines = [
@@ -36,12 +36,8 @@ export default function SavingsV3() {
                         <p className="sub">Every trip is a savings opportunity — in the fare, in the behavior, and in the visibility. Miraee works all three, continuously.</p>
                         <div className="cta-row"><Link className="btn btn-solid" to="/v3/demo">See your savings <span className="arr">→</span></Link></div>
                     </Reveal>
-                    <Reveal className="hero-proof-panel savings-proof" delay={0.08}>
-                        <img className="savings-proof__image" src={dashboardImage} alt="Miraee admin dashboard showing travel spend and savings" />
-                            <span className="hero-proof-panel__label">Savings, wallet &amp; rewards</span>
-                        <div className="savings-proof__total"><small>Captured on one trip</small><strong>$353</strong><span>saved</span></div>
-                        <div className="savings-proof__bars"><span style={{ "--bar": "82%" } as CSSProperties}><b>Negotiated fares</b><i /></span><span style={{ "--bar": "58%" } as CSSProperties}><b>Better alternatives</b><i /></span><span style={{ "--bar": "72%" } as CSSProperties}><b>Company rates</b><i /></span></div>
-                        <footer><span>Wallet</span><strong>4,210 points</strong></footer>
+                    <Reveal className="hero-visual" delay={0.08}>
+                        <img className="hero-visual__photo" src={heroPhoto} alt="Colleagues reviewing travel savings together" />
                     </Reveal>
                 </div>
             </header>
@@ -98,9 +94,20 @@ export default function SavingsV3() {
             </section>
 
             <section className="cta-band">
-                <div className="wrap">
-                    <h2>Ask us what your last quarter of travel should have cost.</h2>
-                    <Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link>
+                <div className="wrap cta-band__inner">
+                    <div className="cta-band__copy">
+                        <span className="cta-band__kicker">Ready when you are</span>
+                        <h2>Ask us what your last quarter of travel should have cost.</h2>
+                        <Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link>
+                    </div>
+                    <div className="cta-band__media">
+                        <img className="cta-band__photo" src={ctaPhoto} alt="Colleagues reviewing travel plans on a private jet" />
+                        <div className="photo-chip">
+                            <span className="photo-chip__tag">Captured on one trip</span>
+                            <strong>$353 saved</strong>
+                            <small>Negotiated fare + better alternative</small>
+                        </div>
+                    </div>
                 </div>
             </section>
             <V3Footer />

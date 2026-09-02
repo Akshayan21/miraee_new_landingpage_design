@@ -4,6 +4,7 @@ import { EditorialRows, Reveal, V2Nav } from "../components/V2Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
+import "./V2AlternatingSections.css"
 
 const capabilities = [
     ["Intent understanding", "Natural-language requests become structured itineraries."],
@@ -46,7 +47,7 @@ export default function TechnologyV2() {
             <a className="m-skip" href="#main">Skip to content</a>
             <V2Nav active="/technology" />
             <main id="main">
-                <section className="m-hero" aria-labelledby="technology-hero-title">
+                <section className="m-hero m-section--light" aria-labelledby="technology-hero-title">
                     <Reveal className="m-hero__copy">
                         <p className="m-eyebrow">AI &amp; TECHNOLOGY</p>
                         <h1 id="technology-hero-title">The intelligence engine beneath every trip.</h1>
@@ -80,7 +81,7 @@ export default function TechnologyV2() {
                     </Reveal>
                 </section>
 
-                <section className="m-iconband" aria-labelledby="governance-title">
+                <section className="m-iconband m-section--dark" aria-labelledby="governance-title">
                     <div className="m-iconband__head"><Reveal><p className="m-eyebrow">SAFETY &amp; GOVERNANCE</p><h2 id="governance-title">Autonomy with guardrails.</h2><p>Every action is bounded by policy, budget, and permissions, then recorded in a complete audit trail. This is AI governance for travel, not a compliance afterthought.</p></Reveal></div>
                     <Reveal><div className="m-iconband__grid">{guardrails.map(([num, title, body]) => <div className="m-iconband__item" key={title}><span className="m-iconband__num">{num}</span><h3>{title}</h3><p>{body}</p></div>)}</div></Reveal>
                 </section>

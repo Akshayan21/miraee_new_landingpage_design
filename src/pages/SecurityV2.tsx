@@ -3,6 +3,7 @@ import { V2Footer } from "../components/LegalFormKit"
 import { Reveal, V2Nav, Faq } from "../components/V2Kit"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
+import "./V2AlternatingSections.css"
 
 const SECURITY_EMAIL = "mailto:hello@miraee.ai?subject=Security%20package%20request"
 
@@ -63,7 +64,7 @@ export default function SecurityV2() {
             <a className="m-skip" href="#main">Skip to content</a>
             <V2Nav active="/security" />
             <main id="main">
-                <section className="m-hero" aria-labelledby="security-hero-title">
+                <section className="m-hero m-section--light" aria-labelledby="security-hero-title">
                     <Reveal className="m-hero__copy">
                         <p className="m-eyebrow">TRUST</p>
                         <h1 id="security-hero-title">Fast for people.<br /><em>Safe for the business.</em></h1>
@@ -76,7 +77,7 @@ export default function SecurityV2() {
                     </Reveal>
                 </section>
 
-                <section id="certifications" className="m-security" aria-label="Certifications and compliance">
+                <section id="certifications" className="m-security m-section--dark" aria-label="Certifications and compliance">
                     <Reveal>
                         <p className="m-eyebrow">CERTIFICATIONS</p>
                         <h2>Independently verified,<br />not self-declared.</h2>

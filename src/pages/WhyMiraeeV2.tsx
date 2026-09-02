@@ -4,6 +4,7 @@ import { V2Footer } from "../components/LegalFormKit"
 import { Reveal, V2Nav, Faq, EditorialRows, MiniTable } from "../components/V2Kit"
 import "./HomeV2Light.css"
 import "./SubpagesV2.css"
+import "./V2AlternatingSections.css"
 
 const shift = [
     ["Planning a trip", "The traveler searches across tools, guesses at policy, and assembles an itinerary themselves.", "The traveler describes the trip. A policy-safe itinerary comes back in under a minute."],
@@ -58,7 +59,7 @@ export default function WhyMiraeeV2() {
             <a className="m-skip" href="#main">Skip to content</a>
             <V2Nav active="/why-miraee" />
             <main id="main">
-                <section className="m-hero" aria-labelledby="why-hero-title">
+                <section className="m-hero m-section--light" aria-labelledby="why-hero-title">
                     <Reveal className="m-hero__copy">
                         <p className="m-eyebrow">WHY MIRAEE</p>
                         <h1 id="why-hero-title">Your travel program isn't broken.<br /><em>Its architecture is.</em></h1>
@@ -102,7 +103,7 @@ export default function WhyMiraeeV2() {
                     <Reveal><Faq items={hardQuestions} /></Reveal>
                 </section>
 
-                <section className="m-section m-tint-band" aria-labelledby="switching-title">
+                <section className="m-section m-tint-band m-section--dark" aria-labelledby="switching-title">
                     <Reveal className="m-section__head">
                         <p className="m-eyebrow">SWITCHING</p>
                         <h2 id="switching-title">Live in weeks, not quarters.</h2>
