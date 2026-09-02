@@ -70,13 +70,13 @@ export default function App() {
                     <Route path="/v1/about" element={<V1About />} />
                     <Route path="/v1/why-miraee" element={<V1WhyMiraee />} />
                     <Route path="/v1/resources" element={<V1Resources />} />
-                    <Route path="/v1.1/product" element={<div className="v11-route v11-platform-route"><V1Product /></div>} />
-                    <Route path="/v1.1/technology" element={<div className="v11-route"><V1Technology /></div>} />
-                    <Route path="/v1.1/solutions" element={<div className="v11-route"><V1Solutions /></div>} />
-                    <Route path="/v1.1/security" element={<div className="v11-route"><V1Security /></div>} />
-                    <Route path="/v1.1/about" element={<div className="v11-route"><V1About /></div>} />
-                    <Route path="/v1.1/why-miraee" element={<div className="v11-route"><V1WhyMiraee /></div>} />
-                    <Route path="/v1.1/resources" element={<div className="v11-route"><V1Resources /></div>} />
+                    <Route path="/v1.1/product" element={<div className="v11-route v11-alternating-route"><V1Product /></div>} />
+                    <Route path="/v1.1/technology" element={<div className="v11-route v11-alternating-route"><V1Technology /></div>} />
+                    <Route path="/v1.1/solutions" element={<div className="v11-route v11-alternating-route"><V1Solutions /></div>} />
+                    <Route path="/v1.1/security" element={<div className="v11-route v11-alternating-route"><V1Security /></div>} />
+                    <Route path="/v1.1/about" element={<div className="v11-route v11-alternating-route"><V1About /></div>} />
+                    <Route path="/v1.1/why-miraee" element={<div className="v11-route v11-alternating-route"><V1WhyMiraee /></div>} />
+                    <Route path="/v1.1/resources" element={<div className="v11-route v11-alternating-route"><V1Resources /></div>} />
                     <Route path="/product" element={<ProductV2 />} />
                     <Route path="/for-teams" element={<ForTeamsV2 />} />
                     <Route path="/resources" element={<ResourcesV2 />} />

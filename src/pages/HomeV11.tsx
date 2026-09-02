@@ -9,6 +9,9 @@ import bookingCardImg from "../assets/ui-hotel-card.png"
 import changeCardImg from "../assets/ui-changes-card.png"
 import expensesCardImg from "../assets/ui-expenses-card.png"
 import flightCardImg from "../assets/ui-flight-card.png"
+import employeePhoto from "../assets/miraee-role-employee.webp"
+import travelTeamPhoto from "../assets/miraee-role-travel-team.webp"
+import financePhoto from "../assets/miraee-role-finance.webp"
 import homeHeroImg from "../../images/weavy/v1/v1-home-hero.webp"
 import experiencesImg from "../../images/weavy/v1/v1-experiences-culture.webp"
 import closingCtaImg from "../../images/weavy/v1/v1-closing-cta.webp"
@@ -113,9 +116,32 @@ function BusinessCase(){return <section className="el-business-case"><Reveal cla
 function Partners(){const points=[["01","Premium travelers","Access a large, engaged traveler base."],["02","Brand-forward NDC","Merchandise rich content in real time."],["03","The whole traveler","Win business and personal travel alike."]];return <section className="el-partners"><Reveal><span className="el-label">For airlines and suppliers</span><h2>Be part of<br/>your travelers’<br/>best experiences.</h2><p>Miraee puts partner brands in front of premium, high-frequency travelers - for the business trip and the personal one - with content they control.</p><Link className="el-button" to="/book-a-demo">Partner with Miraee <span aria-hidden="true">↗</span></Link></Reveal><div className="el-partner-points">{points.map((x,i)=><Reveal key={x[0]} delay={i*.08}><span>{x[0]}</span><b>{x[1]}</b><p>{x[2]}</p></Reveal>)}</div></section>}
 
 function FeatureVisual({ type }: { type: "book"|"change"|"expense" }) {
-  if(type==="book") return <img className="el-visual-img" src={bookingCardImg} alt="Miraee hotel selection card for The Savoy London" width="1136" height="1469" loading="lazy" decoding="async"/>
-  if(type==="change") return <img className="el-visual-img" src={changeCardImg} alt="Modification request showing requested flight changes and expected savings" width="1632" height="1768" loading="lazy" decoding="async"/>
-  return <img className="el-visual-img" src={expensesCardImg} alt="Trip expenses list with policy flags and auto-reconciled totals" width="1412" height="1541" loading="lazy" decoding="async"/>
+  const visuals = {
+    book: {
+      photo: employeePhoto,
+      photoAlt: "Business traveler using Miraee while waiting at an airport",
+      screen: bookingCardImg,
+      screenAlt: "Miraee hotel selection card for The Savoy London",
+    },
+    change: {
+      photo: travelTeamPhoto,
+      photoAlt: "Travel team coordinating an itinerary change together",
+      screen: changeCardImg,
+      screenAlt: "Miraee modification request showing requested flight changes and expected savings",
+    },
+    expense: {
+      photo: financePhoto,
+      photoAlt: "Finance manager reviewing company travel activity",
+      screen: expensesCardImg,
+      screenAlt: "Miraee trip expenses list with policy flags and auto-reconciled totals",
+    },
+  } as const
+  const visual = visuals[type]
+
+  return <figure className={`v11-human-ui v11-human-ui--${type}`}>
+    <img className="v11-human-ui__photo" src={visual.photo} alt={visual.photoAlt} loading="lazy" decoding="async"/>
+    <img className="v11-human-ui__screen" src={visual.screen} alt={visual.screenAlt} loading="lazy" decoding="async"/>
+  </figure>
 }
 
 const features = [
