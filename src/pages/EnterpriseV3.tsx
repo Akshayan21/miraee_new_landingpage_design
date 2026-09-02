@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom"
 import { Reveal, V3Nav, V3Footer, Rows } from "../components/V3Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
-import financeDashboard from "../assets/ui-admin-dashboard.png"
+import heroPhoto from "../assets/miraee-role-finance.png"
+import ctaPhoto from "../assets/role-finance-manager.jpg"
 import "./V3.css"
 
 const consoleItems = [
@@ -38,7 +39,9 @@ export default function EnterpriseV3() {
                         <p className="sub">Everything the traveler never has to think about — spend, policy, approvals, risk — is exactly what the admin console makes visible, in real time.</p>
                         <div className="cta-row"><Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link></div>
                     </Reveal>
-                    <Reveal className="product-dashboard-stage" delay={0.08}><img src={financeDashboard} alt="Miraee admin dashboard showing travel spend, compliance, and active trips" /></Reveal>
+                    <Reveal className="hero-visual" delay={0.08}>
+                        <img className="hero-visual__photo" src={heroPhoto} alt="Enterprise admin reviewing the travel program console" />
+                    </Reveal>
                 </div>
             </header>
 
@@ -65,9 +68,20 @@ export default function EnterpriseV3() {
             </section>
 
             <section className="cta-band">
-                <div className="wrap">
-                    <h2>For employees, Miraee feels simple. For you, it's total visibility.</h2>
-                    <Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link>
+                <div className="wrap cta-band__inner">
+                    <div className="cta-band__copy">
+                        <span className="cta-band__kicker">Ready when you are</span>
+                        <h2>For employees, Miraee feels simple. For you, it's total visibility.</h2>
+                        <Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link>
+                    </div>
+                    <div className="cta-band__media">
+                        <img className="cta-band__photo" src={ctaPhoto} alt="Enterprise leaders reviewing travel program data" />
+                        <div className="photo-chip">
+                            <span className="photo-chip__tag">Live · this quarter</span>
+                            <strong>97% in policy</strong>
+                            <small>Spend, savings, and duty of care in one pane</small>
+                        </div>
+                    </div>
                 </div>
             </section>
             <V3Footer />

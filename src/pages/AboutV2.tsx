@@ -58,7 +58,7 @@ export default function AboutV2() {
             <a className="m-skip" href="#main">Skip to content</a>
             <V2Nav active="/about" />
             <main id="main">
-                <section className="m-hero m-section--light" aria-labelledby="about-hero-title">
+                <section className="m-hero m-hero--about m-section--light" aria-labelledby="about-hero-title">
                     <Reveal className="m-hero__copy">
                         <p className="m-eyebrow">THE COMPANY</p>
                         <h1 id="about-hero-title">The Agentic Core</h1>

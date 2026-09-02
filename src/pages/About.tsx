@@ -112,7 +112,7 @@ function AboutHero() {
 
     useGSAP((gsap, ST) => {
         if (!heroRef.current || !heroInnerRef.current) return
-        gsap.to(heroInnerRef.current, { y: -160, ease: "none",
+        gsap.to(heroInnerRef.current, { y: -64, ease: "none",
             scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 1.5 } })
     }, [])
 
@@ -144,7 +144,7 @@ function AboutHero() {
             }} />
             <div style={{ position: "absolute", top: 0, left: 0, width: 120, height: 120, borderTop: "1px solid rgba(229,86,2,0.15)", borderLeft: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }}/>
             <div style={{ position: "absolute", bottom: 0, right: 0, width: 120, height: 120, borderBottom: "1px solid rgba(229,86,2,0.15)", borderRight: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }}/>
-            <div ref={heroInnerRef} style={{ position: "relative", zIndex: 3, width: "100%", maxWidth: 900, textAlign: "center", padding: isMobile ? "120px 24px 96px" : isTablet ? "132px 48px 124px" : "144px 64px 132px", willChange: "transform" }}>
+            <div ref={heroInnerRef} style={{ position: "relative", zIndex: 3, width: "100%", maxWidth: 900, textAlign: "center", padding: isMobile ? "128px 24px 88px" : isTablet ? "156px 48px 100px" : "176px 64px 100px", willChange: "transform" }}>
                 <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" as const }}
                     style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 20px", border: "1px solid rgba(var(--text-rgb),0.15)", borderRadius: 100, marginBottom: 48, background: "rgba(var(--text-rgb),0.05)" }}>
                     <motion.div animate={{ scale: [1,1.6,1], opacity: [0.7,1,0.7] }} transition={{ duration: 2, repeat: Infinity }}

@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom"
 import { motion, useInView, useReducedMotion } from "framer-motion"
 import type { ReactNode, CSSProperties } from "react"
 import { MiraeeLogo } from "./LegalFormKit"
+import miraeeFavicon from "../assets/favicon-180.png"
+import userAvatar from "../assets/role-traveller.jpg"
 
 // Shared chrome for the v3 marketing site  -  an editorial "dossier" system
 // (serif display type, monospace numbering, numbered hairline rows) styled
@@ -105,7 +107,11 @@ export function Transcript({ lines, className = "" }: { lines: { from: "ask" | "
         <Reveal className={"transcript" + (className ? " " + className : "")}>
             {lines.map((line, i) => (
                 <div className={"t-line " + line.from} key={i}>
-                    <span className="t-avatar" aria-hidden="true">{line.from === "ask" ? "Y" : "M"}</span>
+                    <span className={"t-avatar t-avatar--photo"} aria-hidden="true">
+                        {line.from === "ask"
+                            ? <img src={userAvatar} alt="" style={{ objectPosition: "50% 15%", transform: "scale(1.8)" }} />
+                            : <img src={miraeeFavicon} alt="" />}
+                    </span>
                     <div className="t-body">
                         <span className="who">{line.label ?? (line.from === "ask" ? "The ask" : "Miraee replies")}</span>
                         <p className={line.from}>{line.text}</p>

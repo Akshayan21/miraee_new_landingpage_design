@@ -1,0 +1,146 @@
+:root {
+  --v11-light: #fbf6f2;
+  --v11-dark: #310a10;
+  --v11-dark-soft: rgba(255, 255, 255, .065);
+  --v11-dark-line: rgba(255, 255, 255, .16);
+  --v11-dark-text: #fffaf6;
+  --v11-dark-muted: rgba(255, 255, 255, .68);
+  --v11-accent: #ff8a52;
+}
+
+/* The homepage uses this controlled sequence. Legacy subpages keep their own
+   component-aware themes; opt-in remains available for future compatible pages. */
+.v11-site > section:first-of-type,
+.v11-route.v11-enable-alternation .v1-type-page > section:first-of-type {
+  background: var(--v11-light) !important;
+  color: #0f0407 !important;
+}
+
+.v11-site > section:nth-of-type(even),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) {
+  background: radial-gradient(circle at 88% 8%, rgba(229, 86, 2, .18), transparent 34%), var(--v11-dark) !important;
+  color: var(--v11-dark-text) !important;
+}
+
+.v11-site > section:nth-of-type(odd):not(:first-of-type),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(odd):not(:first-of-type) {
+  background-color: var(--v11-light) !important;
+  color: #0f0407 !important;
+}
+
+.v11-site > section:nth-of-type(even) :is(h1, h2, h3, h4, strong, b, p, small, li, dt, dd, blockquote),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) :is(h1, h2, h3, h4, strong, b, p, small, li, dt, dd, blockquote) {
+  color: var(--v11-dark-text) !important;
+}
+
+.v11-site > section:nth-of-type(even) :is(p, small),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) :is(p, small) {
+  color: var(--v11-dark-muted) !important;
+}
+
+/* Interactive copy must remain legible when a formerly-light section turns dark. */
+.v11-site > section:nth-of-type(even) :is(a:not(.el-button), em) {
+  color: var(--v11-accent) !important;
+}
+
+.v11-site > section:nth-of-type(even) .el-journey-flow__head h2 {
+  color: var(--v11-dark-text) !important;
+}
+
+.v11-site > section:nth-of-type(even) .el-journey-flow__head h2 em {
+  color: var(--v11-accent) !important;
+}
+
+.v11-site > section:nth-of-type(even) :is(.el-label, [class*="label"], [class*="eyebrow"]),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) :is(.el-label, [class*="label"], [class*="eyebrow"]) {
+  color: var(--v11-accent) !important;
+}
+
+.v11-site > section:nth-of-type(even) :is(article, [class*="card"], [class*="row"]),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) :is(article, [class*="card"], [class*="row"]) {
+  border-color: var(--v11-dark-line) !important;
+}
+
+/* Keep nested surfaces legible without flattening media and product imagery. */
+.v11-site > section:nth-of-type(even) :is(article, [class*="metric"], [class*="point"]),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) article {
+  background-color: var(--v11-dark-soft) !important;
+}
+
+/* Keep the product story dominant; its UI is supporting evidence, not the headline. */
+.v11-site > section.el-product .el-feature {
+  grid-template-columns: minmax(320px, 1fr) minmax(360px, .78fr);
+  gap: clamp(48px, 6vw, 88px);
+  min-height: 620px;
+  padding-block: 70px;
+  background: transparent !important;
+}
+
+.v11-site > section.el-product .el-feature:nth-child(even) {
+  grid-template-columns: minmax(360px, .78fr) minmax(320px, 1fr);
+}
+
+.v11-site > section.el-product .el-feature__copy {
+  max-width: 520px;
+}
+
+.v11-site > section.el-product .el-feature__visual {
+  width: min(100%, 540px);
+  justify-self: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.v11-site > section.el-product .el-visual-img {
+  width: auto;
+  max-width: min(100%, 390px);
+  max-height: 530px;
+}
+
+/* Experiences was authored as a dark section; reset only its copy when it lands on light. */
+.v11-site > section.el-experiences:nth-of-type(odd) .v11-experiences-copy h2,
+.v11-site > section.el-experiences:nth-of-type(odd) .v11-experiences-index b {
+  color: #0f0407 !important;
+}
+
+.v11-site > section.el-experiences:nth-of-type(odd) .v11-experiences-copy > p {
+  color: #6f6765 !important;
+}
+
+.v11-site > section.el-experiences:nth-of-type(odd) .v11-experiences-index {
+  border-color: rgba(15, 4, 7, .16);
+}
+
+.v11-site > section.el-experiences:nth-of-type(odd) .v11-experiences-index > span {
+  border-color: rgba(15, 4, 7, .12);
+}
+
+@media (max-width: 900px) {
+  .v11-site > section.el-product .el-feature,
+  .v11-site > section.el-product .el-feature:nth-child(even) {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .v11-site > section.el-product .el-feature__visual {
+    width: min(100%, 500px);
+  }
+}
+
+@media (max-width: 620px) {
+  .v11-site > section.el-product .el-feature {
+    gap: 30px;
+    padding-block: 56px;
+  }
+
+  .v11-site > section.el-product .el-feature__visual {
+    width: min(100%, 420px);
+    padding: 0;
+  }
+
+  .v11-site > section.el-product .el-visual-img {
+    max-height: 460px;
+  }
+}

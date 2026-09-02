@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom"
 import { Reveal, V3Nav, V3Footer, Rows } from "../components/V3Kit"
 import { usePageMeta } from "../hooks/usePageMeta"
-import mobileUi from "../assets/ui-car-card.png"
+import employeePhoto from "../assets/miraee-role-employee.png"
+import ctaPhoto from "../assets/v2-home-hero.jpg"
+import miraeeFavicon from "../assets/favicon-180.png"
 import "./V3.css"
 
 const perks = [
@@ -25,7 +27,13 @@ export default function HrV3() {
                         <p className="sub">Your frequent travelers give up evenings, weekends, and sleep for the company. Miraee gives them back time, care, and rewards — and gives HR a benefit that costs less than the tools it replaces.</p>
                         <div className="cta-row"><Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link></div>
                     </Reveal>
-                    <Reveal className="product-mobile-stage" delay={0.08}><img src={mobileUi} alt="Miraee rewards car selection card" /></Reveal>
+                    <Reveal className="hero-visual" delay={0.08}>
+                        <img className="hero-visual__photo" src={employeePhoto} alt="Employee traveling for business, checking Miraee on their phone" />
+                        <div className="photo-chip photo-chip--toast">
+                            <span className="photo-chip__icon"><img src={miraeeFavicon} alt="" width={16} height={16} /></span>
+                            <div><strong>+610 points</strong><small>Added to your Miraee Wallet</small></div>
+                        </div>
+                    </Reveal>
                 </div>
             </header>
 
@@ -58,9 +66,15 @@ export default function HrV3() {
             </section>
 
             <section className="cta-band">
-                <div className="wrap">
-                    <h2>Give your travelers the upgrade. Keep the budget.</h2>
-                    <Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link>
+                <div className="wrap cta-band__inner">
+                    <div className="cta-band__copy">
+                        <span className="cta-band__kicker">Ready when you are</span>
+                        <h2>Give your travelers the upgrade. Keep the budget.</h2>
+                        <Link className="btn btn-solid" to="/v3/demo">Book a demo <span className="arr">→</span></Link>
+                    </div>
+                    <div className="cta-band__media">
+                        <img className="cta-band__photo" src={ctaPhoto} alt="Traveler smiling at the airport" />
+                    </div>
                 </div>
             </section>
             <V3Footer />

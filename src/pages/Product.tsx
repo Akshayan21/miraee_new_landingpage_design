@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
 import V11PageImage from "../components/V11PageImage"
 import productPageImg from "../../images/weavy/v1/v1-home-hero.webp"
+import miraeeFavicon from "../assets/favicon-180.png"
 gsap.registerPlugin(ScrollTrigger)
 
 // ─── Design tokens ───────────────────────────────────────────────────────────
@@ -351,8 +352,8 @@ function WhatIsMiraee() {
                                 "One agent carries one context, from request to reconciliation. Nothing is handed off."
                             </div>
                             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                                <div style={{ width: 40, height: 40, borderRadius: 12, background: T.maroon, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                    <span style={{ color: T.cream, fontFamily: "Cardo, serif", fontWeight: 700, fontSize: 16 }}>M</span>
+                                <div style={{ width: 40, height: 40, borderRadius: 12, overflow: "hidden", flexShrink: 0 }}>
+                                    <img src={miraeeFavicon} alt="Miraee" width="40" height="40" style={{ display: "block", width: "100%", height: "100%", objectFit: "cover" }} />
                                 </div>
                                 <div>
                                     <div style={{ fontFamily: "Plus Jakarta Sans, sans-serif", fontWeight: 700, fontSize: 13, color: T.ink }}>Miraee Platform</div>
