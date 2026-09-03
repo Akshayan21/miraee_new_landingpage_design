@@ -152,9 +152,9 @@ function Guides() {
 
 // --- CALCULATORS -----------------------------------------------------------
 const CALCULATORS: [string, string][] = [
-    ["ROI / Savings Calculator", "hours reclaimed, spend brought under management, projected return."],
-    ["Unmanaged Spend Estimator", "how much of your travel budget is invisible today."],
-    ["Tool Consolidation Calculator", "the cost of your current 6+ tool stack vs. one platform."],
+    ["ROI and savings calculator", "hours reclaimed, spend brought under management, projected return."],
+    ["Unmanaged spend estimator", "how much of your travel budget is invisible today."],
+    ["Tool consolidation calculator", "the cost of your current 6+ tool stack vs. one platform."],
 ]
 
 function Calculators() {
@@ -273,62 +273,6 @@ function WebinarsAndHelp() {
 }
 
 // --- FAQ ---------------------------------------------------------------------
-const FAQS: [string, React.ReactNode][] = [
-    ["How does Miraee handle policy?", "Automatically, on every booking, with instant exception routing."],
-    ["Which systems does it integrate with?", "ERP, accounting, HRIS, corporate card/payment networks, and GDS."],
-    ["How long is implementation?", "Pilots reach full deployment in as little as 90 days."],
-    ["Does it cover group travel and events?", <>Yes - <strong>MICE</strong> is native.</>],
-    ["Is my data safe?", "Enterprise-grade security, full audit trails, and governance are built in."],
-]
-
-function FaqRow({ question, answer, index }: { question: string; answer: React.ReactNode; index: number }) {
-    const [open, setOpen] = useState(false)
-    return (
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: index * 0.05 }}
-            style={{ borderBottom: "1px solid rgba(var(--text-rgb),0.1)" }}>
-            <button onClick={() => setOpen(o => !o)}
-                style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "22px 0", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
-                <span style={{ fontSize: 16, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.4 }}>{question}</span>
-                <motion.span animate={{ rotate: open ? 45 : 0 }} transition={{ duration: 0.25 }}
-                    style={{ flexShrink: 0, width: 26, height: 26, borderRadius: "50%", border: `1px solid ${T.orange}`, display: "flex", alignItems: "center", justifyContent: "center", color: T.orange, fontSize: 16, lineHeight: 1 }}>
-                    +
-                </motion.span>
-            </button>
-            <AnimatePresence initial={false}>
-                {open && (
-                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" as const }}
-                        style={{ overflow: "hidden" }}>
-                        <p style={{ fontSize: 14.5, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.75, margin: "0 0 22px", maxWidth: 560 }}>{answer}</p>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </motion.div>
-    )
-}
-
-function ResourcesFAQ() {
-    const w = useWindowWidth()
-    const isMobile = w < 768
-    const isTablet = w < 1024
-
-    return (
-        <section style={{ padding: isMobile ? "80px 24px" : "130px 80px", background: "var(--surface-2)" }}>
-            <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile || isTablet ? "1fr" : "380px 1fr", gap: isMobile ? 36 : 64, alignItems: "start" }}>
-                <Reveal>
-                    <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>05 / FAQs</span>
-                    <h2 style={{ fontSize: isMobile ? 30 : 42, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.12, letterSpacing: "-0.025em", margin: 0 }}>Common questions, clearly answered.</h2>
-                </Reveal>
-                <div>
-                    {FAQS.map(([question, answer], index) => (
-                        <FaqRow key={question} question={question} answer={answer} index={index} />
-                    ))}
-                </div>
-            </div>
-        </section>
-    )
-}
-
-// --- CLOSING CTA ---------------------------------------------------------------
 function ClosingCTA() {
     const w = useWindowWidth()
     const isMobile = w < 768
@@ -396,7 +340,16 @@ export default function MiraeeResourcesPage(_props: any) {
         meta.content = 'width=device-width, initial-scale=1, maximum-scale=5'
     }, [])
 
-    return (
+        useEffect(() => {
+        // Title tag + meta description per the doc's Resources SEO brief.
+        document.title = "Resources | Guides, Calculators and Webinars | Miraee"
+        const description = "Research, calculators and guidance for finance, travel and people leaders building an agentic travel program. Start with the ROI calculator."
+        let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]')
+        if (!meta) { meta = document.createElement("meta"); meta.name = "description"; document.head.appendChild(meta) }
+        meta.content = description
+    }, [])
+
+return (
         <div className="v1-type-page" style={{ position: "relative", width: "100%", maxWidth: "100vw", overflowX: "clip", background: "var(--page-bg)", fontFamily: "Plus Jakarta Sans, sans-serif" }}>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
@@ -415,7 +368,6 @@ export default function MiraeeResourcesPage(_props: any) {
             <Guides/>
             <Calculators/>
             <WebinarsAndHelp/>
-            <ResourcesFAQ/>
             <ClosingCTA/>
             <V1Footer />
         </div>

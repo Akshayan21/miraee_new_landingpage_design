@@ -106,7 +106,7 @@ export default function PersonaShowcase() {
                     transition={{ duration: reduce ? 0.2 : 0.42, ease: [0.16, 1, 0.3, 1] }}
                     className="persona-showcase__panel">
                     <p className="persona-showcase__body">{persona.body}</p>
-                    <PersonaExperience script={PERSONA_SCRIPTS[persona.slug]} autoPlay />
+                    <PersonaExperience script={PERSONA_SCRIPTS[persona.slug]} autoPlay tone="dark" />
                     <Link className="persona-showcase__link" to={persona.href}>
                         See how it works for {persona.label.replace("For ", "")} <span aria-hidden="true">→</span>
                     </Link>

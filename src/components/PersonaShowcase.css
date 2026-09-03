@@ -115,24 +115,9 @@
 
 .persona-showcase__link:hover { text-decoration: underline; }
 
-/* Recess the preview inside the panel so it reads as a screen, not a second
-   floating card at the same elevation. */
-.v11-site > section.v11-outcomes .persona-showcase .persona-exp {
-  --pe-ink: #fffaf6;
-  --pe-surface: rgba(10, 2, 4, 0.44);
-  --pe-line: rgba(255, 255, 255, 0.09);
-  --pe-agent-bg: rgba(255, 255, 255, 0.1);
-  --pe-traveler-bg: rgba(255, 138, 82, 0.22);
-  --pe-muted: rgba(255, 250, 246, 0.6);
-  --pe-accent: #ff8a52;
-  min-height: 264px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
-}
-
-.v11-site > section.v11-outcomes .persona-showcase .persona-exp__line,
-.v11-site > section.v11-outcomes .persona-showcase .persona-exp__line span { color: var(--pe-ink); }
-
-.v11-site > section.v11-outcomes .persona-showcase .persona-exp__line { font-size: 14px; }
+/* Size only — the dark palette now travels with the component's tone. */
+.persona-showcase .persona-exp { min-height: 264px; }
+.persona-showcase .persona-exp__line { font-size: 14px; }
 
 @media (max-width: 900px) {
   .persona-showcase { grid-template-columns: 1fr; gap: 24px; }
