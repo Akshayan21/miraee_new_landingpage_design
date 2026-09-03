@@ -35,12 +35,22 @@ type Props = {
     playOnInteract?: boolean
     /** Compact variant for the Home cards. */
     compact?: boolean
+    /**
+     * Surface the component is sitting on. Declared explicitly rather than
+     * inferred from an ancestor page class — the previous version keyed its dark
+     * palette off `.v11-site`, so the same component rendered near-black text on
+     * the maroon For Teams panel (1.23:1) because that page is `.v1-type-page`.
+     */
+    tone?: "light" | "dark"
+    /** Drops the component's own surface and header bar so it can sit flush
+     *  inside a host card, instead of reading as a card within a card. */
+    flush?: boolean
 }
 
 const TYPE_MS = 260   // per line — inside the 150-300ms micro-interaction band
 const HOLD_MS = 620   // pause between lines so the thread reads naturally
 
-export default function PersonaExperience({ script, autoPlay = false, playOnInteract = false, compact = false }: Props) {
+export default function PersonaExperience({ script, autoPlay = false, playOnInteract = false, compact = false, tone = "light", flush = false }: Props) {
     const reduce = useReducedMotion()
     const ref = useRef<HTMLDivElement>(null)
     const timers = useRef<number[]>([])
@@ -95,13 +105,15 @@ export default function PersonaExperience({ script, autoPlay = false, playOnInte
     return (
         <div
             ref={ref}
-            className={`persona-exp${compact ? " persona-exp--compact" : ""}`}
+            className={`persona-exp persona-exp--${tone}${compact ? " persona-exp--compact" : ""}${flush ? " persona-exp--flush" : ""}`}
             {...interact}>
-            <div className="persona-exp__bar">
-                <span className="persona-exp__dot" aria-hidden="true" />
-                <span className="persona-exp__role">{script.label}</span>
-                <span className="persona-exp__tag">Scripted preview</span>
-            </div>
+            {!flush && (
+                <div className="persona-exp__bar">
+                    <span className="persona-exp__dot" aria-hidden="true" />
+                    <span className="persona-exp__role">{script.label}</span>
+                    <span className="persona-exp__tag">Scripted preview</span>
+                </div>
+            )}
 
             {/* Animated thread — decorative; the transcript below is the real content. */}
             <div className="persona-exp__thread" aria-hidden="true">

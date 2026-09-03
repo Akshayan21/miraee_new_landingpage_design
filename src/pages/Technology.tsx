@@ -207,6 +207,32 @@ function Architecture() {
                         ))}
                     </div>
                 </Reveal>
+
+                {/* The layer beneath the six agents.
+                    Doc design note: keep the six-agent diagram as the traveler-facing
+                    layer and show the 200+ bot fabric as the layer beneath it. The two
+                    counts must never be merged into one number. */}
+                <Reveal delay={0.26}>
+                    <div style={{ marginTop: isMobile ? 48 : 72, paddingTop: isMobile ? 40 : 56, borderTop: `1px solid ${T.mutedLight}` }}>
+                        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "minmax(0, 0.44fr) minmax(0, 1fr)", gap: isMobile ? 24 : 56, alignItems: "start" }}>
+                            <div>
+                                <div style={{ fontFamily: SERIF, fontSize: "clamp(38px, 5vw, 62px)", fontWeight: 700, color: T.accent, lineHeight: 1, letterSpacing: "-0.04em" }}>200+</div>
+                                <h3 style={{ fontFamily: F, fontSize: 16, fontWeight: 700, color: T.ink, margin: "14px 0 0", lineHeight: 1.4 }}>
+                                    The layer beneath the six agents
+                                </h3>
+                            </div>
+                            <p style={{ fontFamily: F, fontSize: isMobile ? 15 : 16, lineHeight: 1.75, color: T.muted, margin: 0 }}>
+                                The six agents a traveler meets do not work alone. They run on Tabhi&rsquo;s automation fabric: 200+ specialised bots that connect booking, supply, policy, payment, expense and support into one framework, each handling one small, well-defined step. Breaking the work into small steps is what makes the system both reliable and fast &mdash; every bot has a job narrow enough to execute cleanly and to audit. It is also what lets the same framework serve every persona differently: the steps an employee needs, the controls finance needs and the visibility a travel lead needs are assembled from the same shared library of bots, not rebuilt for each role.
+                            </p>
+                        </div>
+
+                        <div style={{ marginTop: isMobile ? 28 : 40, padding: isMobile ? "26px 24px" : "34px 40px", borderRadius: 22, background: T.maroon, color: T.cream }}>
+                            <p style={{ fontFamily: SERIF, fontSize: isMobile ? 19 : 24, lineHeight: 1.5, color: T.cream, margin: 0 }}>
+                                <strong style={{ fontWeight: 700 }}>Two layers, one system.</strong> Six specialised agents run each trip. 200+ Tabhi bots connect the whole platform beneath them. Competitors bolt AI onto a booking tool; our intelligence and our supply were built together, on infrastructure the group already runs.
+                            </p>
+                        </div>
+                    </div>
+                </Reveal>
             </div>
         </section>
     )

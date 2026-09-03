@@ -1,3 +1,7 @@
+/* Sections that own their own ground opt out with .v11-role-band: the rules
+   below use !important, which inline styles cannot beat, so a self-coloured
+   section needs an escape hatch rather than another layer of overrides. */
+
 :root {
   --v11-light: #fbf6f2;
   --v11-dark: #310a10;
@@ -16,30 +20,30 @@
   color: #0f0407 !important;
 }
 
-.v11-site > section:nth-of-type(even),
-.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) {
+.v11-site > section:nth-of-type(even):not(.v11-role-band),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even):not(.v11-role-band) {
   background: radial-gradient(circle at 88% 8%, rgba(229, 86, 2, .18), transparent 34%), var(--v11-dark) !important;
   color: var(--v11-dark-text) !important;
 }
 
-.v11-site > section:nth-of-type(odd):not(:first-of-type),
-.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(odd):not(:first-of-type) {
+.v11-site > section:nth-of-type(odd):not(:first-of-type):not(.v11-role-band),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(odd):not(:first-of-type):not(.v11-role-band) {
   background-color: var(--v11-light) !important;
   color: #0f0407 !important;
 }
 
-.v11-site > section:nth-of-type(even) :is(h1, h2, h3, h4, strong, b, p, small, li, dt, dd, blockquote),
-.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) :is(h1, h2, h3, h4, strong, b, p, small, li, dt, dd, blockquote) {
+.v11-site > section:nth-of-type(even):not(.v11-role-band) :is(h1, h2, h3, h4, strong, b, p, small, li, dt, dd, blockquote),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even):not(.v11-role-band) :is(h1, h2, h3, h4, strong, b, p, small, li, dt, dd, blockquote) {
   color: var(--v11-dark-text) !important;
 }
 
-.v11-site > section:nth-of-type(even) :is(p, small),
-.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) :is(p, small) {
+.v11-site > section:nth-of-type(even):not(.v11-role-band) :is(p, small),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even):not(.v11-role-band) :is(p, small) {
   color: var(--v11-dark-muted) !important;
 }
 
 /* Interactive copy must remain legible when a formerly-light section turns dark. */
-.v11-site > section:nth-of-type(even) :is(a:not(.el-button), em) {
+.v11-site > section:nth-of-type(even):not(.v11-role-band) :is(a:not(.el-button), em) {
   color: var(--v11-accent) !important;
 }
 
@@ -52,48 +56,48 @@
   background-color: transparent !important;
 }
 
-.v11-site > section:nth-of-type(odd):not(:first-of-type).el-workflow.el-journey-flow {
+.v11-site > section:nth-of-type(odd):not(:first-of-type):not(.v11-role-band).el-workflow.el-journey-flow {
   background-color: var(--v11-light) !important;
 }
 
-.v11-site > section:nth-of-type(even).el-workflow.el-journey-flow {
+.v11-site > section:nth-of-type(even):not(.v11-role-band).el-workflow.el-journey-flow {
   background: radial-gradient(circle at 88% 8%, rgba(229, 86, 2, .18), transparent 34%), var(--v11-dark) !important;
 }
 
 /* Its heading follows the section, not the board: cream only on dark slots. */
-.v11-site > section:nth-of-type(even) .el-journey-flow__head h2 {
+.v11-site > section:nth-of-type(even):not(.v11-role-band) .el-journey-flow__head h2 {
   color: var(--v11-dark-text) !important;
 }
 
-.v11-site > section:nth-of-type(even) .el-journey-flow__head h2 em,
-.v11-site > section:nth-of-type(even) .el-journey-flow__link a {
+.v11-site > section:nth-of-type(even):not(.v11-role-band) .el-journey-flow__head h2 em,
+.v11-site > section:nth-of-type(even):not(.v11-role-band) .el-journey-flow__link a {
   color: var(--v11-accent) !important;
 }
 
 /* On a light slot the section's own dark-theme accents (#ff8a52) and muted
    grey-green wash out against cream — use the light-surface brand tones. */
-.v11-site > section:nth-of-type(odd):not(:first-of-type) .el-journey-flow__head h2 em,
-.v11-site > section:nth-of-type(odd):not(:first-of-type) .el-journey-flow__link a {
+.v11-site > section:nth-of-type(odd):not(:first-of-type):not(.v11-role-band) .el-journey-flow__head h2 em,
+.v11-site > section:nth-of-type(odd):not(:first-of-type):not(.v11-role-band) .el-journey-flow__link a {
   color: #e55602 !important;
 }
 
-.v11-site > section:nth-of-type(odd):not(:first-of-type) .el-journey-flow__head p {
+.v11-site > section:nth-of-type(odd):not(:first-of-type):not(.v11-role-band) .el-journey-flow__head p {
   color: #786c69 !important;
 }
 
-.v11-site > section:nth-of-type(even) :is(.el-label, [class*="label"], [class*="eyebrow"]),
-.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) :is(.el-label, [class*="label"], [class*="eyebrow"]) {
+.v11-site > section:nth-of-type(even):not(.v11-role-band) :is(.el-label, [class*="label"], [class*="eyebrow"]),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even):not(.v11-role-band) :is(.el-label, [class*="label"], [class*="eyebrow"]) {
   color: var(--v11-accent) !important;
 }
 
-.v11-site > section:nth-of-type(even) :is(article, [class*="card"], [class*="row"]),
-.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) :is(article, [class*="card"], [class*="row"]) {
+.v11-site > section:nth-of-type(even):not(.v11-role-band) :is(article, [class*="card"], [class*="row"]),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even):not(.v11-role-band) :is(article, [class*="card"], [class*="row"]) {
   border-color: var(--v11-dark-line) !important;
 }
 
 /* Keep nested surfaces legible without flattening media and product imagery. */
-.v11-site > section:nth-of-type(even) :is(article, [class*="metric"], [class*="point"]),
-.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even) article {
+.v11-site > section:nth-of-type(even):not(.v11-role-band) :is(article, [class*="metric"], [class*="point"]),
+.v11-route.v11-enable-alternation .v1-type-page > section:nth-of-type(even):not(.v11-role-band) article {
   background-color: var(--v11-dark-soft) !important;
 }
 
@@ -279,14 +283,14 @@
    but when its section lands on a dark alternating slot, the even-section rule
    forces all its h3/small/strong text to cream, making light-on-light text.
    Pin its text back to dark ink regardless of section position. */
-.v11-site section:nth-of-type(even) .el-handoff-ledger :is(h1, h2, h3, h4, strong, b, p, small, li, dt, dd, blockquote) {
+.v11-site section:nth-of-type(even):not(.v11-role-band) .el-handoff-ledger :is(h1, h2, h3, h4, strong, b, p, small, li, dt, dd, blockquote) {
   color: #0f0407 !important;
 }
-.v11-site section:nth-of-type(even) .el-handoff-ledger header span,
-.v11-site section:nth-of-type(even) .el-handoff-ledger footer span {
+.v11-site section:nth-of-type(even):not(.v11-role-band) .el-handoff-ledger header span,
+.v11-site section:nth-of-type(even):not(.v11-role-band) .el-handoff-ledger footer span {
   color: #7b746b !important;
 }
-.v11-site section:nth-of-type(even) .el-handoff-ledger header small {
+.v11-site section:nth-of-type(even):not(.v11-role-band) .el-handoff-ledger header small {
   color: #77726b !important;
 }
 
@@ -400,7 +404,7 @@
 
 /* V1.1 subpages: alternate at the section boundary through the pages' own
    color tokens. This preserves component-specific foregrounds and motion. */
-.v11-alternating-route .v1-type-page > section:nth-child(odd of section:not(.v11-page-image)) {
+.v11-alternating-route .v1-type-page > section:nth-child(odd of section:not(.v11-page-image)):not(.v11-role-band) {
   --text: #0f0407;
   --text-rgb: 15, 4, 7;
   --page-bg: var(--v11-light);
@@ -410,7 +414,7 @@
   color: #0f0407;
 }
 
-.v11-alternating-route .v1-type-page > section:nth-child(even of section:not(.v11-page-image)) {
+.v11-alternating-route .v1-type-page > section:nth-child(even of section:not(.v11-page-image)):not(.v11-role-band) {
   --text: var(--v11-dark-text);
   --text-rgb: 255, 250, 246;
   --page-bg: var(--v11-dark);
@@ -423,8 +427,8 @@
 }
 
 /* Components with an explicitly white canvas keep dark ink inside dark sections. */
-.v11-alternating-route .v1-type-page > section:nth-child(even of section:not(.v11-page-image)) [style*="background: rgb(255, 255, 255)"],
-.v11-alternating-route .v1-type-page > section:nth-child(even of section:not(.v11-page-image)) [style*="background-color: rgb(255, 255, 255)"] {
+.v11-alternating-route .v1-type-page > section:nth-child(even of section:not(.v11-page-image)):not(.v11-role-band) [style*="background: rgb(255, 255, 255)"],
+.v11-alternating-route .v1-type-page > section:nth-child(even of section:not(.v11-page-image)):not(.v11-role-band) [style*="background-color: rgb(255, 255, 255)"] {
   --text: #0f0407;
   --text-rgb: 15, 4, 7;
   color: #0f0407;
