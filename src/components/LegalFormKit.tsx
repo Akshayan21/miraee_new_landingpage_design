@@ -32,13 +32,26 @@ export function MiraeeLogo({ fill = T.orange, height = 26 }: { fill?: string; he
 }
 
 // ─── Site nav (used by every routed page) ────────────────────────────────────
-const v1NavLinks = (prefix: "" | "/v1.1"): [string, string][] => [
-    ["Home", prefix || "/"],
-    ["Platform", `${prefix || "/v1"}/product`],
-    ["Solutions", `${prefix || "/v1"}/solutions`],
-    ["AI & Technology", `${prefix || "/v1"}/technology`],
-    ["About", `${prefix || "/v1"}/about`],
-]
+// V1.1 follows the content doc's navigation bar exactly (Part 2.2):
+// Platform · For Teams · Why Miraee · AI & Technology · Resources · [Book a demo].
+// Home is reached through the logo, and Trust & Security plus About live in the
+// footer. V1 keeps its original links, since For Teams and Why Miraee only
+// exist under the /v1.1 prefix.
+const v1NavLinks = (prefix: "" | "/v1.1"): [string, string][] => prefix === "/v1.1"
+    ? [
+        ["Platform", `${prefix}/product`],
+        ["For Teams", `${prefix}/for-teams`],
+        ["Why Miraee", `${prefix}/why-miraee`],
+        ["AI & Technology", `${prefix}/technology`],
+        ["Resources", `${prefix}/resources`],
+    ]
+    : [
+        ["Home", "/"],
+        ["Platform", "/v1/product"],
+        ["Solutions", "/v1/solutions"],
+        ["AI & Technology", "/v1/technology"],
+        ["About", "/v1/about"],
+    ]
 
 export function SiteNav() {
     const vw = useWindowWidth()
@@ -143,7 +156,40 @@ export function SiteFooter({ version }: { version?: SiteVersion } = {}) {
     const hoverIn = (e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.color = T.cream)
     const hoverOut = (e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.color = "rgba(251,246,242,0.55)")
 
-    const COLS: { title: string; links: FooterLink[] }[] = [
+    // V1.1 uses the content doc's footer (Part 2.2): Product / Company /
+    // Resources. Pricing and Newsroom are omitted until they exist, as the doc
+    // marks them "when available" / "add when content exists". Other versions
+    // keep the original footer below.
+    const V11_COLS: { title: string; links: FooterLink[] }[] = [
+        {
+            title: "Product", links: [
+                { label: "Platform", href: "/v1.1/product" },
+                { label: "For Teams", href: "/v1.1/for-teams" },
+                { label: "Why Miraee", href: "/v1.1/why-miraee" },
+                { label: "AI & Technology", href: "/v1.1/technology" },
+                { label: "Pricing", disabled: true },
+            ],
+        },
+        {
+            title: "Company", links: [
+                { label: "About", href: "/v1.1/about" },
+                { label: "Trust & Security", href: "/v1.1/security" },
+                { label: "Careers", disabled: true },
+                { label: "Contact", href: "mailto:hello@miraee.ai" },
+            ],
+        },
+        {
+            title: "Resources", links: [
+                { label: "Guides", href: "/v1.1/resources#guides" },
+                { label: "Calculators", href: "/v1.1/resources#calculators" },
+                { label: "Webinars", href: "/v1.1/resources#webinars" },
+                { label: "Help Center", href: "/support" },
+                { label: "Status", href: "https://status.miraee.ai", external: true },
+            ],
+        },
+    ]
+
+    const LEGACY_COLS: { title: string; links: FooterLink[] }[] = [
         {
             title: "Explore", links: [
                 { label: "Platform", href: versionHref("/v1/product", "/product") },
@@ -173,6 +219,8 @@ export function SiteFooter({ version }: { version?: SiteVersion } = {}) {
             ],
         },
     ]
+
+    const COLS = isV11 ? V11_COLS : LEGACY_COLS
 
     return (
         <footer ref={footRef} data-site-version={resolvedVersion} style={{ background: "#0F0407", padding: isMobile ? "60px 20px 40px" : "80px 64px 48px", position: "relative", overflow: "hidden" }}>
@@ -209,11 +257,21 @@ export function SiteFooter({ version }: { version?: SiteVersion } = {}) {
                         ))}
                     </div>
                 </div>
+                {/* Doc Part 2.2: trust chips in the footer. */}
+                {isV11 && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 28 }}>
+                        {["SOC 2", "GDPR", "SSO/SCIM", "Audit logs"].map(chip => (
+                            <span key={chip} style={{ padding: "6px 14px", borderRadius: 100, border: "1px solid rgba(251,246,242,0.16)", fontSize: 11, fontFamily: F, fontWeight: 600, color: "rgba(251,246,242,0.55)" }}>{chip}</span>
+                        ))}
+                    </div>
+                )}
                 <div style={{ borderTop: "1px solid rgba(251,246,242,0.08)", paddingTop: 28, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
                     <p style={{ fontSize: 13, fontFamily: F, color: "rgba(251,246,242,0.28)", margin: 0 }}>
-                        © 2026 Miraee, a Tabhi company. <a href="/privacy" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Privacy</a> · <a href="/terms" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Terms</a> · <a href={versionHref("/v1/security", "/security")} style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Security</a>
+                        {/* Doc Part 2.2 group line. */}
+                        {isV11 ? "Miraee is part of Tabhi, alongside Mondee and Abhee. " : "© 2026 Miraee, a Tabhi company. "}
+                        <a href="/privacy" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Privacy</a> · <a href="/terms" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Terms</a> · <a href={versionHref("/v1/security", "/security")} style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Security</a>
                     </p>
-                    <p style={{ fontSize: 13, fontFamily: F, color: "rgba(251,246,242,0.28)", margin: 0 }}>Built by Tabhi AI</p>
+                    <p style={{ fontSize: 13, fontFamily: F, color: "rgba(251,246,242,0.28)", margin: 0 }}>{isV11 ? "© 2026 Miraee" : "Built by Tabhi AI"}</p>
                 </div>
             </div>
         </footer>

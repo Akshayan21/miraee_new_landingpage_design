@@ -88,7 +88,7 @@ const agents = [
 ] as const
 
 const supplyAdvantages = [
-    ["01", "Global content", "Millions of properties and airline partners, sourced through direct connections and wholesale agreements rather than resold inventory.", "2M+ properties"],
+    ["01", "Global content", "Millions of hotels and airline partners, sourced through direct connections and wholesale agreements rather than resold inventory.", "2M+ hotels"],
     ["02", "Wholesale economics", "Negotiated rates that travel with the trip, applied automatically at booking rather than claimed back later.", "500+ airlines"],
     ["03", "Reach", "The Tabhi network already serves a traveler base at global scale. That volume is what makes the rates possible.", "125M+ travelers reached"],
     ["04", "Local experiences", "Festivals, performances, markets and makers - content that no corporate channel has ever carried.", "Hyperlocal"],
@@ -115,7 +115,7 @@ const faqs: [string, ReactNode][] = [
     ["Do travelers still have to file expense reports?", "No. Miraee captures the receipt at the point of transaction, codes it to the correct category, entity and cost centre, matches it against the original booking, and posts it to the finance system, making the expense reimbursement process easier. Travelers do not submit reports and finance teams do not chase receipts - this is automated expense reporting, not a task travelers manage."],
     ["What happens when a flight is cancelled or delayed?", "Miraee monitors every segment of every trip continuously and detects most disruptions before the airline notifies the traveler. The agent finds alternatives, prices each against company policy, and either rebooks automatically inside limits you have set or presents one clear recommendation for approval."],
     ["Can employees book personal travel through Miraee?", "Yes. The same agent plans personal trips using the traveler's own payment card, with corporate negotiated rates applied where supplier agreements permit. Personal spend never enters company reporting and company funds are never used, so business and personal travel stay entirely separate while sharing one experience - this is how Miraee supports bleisure travel without adding a second process."],
-    ["What travel inventory does Miraee have access to?", "Miraee books flights, hotels, rail and car hire from live inventory sourced through direct supplier connections and wholesale agreements held by the Tabhi group, covering over 500 airlines and more than two million properties. It also carries hyperlocal experience content that is not available through other corporate travel channels."],
+    ["What travel inventory does Miraee have access to?", "Miraee books flights, hotels, rail and car hire from live inventory sourced through direct supplier connections and wholesale agreements held by the Tabhi group, covering over 500 airlines and more than two million hotels. It also carries hyperlocal experience content that is not available through other corporate travel channels."],
     ["Which systems does Miraee integrate with?", "Miraee connects to identity providers via SSO and SCIM, to HRIS platforms for traveler and cost centre data, to ERP and accounting systems for expense posting, to corporate card networks for payment, and to calendar and messaging tools for itineraries."],
     ["How long does implementation take?", "Pilots reach full deployment in as little as 90 days."],
 ]

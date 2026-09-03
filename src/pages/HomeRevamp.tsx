@@ -4,7 +4,7 @@ import ThemeToggle from "../components/ThemeToggle"
 import { GrainOverlay, ScrollProgress } from "../animations"
 import { EO } from "../animations/easings"
 
-const stats = [["2M+", "properties"], ["500+", "airlines"], ["20–30%", "typical savings"], ["24/7", "human support"]]
+const stats = [["2M+", "hotels"], ["500+", "airlines"], ["20–30%", "typical savings"], ["24/7", "human support"]]
 const pains = [
     ["01", "Booking lives everywhere", "Consumer sites, agent emails, policy PDFs, and expense tools make one trip feel like five jobs."],
     ["02", "Changes become tickets", "A delayed flight starts a chain of messages while the traveler waits and finance loses visibility."],

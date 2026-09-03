@@ -43,15 +43,42 @@
   color: var(--v11-accent) !important;
 }
 
-/* .el-journey-flow always carries its own fixed dark background regardless of
-   its odd/even position in the alternating sequence, so its heading must stay
-   light-on-dark either way — not just on even instances. */
-.v11-site > section .el-journey-flow__head h2 {
+/* .el-journey-flow ships its own near-black background (var(--dark)) which
+   ignores the alternating sequence. Let the sequence own the section canvas
+   instead, so Home reads light / dark / light / dark all the way down. The
+   journey board *inside* it keeps its own dark surfaces either way. */
+.v11-site > section.el-workflow.el-journey-flow {
+  background: none !important;
+  background-color: transparent !important;
+}
+
+.v11-site > section:nth-of-type(odd):not(:first-of-type).el-workflow.el-journey-flow {
+  background-color: var(--v11-light) !important;
+}
+
+.v11-site > section:nth-of-type(even).el-workflow.el-journey-flow {
+  background: radial-gradient(circle at 88% 8%, rgba(229, 86, 2, .18), transparent 34%), var(--v11-dark) !important;
+}
+
+/* Its heading follows the section, not the board: cream only on dark slots. */
+.v11-site > section:nth-of-type(even) .el-journey-flow__head h2 {
   color: var(--v11-dark-text) !important;
 }
 
-.v11-site > section .el-journey-flow__head h2 em {
+.v11-site > section:nth-of-type(even) .el-journey-flow__head h2 em,
+.v11-site > section:nth-of-type(even) .el-journey-flow__link a {
   color: var(--v11-accent) !important;
+}
+
+/* On a light slot the section's own dark-theme accents (#ff8a52) and muted
+   grey-green wash out against cream — use the light-surface brand tones. */
+.v11-site > section:nth-of-type(odd):not(:first-of-type) .el-journey-flow__head h2 em,
+.v11-site > section:nth-of-type(odd):not(:first-of-type) .el-journey-flow__link a {
+  color: #e55602 !important;
+}
+
+.v11-site > section:nth-of-type(odd):not(:first-of-type) .el-journey-flow__head p {
+  color: #786c69 !important;
 }
 
 .v11-site > section:nth-of-type(even) :is(.el-label, [class*="label"], [class*="eyebrow"]),
@@ -208,6 +235,149 @@
   .v11-site .el-comparison .el-section-head > p {
     white-space: normal;
   }
+}
+
+/* Shrink the "Live journey" ledger card — the base revamp grid gives it up to
+   1.28fr and generous row padding, making it oversized next to the copy. */
+.v11-site .el-handoff--revamp {
+  grid-template-columns: minmax(320px, .8fr) minmax(360px, .82fr);
+}
+.v11-site .el-handoff-ledger {
+  max-width: 560px;
+  justify-self: end;
+}
+.v11-site .el-handoff-ledger header {
+  padding: 20px 22px 18px;
+}
+.v11-site .el-handoff-ledger header strong {
+  font-size: clamp(1.5rem, 2.2vw, 2.4rem);
+}
+.v11-site .el-handoff-ledger__rows article {
+  padding: 14px 14px;
+}
+.v11-site .el-handoff-ledger__rows h3 {
+  font-size: clamp(.95rem, 1.3vw, 1.15rem);
+}
+.v11-site .el-handoff-ledger footer {
+  padding: 14px 22px;
+}
+
+@media (max-width: 980px) {
+  /* The override above outranks HomeElegant's own 980px rule, so the grid has
+     to be collapsed here too — otherwise the two minmax tracks total 680px and
+     the ledger gets clipped off the right edge of a phone. */
+  .v11-site .el-handoff--revamp {
+    grid-template-columns: 1fr;
+  }
+  .v11-site .el-handoff-ledger {
+    max-width: none;
+    justify-self: stretch;
+  }
+}
+
+/* .el-handoff-ledger is a light card with its own #f8f5ee background, always —
+   but when its section lands on a dark alternating slot, the even-section rule
+   forces all its h3/small/strong text to cream, making light-on-light text.
+   Pin its text back to dark ink regardless of section position. */
+.v11-site section:nth-of-type(even) .el-handoff-ledger :is(h1, h2, h3, h4, strong, b, p, small, li, dt, dd, blockquote) {
+  color: #0f0407 !important;
+}
+.v11-site section:nth-of-type(even) .el-handoff-ledger header span,
+.v11-site section:nth-of-type(even) .el-handoff-ledger footer span {
+  color: #7b746b !important;
+}
+.v11-site section:nth-of-type(even) .el-handoff-ledger header small {
+  color: #77726b !important;
+}
+
+/* ─── Home section 4 — "Built for everyone behind the journey" ───────────────
+   Three fixes over the previous treatment:
+   1. Full bleed. .el-outcomes ships margin:20px + radius:32px, which read as an
+      inset card with cream gutters down both edges. The section now runs edge
+      to edge like every other band on the page.
+   2. Asymmetric bento instead of three equal columns. The lead persona gets a
+      tall featured tile; the other two stack beside it.
+   3. A real tonal ladder. Section, card and scripted preview were all within a
+      few percent of each other, so nothing separated. Now: dark section →
+      lifted card with a refraction edge → recessed preview surface. */
+
+.v11-site > section.el-outcomes {
+  margin: 0;
+  border-radius: 0;
+  padding-inline: clamp(20px, 6vw, 96px);
+}
+
+.v11-site .el-audience-cards__note {
+  margin-top: 26px;
+  font-size: 12px;
+  opacity: .55;
+}
+
+.v11-site .el-cta__reassurance {
+  display: block;
+  margin-top: 18px;
+  font-size: 13px;
+  opacity: .7;
+}
+
+@media (max-width: 900px) {
+  .v11-site .el-audience-cards { grid-template-columns: 1fr; }
+}
+
+.v11-site .el-handoff__caption {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  opacity: .7;
+}
+
+.v11-site .el-difference-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 48px;
+}
+.v11-site .el-difference-list h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -.02em;
+}
+.v11-site .el-difference-list p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.v11-site .el-comparison .el-text-link,
+.v11-site .el-differentiators .el-text-link {
+  display: inline-block;
+  margin-top: 36px;
+}
+
+@media (max-width: 900px) {
+  .v11-site .el-difference-list { grid-template-columns: 1fr; gap: 24px; }
+}
+
+.v11-site .el-journey-board__steps p {
+  grid-column: 1 / -1;
+  align-self: end;
+  margin: 28px 0 10px;
+  color: #c7cdc8;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.v11-site .el-journey-flow__link {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.v11-site .el-journey-flow__link a {
+  color: var(--v11-accent, #ff8a52);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .v11-site .el-journey-board figure {

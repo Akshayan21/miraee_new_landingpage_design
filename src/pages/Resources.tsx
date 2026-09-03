@@ -4,6 +4,8 @@ import { Link } from "react-router-dom"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
+import V11Hero from "../components/V11Hero"
+import "./HomeV12.css"
 import { usePageMeta } from "../hooks/usePageMeta"
 import V11PageImage from "../components/V11PageImage"
 import resourcesPageImg from "../../images/weavy/v1/solutions/v1-solutions-travelleads.webp"
@@ -79,66 +81,7 @@ const wordVariants = {
         transition: { duration: 0.75, delay: 0.3 + i * 0.05, ease: "easeOut" as const } }),
 }
 
-function ResourcesHero() {
-    const w = useWindowWidth()
-    const isMobile = w < 768
-    const isTablet = w < 1024
-    const heroRef = useRef<HTMLDivElement>(null)
-    const heroInnerRef = useRef<HTMLDivElement>(null)
 
-    useGSAP((gsap) => {
-        if (!heroRef.current || !heroInnerRef.current) return
-        gsap.to(heroInnerRef.current, { y: -120, ease: "none",
-            scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 1.5 } })
-    }, [])
-
-    const line1 = ["Everything", "you", "need", "to", "shape"]
-    const line2 = ["the", "future", "of", "corporate", "travel."]
-    const allWords = [...line1, ...line2]
-    const accentWords = new Set(["travel."])
-
-    let wordIdx = 0
-    const renderLine = (words: string[]) => words.map((word) => {
-        const idx = wordIdx++
-        return (
-            <span key={idx} style={{ display: "inline-block", overflow: "hidden", verticalAlign: "bottom", lineHeight: 1.15, perspective: 1000, marginRight: "0.22em" }}>
-                <motion.span custom={idx} variants={wordVariants} initial="hidden" animate="visible"
-                    style={{ display: "inline-block", backfaceVisibility: "hidden",
-                        color: accentWords.has(word) ? T.orange : T.ink }}>
-                    {word}
-                </motion.span>
-            </span>
-        )
-    })
-
-    return (
-        <section ref={heroRef} style={{ position: "relative", minHeight: "88vh", background: `radial-gradient(ellipse 62% 55% at 50% 0%, rgba(229,86,2,0.12), transparent 62%), var(--page-bg)`, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.035) 1px, transparent 1px)", backgroundSize: "72px 72px", pointerEvents: "none" }}/>
-            <div style={{ position: "absolute", top: 0, left: 0, width: 120, height: 120, borderTop: "1px solid rgba(229,86,2,0.15)", borderLeft: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }}/>
-            <div style={{ position: "absolute", bottom: 0, right: 0, width: 120, height: 120, borderBottom: "1px solid rgba(229,86,2,0.15)", borderRight: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }}/>
-
-            <div ref={heroInnerRef} style={{ position: "relative", top: isMobile ? 0 : isTablet ? 36 : 48, zIndex: 3, maxWidth: 920, textAlign: "center", padding: isMobile ? "140px 24px 80px" : isTablet ? "120px 48px 80px" : "60px 64px", willChange: "transform" }}>
-                <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" as const }}
-                    style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 20px", border: "1px solid rgba(var(--text-rgb),0.12)", borderRadius: 100, marginBottom: 44, background: "rgba(var(--text-rgb),0.04)" }}>
-                    <motion.div animate={{ scale: [1,1.6,1], opacity: [0.7,1,0.7] }} transition={{ duration: 2, repeat: Infinity }}
-                        style={{ width: 6, height: 6, borderRadius: "50%", background: T.orange, flexShrink: 0 }}/>
-                    <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans", color: T.ink, letterSpacing: "0.13em", textTransform: "uppercase", fontWeight: 700 }}>Resources · Miraee</span>
-                </motion.div>
-
-                <h1 style={{ fontSize: isMobile ? 34 : isTablet ? 52 : 68, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 32px", textAlign: "center" }}>
-                    <span style={{ display: "block", textAlign: "center" }}>{renderLine(line1)}</span>
-                    <span style={{ display: "block", textAlign: "center" }}>{renderLine(line2)}</span>
-                </h1>
-
-                <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.3 + allWords.length * 0.05 + 0.15, ease: "easeOut" as const }}
-                    style={{ fontSize: isMobile ? 16 : 19, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, maxWidth: 620, margin: "0 auto", fontWeight: 400 }}>
-                    Research, tools, and guidance for finance, travel, and people leaders building the <strong style={{ color: T.ink, fontWeight: 700 }}>agentic travel</strong> program.
-                </motion.p>
-            </div>
-        </section>
-    )
-}
 
 // --- GUIDES & REPORTS ------------------------------------------------------
 const GUIDES: [string, string][] = [
@@ -460,7 +403,14 @@ export default function MiraeeResourcesPage(_props: any) {
             <SmoothScrollStyle/>
             <ScrollBar/>
             <SiteNav />
-            <ResourcesHero/>
+            <V11Hero
+                kicker="Resources"
+                title="Everything you need to shape"
+                accent="the future of corporate travel."
+                sub="Research, tools and guidance for finance, travel and people leaders building the agentic travel program."
+                primaryCta={{ label: "Try the calculators", href: "#calculators" }}
+                secondaryCta={{ label: "Browse guides ↓", href: "#guides" }}
+                image={{ src: resourcesPageImg, alt: "Travel lead reviewing a corporate travel program" }} />
             <V11PageImage src={resourcesPageImg} alt="Travel leader moving through an airport with live journey context" label="Guidance for modern travel teams" caption="Practical thinking for teams building a more connected, responsive, and human travel program." position="center 42%" mobilePosition="42% center" />
             <Guides/>
             <Calculators/>

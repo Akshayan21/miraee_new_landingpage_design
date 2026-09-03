@@ -3,6 +3,8 @@ import { useRef, useEffect, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
+import V11Hero from "../components/V11Hero"
+import "./HomeV12.css"
 import V11PageImage from "../components/V11PageImage"
 import securityPageImg from "../../images/weavy/v1/solutions/v1-solutions-finance.webp"
 gsap.registerPlugin(ScrollTrigger)
@@ -73,35 +75,43 @@ function ScrollBar() {
 }
 
 // --- CONTENT DATA (verbatim from SecurityV2) ---------------------------------
+// Copy below is taken verbatim from the website content document (Page 6).
+
+// Doc section 3 — Action / Default permission. The third value is the
+// "who controls it" note kept from the existing table; the doc's own two
+// columns are the action and the default permission.
 const mayDoWithoutAsking: [string, string, string][] = [
-    ["Search inventory and assemble an itinerary", "Always permitted", "Fixed control"],
-    ["Book a trip that is fully within policy", "Permitted", "Can require approval on any dimension"],
-    ["Rebook a disrupted trip within the original fare band", "Permitted", "Ceiling set by you"],
-    ["Rebook above the original cost", "Requires approval", "Threshold set by you"],
-    ["Code and post an expense to the ERP", "Permitted", "Can require sign-off before posting"],
-    ["Book out of policy", "Never permitted without approval", "Approver set by you"],
-    ["Issue a virtual card for a booking", "Permitted within trip value", "Limits set by you"],
+    ["Search and assemble options", "Always permitted", "Fixed control"],
+    ["Book in-policy trip", "Permitted; approval optional", "Can require approval on any dimension"],
+    ["Rebook within fare band", "Permitted; traveler notified", "Ceiling set by you"],
+    ["Rebook above fare band", "Requires named approver", "Threshold set by you"],
+    ["Code and post expense", "Permitted; sign-off optional", "Can require sign-off before posting"],
+    ["Book out of policy", "Never without approval", "Approver set by you"],
+    ["Issue virtual card", "Permitted within trip value", "Limits set by you"],
 ]
 
+// Doc section 3 — Hard limits (never configurable).
 const neverDo = [
-    "Move money outside the payment rails you have pre-authorised",
-    "Change a policy rule, an approval chain or a spend limit",
-    "Book with a supplier you have excluded",
-    "Use company funds for a personal trip, or personal funds for a company trip",
-    "Access or act on traveler personal data beyond the scope of the trip in hand",
-    "Delete, alter or suppress an audit record",
-    "Take an action it cannot log, attribute and explain",
+    "Move money outside pre-authorised rails",
+    "Change policy, approvals or limits",
+    "Book excluded suppliers",
+    "Mix personal and company funds",
+    "Act on traveler data beyond the trip",
+    "Delete, alter or suppress audit records",
+    "Take any unlogged action",
 ]
 
+// Doc section 3 — Human in the loop.
 const humanSits: [string, string][] = [
-    ["Setting policy and limits", "You. Always. No agent may write a rule."],
-    ["Routine in-policy booking", "The agent, inside your limits."],
-    ["Anything out of policy", "A named human approver you designate."],
-    ["Disruption inside the fare band", "The agent, with notification."],
-    ["Disruption above the fare band", "A human, with the agent's recommendation attached."],
-    ["Escalation to a person", "The traveler, at any point, with full context carried over."],
+    ["Policy and limits", "You, always."],
+    ["Routine booking", "Agent within limits."],
+    ["Out of policy", "Named human approver."],
+    ["Disruption in band", "Agent, with notification."],
+    ["Disruption above band", "Human, with agent recommendation."],
+    ["Escalation", "Traveler, any time, full context."],
 ]
 
+// Doc section 3 — Trust layers.
 const trustLayers: [string, string, string, string][] = [
     ["01", "Identity", "SSO / SCIM", "People and agents get only the access their role requires."],
     ["02", "Policy", "Configurable", "Every action is checked against your rules before execution."],
@@ -109,109 +119,25 @@ const trustLayers: [string, string, string, string][] = [
     ["04", "Evidence", "Always logged", "Actor, rule, time and cost are recorded for every action."],
 ]
 
+// Doc section 4 — Access control.
 const accessGrid: [string, string][] = [
-    ["SAML + OIDC", "Single sign-on"],
-    ["SCIM", "Automatic provisioning and deprovisioning"],
-    ["Role based", "Traveler, approver, finance and admin access"],
-    ["Entity isolated", "Segregation for multi-company groups"],
-    ["MFA", "Session controls and enforced multi-factor authentication"],
+    ["SAML and OIDC", "Single sign-on"],
+    ["SCIM", "Provisioning and deprovisioning"],
+    ["Role-based access", "Traveler, approver, finance and admin"],
+    ["Entity isolation", "Segregation for multi-company groups"],
+    ["MFA", "Enforced multi-factor authentication"],
 ]
 
+// Doc section 6 — Security FAQ (five questions).
 const faqs: [string, string][] = [
-    ["Where is our data stored?", "Miraee stores and processes customer data in the region you select at contract: United States, European Union or India. Data does not leave the selected region except where a booking must be transmitted to a supplier to be fulfilled."],
-    ["Do Miraee's AI agents use our company data to train models?", "No. Your trip data is used to personalise your own organisation's experience and is not used to train foundation models or to improve outcomes for any other customer. Personalisation is scoped to your tenant."],
-    ["What can Miraee's agents do without human approval?", "Miraee's agents can search inventory, assemble itineraries, book trips that fall fully within your policy, rebook disruptions inside a fare band you define, and code expenses to your finance system. Anything out of policy, above your thresholds, or outside pre-authorised payment rails requires a named human approver. Every boundary is configurable and every action is logged."],
-    ["Can we see what an agent did and why?", "Yes. Every agent action is recorded with the action taken, the agent responsible, the timestamp, the policy rule applied and the cost involved. The full audit trail is exportable at any time and cannot be altered or deleted by any agent."],
-    ["How does Miraee handle traveler personal data?", "Miraee collects only the traveler data required to book and support a trip, including identity details, preferences, loyalty memberships and the itinerary itself. Access is role-based, agents cannot act on personal data beyond the scope of the trip in hand, and retention periods are published."],
+    ["Where is our data stored?", "In the region you select at contract: US, EU or India. It stays in-region except where a supplier must receive it to fulfil a booking."],
+    ["Do agents train on our data?", "No. Personalisation is scoped to your tenant only."],
+    ["What can agents do without approval?", "Search, assemble, book in policy, rebook in band, code expenses. Anything above your thresholds goes to a named human."],
+    ["Can we see what an agent did and why?", "Yes. Every action is logged with actor, rule, time and cost, exportable, and cannot be altered by any agent."],
+    ["How is traveler personal data handled?", "Only what is needed to book and support the trip, with role-based access and published retention periods."],
 ]
 
 // --- HERO ----------------------------------------------------------------
-const wordVariants = {
-    hidden: { y: "110%", opacity: 0, rotateX: -45 },
-    visible: (i: number) => ({ y: "0%", opacity: 1, rotateX: 0,
-        transition: { duration: 0.75, delay: 0.3 + i * 0.055, ease: "easeOut" as const } }),
-}
-
-function SecurityHero() {
-    const w = useWindowWidth()
-    const isMobile = w < 768
-    const isTablet = w < 1024
-    const heroRef = useRef<HTMLDivElement>(null)
-    const heroInnerRef = useRef<HTMLDivElement>(null)
-
-    useGSAP((gsap, ST) => {
-        if (!heroRef.current || !heroInnerRef.current) return
-        gsap.to(heroInnerRef.current, { y: -140, ease: "none",
-            scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 1.5 } })
-    }, [])
-
-    const line1 = ["Fast", "for", "people."]
-    const line2 = ["Safe", "for", "the", "business."]
-    const accentWords = new Set(["business."])
-
-    let wordIdx = 0
-    const renderLine = (words: string[]) => words.map((word) => {
-        const idx = wordIdx++
-        return (
-            <span key={idx} style={{ display: "inline-block", overflow: "hidden", verticalAlign: "bottom", lineHeight: 1.15, perspective: 1000, marginRight: "0.22em" }}>
-                <motion.span custom={idx} variants={wordVariants} initial="hidden" animate="visible"
-                    style={{ display: "inline-block", backfaceVisibility: "hidden",
-                        color: accentWords.has(word) ? T.orange : T.ink, fontStyle: accentWords.has(word) ? "italic" : "normal" }}>
-                    {word}
-                </motion.span>
-            </span>
-        )
-    })
-
-    return (
-        <section ref={heroRef} style={{ position: "relative", minHeight: "92vh", background: "var(--page-bg)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.035) 1px, transparent 1px)", backgroundSize: "72px 72px", pointerEvents: "none" }}/>
-            <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 1 }}>
-                <div style={{ position: "absolute", top: "-10%", left: "20%", width: 700, height: 700, borderRadius: "50%", background: "radial-gradient(circle, rgba(229,86,2,0.10) 0%, transparent 65%)" }} />
-                <div style={{ position: "absolute", bottom: "0%", right: "5%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(229,86,2,0.07) 0%, transparent 65%)" }} />
-            </div>
-            <div style={{ position: "absolute", top: 0, left: 0, width: 120, height: 120, borderTop: "1px solid rgba(229,86,2,0.15)", borderLeft: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }}/>
-            <div style={{ position: "absolute", bottom: 0, right: 0, width: 120, height: 120, borderBottom: "1px solid rgba(229,86,2,0.15)", borderRight: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }}/>
-
-            <div ref={heroInnerRef} style={{ position: "relative", zIndex: 3, maxWidth: 900, textAlign: "center", padding: isMobile ? "140px 24px 80px" : isTablet ? "120px 48px 80px" : "100px 64px", willChange: "transform" }}>
-                <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" as const }}
-                    style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 20px", border: "1px solid rgba(229,86,2,0.3)", borderRadius: 100, marginBottom: 40, background: "rgba(229,86,2,0.12)" }}>
-                    <motion.div animate={{ scale: [1,1.6,1], opacity: [0.7,1,0.7] }} transition={{ duration: 2, repeat: Infinity }}
-                        style={{ width: 6, height: 6, borderRadius: "50%", background: T.orange, flexShrink: 0 }}/>
-                    <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans", color: T.orange, letterSpacing: "0.13em", textTransform: "uppercase", fontWeight: 700 }}>Trust · Miraee</span>
-                </motion.div>
-                <h1 style={{ fontSize: isMobile ? 38 : isTablet ? 58 : 76, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.06, letterSpacing: "-0.035em", margin: "0 0 32px", textAlign: "center" }}>
-                    <span style={{ display: "block", textAlign: "center" }}>{renderLine(line1)}</span>
-                    <span style={{ display: "block", textAlign: "center" }}>{renderLine(line2)}</span>
-                </h1>
-                <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 1.1, ease: "easeOut" as const }}
-                    style={{ fontSize: isMobile ? 16 : 19, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, maxWidth: 620, margin: "0 auto 44px", fontWeight: 400 }}>
-                    Every agent action is governed, permissioned, traceable and reversible. Autonomy never means blind trust.
-                </motion.p>
-                <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.3, ease: "easeOut" as const }}
-                    style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 40 }}>
-                    <motion.a href={SECURITY_EMAIL} whileHover={{ scale: 1.04, boxShadow: "0 14px 48px rgba(229,86,2,0.55)" }} whileTap={{ scale: 0.97 }}
-                        style={{ padding: isMobile ? "14px 30px" : "17px 42px", background: T.orange, color: T.white, borderRadius: 12, fontSize: 15, fontFamily: "Plus Jakarta Sans", fontWeight: 700, textDecoration: "none", display: "inline-block", letterSpacing: "0.01em" }}>
-                        Request the security package
-                    </motion.a>
-                    <motion.a href="#governance" whileHover={{ borderColor: "rgba(69,14,20,0.3)", color: T.ink, background: "rgba(69,14,20,0.04)" }} whileTap={{ scale: 0.97 }}
-                        style={{ padding: isMobile ? "14px 30px" : "17px 42px", border: "1px solid rgba(69,14,20,0.14)", color: T.muted, borderRadius: 12, fontSize: 15, fontFamily: "Plus Jakarta Sans", fontWeight: 500, textDecoration: "none", display: "inline-block", transition: "all 0.22s" }}>
-                        See the boundaries
-                    </motion.a>
-                </motion.div>
-                <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.45, ease: "easeOut" as const }}
-                    style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-                    {["SOC 2", "GDPR", "SSO / SCIM", "Audit logs"].map(c => (
-                        <span key={c} style={{ padding: "7px 16px", borderRadius: 100, border: "1px solid rgba(69,14,20,0.14)", background: "rgba(69,14,20,0.03)", fontSize: 12, fontFamily: "Plus Jakarta Sans", fontWeight: 600, color: T.muted }}>{c}</span>
-                    ))}
-                </motion.div>
-            </div>
-        </section>
-    )
-}
 
 // --- CERTIFICATIONS -------------------------------------------------------
 function Certifications() {
@@ -220,10 +146,12 @@ function Certifications() {
     const isTablet = w < 1024
     const sectionRef = useRef<HTMLDivElement>(null)
 
+    // Doc section 2 tiles. SOC 2 status stays neutral until it is confirmed
+    // (doc Part 4, item 1) so the same wording can ship everywhere at once.
     const marks = [
-        { label: "SOC 2", status: "In progress" },
+        { label: "SOC 2 Type II", status: "Status on request" },
         { label: "GDPR", status: "Compliant" },
-        { label: "SSO / SCIM", status: "Identity management" },
+        { label: "SSO / SCIM", status: "SAML, OIDC, SCIM" },
         { label: "Audit logs", status: "Every agent action" },
     ]
 
@@ -242,7 +170,7 @@ function Certifications() {
                     <div style={{ textAlign: "center", marginBottom: isMobile ? 48 : 64 }}>
                         <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>Certifications</span>
                         <h2 style={{ fontSize: isMobile ? 30 : isTablet ? 44 : 54, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 auto 18px", maxWidth: 620 }}>
-                            Independently verified, not self-declared.
+                            Certifications and data residency.
                         </h2>
                         <p style={{ fontSize: 15, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.75, margin: "0 auto", maxWidth: 560 }}>
                             Security controls, data protection, identity management, and agent actions are documented with a clear status for procurement review.
@@ -295,7 +223,7 @@ function DataResidency() {
                             Your data stays where you need it.
                         </h2>
                         <p style={{ fontSize: 15, color: "rgba(var(--text-rgb),0.48)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, maxWidth: 620, margin: 0 }}>
-                            Choose the region your traveler and transaction data is stored and processed in. For organisations operating across the US, Europe and India, this is a procurement requirement rather than a preference.
+                            Regional processing in the United States, the European Union or India, chosen at contract. Data stays in-region except where a supplier must receive it to fulfil a booking.
                         </p>
                     </div>
                 </Reveal>
@@ -351,13 +279,13 @@ function AIGovernance() {
                     </motion.span>
                     <div ref={headRef}>
                         <h2 style={{ fontSize: isMobile ? 30 : isTablet ? 46 : 58, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 18px", maxWidth: 760 }}>
-                            {["Autonomy", "never", "means"].map((word, i) => (
+                            {["What", "the", "agents", "may", "do,", "must", "ask", "about,"].map((word, i) => (
                                 <span key={i} style={{ display: "inline-block", overflow: "hidden", marginRight: "0.22em", verticalAlign: "bottom", lineHeight: 1.18 }}>
                                     <span className="gov-w" style={{ display: "inline-block" }}>{word}</span>
                                 </span>
                             ))}
                             <span style={{ display: "inline-block", overflow: "hidden", marginRight: "0.22em", verticalAlign: "bottom", lineHeight: 1.18 }}>
-                                <span className="gov-w" style={{ display: "inline-block", color: T.orange, fontStyle: "italic" }}>blind trust.</span>
+                                <span className="gov-w" style={{ display: "inline-block", color: T.orange, fontStyle: "italic" }}>and may never do.</span>
                             </span>
                         </h2>
                     </div>
@@ -400,7 +328,11 @@ function AIGovernance() {
                                     <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: accent }}>{approval ? "Human approval" : "Agent permitted"}</span>
                                 </div>
                                 <h4 style={{ fontSize: 16, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, margin: "0 0 8px", lineHeight: 1.3 }}>{action}</h4>
-                                <p style={{ fontSize: 13, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.6, margin: 0 }}>{config === "Fixed control" ? rule : config}</p>
+                                {/* The doc's "Default permission" column leads; the control note follows. */}
+                                <p style={{ fontSize: 13.5, color: T.ink, fontFamily: "Plus Jakarta Sans", fontWeight: 600, lineHeight: 1.6, margin: "0 0 6px" }}>{rule}</p>
+                                {config !== "Fixed control" && (
+                                    <p style={{ fontSize: 12.5, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.6, margin: 0 }}>{config}</p>
+                                )}
                             </div>
                         )
                     })}
@@ -622,7 +554,7 @@ function SecurityFAQ() {
                     <div style={{ marginBottom: isMobile ? 40 : 56 }}>
                         <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>Security FAQ</span>
                         <h2 style={{ fontSize: isMobile ? 28 : 44, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: 0 }}>
-                            Questions procurement asks first.
+                            Security FAQ.
                         </h2>
                     </div>
                 </Reveal>
@@ -651,7 +583,7 @@ function SecurityCTA() {
                         Send us your<br/>security questionnaire.
                     </h2>
                     <p style={{ fontSize: 16, color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 0 40px" }}>
-                        We'll return it completed, with the documentation attached.
+                        We return it completed, with the documentation attached.
                     </p>
                     <motion.a href={SECURITY_EMAIL} whileHover={{ scale: 1.04, boxShadow: "0 14px 48px rgba(229,86,2,0.55)" }} whileTap={{ scale: 0.97 }}
                         style={{ padding: isMobile ? "14px 30px" : "17px 42px", background: T.orange, color: T.white, borderRadius: 12, fontSize: 15, fontFamily: "Plus Jakarta Sans", fontWeight: 700, textDecoration: "none", display: "inline-block", letterSpacing: "0.01em" }}>
@@ -669,8 +601,8 @@ function SecurityCTA() {
  */
 export default function MiraeeSecurityPage(_props: any) {
     useEffect(() => {
-        document.title = "Security, Compliance and AI Governance - Miraee"
-        const description = "How Miraee secures traveler data, where it is stored, and exactly what our AI agents may and may not do without a human. Certifications, controls and the full governance model."
+        document.title = "Trust & Security | Governed, Logged, Reversible | Miraee"
+        const description = "What Miraee's agents may do alone, what always needs a human, and what they may never do. SOC 2, GDPR, SSO/SCIM, regional data residency and a full audit trail."
         let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]')
         if (!meta) { meta = document.createElement("meta"); meta.name = "description"; document.head.appendChild(meta) }
         meta.content = description
@@ -691,7 +623,15 @@ export default function MiraeeSecurityPage(_props: any) {
             <SmoothScrollStyle/>
             <ScrollBar/>
             <SiteNav />
-            <SecurityHero/>
+            <V11Hero
+                kicker="Trust & Security"
+                title="Fast for people."
+                accent="Safe for the business."
+                sub="Every agent action is governed, permissioned, traceable and reversible. Autonomy never means blind trust."
+                primaryCta={{ label: "Request the security package", href: "mailto:hello@miraee.ai?subject=Security%20package%20request" }}
+                secondaryCta={{ label: "See the boundaries ↓", href: "#governance" }}
+                image={{ src: securityPageImg, alt: "Finance manager reviewing company travel activity" }}
+                chips={["SOC 2", "GDPR", "SSO/SCIM", "Audit logs"]} />
             <V11PageImage src={securityPageImg} alt="Finance team reviewing governed travel information" label="Control without friction" caption="Permissions, policy, auditability, and human oversight are built into the same workflow employees use to travel." position="center 40%" mobilePosition="57% center" />
             <Certifications/>
             <DataResidency/>

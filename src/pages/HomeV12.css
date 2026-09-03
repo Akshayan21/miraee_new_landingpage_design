@@ -12,14 +12,17 @@
   position: relative;
   max-width: 1280px;
   margin: 0 auto;
-  background:
-    radial-gradient(circle at 18% 0%, rgba(229,86,2,0.08), transparent 42%),
-    radial-gradient(circle at 88% 10%, rgba(229,86,2,0.06), transparent 38%),
-    var(--v12-bg);
   color: var(--v12-ink);
   overflow: hidden;
   padding: 132px 24px 72px;
   text-align: center;
+}
+
+/* Kill the flat opaque background V11AlternatingSections.css forces onto the
+   first section — it painted a solid white box over the whole hero, from the
+   nav down to the dashboard mockup, hiding the page's own gradient behind it. */
+.v11-site > section.v12-hero:first-of-type{
+  background: transparent !important;
 }
 
 .v12-hero__row{
@@ -34,10 +37,42 @@
 
 .v12-hero__copy{ flex: 1 1 480px; min-width: 0; }
 
+.v12-hero__kicker{
+  display: inline-block;
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--v12-accent);
+}
+
+.v12-hero__proof{
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  margin-top: 26px;
+  font-size: 12px;
+  color: var(--v12-muted);
+}
+.v12-hero__proof i{ width: 3px; height: 3px; border-radius: 50%; background: var(--v12-line); }
+
+.v12-hero__chips{
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 16px;
+}
+.v12-hero__chips span{
+  padding: 5px 12px;
+  border: 1px solid var(--v12-line);
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--v12-muted);
+}
+
 .v12-hero__media{ flex: 1 1 420px; max-width: 520px; }
 .v12-hero__media img{ display: block; width: 100%; border-radius: 24px; box-shadow: 0 30px 70px rgba(23,10,12,.14); }
 
-.el-site .v12-hero h1{
+.el-site .v12-hero h1,
+.v1-type-page .v12-hero h1{
   margin: 0;
   max-width: 620px;
   text-align: left;
@@ -83,7 +118,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  margin: 48px auto 0;
+  margin: clamp(120px, 16vw, 200px) auto 0;
   max-width: 1100px;
   padding: clamp(20px, 4vw, 48px);
   min-height: 380px;
@@ -107,7 +142,8 @@
 
 @media (max-width: 900px){
   .v12-hero__row{ flex-direction: column; text-align: center; }
-  .el-site .v12-hero h1{ margin: 0 auto; text-align: center; }
+  .el-site .v12-hero h1,
+  .v1-type-page .v12-hero h1{ margin: 0 auto; text-align: center; }
   .v12-hero__copy > p{ margin: 22px auto 0; text-align: center; }
   .v12-hero__actions{ justify-content: center; }
   .v12-hero__media{ order: -1; max-width: 420px; }
@@ -115,9 +151,10 @@
 
 @media (max-width: 640px){
   .v12-hero{ padding: 108px 16px 56px; }
-  .el-site .v12-hero h1{ font-size: clamp(2.1rem, 9vw, 2.8rem); }
+  .el-site .v12-hero h1,
+  .v1-type-page .v12-hero h1{ font-size: clamp(2.1rem, 9vw, 2.8rem); }
   .v12-hero__copy > p{ font-size: 15px; }
-  .v12-preview{ padding: 0; margin-top: 40px; min-height: 0; }
+  .v12-preview{ padding: 0; margin-top: 90px; min-height: 0; }
   .v12-preview__floating{ display: none; }
 }
 
