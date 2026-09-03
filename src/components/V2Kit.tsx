@@ -1,9 +1,10 @@
 import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { MiraeeLogo } from "./LegalFormKit"
 import { useWindowWidth } from "../hooks/useWindowSize"
+import { VersionSwitch } from "./VersionSwitch"
 
 // Shared chrome and content primitives for the v2 marketing site (home +
 // product / for-teams / security / about / why-miraee) so every page renders
@@ -29,19 +30,6 @@ const NAV_LINKS: [string, string][] = [
     ["AI & Technology", "/technology"],
     ["About", "/about"],
 ]
-
-function VersionSwitch({ className = "" }: { className?: string }) {
-    const { pathname } = useLocation()
-    const activeVersion = pathname === "/v1.1" ? "v1.1" : pathname.startsWith("/v3") ? "v3" : pathname === "/" || pathname.startsWith("/v1/") ? "v1" : "v2"
-    return (
-        <div className={"m-nav__version " + className} aria-label="Choose site version">
-            <Link to="/" aria-current={activeVersion === "v1" ? "page" : undefined}>v1</Link>
-            <Link to="/v1.1" aria-current={activeVersion === "v1.1" ? "page" : undefined}>v1.1</Link>
-            <Link to="/v2" aria-current={activeVersion === "v2" ? "page" : undefined}>v2</Link>
-            <Link to="/v3" aria-current={activeVersion === "v3" ? "page" : undefined}>v3</Link>
-        </div>
-    )
-}
 
 export function V2Nav({ active }: { active?: string }) {
     const vw = useWindowWidth()
@@ -86,7 +74,7 @@ export function V2Nav({ active }: { active?: string }) {
                     </nav>
                 )}
                 <div className="m-nav__actions">
-                    {!isCompact && <VersionSwitch />}
+                    {!isCompact && <VersionSwitch className="m-nav__version" />}
                     {!isCompact && <a href="https://app.miraee.ai">Sign in</a>}
                     <Link to="/book-a-demo" className="m-nav__cta">Book a demo</Link>
                     {isCompact && (
@@ -103,7 +91,7 @@ export function V2Nav({ active }: { active?: string }) {
                             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .2 }} />
                         <motion.nav id="m-nav-mobile" className="m-nav__mobile" key="m-nav-mobile" aria-label="Mobile navigation"
                             initial={{ opacity: 0, y: -12, scale: .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8, scale: .99 }} transition={{ duration: .24, ease }}>
-                            <div className="m-nav__mobile-head"><span>Navigate</span><VersionSwitch className="m-nav__version--mobile" /></div>
+                            <div className="m-nav__mobile-head"><span>Navigate</span><VersionSwitch className="m-nav__version m-nav__version--mobile" /></div>
                             <div className="m-nav__mobile-links">
                                 {NAV_LINKS.map(([label, href], index) => (
                                     <Link key={href} to={href} aria-current={active === href ? "page" : undefined} onClick={() => setOpen(false)}><span>0{index + 1}</span>{label}<b aria-hidden="true">↗</b></Link>

@@ -198,8 +198,14 @@ body::before {
   overflow: hidden;
   pointer-events: none;
   isolation: isolate;
+  contain: strict;
 }
 
+/* The drift animates translate AND scale, and the orb carries a 90px blur.
+   Without an explicit layer promotion the browser has to re-run that blur every
+   frame, because the element's rendered size keeps changing. `will-change`
+   rasterises the blurred circle once and lets the GPU transform that texture,
+   which is the whole cost of this effect. Appearance is unchanged. */
 .site-atmosphere__orb {
   position: absolute;
   width: 38rem;
@@ -208,6 +214,7 @@ body::before {
   filter: blur(90px);
   opacity: .08;
   animation: atmosphere-drift 18s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
 .site-atmosphere__orb--one { top: 8%; left: -22rem; background: #E55602; }
@@ -221,6 +228,7 @@ body::before {
   opacity: .055;
   background: radial-gradient(circle, #E55602, transparent 68%);
   mix-blend-mode: multiply;
+  will-change: transform;
 }
 
 [data-theme="dark"] .site-atmosphere__cursor { mix-blend-mode: screen; opacity: .07; }
@@ -314,17 +322,17 @@ body {
   min-width: 320px;
 }
 
-:where(.el-site, .v1-type-page, .m-site, .v3-page, .form-page, .legal-page)
+:where(.el-site, .v1-type-page, .m-site, .v3-page, .v4-site, .form-page, .legal-page)
   :where(main, header, footer, section, article, aside, nav, figure, div) {
   min-width: 0;
 }
 
-:where(.el-site, .v1-type-page, .m-site, .v3-page, .form-page, .legal-page)
+:where(.el-site, .v1-type-page, .m-site, .v3-page, .v4-site, .form-page, .legal-page)
   :where(h1, h2, h3, h4, p, a, span, strong) {
   overflow-wrap: break-word;
 }
 
-:where(.el-site, .v1-type-page, .m-site, .v3-page, .form-page, .legal-page)
+:where(.el-site, .v1-type-page, .m-site, .v3-page, .v4-site, .form-page, .legal-page)
   :where(img, video, canvas, iframe) {
   max-width: 100%;
 }
@@ -341,6 +349,7 @@ body {
 
   .el-site .el-hero,
   .m-site .m-hero,
+  .v4-site .v4-hero,
   .v3-page header.hero {
     min-height: auto;
   }
@@ -351,19 +360,19 @@ body {
     min-height: auto !important;
   }
 
-  :where(.el-site, .v1-type-page, .m-site, .v3-page, .form-page, .legal-page)
+  :where(.el-site, .v1-type-page, .m-site, .v3-page, .v4-site, .form-page, .legal-page)
     :where(input, select, textarea) {
     font-size: 16px;
   }
 
-  :where(.el-site, .v1-type-page, .m-site, .v3-page)
+  :where(.el-site, .v1-type-page, .m-site, .v3-page, .v4-site)
     :where(button, [role="button"], input, select, textarea) {
     max-width: 100%;
   }
 }
 
 @media (max-width: 380px) {
-  :where(.el-site, .v1-type-page, .m-site, .v3-page)
+  :where(.el-site, .v1-type-page, .m-site, .v3-page, .v4-site)
     :where(h1, h2, h3) {
     text-wrap: pretty;
   }
