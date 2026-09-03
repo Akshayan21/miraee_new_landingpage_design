@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom"
 import { motion, useInView, useReducedMotion } from "framer-motion"
 import type { ReactNode, CSSProperties } from "react"
 import { MiraeeLogo } from "./LegalFormKit"
+import { VersionSwitch } from "./VersionSwitch"
 import miraeeFavicon from "../assets/favicon-180.png"
 import userAvatar from "../assets/role-traveller.jpg"
 
@@ -34,17 +35,6 @@ const NAV_LINKS: [string, string][] = [
     ["Enterprise", "/v3/enterprise"],
 ]
 
-function V3VersionSwitch({ className = "" }: { className?: string }) {
-    const { pathname } = useLocation()
-    const active = pathname === "/v1.1" ? "v1.1" : pathname.startsWith("/v3") ? "v3" : pathname === "/v2" ? "v2" : "v1"
-    const versions = [["v1", "/"], ["v1.1", "/v1.1"], ["v2", "/v2"], ["v3", "/v3"]] as const
-    return (
-        <div className={`v3-version-switch ${className}`.trim()} aria-label="Choose site version">
-            {versions.map(([version, href]) => <Link key={version} to={href} aria-current={active === version ? "page" : undefined}>{version}</Link>)}
-        </div>
-    )
-}
-
 export function V3Nav() {
     const { pathname } = useLocation()
     const [open, setOpen] = useState(false)
@@ -56,11 +46,11 @@ export function V3Nav() {
                 </Link>
                 <button type="button" className="v3-menu-btn" aria-expanded={open} aria-controls="v3NavLinks" onClick={() => setOpen(o => !o)}>Menu</button>
                 <div className={"v3-nav-links" + (open ? " open" : "")} id="v3NavLinks">
-                    <V3VersionSwitch className="v3-version-switch--mobile" />
+                    <VersionSwitch className="v3-version-switch v3-version-switch--mobile" />
                     {NAV_LINKS.map(([label, href]) => (
                         <Link key={href} className={"pl" + (pathname === href ? " active" : "")} to={href} onClick={() => setOpen(false)}>{label}</Link>
                     ))}
-                    <V3VersionSwitch className="v3-version-switch--desktop" />
+                    <VersionSwitch className="v3-version-switch v3-version-switch--desktop" />
                     <Link className="btn btn-solid v3-nav-cta" to="/v3/demo" onClick={() => setOpen(false)}>Book a demo</Link>
                 </div>
             </div>

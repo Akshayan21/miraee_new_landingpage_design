@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom"
 import { EO } from "../animations/easings"
 import ThemeToggle from "./ThemeToggle"
 import { useWindowWidth } from "../hooks/useWindowSize"
+import { SITE_VERSIONS, resolveSiteVersion } from "../lib/siteVersions"
 
 export const useVW = useWindowWidth
 
@@ -57,7 +58,7 @@ export function SiteNav() {
     const vw = useWindowWidth()
     const pathname = useLocation().pathname
     const isV11 = pathname === "/v1.1" || pathname.startsWith("/v1.1/")
-    const activeVersion = isV11 ? "v1.1" : pathname.startsWith("/v3") ? "v3" : pathname === "/v2" || (!pathname.startsWith("/v1/") && pathname !== "/") ? "v2" : "v1"
+    const activeVersion = resolveSiteVersion(pathname)
     const isMobile = vw < 640
     const isCompact = vw < 1180
     const [open, setOpen] = useState(false)
@@ -85,7 +86,7 @@ export function SiteNav() {
                 )}
                 <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 4 : 16 }}>
                     <div className="site-version-switch" aria-label="Choose site version" style={{ display: "flex", alignItems: "center", padding: 3, border: "1px solid rgba(var(--text-rgb),0.10)", borderRadius: 100, background: "rgba(var(--text-rgb),0.035)" }}>
-                        {(["v1", "v1.1", "v2", "v3"] as const).map(version => <Link key={version} to={version === "v1" ? "/" : `/${version}`} aria-current={activeVersion === version ? "page" : undefined}
+                        {SITE_VERSIONS.map(([version, href]) => <Link key={version} to={href} aria-current={activeVersion === version ? "page" : undefined}
                             style={{ display: "grid", placeItems: "center", minWidth: isMobile ? 26 : 38, height: isMobile ? 26 : 30, padding: isMobile ? "0 4px" : "0 8px", borderRadius: 100, background: activeVersion === version ? T.ink : "transparent", color: activeVersion === version ? T.cream : T.muted, fontSize: isMobile ? 9 : 10, fontFamily: F, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s ease,color .2s ease" }}>{version}</Link>)}
                     </div>
                     {!isMobile && <ThemeToggle size={34} />}

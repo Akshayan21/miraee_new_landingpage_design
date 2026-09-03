@@ -39,6 +39,22 @@ const DisputeNotice = lazy(() => import("./pages/DisputeNotice"))
 const BookDemo = lazy(() => import("./pages/BookDemo"))
 const NotFound = lazy(() => import("./pages/NotFound"))
 
+// v4 — the current build. Pages live in ./pages/v4/ because it is the only
+// version with a parent/child hierarchy (Resources hub + children).
+const V4Home = lazy(() => import("./pages/v4/Home"))
+const V4Platform = lazy(() => import("./pages/v4/Platform"))
+const V4Solutions = lazy(() => import("./pages/v4/Solutions"))
+const V4Technology = lazy(() => import("./pages/v4/Technology"))
+const V4WhyMiraee = lazy(() => import("./pages/v4/WhyMiraee"))
+const V4Company = lazy(() => import("./pages/v4/Company"))
+const V4Resources = lazy(() => import("./pages/v4/Resources"))
+const V4Calculator = lazy(() => import("./pages/v4/Calculator"))
+const V4HelpCenter = lazy(() => import("./pages/v4/HelpCenter"))
+const V4ResourcesGuides = lazy(() => import("./pages/v4/ResourceStub").then(m => ({ default: m.V4ResourcesGuides })))
+const V4ResourcesBlog = lazy(() => import("./pages/v4/ResourceStub").then(m => ({ default: m.V4ResourcesBlog })))
+const V4ResourcesNews = lazy(() => import("./pages/v4/ResourceStub").then(m => ({ default: m.V4ResourcesNews })))
+const V4ResourcesLife = lazy(() => import("./pages/v4/ResourceStub").then(m => ({ default: m.V4ResourcesLife })))
+
 function PageFallback() {
     return (
         <div className="page-preloader min-h-screen flex flex-col gap-5 items-center justify-center bg-page" aria-label="Loading Miraee">
@@ -64,6 +80,19 @@ export default function App() {
                     <Route path="/v3/hr" element={<HrV3 />} />
                     <Route path="/v3/enterprise" element={<EnterpriseV3 />} />
                     <Route path="/v3/demo" element={<DemoV3 />} />
+                    <Route path="/v4" element={<V4Home />} />
+                    <Route path="/v4/platform" element={<V4Platform />} />
+                    <Route path="/v4/solutions" element={<V4Solutions />} />
+                    <Route path="/v4/technology" element={<V4Technology />} />
+                    <Route path="/v4/why-miraee" element={<V4WhyMiraee />} />
+                    <Route path="/v4/company" element={<V4Company />} />
+                    <Route path="/v4/resources" element={<V4Resources />} />
+                    <Route path="/v4/resources/guides" element={<V4ResourcesGuides />} />
+                    <Route path="/v4/resources/life-at-miraee" element={<V4ResourcesLife />} />
+                    <Route path="/v4/resources/blog" element={<V4ResourcesBlog />} />
+                    <Route path="/v4/resources/news" element={<V4ResourcesNews />} />
+                    <Route path="/v4/resources/calculator" element={<V4Calculator />} />
+                    <Route path="/v4/resources/help-center" element={<V4HelpCenter />} />
                     <Route path="/v1/product" element={<V1Product />} />
                     <Route path="/v1/technology" element={<V1Technology />} />
                     <Route path="/v1/solutions" element={<V1Solutions />} />
