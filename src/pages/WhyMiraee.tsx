@@ -4,6 +4,8 @@ import { Link } from "react-router-dom"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SiteNav, V1Footer } from "../components/LegalFormKit"
+import V11Hero from "../components/V11Hero"
+import "./HomeV12.css"
 import V11PageImage from "../components/V11PageImage"
 import whyPageImg from "../../images/weavy/v1/solutions/v1-solutions-employees.webp"
 gsap.registerPlugin(ScrollTrigger)
@@ -60,132 +62,60 @@ function SmoothScrollStyle() {
 }
 
 // --- Content (verbatim from WhyMiraeeV2.tsx) ----------------------------------
+// Copy below is taken verbatim from the website content document (Page 4).
+// Doc note: competitor names stay out of on-page copy; they are targeted via
+// the SEO title/meta and Resources comparison articles instead.
+
+// Doc section 2 — What actually changes (Stage / Today / With Miraee).
 const shift: [string, string, string][] = [
-    ["Planning a trip", "The traveler searches across tools, guesses at policy, and assembles an itinerary themselves.", "The traveler describes the trip. A policy-safe itinerary comes back in under a minute."],
-    ["Staying in policy", "Policy is a document. Violations are discovered at approval, after the choice is made.", "Policy is applied at search - travel policy compliance by default, not by audit."],
-    ["Getting approval", "A request sits in a queue while someone reconstructs the context to judge it.", "Routine trips book themselves. What reaches an approver is a genuine exception, with full context attached."],
-    ["Handling disruption", "The traveler discovers the cancellation, then opens a ticket and waits.", "The agent detects it, prices alternatives against policy, and either rebooks or brings one decision."],
-    ["Filing the expense", "The traveler collects receipts, codes them, and submits a report. Finance chases the gaps.", "The expense is captured, coded and reconciled at the transaction - automated expense reporting, no report exists to file."],
-    ["Getting help", "A support queue with none of the trip context. The traveler re-explains everything.", "A travel specialist in the same thread, with the whole trip already in front of them."],
+    ["Planning a trip", "The traveler assembles it across tools", "Describes it and gets a policy-safe itinerary in under a minute"],
+    ["Staying in policy", "Violations are found at approval", "Policy is applied at search; only compliant options appear"],
+    ["Getting approval", "A queue, with context reconstructed from emails", "Routine trips self-book inside limits; only real exceptions escalate, with context attached"],
+    ["Handling disruption", "The traveler discovers it and opens a ticket", "The agent detects it, prices alternatives, rebooks in band or brings one decision"],
+    ["Filing the expense", "Collect, code, submit; finance chases the gaps", "Captured, coded and reconciled at the transaction"],
+    ["Getting help", "A support queue with no context", "A specialist in the same thread with the full trip attached"],
 ]
 
+// Doc section 3 — Side by side, table one: capabilities.
 const capabilityCompare: [string, string, string, string][] = [
-    ["Natural-language planning", "-", "-", "Included"],
-    ["Policy applied before booking", "Partial", "Partial", "Included"],
-    ["Proactive disruption handling", "Reactive", "-", "Included"],
-    ["Expense prepared automatically", "-", "Partial", "Included"],
-    ["Business and personal travel", "-", "-", "Included"],
-    ["24/7 human support", "Included", "Ticket queue", "Included"],
-    ["Agents that complete the work", "-", "-", "Included"],
+    ["Natural-language planning", "No", "No", "Yes"],
+    ["Policy applied before booking", "Partial, by agent", "Partial, at checkout", "Yes, at search"],
+    ["Proactive disruption handling", "By phone, during hours", "Notification only", "Detect, price, rebook in band"],
+    ["Expense prepared automatically", "No", "Partial, receipt capture", "Coded, matched, posted"],
+    ["Business and personal travel", "No", "No", "Yes, separate ledgers"],
+    ["24/7 human support", "Often extra cost", "Chat, limited", "Included, same thread"],
+    ["Agents that complete the work", "Humans do", "Software returns options", "Yes, inside written limits"],
 ]
 
+// Doc section 3 — table two: commercials. Rewritten per the doc so no claim
+// implies supplier change penalties are waived.
 const commercials: [string, string, string, string][] = [
-    ["Booking fees", "Per transaction", "Usually none", "None"],
-    ["Change and cancellation fees", "Per change", "Varies", "None"],
-    ["Cost of speaking to a human", "Per call or service tier", "Not offered", "Included"],
-    ["Expense management", "Separate contract", "Included", "Included"],
-    ["Expense reports per trip", "One", "One", "Zero"],
+    ["Platform booking fee", "Per transaction", "Per user or per trip", "None"],
+    ["Platform change fee", "Per transaction", "Varies", "None. Supplier fare rules apply"],
+    ["Human support", "Priced per call or tier", "Tiered", "Included"],
+    ["Expense management", "Separate product", "Bundled or add-on", "Included"],
+    ["Expense reports per trip", "One, by the traveler", "One, partly pre-filled", "None to file"],
 ]
 
+// Doc section 4 — The hard questions.
 const hardQuestions: [string, string][] = [
-    ["“We just signed with our TMC.”", "Most travel contracts have a volume commitment rather than an exclusivity clause. Companies commonly run Miraee alongside an existing agreement for a single team or region first, then move the rest at renewal. We will read your contract with you and tell you honestly whether now is the right moment - including when it isn't."],
-    ["“Our travelers won't adopt another tool.”", "They are not being asked to learn a tool. They describe the trip in a sentence and it comes back booked. Adoption resistance in corporate travel comes from tools that demand more of the traveler than the workaround does; Miraee demands less than booking it themselves on a consumer site, which is what most people currently do."],
-    ["“We can't let AI book without approval.”", "Then don't. Every boundary is configurable and every default can be tightened, including requiring approval on every booking. Most companies start there and loosen the limits once they can see the audit trail. What agents may and may not do is published in full on our security page, not buried in a contract."],
-    ["“Our travel policy is too complex.”", "Complex policy is the argument for this, not against it. Rules that vary by route, grade, entity and trip type are exactly what people fail to follow when policy is a document. Applied at the point of search, complexity costs the traveler nothing because they never see the options that don't apply to them - travel policy compliance without added friction."],
-    ["“What happens when a trip goes badly wrong?”", "A human travel specialist, 24/7, in the same thread, with the full trip context already in front of them - included, not billed per call. Automation that cannot escalate is a trap, which is why escalation is a product decision rather than an exception."],
-    ["“You're new.”", "The software is. The company is not. Miraee is built by Tabhi - a group of 23 travel businesses holding direct supplier contracts, institutionally backed, already serving travelers at global scale. We are not reselling someone else's inventory or hoping to raise the next round."],
+    ["“We just signed with our TMC.”", "Run Miraee alongside it for one team. Your TMC keeps the contract; your pilot group gets a different experience. Compare at renewal with your own numbers."],
+    ["“Our travelers won’t adopt another tool.”", "There is nothing to learn. Employees describe a trip in the chat or email they already use, and the agent does the rest. Adoption is the absence of a tool."],
+    ["“We can’t let AI book without approval.”", "Then it won’t. Every autonomous action sits inside limits you set, and out-of-policy bookings always require a named human. Start with approval on everything and relax it when the audit trail earns it."],
+    ["“Our travel policy is too complex.”", "Complex policy is exactly what breaks when humans apply it at approval time. The agent applies per-role, per-entity, per-route rules at search, every time, and shows its reasoning."],
+    ["“What happens when a trip goes badly wrong?”", "A person, 24/7, in the same thread, with the full trip in front of them. The agent handles the routine so humans are available for the hard cases."],
+    ["“You’re new.”", "Miraee is new. The supply behind it is not. Mondee has direct contracts with 500+ airlines and 2M+ hotels and has moved travelers at scale for years. The group is institutionally backed. What is new is the operating model, and we would rather show it on your trip than describe it."],
 ]
 
+// Doc section 5 — Switching, without a big-bang (four steps with owners).
 const switching: [string, string, string][] = [
-    ["Policy", "We translate your existing travel policy into rules the agent applies at the point of search.", "Miraee, with your travel team"],
-    ["Connect", "SSO, HRIS and ERP connected. Travelers provisioned automatically.", "Miraee, with your IT team"],
-    ["Pilot", "One team, real trips, live support. The rules get adjusted against reality, not assumptions.", "Both"],
-    ["Roll out", "Company-wide, with traveler onboarding and admin training.", "Miraee"],
+    ["Policy", "We translate your existing policy into agent rules with your travel team.", "Miraee, with your travel team"],
+    ["Connect", "SSO, HRIS and ERP with your IT team. Users provision automatically.", "Miraee, with your IT team"],
+    ["Pilot", "One team, real trips, live support. Typically four to six weeks.", "Both"],
+    ["Roll out", "Company-wide, with traveler onboarding and admin training. Full deployment in as little as 90 days.", "Miraee"],
 ]
 
 // --- Hero ----------------------------------------------------------------------
-const wordVariants = {
-    hidden: { y: "110%", opacity: 0, rotateX: -45 },
-    visible: (i: number) => ({ y: "0%", opacity: 1, rotateX: 0,
-        transition: { duration: 0.75, delay: 0.3 + i * 0.055, ease: "easeOut" as const } }),
-}
-
-function WhyHero() {
-    const w = useWindowWidth()
-    const isMobile = w < 768
-    const isTablet = w < 1024
-    const heroRef = useRef<HTMLDivElement>(null)
-    const heroInnerRef = useRef<HTMLDivElement>(null)
-
-    useGSAP((gsap, ST) => {
-        if (!heroRef.current || !heroInnerRef.current) return
-        gsap.to(heroInnerRef.current, { y: -140, ease: "none",
-            scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 1.5 } })
-    }, [])
-
-    const line1 = ["Your", "travel", "program"]
-    const line2 = ["isn't", "broken."]
-    const line3 = ["Its", "architecture", "is."]
-    const accentWords = new Set(["is."])
-
-    let wordIdx = 0
-    const renderLine = (words: string[]) => words.map((word) => {
-        const idx = wordIdx++
-        return (
-            <span key={idx} style={{ display: "inline-block", overflow: "hidden", verticalAlign: "bottom", lineHeight: 1.15, perspective: 1000, marginRight: "0.22em" }}>
-                <motion.span custom={idx} variants={wordVariants} initial="hidden" animate="visible"
-                    style={{ display: "inline-block", backfaceVisibility: "hidden",
-                        color: accentWords.has(word) ? T.orange : T.ink, fontStyle: (word === "Its" || word === "architecture" || word === "is.") ? "italic" : "normal" }}>
-                    {word}
-                </motion.span>
-            </span>
-        )
-    })
-
-    return (
-        <section ref={heroRef} style={{ position: "relative", minHeight: "100vh", background: "radial-gradient(circle at 50% 0%, rgba(229,86,2,0.12), transparent 32%), var(--bg)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(var(--text-rgb),0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--text-rgb),0.035) 1px, transparent 1px)", backgroundSize: "72px 72px", pointerEvents: "none" }} />
-            <div style={{ position: "absolute", top: 0, left: 0, width: 120, height: 120, borderTop: "1px solid rgba(229,86,2,0.15)", borderLeft: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }} />
-            <div style={{ position: "absolute", bottom: 0, right: 0, width: 120, height: 120, borderBottom: "1px solid rgba(229,86,2,0.15)", borderRight: "1px solid rgba(229,86,2,0.15)", pointerEvents: "none" }} />
-            <div ref={heroInnerRef} style={{ position: "relative", top: isMobile ? 0 : isTablet ? 36 : 48, zIndex: 3, maxWidth: 920, textAlign: "center", padding: isMobile ? "120px 24px 80px" : isTablet ? "100px 48px 80px" : "0 64px", willChange: "transform" }}>
-                <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" as const }}
-                    style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 20px", border: "1px solid rgba(var(--text-rgb),0.15)", borderRadius: 100, marginBottom: 48, background: "rgba(var(--text-rgb),0.05)" }}>
-                    <motion.div animate={{ scale: [1, 1.6, 1], opacity: [0.7, 1, 0.7] }} transition={{ duration: 2, repeat: Infinity }}
-                        style={{ width: 6, height: 6, borderRadius: "50%", background: T.orange, flexShrink: 0 }} />
-                    <span style={{ fontSize: 11, fontFamily: "Plus Jakarta Sans", color: T.ink, letterSpacing: "0.13em", textTransform: "uppercase", fontWeight: 700 }}>Why Miraee</span>
-                </motion.div>
-                <h1 style={{ fontSize: isMobile ? 34 : isTablet ? 54 : 72, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.06, letterSpacing: "-0.03em", margin: "0 0 36px", textAlign: "center" }}>
-                    <span style={{ display: "block", textAlign: "center" }}>{renderLine(line1)}</span>
-                    <span style={{ display: "block", textAlign: "center" }}>{renderLine(line2)}</span>
-                    <span style={{ display: "block", textAlign: "center" }}>{renderLine(line3)}</span>
-                </h1>
-                <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 1.05, ease: "easeOut" as const }}
-                    style={{ fontSize: isMobile ? 16 : 19, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, maxWidth: 620, margin: "0 auto 52px", fontWeight: 400 }}>
-                    Every tool in corporate travel management solved one stage and handed the traveler to the next. The problem was never the booking screen. It was the handoff.
-                </motion.p>
-                <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.25, ease: "easeOut" as const }}
-                    style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-                    <motion.div whileHover={{ scale: 1.04, boxShadow: "0 14px 48px rgba(229,86,2,0.55)" }} whileTap={{ scale: 0.97 }}>
-                        <Link to="/book-a-demo" style={{ padding: isMobile ? "14px 30px" : "17px 42px", background: T.orange, color: T.white, borderRadius: 12, fontSize: 15, fontFamily: "Plus Jakarta Sans", fontWeight: 700, textDecoration: "none", display: "inline-block", letterSpacing: "0.01em" }}>
-                            See the difference live
-                        </Link>
-                    </motion.div>
-                    <motion.a href="#compare" whileHover={{ borderColor: "rgba(var(--text-rgb),0.4)", color: T.ink, background: "rgba(var(--text-rgb),0.04)" }} whileTap={{ scale: 0.97 }}
-                        style={{ padding: isMobile ? "14px 30px" : "17px 42px", border: "1px solid rgba(var(--text-rgb),0.18)", color: "rgba(var(--text-rgb),0.65)", borderRadius: 12, fontSize: 15, fontFamily: "Plus Jakarta Sans", fontWeight: 500, textDecoration: "none", display: "inline-block", transition: "all 0.22s" }}>
-                        Compare side by side
-                    </motion.a>
-                </motion.div>
-            </div>
-            <motion.div style={{ position: "absolute", bottom: 36, left: 0, right: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 6, zIndex: 4 }}
-                animate={{ y: [0, 10, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}>
-                <span style={{ fontSize: 9, fontFamily: "Plus Jakarta Sans", color: "rgba(var(--text-rgb),0.3)", letterSpacing: "0.14em", textTransform: "uppercase" }}>Scroll</span>
-                <div style={{ width: 1, height: 52, background: "linear-gradient(to bottom,rgba(229,86,2,0.7),transparent)" }} />
-            </motion.div>
-        </section>
-    )
-}
 
 // --- The Shift -------------------------------------------------------------------
 function TheShift() {
@@ -210,11 +140,8 @@ function TheShift() {
                     <div style={{ marginBottom: isMobile ? 48 : 72 }}>
                         <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>What Actually Changes</span>
                         <h2 style={{ fontSize: isMobile ? 30 : isTablet ? 44 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 18px", maxWidth: 720 }}>
-                            From tools that wait to agents that act.
+                            What actually changes.
                         </h2>
-                        <p style={{ fontSize: 16, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.7, margin: 0, maxWidth: 560 }}>
-                            The difference is not the interface. It is who does the work.
-                        </p>
                     </div>
                 </Reveal>
 
@@ -334,18 +261,18 @@ function SideBySide() {
                         Side by Side
                     </motion.span>
                     <h2 style={{ fontSize: isMobile ? 28 : isTablet ? 44 : 56, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: 0, maxWidth: 700 }}>
-                        Same trip. Different operating model.
+                        Side by side.
                     </h2>
                 </div>
 
                 <div className="compare-block" style={{ marginBottom: 48 }}>
                     <h3 style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", margin: "0 0 18px" }}>Capability</h3>
-                    <CompareTable caption="Capability comparison" headers={["Capability", "Legacy TMC", "First-gen T&E", "Miraee"]} rows={capabilityCompare} />
+                    <CompareTable caption="Capability comparison" headers={["Capability", "Legacy TMC", "First-gen T&E tool", "Miraee"]} rows={capabilityCompare} />
                 </div>
 
                 <div className="compare-block">
                     <h3 style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", margin: "0 0 18px" }}>Commercials</h3>
-                    <CompareTable caption="Commercial terms comparison" headers={["Terms", "Legacy TMC", "First-gen T&E", "Miraee"]} rows={commercials} />
+                    <CompareTable caption="Commercial terms comparison" headers={["Commercials", "Legacy TMC", "First-gen T&E tool", "Miraee"]} rows={commercials} />
                 </div>
             </div>
         </section>
@@ -399,7 +326,7 @@ function HardQuestions() {
                     <div style={{ marginBottom: isMobile ? 40 : 64 }}>
                         <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>The Hard Questions</span>
                         <h2 style={{ fontSize: isMobile ? 28 : isTablet ? 42 : 52, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.1, letterSpacing: "-0.03em", margin: 0 }}>
-                            What people ask before they switch.
+                            The hard questions.
                         </h2>
                     </div>
                 </Reveal>
@@ -437,11 +364,8 @@ function Switching() {
                     <div style={{ marginBottom: isMobile ? 48 : 72 }}>
                         <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.orange, fontFamily: "Plus Jakarta Sans", display: "inline-block", marginBottom: 16 }}>Switching</span>
                         <h2 style={{ fontSize: isMobile ? 30 : isTablet ? 44 : 54, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 16px", maxWidth: 640 }}>
-                            Live in weeks, not quarters.
+                            Switching, without a big-bang.
                         </h2>
-                        <p style={{ fontSize: 16, color: T.muted, fontFamily: "Plus Jakarta Sans", lineHeight: 1.7, margin: 0, maxWidth: 520 }}>
-                            Most of the work is decisions, not deployment.
-                        </p>
                     </div>
                 </Reveal>
 
@@ -493,10 +417,10 @@ function WhyCTA() {
                     See the Agent in Action
                 </span>
                 <h2 style={{ fontSize: isMobile ? 32 : isTablet ? 48 : 60, fontFamily: "Cardo,serif", fontWeight: 700, color: T.ink, lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 24px" }}>
-                    Experience the agentic travel.
+                    Bring the trip that<br />always goes wrong.
                 </h2>
                 <p style={{ fontSize: isMobile ? 15 : 17, color: "rgba(var(--text-rgb),0.5)", fontFamily: "Plus Jakarta Sans", lineHeight: 1.8, margin: "0 auto 44px", maxWidth: 560 }}>
-                    Twenty minutes. The multi-city one, the one that always gets changed, the one nobody spends correctly. We'll run it live.
+                    The multi-city one. The one that always gets changed. The one nobody expenses correctly. Twenty minutes, live.
                 </p>
                 <motion.div style={{ display: "inline-block" }} whileHover={{ scale: 1.04, boxShadow: "0 14px 48px rgba(229,86,2,0.55)" }} whileTap={{ scale: 0.97 }}>
                     <Link to="/book-a-demo" style={{ padding: isMobile ? "16px 34px" : "18px 46px", background: T.orange, color: T.white, borderRadius: 12, fontSize: 15, fontFamily: "Plus Jakarta Sans", fontWeight: 700, textDecoration: "none", display: "inline-block", letterSpacing: "0.01em" }}>
@@ -511,8 +435,9 @@ function WhyCTA() {
 // --- Page ------------------------------------------------------------------------
 export default function MiraeeWhyMiraeePage() {
     useEffect(() => {
-        document.title = "Why Miraee - The Alternative to Legacy Corporate Travel"
-        const description = "Legacy TMCs charge per transaction. First-generation tools moved the work to the traveler. Miraee is travel management software built around AI agents that complete the trip instead of simply presenting options."
+        document.title = "Why Miraee | Compared with TMCs and Travel & Expense Tools"
+        // Meta description per the doc's Why Miraee SEO brief.
+        const description = "Side by side with legacy TMCs and first-generation T&E tools, plus straight answers to the hard questions. Your travel program is not broken. Its architecture is."
         let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]')
         if (!meta) {
             meta = document.createElement("meta")
@@ -531,7 +456,14 @@ export default function MiraeeWhyMiraeePage() {
         <div className="v1-type-page" style={{ background: "var(--page-bg)" }}>
             <SmoothScrollStyle />
             <SiteNav />
-            <WhyHero />
+            <V11Hero
+                kicker="Why Miraee"
+                title="Your travel program isn't broken."
+                accent="Its architecture is."
+                sub="Every tool in corporate travel solved one stage and handed the traveler to the next. The problem was never the booking screen. It was the handoff."
+                primaryCta={{ label: "See the difference live", href: "/book-a-demo" }}
+                secondaryCta={{ label: "Compare side by side ↓", href: "#compare" }}
+                image={{ src: whyPageImg, alt: "Employee beginning a business journey with confidence" }} />
             <V11PageImage src={whyPageImg} alt="Employee beginning a business journey with confidence" label="A better way to travel" caption="Employees get a personal experience while the business gains one continuous view of the journey." position="center 38%" mobilePosition="56% center" />
             <TheShift />
             <SideBySide />

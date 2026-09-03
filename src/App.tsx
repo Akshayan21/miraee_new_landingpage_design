@@ -17,6 +17,7 @@ const HrV3 = lazy(() => import("./pages/HrV3"))
 const EnterpriseV3 = lazy(() => import("./pages/EnterpriseV3"))
 const DemoV3 = lazy(() => import("./pages/DemoV3"))
 const V1Product = lazy(() => import("./pages/Product"))
+const V1ForTeams = lazy(() => import("./pages/ForTeams"))
 const V1Technology = lazy(() => import("./pages/Technology"))
 const V1Solutions = lazy(() => import("./pages/Solutions"))
 const V1Security = lazy(() => import("./pages/Security"))
@@ -73,6 +74,7 @@ export default function App() {
                     <Route path="/v1.1/product" element={<div className="v11-route v11-alternating-route"><V1Product /></div>} />
                     <Route path="/v1.1/technology" element={<div className="v11-route v11-alternating-route"><V1Technology /></div>} />
                     <Route path="/v1.1/solutions" element={<div className="v11-route v11-alternating-route"><V1Solutions /></div>} />
+                    <Route path="/v1.1/for-teams" element={<div className="v11-route v11-alternating-route"><V1ForTeams /></div>} />
                     <Route path="/v1.1/security" element={<div className="v11-route v11-alternating-route"><V1Security /></div>} />
                     <Route path="/v1.1/about" element={<div className="v11-route v11-alternating-route"><V1About /></div>} />
                     <Route path="/v1.1/why-miraee" element={<div className="v11-route v11-alternating-route"><V1WhyMiraee /></div>} />

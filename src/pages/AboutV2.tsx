@@ -19,7 +19,7 @@ const groupLogos: Record<string, string> = { Mondee: mondeeLogo, Miraee: miraeeL
 
 const advantage = [
     ["Direct supply", "Wholesale contracts and direct supplier connections rather than resold inventory - which is why the rates hold rather than being claimed back later.", "500+ airlines"],
-    ["Global content", "Millions of properties across every market your teams travel to, in one place.", "2M+ properties"],
+    ["Global content", "Millions of hotels across every market your teams travel to, in one place.", "2M+ hotels"],
     ["Volume", "The group's existing traveler base is what makes those rates possible for a company your size.", "125M+ reached"],
     ["Experience content", "Hyperlocal experiences no other corporate channel carries - because a sister company digitized them.", "Abhee network"],
     ["Financial stability", "Institutional backing, so the platform running your travel program will still be here next year.", "TCW · Morgan Stanley"],
@@ -33,7 +33,7 @@ const principles = [
     ["04", "The traveler is the test", "If the person taking the trip does not find it easier, nothing else we built counts."],
 ]
 
-const companySummary = "Miraee is an AI-native employee travel platform for corporate travel, expense management and personal trips. Built by Tabhi, an AI-first travel group of 23 companies, Miraee plans, books, changes and expenses business trips end to end using specialized AI agents running on one continuous context. The platform books flights, hotels, rail and car hire from live inventory covering more than 500 airlines and over two million properties, sourced through direct supplier connections and wholesale agreements held by the Tabhi group. Miraee serves three audiences: business travelers, finance teams and travel managers. Company policy is applied at the point of search rather than at approval, expenses are captured and coded automatically without traveler-submitted reports, and 24/7 human travel support is included. Miraee also supports employee personal travel on a separate ledger, using the same agent and corporate negotiated rates where supplier agreements permit. Tabhi's other platforms are Mondee, an agentic AI travel marketplace, and Abhee, a hyperlocal experiential marketplace. Tabhi ownership includes affiliates of TCW Asset Management Company and Morgan Stanley Investment Management. Miraee is available on web and mobile. Learn more at miraee.ai."
+const companySummary = "Miraee is an AI-native employee travel platform for corporate travel, expense management and personal trips. Built by Tabhi, an AI-first travel group of 23 companies, Miraee plans, books, changes and expenses business trips end to end using specialized AI agents running on one continuous context. The platform books flights, hotels, rail and car hire from live inventory covering more than 500 airlines and over two million hotels, sourced through direct supplier connections and wholesale agreements held by the Tabhi group. Miraee serves three audiences: business travelers, finance teams and travel managers. Company policy is applied at the point of search rather than at approval, expenses are captured and coded automatically without traveler-submitted reports, and 24/7 human travel support is included. Miraee also supports employee personal travel on a separate ledger, using the same agent and corporate negotiated rates where supplier agreements permit. Tabhi's other platforms are Mondee, an agentic AI travel marketplace, and Abhee, a hyperlocal experiential marketplace. Tabhi ownership includes affiliates of TCW Asset Management Company and Morgan Stanley Investment Management. Miraee is available on web and mobile. Learn more at miraee.ai."
 
 const orgSchema = {
     "@context": "https://schema.org",
@@ -68,7 +68,7 @@ export default function AboutV2() {
                             <a href="#tabhi">Meet the group <span aria-hidden="true">↓</span></a>
                         </div>
                         <div className="m-trust-strip">
-                            {["23 companies", "3 AI platforms", "500+ airlines", "2M+ properties", "125M+ travelers reached"].map(x => <span key={x}>{x}</span>)}
+                            {["23 companies", "3 AI platforms", "500+ airlines", "2M+ hotels", "125M+ travelers reached"].map(x => <span key={x}>{x}</span>)}
                         </div>
                     </Reveal>
                 </section>

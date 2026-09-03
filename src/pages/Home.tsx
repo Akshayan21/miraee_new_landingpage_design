@@ -467,7 +467,7 @@ function Hero() {
                 {/* Mobile proof line */}
                 {isMobile && (
                     <FadeUp delay={1.4} style={{ marginTop: 36 }}>
-                        <p style={{ fontSize: 12, fontFamily: F, fontWeight: 500, color: T.muted, margin: 0 }}>Built by Tabhi · 2M+ properties</p>
+                        <p style={{ fontSize: 12, fontFamily: F, fontWeight: 500, color: T.muted, margin: 0 }}>Built by Tabhi · 2M+ hotels</p>
                     </FadeUp>
                 )}
                 </motion.div>
@@ -481,7 +481,7 @@ function Hero() {
 // ─── STAT STRIP ───────────────────────────────────────────────────────────────
 function StatStrip() {
     const STATS = [
-        { val: "2M+", label: "Properties" }, { val: "500+", label: "Airlines" },
+        { val: "2M+", label: "Hotels" }, { val: "500+", label: "Airlines" },
         { val: "200+", label: "AI agents" }, { val: "125M+", label: "Travelers reached" },
         { val: "20\u201330%", label: "Wholesale savings" }, { val: "24/7", label: "Human support" },
         { val: "100%", label: "Agent-managed" }, { val: "1", label: "Platform" },
@@ -714,7 +714,7 @@ function Problem() {
 
 // ─── SOLUTION — sticky scroll feature showcase ────────────────────────────────
 const SOLUTION_ITEMS = [
-    { num: "01", title: "Global content, local experiences", body: "Millions of properties and hundreds of airlines, plus hyperlocal experiences no one else has digitized.", accent: T.orange, stat: "2M+", statLabel: "properties", icon: "◈" },
+    { num: "01", title: "Global content, local experiences", body: "Millions of hotels and hundreds of airlines, plus hyperlocal experiences no one else has digitized.", accent: T.orange, stat: "2M+", statLabel: "hotels", icon: "◈" },
     { num: "02", title: "A swarm of specialized agents", body: "Booking, policy, negotiation, rebooking and expense agents that act, not just answer.", accent: "var(--accent-strong)", stat: "200+", statLabel: "deep AI agents", icon: "⬡" },
     { num: "03", title: "Human in the loop", body: "Real support and oversight where it matters, so autonomy never means blind trust.", accent: T.orange, stat: "24/7", statLabel: "human support", icon: "◉" },
 ]
