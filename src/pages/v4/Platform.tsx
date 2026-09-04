@@ -62,9 +62,9 @@ const CAPABILITIES: Capability[] = [
 
 // From ProductV2.tsx — "Fits the stack you already run".
 const INTEGRATIONS: string[][] = [
-    ["Identity", "SSO, SAML, SCIM, Okta, Entra", "Provision and deprovision travelers automatically. No orphaned accounts."],
+    ["Identity", "SSO, SAML, SCIM, Okta, Entra", "Provisions and deprovisions travelers automatically. No orphaned accounts."],
     ["People", "HRIS", "Grades, entities, cost centres and managers stay current without manual upkeep."],
-    ["Finance", "ERP, accounting systems, card networks", "Coded expenses post directly, corporate card expenses are managed automatically, and accounts payable is reconciled at source."],
+    ["Finance", "ERP, accounting systems, card networks", "Coded expenses post directly, corporate card spend is managed automatically, and accounts payable reconciles at source."],
     ["Work", "Calendar, email, chat", "Itineraries and changes appear where people already work."],
 ]
 
