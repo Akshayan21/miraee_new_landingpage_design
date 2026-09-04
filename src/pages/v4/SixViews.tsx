@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { motion, useReducedMotion } from "framer-motion"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import PersonaExperience, { PERSONA_SCRIPTS } from "../../components/PersonaExperience"
 import { Reveal } from "../../components/V4Kit"
 
@@ -29,6 +29,8 @@ export type SixViewRole = {
     label: string
     slug: string
     shift: string
+    body?: string
+    controls?: string[]
     rows: string[]
     cta: string
     href: string
@@ -50,26 +52,42 @@ function RoleStatement({ role, isMobile }: { role: SixViewRole; isMobile: boolea
                 Before
             </div>
             <p style={{
-                fontFamily: F, fontSize: isMobile ? 20 : "clamp(21px, 1.7vw, 26px)", fontWeight: 400,
-                lineHeight: 1.32, letterSpacing: "-0.02em", color: T.onDarkSoft, margin: "0 0 30px",
+                fontFamily: F, fontSize: isMobile ? 18 : "clamp(19px, 1.5vw, 24px)", fontWeight: 400,
+                lineHeight: 1.32, letterSpacing: "-0.02em", color: T.onDarkSoft, margin: "0 0 24px",
                 textDecoration: "line-through", textDecorationColor: T.accentLight,
                 textDecorationThickness: "1.5px", textUnderlineOffset: "2px",
             }}>
                 {before}
             </p>
-            <div style={{ fontFamily: F, fontSize: 10, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: T.accentLight, marginBottom: 14 }}>
+            <div style={{ fontFamily: F, fontSize: 10, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: T.accentLight, marginBottom: 12 }}>
                 With Miraee
             </div>
             {/* The visible headline is only the "after" half, so the full sentence
                 is exposed to assistive tech in a visually-hidden span. */}
-            <h3 style={{ fontFamily: F, fontSize: isMobile ? 30 : "clamp(32px, 3.4vw, 50px)", fontWeight: 700, lineHeight: 1.06, letterSpacing: "-0.035em", color: T.onDark, margin: 0 }}>
+            <h3 style={{ fontFamily: F, fontSize: isMobile ? 26 : "clamp(28px, 2.8vw, 42px)", fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.035em", color: T.onDark, margin: "0 0 16px" }}>
                 <span style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>{role.shift}</span>
                 <span aria-hidden="true">{after}</span>
             </h3>
+
+            {role.body && (
+                <p style={{ fontFamily: F, fontSize: isMobile ? 14 : 15, lineHeight: 1.65, color: T.onDarkSoft, margin: "0 0 16px" }}>
+                    {role.body}
+                </p>
+            )}
+
+            {role.controls && role.controls.length > 0 && (
+                <div className="v4-role-controls" aria-label={`Controls for ${role.label}`}>
+                    <span className="v4-role-controls__label">Controls</span>
+                    {role.controls.map(ctrl => (
+                        <span key={ctrl} className="v4-role-control-chip">{ctrl}</span>
+                    ))}
+                </div>
+            )}
+
             <Link to={role.href} style={{
                 display: "inline-flex", alignSelf: "flex-start", alignItems: "center", gap: 10,
-                marginTop: isMobile ? 30 : "auto", paddingTop: 30,
-                fontFamily: F, fontSize: 15, fontWeight: 700, color: T.accentLight, textDecoration: "none",
+                marginTop: isMobile ? 24 : "auto", paddingTop: 20,
+                fontFamily: F, fontSize: 14.5, fontWeight: 700, color: T.accentLight, textDecoration: "none",
                 borderBottom: "1px solid " + T.onDarkFaint,
             }}>
                 {role.cta} <span aria-hidden="true">&rarr;</span>
@@ -107,7 +125,27 @@ function RoleLedger({ role, isMobile, animate }: { role: SixViewRole; isMobile: 
 }
 
 export function SixViews({ roles, isMobile }: { roles: SixViewRole[]; isMobile: boolean }) {
-    const [active, setActive] = useState(0)
+    const { hash } = useLocation()
+    const [active, setActive] = useState(() => {
+        if (!hash) return 0
+        const targetSlug = hash.replace("#", "").toLowerCase()
+        const matchIndex = roles.findIndex(r => r.slug.toLowerCase() === targetSlug)
+        return matchIndex >= 0 ? matchIndex : 0
+    })
+
+    // Adjust active tab state during render when URL hash changes
+    const [prevHash, setPrevHash] = useState(hash)
+    if (prevHash !== hash) {
+        setPrevHash(hash)
+        if (hash) {
+            const targetSlug = hash.replace("#", "").toLowerCase()
+            const matchIndex = roles.findIndex(r => r.slug.toLowerCase() === targetSlug)
+            if (matchIndex >= 0) {
+                setActive(matchIndex)
+            }
+        }
+    }
+
     const reduce = useReducedMotion()
     const railRef = useRef<HTMLDivElement>(null)
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
@@ -135,10 +173,10 @@ export function SixViews({ roles, isMobile }: { roles: SixViewRole[]; isMobile: 
                     <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "minmax(0, 1fr) auto", gap: 24, alignItems: "end", marginBottom: isMobile ? 40 : 64 }}>
                         <div>
                             <div style={{ fontFamily: F, fontSize: 11, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: T.accentLight, marginBottom: 18 }}>
-                                One platform, six views
+                                Built for each seat
                             </div>
-                            <h2 id="sixviews-title" style={{ fontFamily: F, fontSize: "clamp(32px, 4.4vw, 62px)", fontWeight: 700, color: T.onDark, lineHeight: 1.04, letterSpacing: "-0.035em", margin: 0, maxWidth: "16ch" }}>
-                                What changes, <span style={{ color: T.accentLight, fontStyle: "italic" }}>role by role.</span>
+                            <h2 id="sixviews-title" style={{ fontFamily: F, fontSize: "clamp(32px, 4.4vw, 56px)", fontWeight: 700, color: T.onDark, lineHeight: 1.06, letterSpacing: "-0.035em", margin: 0, maxWidth: "22ch" }}>
+                                Everyone lands on a dashboard <span style={{ color: T.accentLight, fontStyle: "italic" }}>shaped to their role.</span>
                             </h2>
                         </div>
                         {!isMobile && (

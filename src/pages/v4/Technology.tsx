@@ -1,4 +1,5 @@
-import { V4Page, V4Hero, V4Cta, Reveal, EditorialRows } from "../../components/V4Kit"
+import { Fragment } from "react"
+import { V4Page, V4Hero, V4Cta, Reveal } from "../../components/V4Kit"
 import { SecurityV1 } from "./RefSections"
 import "../SubpagesV2.css"
 import "./V4.css"
@@ -16,9 +17,41 @@ const CONTRAST: { tag: string; title: string; copy: string }[] = [
     { tag: "Agentic AI · Miraee", title: "Plans, books, reconciles.", copy: "It interprets intent, enforces policy, handles disruptions, and escalates only when judgment is needed." },
 ]
 
+// The two panels were reading as equal options in a neutral card grid, when
+// the copy's actual argument is a step up from one to the other. The second
+// card (Miraee) now carries the visual weight — tint, filled tag, elevation —
+// with an arrow between them so the eye reads it as a transition, not a menu.
+function AgenticContrast({ panels }: { panels: { tag: string; title: string; copy: string }[] }) {
+    return (
+        <div className="v4-contrast">
+            {panels.map((panel, i) => (
+                <Fragment key={panel.tag}>
+                    {i > 0 && <span className="v4-contrast__arrow" aria-hidden="true">→</span>}
+                    <div className={"v4-contrast__card" + (i === panels.length - 1 ? " v4-contrast__card--win" : "")}>
+                        <span className="v4-contrast__tag">{panel.tag}</span>
+                        <h3>{panel.title}</h3>
+                        <p>{panel.copy}</p>
+                    </div>
+                </Fragment>
+            ))}
+        </div>
+    )
+}
+
 // Named only, no explanation — the structure doc flags the full descriptions as
 // repetitive with the Platform page's six capabilities.
 const AGENTS = ["Booking agent", "Policy agent", "Negotiation agent", "Rebooking agent", "Expense agent", "Support agent"]
+
+const GUARDRAIL_ICONS = [
+    // Full audit trail — a log/list.
+    <svg key="audit" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d="M8 4h11a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H8" /><path d="M4 4h2v16H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" /><path d="M12 9h5M12 13h5M12 17h3" /></svg>,
+    // Policy and budget guardrails — a shield.
+    <svg key="shield" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d="M12 3 4 6v6c0 4.5 3 7.7 8 9 5-1.3 8-4.5 8-9V6l-8-3Z" /><path d="m9 12 2 2 4-4" /></svg>,
+    // Role-based permissions — a keyed lock.
+    <svg key="lock" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /><circle cx="12" cy="15" r="1.4" /></svg>,
+    // Human in the loop — a person.
+    <svg key="human" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="7.5" r="3.2" /><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7" /></svg>,
+]
 
 const GUARDRAILS: string[][] = [
     ["Full audit trail", "Every agent action is recorded and attributable."],
@@ -26,6 +59,23 @@ const GUARDRAILS: string[][] = [
     ["Role-based permissions", "Approvals and access follow each person's responsibilities."],
     ["Human in the loop", "Genuine exceptions pause for human judgment."],
 ]
+
+// A flat row list undersold the section's job: this is the trust page's
+// safety argument, so each guarantee gets an icon of its own instead of just
+// a number, laid out as a scannable 2x2 grid rather than a linear reading list.
+function GuardrailGrid({ rows }: { rows: string[][] }) {
+    return (
+        <div className="v4-guardrails">
+            {rows.map(([title, body], i) => (
+                <div className="v4-guardrail" key={title}>
+                    <span className="v4-guardrail__icon">{GUARDRAIL_ICONS[i]}</span>
+                    <h3>{title}</h3>
+                    <p>{body}</p>
+                </div>
+            ))}
+        </div>
+    )
+}
 
 export default function V4Technology() {
     return (
@@ -41,19 +91,13 @@ export default function V4Technology() {
             <section className="v4-section v4-section--tint" id="assistant" aria-labelledby="assistant-title">
                 <div className="v4-shell">
                     <Reveal>
-                        <span className="v4-eyebrow">What is agentic AI?</span>
+                        <span className="v4-eyebrow">AI Assistant for Every Employee</span>
                         <h2 className="v4-h2" id="assistant-title">From assistants to agents.</h2>
                         <p className="v4-lede">Most AI travel products suggest while you execute. Miraee takes action end to end — agentic AI travel, not an assistant with a travel skin.</p>
                     </Reveal>
                     <Reveal delay={0.1}>
-                        <div className="v4-steps" style={{ marginTop: 36 }}>
-                            {CONTRAST.map(panel => (
-                                <div className="v4-step" key={panel.tag}>
-                                    <b className="v4-step__num">{panel.tag}</b>
-                                    <h3>{panel.title}</h3>
-                                    <p>{panel.copy}</p>
-                                </div>
-                            ))}
+                        <div style={{ marginTop: 36 }}>
+                            <AgenticContrast panels={CONTRAST} />
                         </div>
                     </Reveal>
                 </div>
@@ -64,7 +108,7 @@ export default function V4Technology() {
                     <Reveal>
                         <span className="v4-eyebrow">The architecture</span>
                         <h2 className="v4-h2" id="architecture-title">Not one agent. A workforce.</h2>
-                        <p className="v4-lede">Six specialized agents run each trip, all reading the same thread. Beneath them sits Tabhi's automation fabric — 200+ bots connecting supply, policy, payment and expense into one framework, so a trip never leaves the platform.</p>
+                        <p className="v4-lede">Six different specialized agents each running their own allotted task, under the same thread. Beneath them sits Tabhi intelligence connecting Mondee supply, policy, payment and expense all together woven into one framework, dedicatedly working to complete one single trip.</p>
                     </Reveal>
                     <Reveal delay={0.1}>
                         <ul className="v4-chips" style={{ marginTop: 30 }}>
@@ -96,7 +140,7 @@ export default function V4Technology() {
                     </Reveal>
                     <Reveal delay={0.1}>
                         <div style={{ marginTop: 32 }}>
-                            <EditorialRows headers={["Guardrail", "What it guarantees"]} rows={GUARDRAILS} caption="Governance guardrails" />
+                            <GuardrailGrid rows={GUARDRAILS} />
                         </div>
                     </Reveal>
                 </div>

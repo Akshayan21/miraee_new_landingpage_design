@@ -3,6 +3,55 @@ import type { ReactNode } from "react"
 import "../SubpagesV2.css"
 import "./V4.css"
 
+// "What actually changes" reads as a transformation, not a spreadsheet, so it
+// gets a before/after list instead of MiniTable: the old way struck through,
+// the new way as the visual payload, connected by an arrow. Mirrors the
+// struck-through convention SixViews already uses for the same "you used to
+// X, now you Y" shape, so the two pages read as one design language.
+function ShiftList({ rows }: { rows: string[][] }) {
+    return (
+        <ul className="v4-shift">
+            {rows.map(([job, before, after]) => (
+                <li className="v4-shift__row" key={job}>
+                    <span className="v4-shift__job">{job}</span>
+                    <span className="v4-shift__before">
+                        <span className="v4-shift__microlabel">Today</span>
+                        {before}
+                    </span>
+                    <span className="v4-shift__arrow" aria-hidden="true">→</span>
+                    <span className="v4-shift__after">
+                        <span className="v4-shift__microlabel">With Miraee</span>
+                        {after}
+                    </span>
+                </li>
+            ))}
+        </ul>
+    )
+}
+
+// The rollout plan is a sequence, not a spreadsheet — a table forces a reader
+// to scan three unrelated columns to find "what order does this happen in".
+// A connected stepper makes the order the first thing you see; the numeral
+// prefix already baked into each step's label ("01 · Policy") moves into a
+// real badge instead of being repeated as text.
+function StepperList({ rows }: { rows: string[][] }) {
+    return (
+        <div className="v4-stepper">
+            {rows.map(([step, body, who], i) => {
+                const title = step.includes(" · ") ? step.split(" · ")[1] : step
+                return (
+                    <div className="v4-stepper__node" key={step}>
+                        <span className="v4-stepper__badge" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                        <h3>{title}</h3>
+                        <p>{body}</p>
+                        <span className="v4-stepper__who">{who}</span>
+                    </div>
+                )
+            })}
+        </div>
+    )
+}
+
 // Why Miraee. Ported from WhyMiraeeV2.tsx — the differentiation argument the
 // manager's nav asks for, which the Part 1 structure doc has no page for.
 // The #switching section is the target of the Product menu's
@@ -62,7 +111,7 @@ export default function V4WhyMiraee() {
                     </Reveal>
                     <Reveal delay={0.1}>
                         <div style={{ marginTop: 28 }}>
-                            <MiniTable headers={["The job", "Today", "With Miraee"]} rows={SHIFT} caption="What changes, job by job" />
+                            <ShiftList rows={SHIFT} />
                         </div>
                     </Reveal>
                 </div>
@@ -74,10 +123,12 @@ export default function V4WhyMiraee() {
                         <span className="v4-eyebrow">Side by side</span>
                         <h2 className="v4-h2" id="compare-title">Same trip. Different operating model.</h2>
                     </Reveal>
-                    <Reveal delay={0.1}>
-                        <div style={{ marginTop: 28 }}>
-                            <MiniTable headers={["Capability", "Legacy TMC", "First-gen T&E", "Miraee"]} rows={CAPABILITY_COMPARE} caption="Capability comparison" />
-                        </div>
+                    {/* Boxed, pinned-column comparison treatment — same
+                        m-compare-block pattern WhyMiraeeV2 uses for this exact
+                        section, so the Miraee column reads as the winner via
+                        a checkmark + tint, not color alone. */}
+                    <Reveal className="m-compare-block" delay={0.1}>
+                        <MiniTable headers={["Capability", "Legacy TMC", "First-gen T&E", "Miraee"]} rows={CAPABILITY_COMPARE} caption="Capability comparison" highlightLast checkmark />
                     </Reveal>
                 </div>
             </section>
@@ -102,8 +153,8 @@ export default function V4WhyMiraee() {
                         <p className="v4-lede">Pilots reach full deployment in as little as 90 days, and nothing has to be switched off to start.</p>
                     </Reveal>
                     <Reveal delay={0.1}>
-                        <div style={{ marginTop: 28 }}>
-                            <MiniTable headers={["Step", "What happens", "Who is involved"]} rows={SWITCHING} caption="Implementation steps" />
+                        <div style={{ marginTop: 40 }}>
+                            <StepperList rows={SWITCHING} />
                         </div>
                     </Reveal>
                 </div>

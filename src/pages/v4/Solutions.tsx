@@ -1,12 +1,13 @@
 import { V4Page, V4Hero, V4Cta, Reveal, MiniTable } from "../../components/V4Kit"
 import { SixViews } from "./SixViews"
 import type { SixViewRole } from "./SixViews"
+import UseCasesShowcase from "./solutions/UseCasesShowcase"
 import { useWindowWidth } from "../../hooks/useWindowSize"
 import "../SubpagesV2.css"
 import "./V4.css"
 
-// Solutions. Section order per the Part 1 structure doc:
-//   six views (very minimal text) → persona table → use cases (reduced)
+// Solutions. Section order:
+//   six views (very minimal text) → use cases (V1.1) → persona table
 //   → duty of care (reduced).
 //
 // The six roles are the canonical set from ForTeams.tsx. Slugs are the
@@ -20,40 +21,94 @@ import "./V4.css"
 
 const ROLES: SixViewRole[] = [
     {
-        slug: "employees", label: "Employees",
-        shift: "You used to assemble a trip. Now you describe one.",
-        cta: "See a trip get planned", href: "/v4/platform#plan",
-        rows: ["Trip planning from a sentence", "Policy applied before you see options", "Rebooking handled in the same thread", "Receipts captured, no report to file", "Personal trips on the same agent"],
+        slug: "employees",
+        label: "Employees",
+        shift: "Used to assemble a trip. Now they describe one.",
+        body: "Book from a sentence, checked against policy as you go. The Receipt Scanner matches receipts to trips automatically, so there's no report to file. Your briefing carries currency, safety, visa and emergency numbers; Rewards tracks points to your next milestone.",
+        controls: ["My Trips", "Receipt Scanner", "Rewards"],
+        cta: "Experience through an Employee lens",
+        href: "/v4/platform#plan",
+        rows: [
+            "Trip planning from a sentence",
+            "Policy applied before you see options",
+            "Rebooking handled in the same thread",
+            "Receipts captured, no report to file",
+            "Personal trips on the same agent",
+        ],
     },
     {
-        slug: "finance", label: "Finance",
-        shift: "You used to reconcile the past. Now you watch the present.",
-        cta: "Run the ROI calculator", href: "/v4/resources/calculator",
-        rows: ["Committed spend visible at booking", "Automated reconciliation and ERP sync", "Wholesale rates 20 to 30% below published fares*", "Full exportable audit trail"],
-    },
-    {
-        slug: "travel-leads", label: "Travel leads",
-        shift: "You used to process bookings. Now you run a program.",
-        cta: "See the console", href: "/v4/platform",
-        rows: ["Program-wide analytics by team, entity and route", "Direct supply through Mondee", "MICE and group booking built in", "Exceptions routed to you with context"],
-    },
-    {
-        slug: "admins", label: "Admins",
-        shift: "You used to police every trip. Now you set the rule once.",
-        cta: "See policy setup", href: "/v4/platform#change",
-        rows: ["Per diem and policy enforced at search", "Approval routing by role and threshold", "Unified traveler profiles from HRIS", "One dashboard for the whole program"],
-    },
-    {
-        slug: "chros", label: "CHROs",
-        shift: "You used to enforce policy. Now you support people.",
-        cta: "See the traveler experience", href: "/v4/platform#personal",
-        rows: ["Consumer-grade traveler experience", "Duty of care and disruption support", "Policy applied the same way for everyone", "Optional incentives for cost-efficient choices"],
-    },
-    {
-        slug: "managers", label: "Managers",
+        slug: "managers",
+        label: "Managers",
         shift: "You used to chase approvals. Now only exceptions reach you.",
-        cta: "See approval flow", href: "/v4/platform#book",
-        rows: ["Routine trips self-book inside limits", "Exceptions arrive with full context", "Team-level visibility without a report"],
+        body: "Routine trips inside policy self-book. What reaches you arrives with estimated cost, exact policy overage, and an AI confidence score, decide in one glance. Team Analytics gives spend vs budget and compliance without a report.",
+        controls: ["Approvals", "Team Analytics", "Team Trips"],
+        cta: "See approval flow",
+        href: "/v4/platform#book",
+        rows: [
+            "Routine trips self-book inside limits",
+            "Exceptions arrive with full context",
+            "Team-level visibility without a report",
+        ],
+    },
+    {
+        slug: "finance",
+        label: "Finance",
+        shift: "You used to reconcile the past. Now you watch the present.",
+        body: "Committed spend shows at booking, not month-end. Track by department, category and top spenders; move reimbursements from pending to paid in one table. The CFO Dashboard rolls up spend vs budget, savings and cycle time, all exportable.",
+        controls: ["Accounts", "Approval chains", "Ceilings", "Suppliers", "Sign-off", "Audit log"],
+        cta: "Run the ROI calculator",
+        href: "/v4/resources/calculator",
+        rows: [
+            "Committed spend visible at booking",
+            "Automated reconciliation and ERP sync",
+            "Wholesale rates 20 to 30% below published fares*",
+            "Full exportable audit trail",
+        ],
+    },
+    {
+        slug: "travel-leads",
+        label: "Travel leads",
+        shift: "You used to process bookings. Now you run a program.",
+        body: "A Live Tracker shows route, status and ETA for every traveler in motion. The Booking Queue holds every open request in one place, with analytics by team, entity and route. MICE and group booking built in, direct supply through Mondee.",
+        controls: ["Live Tracker", "Booking Queue", "Program analytics"],
+        cta: "See the console",
+        href: "/v4/platform",
+        rows: [
+            "Program-wide analytics by team, entity and route",
+            "Direct supply through Mondee",
+            "MICE and group booking built in",
+            "Exceptions routed to you with context",
+        ],
+    },
+    {
+        slug: "admins",
+        label: "Admins",
+        shift: "You used to police every trip. Now you set the rule once.",
+        body: "Policy applies at search. The Overview shows the whole program, onboarding gaps, exceptions, budget, adoption, compliance and AI savings. Manage travelers and rules, run duty of care from the Live Map, reconcile in one place. The Agentic ROI Dashboard shows what the agent saved.",
+        controls: ["Overview", "Policies", "Live Map", "Agentic ROI"],
+        cta: "See policy setup",
+        href: "/v4/platform#change",
+        rows: [
+            "Per diem and policy enforced at search",
+            "Approval routing by role and threshold",
+            "Unified traveler profiles from HRIS",
+            "One dashboard for the whole program",
+        ],
+    },
+    {
+        slug: "chros",
+        label: "CHROs",
+        shift: "You used to enforce policy. Now you support people.",
+        body: "Your view leads with people: Travel Ready, Currently Traveling, Compliance. Duty of Care shows every active traveler with a live location, plus on-trip tracking and compliance by a team from HRIS. Same policy for everyone, consumer-grade experience.",
+        controls: ["Duty of Care", "Readiness", "Compliance by Team"],
+        cta: "See the traveler experience",
+        href: "/v4/platform#personal",
+        rows: [
+            "Consumer-grade traveler experience",
+            "Duty of care and disruption support",
+            "Policy applied the same way for everyone",
+            "Optional incentives for cost-efficient choices",
+        ],
     },
 ]
 
@@ -65,14 +120,6 @@ const PERSONA_TABLE: string[][] = [
     ["Admins", "Policy, approval routing, profiles", "Set the rule once, enforced at search", "One dashboard for the program", "Rule-based, by exception"],
     ["Finance", "Chart of accounts, spend ceilings, sign-off", "Committed spend visible at booking", "20–30% wholesale savings", "Continuous reconciliation"],
     ["Travel leads", "Supplier program, group travel, analytics", "Run a program, not a booking queue", "Direct supply through Mondee", "Program-level, by exception"],
-]
-
-const USE_CASES: { id: string; label: string; title: string; copy: string }[] = [
-    { id: "use-business", label: "Business travel", title: "Every business trip, end to end.", copy: "Booking, changes and expense for everyday trips — flights, hotels, cars and rail — inside policy, without a queue." },
-    { id: "use-events", label: "Meetings & events", title: "Group travel and events, intelligently managed.", copy: "MICE, group booking, venue sourcing and attendee management on the same platform and the same ledger." },
-    { id: "use-executive", label: "Executive travel", title: "White-glove travel, automated.", copy: "High-touch itineraries and preference learning give executives a premium experience without a dedicated handler." },
-    { id: "use-mobility", label: "Global mobility", title: "Cross-border travel for a distributed workforce.", copy: "Entity-level policy, currency and data residency handled, with global supply and local rates everywhere." },
-    { id: "use-disruption", label: "Emergency & disruption", title: "When plans break, Miraee doesn't.", copy: "Cancellations, delays and reroutes managed proactively in one thread, confirmed before the traveler is stranded." },
 ]
 
 const DUTY_ROWS: [string, string][] = [
@@ -114,26 +161,7 @@ export default function V4Solutions() {
                 </div>
             </section>
 
-            <section className="v4-section v4-section--tint" id="use-cases" aria-labelledby="use-cases-title">
-                <div className="v4-shell">
-                    <Reveal>
-                        <span className="v4-eyebrow">By use case</span>
-                        <h2 className="v4-h2" id="use-cases-title">Every kind of company travel.</h2>
-                    </Reveal>
-                    <Reveal delay={0.1}>
-                        <div className="v4-steps" style={{ marginTop: 36 }}>
-                            {USE_CASES.map((useCase, index) => (
-                                <div className="v4-step" key={useCase.id} id={useCase.id}>
-                                    <b className="v4-step__num">0{index + 1}</b>
-                                    <h3>{useCase.title}</h3>
-                                    <p>{useCase.copy}</p>
-                                    <span className="v4-step__tag">{useCase.label}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </Reveal>
-                </div>
-            </section>
+            <UseCasesShowcase />
 
             <section className="v4-section" id="duty-of-care" aria-labelledby="duty-title">
                 <div className="v4-shell">

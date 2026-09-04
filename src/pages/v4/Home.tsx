@@ -1,10 +1,13 @@
+import { useState } from "react"
 import { Link } from "react-router-dom"
+import { MotionConfig } from "framer-motion"
 import { V4Nav, V4Footer, Reveal } from "../../components/V4Kit"
 import { usePageMeta } from "../../hooks/usePageMeta"
-import { StatStrip, HowItWorks, KineticBand, BusinessCase, Experiences, CtaRoutes } from "./V0Sections"
-import { WaveLetters, Magnetic, ScrollProgress, GrainOverlay, CustomCursor } from "../../animations"
+import { StatStrip, HowItWorks, KineticBand, BusinessCase, Experiences, CtaRoutes, PlatformSolution } from "./V0Sections"
+import { HeroAssistant } from "./HeroAssistant"
+import { Magnetic, ScrollProgress, GrainOverlay, CustomCursor } from "../../animations"
 import { IntroCover } from "./V0Intro"
-import { MotionConfig } from "framer-motion"
+import { useIntroActive } from "./useIntroActive"
 import "../SubpagesV2.css"
 import "./V4.css"
 
@@ -22,6 +25,23 @@ export default function V4Home() {
         "Travel Limitless. Business travel, personalized — one platform for booking, travel management and expenses, plus the personal trips people love.",
     )
 
+    // The intro's state lives here, not inside <IntroCover>, so the real page
+    // below can be made `inert` while the cover is up. V0 doesn't do this: its
+    // cover is fully opaque to a mouse user, but nothing stops a keyboard user
+    // from Tabbing straight past it into hero content they can't see. `inert`
+    // (a real boolean prop as of React 19) removes that content from both the
+    // tab order and the accessibility tree for exactly as long as the cover is
+    // active, then hands it back — no extra library, no manual tabindex bookkeeping.
+    const intro = useIntroActive()
+
+    // The hero's copy column hides once the assistant card is given a prompt,
+    // and the card takes the full row. Lives here (not inside HeroAssistant)
+    // because the H1/eyebrow/actions it hides are siblings, not children, of
+    // the assistant. Also releases the pinned hero's 100vh/overflow:hidden
+    // stage while expanded — the expanded card is meant to breathe, and a
+    // deliberate takeover is a reasonable moment to give up the scroll-pin.
+    const [assistantExpanded, setAssistantExpanded] = useState(false)
+
     return (
         <MotionConfig reducedMotion="user">
         {/* V0's ambient stack, minus SmoothScroll. SmoothScroll hijacks every
@@ -38,31 +58,61 @@ export default function V4Home() {
             GrainOverlay bail under prefers-reduced-motion. */}
         <CustomCursor />
         <GrainOverlay />
-        <IntroCover />
-        <div className="v4-site">
+        <IntroCover active={intro.active} phase={intro.phase} />
+        <div className="v4-site" inert={intro.active || undefined}>
             <ScrollProgress />
             <a className="v4-skip" href="#main">Skip to content</a>
             <V4Nav />
 
             <main id="main">
-                <section className="v4-hero">
-                    <div className="v4-shell">
-                        <Reveal>
-                            <span className="v4-hero__eyebrow">Travel Limitless · Business travel, personalized</span>
-                            {/* V0's per-letter masked entrance, and its magnetic buttons that
-                                lean toward the cursor — the hero effects from the reference. */}
-                            <h1>
-                                <WaveLetters text="A private travel assistant" delay={0.2} />
-                                <br />
-                                <em><WaveLetters text="for every employee." delay={0.55} /></em>
-                            </h1>
-                            <div className="v4-hero__actions">
-                                <Magnetic><Link className="v4-btn v4-btn--solid" to="/book-a-demo">Book a demo</Link></Magnetic>
-                                <Magnetic><a className="v4-btn v4-btn--ghost" href="#how-it-works">See how it works</a></Magnetic>
+                <div className={"v4-hero-pin" + (assistantExpanded ? " is-expanded" : "")}>
+                    <section className="v4-hero">
+                        {/* Ambient blobs are static — no scroll-linked scale/fade and no
+                            mousemove tracking (V0 spring-followed the cursor here too). */}
+                        <div className="v4-hero__bg" aria-hidden="true" />
+                        <div className="v4-hero__bg2" aria-hidden="true" />
+                        <div className="v4-shell" style={{ position: "relative", zIndex: 1 }}>
+                            <div className={"v4-hero__row" + (assistantExpanded ? " v4-hero__row--expanded" : "")} style={{ position: "relative" }}>
+                                {/* Plain CSS class toggle, not AnimatePresence/exit — the
+                                    `--hidden` modifier's `position: absolute` applies the
+                                    instant React commits the class, with zero dependency on an
+                                    animation frame ever running. The opacity/transform fade is
+                                    still a real CSS transition for whoever's tab can paint it;
+                                    it just isn't load-bearing for the layout. Always mounted
+                                    (never conditionally removed) so there's nothing to race. */}
+                                <div className={"v4-hero__copy" + (assistantExpanded ? " v4-hero__copy--hidden" : "")}
+                                    aria-hidden={assistantExpanded || undefined}
+                                    inert={assistantExpanded || undefined}>
+                                    <Reveal>
+                                        <span className="v4-hero__eyebrow">Travel Limitless · Business travel, personalized</span>
+                                        {/* Static now — the per-letter masked entrance (WaveLetters) was
+                                            removed on request. Magnetic buttons that lean toward the
+                                            cursor stay, from the same V0 hero-effects request. H1 copy
+                                            is unchanged on request even as the layout goes two-column. */}
+                                        <h1>
+                                            A private travel assistant
+                                            <br />
+                                            <em>for every employee.</em>
+                                        </h1>
+                                        <div className="v4-hero__actions">
+                                            <Magnetic><Link className="v4-btn v4-btn--solid" to="/book-a-demo">Book a demo</Link></Magnetic>
+                                            <Magnetic><a className="v4-btn v4-btn--ghost" href="#how-it-works">See how it works</a></Magnetic>
+                                        </div>
+                                    </Reveal>
+                                </div>
+                                <Reveal delay={0.12}>
+                                    <HeroAssistant
+                                        expanded={assistantExpanded}
+                                        onExpand={() => setAssistantExpanded(true)}
+                                        onClose={() => setAssistantExpanded(false)} />
+                                </Reveal>
                             </div>
-                        </Reveal>
-                    </div>
-                </section>
+                        </div>
+                    </section>
+                </div>
+
+                {/* V0's "200+ deep agents, working as one" split-screen panel. */}
+                <PlatformSolution />
 
                 {/* Platform section — all V0 data points, V0's velocity-skewed marquee. */}
                 <StatStrip />
