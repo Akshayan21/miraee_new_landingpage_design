@@ -1,14 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 import type { CSSProperties, ReactNode } from "react"
-import { motion, useInView, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from "framer-motion"
+import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from "framer-motion"
 import { EO, FadeUp, SectionWrapper, StaggerWords, ScrambleText, TiltCard } from "../../animations"
 import { useWindowWidth } from "../../hooks/useWindowSize"
-import experienceMarket from "../../assets/miraee-experience-market.webp"
-import experienceSkyline from "../../assets/team-travellers.jpg"
-import experienceCabin from "../../assets/miraee-supplier-cabin.webp"
-import experienceJet from "../../assets/partner-with-miraee.jpg"
-import experienceLounge from "../../assets/role-traveller.jpg"
-import experienceArrival from "../../assets/v2-home-hero.jpg"
 
 // Verbatim ports of the V0 homepage sections the site-architecture doc calls
 // for by name — layout and animation, not just the copy. Source is
@@ -59,6 +53,21 @@ function TypingDots({ color = T.muted, active = true }: { color?: string; active
                 <motion.span key={i} animate={active ? { opacity: [0.25, 1, 0.25], y: [0, -3, 0] } : { opacity: 0.25, y: 0 }} transition={{ duration: 1, repeat: active ? Infinity : 0, delay: i * 0.18 }} style={{ width: 5, height: 5, borderRadius: "50%", background: color, display: "inline-block" }} />
             ))}
         </span>
+    )
+}
+
+function SlideIn({ children, from = "left", delay = 0, distance = 60, style }: { children: ReactNode; from?: "left" | "right" | "bottom"; delay?: number; distance?: number; style?: CSSProperties }) {
+    const ref = useRef<HTMLDivElement>(null)
+    const inView = useInView(ref, { once: true, margin: "-5% 0px" })
+    const x = from === "left" ? -distance : from === "right" ? distance : 0
+    const y = from === "bottom" ? distance : 0
+    return (
+        <motion.div ref={ref} style={style}
+            initial={{ x, y, opacity: 0 }}
+            animate={inView ? { x: 0, y: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.85, delay, ease: EO }}>
+            {children}
+        </motion.div>
     )
 }
 
@@ -113,16 +122,35 @@ export function StatStrip() {
 
 // ─── KINETIC TYPE BAND ───────────────────────────────────────────────────────
 // Giant type strips sliding opposite ways with scroll; second row is outline only.
+//
+// This band sits directly after HowItWorks's four stacked 100vh sticky panels,
+// so it is on screen at the single heaviest moment on the page: their ghost
+// numbers and product cards are still un-pinning and repainting while this
+// mounts. Its own cost has to be kept low precisely because it cannot avoid
+// landing on top of that.
+//
+// Three changes from the source, none of them visual removals:
+//   - font-size capped at 4.5rem instead of 7rem, and the outlined row's
+//     stroke narrowed to 1.25px — the outline is a genuinely expensive paint
+//     (stroking every glyph in a 900-weight face at up to 112px, across a
+//     long repeated string), so less glyph area is the direct lever.
+//   - the line repeats 3 times instead of 4 — still comfortably covers the
+//     ±10%/+4% horizontal travel with margin, just less text to lay out.
+//   - `contain: paint` scopes each row's repaint to its own box instead of
+//     being dragged into the repaint the neighbouring sticky panels are doing
+//     at the same moment; `useReducedMotion` freezes the drift instead of
+//     tracking scroll, matching every other scroll-linked effect on this page.
 export function KineticBand({ line1, line2, bg = T.bg, ink = T.ink }: { line1: string; line2: string; bg?: string; ink?: string }) {
     const ref = useRef<HTMLDivElement>(null)
+    const reduced = useReducedMotion()
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
     const x1 = useTransform(scrollYProgress, [0, 1], ["-10%", "4%"])
     const x2 = useTransform(scrollYProgress, [0, 1], ["4%", "-10%"])
-    const rowStyle: CSSProperties = { whiteSpace: "nowrap", fontFamily: F, fontWeight: 900, fontSize: "clamp(3rem,8vw,7rem)", letterSpacing: "-0.03em", lineHeight: 1.06, userSelect: "none" }
+    const rowStyle: CSSProperties = { whiteSpace: "nowrap", fontFamily: F, fontWeight: 900, fontSize: "clamp(2.4rem,6vw,4.5rem)", letterSpacing: "-0.03em", lineHeight: 1.06, userSelect: "none", contain: "paint" }
     return (
         <div ref={ref} style={{ overflow: "hidden", padding: "clamp(40px,6vw,64px) 0 clamp(32px,5vw,56px)", background: bg }}>
-            <motion.div style={{ ...rowStyle, x: x1, color: ink, willChange: "transform" }}>{(line1 + " · ").repeat(4)}</motion.div>
-            <motion.div style={{ ...rowStyle, x: x2, color: "transparent", WebkitTextStroke: `1.5px ${ink}`, opacity: 0.6, willChange: "transform" }}>{(line2 + " · ").repeat(4)}</motion.div>
+            <motion.div style={{ ...rowStyle, x: reduced ? "0%" : x1, color: ink, willChange: "transform" }}>{(line1 + " · ").repeat(3)}</motion.div>
+            <motion.div style={{ ...rowStyle, x: reduced ? "0%" : x2, color: "transparent", WebkitTextStroke: `1.25px ${ink}`, opacity: 0.6, willChange: "transform" }}>{(line2 + " · ").repeat(3)}</motion.div>
         </div>
     )
 }
@@ -218,12 +246,17 @@ function StepPanel({ num, title, body, accent, bg, tag, index, total }: typeof S
     const isTablet = w >= 640 && w < 1024
     return (
         <div ref={ref} className="v4-step-panel" style={{ position: "sticky", top: 0, height: "100vh", background: bg, display: "flex", alignItems: "center", overflow: "hidden", zIndex: index + 1 }}>
-            {/* Massive ghost number */}
+            {/* Massive ghost number. willChange is gated on inView rather than
+                permanent: all four panels are mounted as siblings for the whole
+                section, so an unconditional will-change here means four
+                GPU-promoted 28vw-glyph layers held simultaneously for the entire
+                scroll — right through the transition into the kinetic band that
+                follows. Only the panel actually settling needs the layer. */}
             <motion.div
                 initial={{ opacity: 0, x: 60 }}
                 animate={inView ? { opacity: 0.045, x: 0 } : { opacity: 0, x: 60 }}
                 transition={{ duration: 0.9, ease: EO }}
-                style={{ position: "absolute", right: isMobile ? -20 : -10, top: "50%", transform: "translateY(-50%)", fontSize: isMobile ? "42vw" : "28vw", fontFamily: F, fontWeight: 900, color: T.ink, lineHeight: 1, userSelect: "none", pointerEvents: "none", letterSpacing: "-0.06em", willChange: "transform, opacity" }}>
+                style={{ position: "absolute", right: isMobile ? -20 : -10, top: "50%", transform: "translateY(-50%)", fontSize: isMobile ? "42vw" : "28vw", fontFamily: F, fontWeight: 900, color: T.ink, lineHeight: 1, userSelect: "none", pointerEvents: "none", letterSpacing: "-0.06em", willChange: inView ? "transform, opacity" : "auto" }}>
                 {num}
             </motion.div>
             {/* Orange side accent bar */}
@@ -305,14 +338,18 @@ export function HowItWorks() {
 }
 
 // ─── EXPERIENCES (scroll-linked horizontal pan) ──────────────────────────────
+// V0's own six images (docs/v0-home-reference.md), hotlinked from
+// framerusercontent.com exactly as V0 itself references them — not a local
+// substitute. That CDN is outside this project's control, so if a link ever
+// breaks the tile silently loses its photo; V0 carries the same exposure.
 const ROLES = [
     { tag: "Experiences", headline: "Not bookable anywhere else.", body: "The city after 5pm, the festival, the family weekend bolted onto a work trip. Booked and expensed separately, one tap.", stat: "90%", statLabel: "of experiences", accent: T.accent, bg: T.bg, img: "" },
-    { tag: "01", headline: "Festivals and culture", body: "", stat: "", statLabel: "", accent: T.orange, bg: T.surface2, img: experienceMarket },
-    { tag: "02", headline: "Once-in-a-trip moments", body: "", stat: "", statLabel: "", accent: T.accent, bg: T.bg, img: experienceSkyline },
-    { tag: "03", headline: "The upgrade that feels earned", body: "", stat: "", statLabel: "", accent: T.orange, bg: T.surface2, img: experienceCabin },
-    { tag: "04", headline: "Business, elevated", body: "", stat: "", statLabel: "", accent: T.accent, bg: T.bg, img: experienceJet },
-    { tag: "05", headline: "Down time between flights", body: "", stat: "", statLabel: "", accent: T.orange, bg: T.surface2, img: experienceLounge },
-    { tag: "06", headline: "Every trip, welcomed", body: "", stat: "", statLabel: "", accent: T.accent, bg: T.bg, img: experienceArrival },
+    { tag: "01", headline: "Festivals and culture", body: "", stat: "", statLabel: "", accent: T.orange, bg: T.surface2, img: "https://framerusercontent.com/images/LMZ3ugguI8VTpFeCKuOrrEUXDY.jpg" },
+    { tag: "02", headline: "Once-in-a-trip moments", body: "", stat: "", statLabel: "", accent: T.accent, bg: T.bg, img: "https://framerusercontent.com/images/lS1MsTKdDET0sJLlXRCt44HdDFY.jpg" },
+    { tag: "03", headline: "Local performances", body: "", stat: "", statLabel: "", accent: T.orange, bg: T.surface2, img: "https://framerusercontent.com/images/AANz7Gv2v4OLJICanNZTO4cDyE.jpg" },
+    { tag: "04", headline: "Markets and makers", body: "", stat: "", statLabel: "", accent: T.accent, bg: T.bg, img: "https://framerusercontent.com/images/v0MpWd9NHbV98F3GxQZzhtAp0o.jpg" },
+    { tag: "05", headline: "The bleisure weekend", body: "", stat: "", statLabel: "", accent: T.orange, bg: T.surface2, img: "https://framerusercontent.com/images/OLnrOVVrjhLnXULOt0RWBQJJ30.jpg" },
+    { tag: "06", headline: "Food and discovery", body: "", stat: "", statLabel: "", accent: T.accent, bg: T.bg, img: "https://framerusercontent.com/images/KqpDMVbbYgwoEAK6vQioHlDmeQ.jpg" },
 ]
 
 function RoleCard({ tag, headline, body, stat, statLabel, accent, bg, img, index }: typeof ROLES[0] & { index: number }) {
@@ -579,5 +616,324 @@ export function CtaRoutes() {
                 </g>
             ))}
         </svg>
+    )
+}
+
+
+// ─── SIX CAPABILITIES — orbital dial ────────────────────────────────────────────
+// Verbatim port of V0's Capabilities() (Home.tsx:846-980). Scroll drives which
+// capability is active (not clicks, despite the "click accordion" shorthand in
+// docs/v0-home-reference.md): a 600vh tall wrapper (CAPS.length * 100vh) holds
+// a sticky 100vh stage; scrollYProgress maps to an index 0-5, which spins a
+// 6-node ring, crossfades the centre stat, and crossfades the right-hand
+// title/body panel. Falls back to a plain numbered list under 1200px, where
+// the ring has no room to read.
+const CAPS = [
+    { num: "01", title: "Plan", body: "Describe the trip in plain language. Miraee builds an in-policy itinerary in seconds.", icon: "◈", accent: T.orange, stat: "<60s", statLabel: "to an itinerary" },
+    { num: "02", title: "Book", body: "Flights, hotels and cars from Mondee wholesale inventory: real savings, one tap.", icon: "⬡", accent: T.accent, stat: "20–30%", statLabel: "wholesale savings" },
+    { num: "03", title: "Expense", body: "Receipts, reports and reconciliation handled automatically. No forms, no chasing.", icon: "◉", accent: T.orange, stat: "0", statLabel: "forms to fill" },
+    { num: "04", title: "Change", body: "Plans shift, the agent rebooks itself: within policy, before you even ask.", icon: "◈", accent: T.accent, stat: "100%", statLabel: "handled by the agent" },
+    { num: "05", title: "24/7 support", body: "A human-in-the-loop backup whenever a trip needs a real person.", icon: "⬡", accent: T.orange, stat: "24/7", statLabel: "human backup" },
+    { num: "06", title: "Personal travel", body: "The same agent plans employees’ own trips: a perk they actually use.", icon: "◎", accent: T.accent, stat: "1", statLabel: "agent for everything" },
+]
+
+// Orbital dial node: sits on the wheel, stays upright while the wheel turns.
+function CapNode({ cap, i, active }: { cap: typeof CAPS[0]; i: number; active: number }) {
+    const isActive = active === i
+    return (
+        <div style={{ position: "absolute", left: "50%", top: "50%", transform: `translate(-50%, -50%) rotate(${i * 60}deg) translateX(min(185px, 15vw, 24vh))` }}>
+            <motion.div animate={{ rotate: active * 60 - i * 60, scale: isActive ? 1.28 : 1 }} transition={{ type: "spring", stiffness: 70, damping: 15 }}
+                style={{ width: 58, height: 58, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", willChange: "transform" }}>
+                <motion.div animate={{ background: isActive ? cap.accent : T.card, borderColor: isActive ? cap.accent : T.border, color: isActive ? T.cream : T.muted, boxShadow: isActive ? "0 12px 32px " + cap.accent + "50" : "0 2px 8px rgba(69,14,20,0.05)" }} transition={{ duration: 0.4 }}
+                    style={{ width: 58, height: 58, borderRadius: "50%", border: "1.5px solid", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>
+                    {cap.icon}
+                </motion.div>
+            </motion.div>
+        </div>
+    )
+}
+
+export function Capabilities() {
+    const w = useWindowWidth()
+    const isMobile = w < 640
+    // Orbital dial needs widescreen: iPad Pro portrait (1024) gets the list too.
+    const isTablet = w >= 640 && w < 1200
+    const containerRef = useRef<HTMLDivElement>(null)
+    const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] })
+    const [activeIndex, setActiveIndex] = useState(0)
+    // Gates the outer ring's continuous 60s rotation — off (and not costing a
+    // frame) until the dial is actually on screen, same pattern already used
+    // for the marquee and the kinetic band on this page.
+    const [ringInView, setRingInView] = useState(false)
+
+    useEffect(() => {
+        return scrollYProgress.on("change", v => {
+            const idx = Math.min(CAPS.length - 1, Math.floor(v * CAPS.length))
+            setActiveIndex(idx)
+        })
+    }, [scrollYProgress])
+
+    useEffect(() => {
+        const el = containerRef.current
+        if (!el) return
+        const observer = new IntersectionObserver(([entry]) => setRingInView(entry.isIntersecting), { threshold: 0 })
+        observer.observe(el)
+        return () => observer.disconnect()
+    }, [])
+
+    if (isMobile || isTablet) {
+        return (
+            <SectionWrapper>
+                <section style={{ background: T.bg, padding: isMobile ? "80px 20px" : "80px 40px" }}>
+                    <SectionLabel>The product</SectionLabel>
+                    <h2 style={{ fontFamily: F, fontSize: isMobile ? "clamp(1.8rem,8vw,2.4rem)" : "clamp(2rem,4vw,3rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: T.ink, marginBottom: 36 }}>
+                        <StaggerWords text="One platform for" /><br /><StaggerWords text="the whole journey." delay={0.15} />
+                    </h2>
+                    <div style={{ borderTop: "1px solid " + T.border }}>
+                        {CAPS.map((cap, i) => (
+                            <div key={cap.num} id={["plan", "book", "expense", "change", "support", "personal"][i]} style={{ position: "relative", borderBottom: "1px solid " + T.border, padding: "20px 0 20px 16px", scrollMarginTop: 108 }}>
+                                <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 2, background: cap.accent, borderRadius: 2 }} />
+                                <p style={{ fontSize: 11, fontFamily: F, fontWeight: 700, color: cap.accent, letterSpacing: "0.1em", margin: "0 0 6px" }}>{cap.num}</p>
+                                <p style={{ fontSize: 16, fontFamily: F, fontWeight: 700, color: T.ink, margin: "0 0 8px" }}>{cap.title}</p>
+                                <p style={{ fontSize: 13, fontFamily: F, lineHeight: 1.6, color: T.muted, margin: 0 }}>{cap.body}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </SectionWrapper>
+        )
+    }
+
+    return (
+        <SectionWrapper>
+            {/* Tall container drives scroll progress. */}
+            <div ref={containerRef} id="capabilities" style={{ height: CAPS.length * 100 + "vh", position: "relative" }}>
+                <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", background: T.bg, display: "flex", alignItems: "center", paddingTop: 110 }}>
+                    {/* Header pinned top-left (below fixed nav). */}
+                    <div style={{ position: "absolute", top: 92, left: "clamp(32px,5vw,64px)", right: "clamp(32px,5vw,64px)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", zIndex: 3 }}>
+                        <div>
+                            <SectionLabel>The product</SectionLabel>
+                            <h2 style={{ fontFamily: F, fontSize: "clamp(1.5rem,2.2vw,2.1rem)", fontWeight: 800, lineHeight: 1.12, letterSpacing: "-0.03em", color: T.ink, margin: 0 }}>
+                                One platform for the whole journey.
+                            </h2>
+                        </div>
+                        <div style={{ textAlign: "right" }}>
+                            <div style={{ fontSize: 28, fontFamily: F, fontWeight: 900, color: CAPS[activeIndex].accent, letterSpacing: "-0.03em", lineHeight: 1 }}>{CAPS[activeIndex].num}<span style={{ color: T.muted, fontWeight: 600, fontSize: 15 }}> / 06</span></div>
+                        </div>
+                    </div>
+                    {/* Orbital dial: scroll turns the wheel. */}
+                    <div style={{ flex: "0 0 46%", display: "flex", justifyContent: "center" }}>
+                        <div style={{ position: "relative", width: "min(400px, 52vh)", aspectRatio: "1" }}>
+                            <div style={{ position: "absolute", inset: 0, borderRadius: "50%", border: "1px solid " + T.border }} />
+                            <div style={{ position: "absolute", inset: "12%", borderRadius: "50%", border: "1px dashed rgba(69,14,20,0.12)" }} />
+                            <motion.div animate={ringInView ? { rotate: 360 } : {}} transition={{ duration: 60, repeat: ringInView ? Infinity : 0, ease: "linear" }}
+                                style={{ position: "absolute", inset: "-7px", borderRadius: "50%", border: "1px dashed rgba(229,86,2,0.25)", willChange: "transform" }} />
+                            <motion.div animate={{ rotate: -activeIndex * 60 }} transition={{ type: "spring", stiffness: 70, damping: 15 }}
+                                style={{ position: "absolute", inset: 0, willChange: "transform" }}>
+                                {CAPS.map((cap, i) => <CapNode key={cap.num} cap={cap} i={i} active={activeIndex} />)}
+                            </motion.div>
+                            {/* Live stat hub. */}
+                            <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
+                                <AnimatePresence mode="wait">
+                                    <motion.div key={activeIndex}
+                                        initial={{ opacity: 0, scale: 0.7 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 1.25 }}
+                                        transition={{ duration: 0.35, ease: EO }}
+                                        style={{ textAlign: "center" }}>
+                                        <div style={{ fontSize: "clamp(3rem,4.5vw,4.5rem)", fontFamily: F, fontWeight: 900, color: CAPS[activeIndex].accent, letterSpacing: "-0.05em", lineHeight: 0.95 }}>{CAPS[activeIndex].stat}</div>
+                                        <div style={{ fontSize: 10, fontFamily: F, fontWeight: 700, color: T.muted, textTransform: "uppercase", letterSpacing: "0.14em", marginTop: 8 }}>{CAPS[activeIndex].statLabel}</div>
+                                    </motion.div>
+                                </AnimatePresence>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Active capability content. */}
+                    <div style={{ flex: 1, paddingRight: "clamp(32px,5vw,64px)", paddingLeft: 24, position: "relative", zIndex: 2 }}>
+                        <AnimatePresence mode="wait">
+                            <motion.div key={activeIndex}
+                                initial={{ opacity: 0, y: 44, clipPath: "inset(12% 0 0 0)" }}
+                                animate={{ opacity: 1, y: 0, clipPath: "inset(0% 0 0 0)" }}
+                                exit={{ opacity: 0, y: -32, clipPath: "inset(0 0 12% 0)" }}
+                                transition={{ duration: 0.45, ease: EO }}>
+                                <div style={{ fontSize: 12, fontFamily: F, fontWeight: 700, letterSpacing: "0.12em", color: CAPS[activeIndex].accent, marginBottom: 14 }}>{CAPS[activeIndex].num} · {CAPS[activeIndex].statLabel.toUpperCase()}</div>
+                                <h3 style={{ fontFamily: F, fontSize: "clamp(2rem,3.2vw,3.2rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.08, color: T.ink, margin: "0 0 20px", maxWidth: 520 }}>{CAPS[activeIndex].title}</h3>
+                                <p style={{ fontSize: 16, fontFamily: F, lineHeight: 1.7, color: T.muted, margin: 0, maxWidth: 440 }}>{CAPS[activeIndex].body}</p>
+                            </motion.div>
+                        </AnimatePresence>
+                        {/* Progress ticks. */}
+                        <div style={{ display: "flex", gap: 6, marginTop: 44 }}>
+                            {CAPS.map((cap, i) => (
+                                <motion.div key={i} animate={{ width: i === activeIndex ? 32 : 8, background: i === activeIndex ? cap.accent : T.border }} transition={{ duration: 0.4 }}
+                                    style={{ height: 4, borderRadius: 2 }} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </SectionWrapper>
+    )
+}
+
+// ─── PLATFORM SOLUTION ───────────────────────────────────────────────────────
+// "200+ deep agents, working as one." — split-screen sticky panel: an active
+// item list on the left, a crossfading icon/stat/title panel on the right.
+// Source: Miraee_landing_page/src/pages/Home.tsx:685-843 (`Solution`).
+const SOLUTION_ITEMS = [
+    { num: "01", title: "Global content, local experiences", body: "Millions of properties and hundreds of airlines, plus hyperlocal experiences no one else has digitized.", accent: T.orange, stat: "2M+", statLabel: "properties", icon: "◈" },
+    { num: "02", title: "A swarm of specialized agents", body: "Booking, policy, negotiation, rebooking and expense agents that act, not just answer.", accent: T.accent, stat: "200+", statLabel: "deep AI agents", icon: "⬡" },
+    { num: "03", title: "Human in the loop", body: "Real support and oversight where it matters, so autonomy never means blind trust.", accent: T.orange, stat: "24/7", statLabel: "human support", icon: "◉" },
+]
+
+export function PlatformSolution() {
+    const w = useWindowWidth()
+    const isMobile = w < 640
+    const isTablet = w >= 640 && w < 1200
+    const sectionRef = useRef<HTMLElement>(null)
+    const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] })
+    const [active, setActive] = useState(0)
+
+    useEffect(() => {
+        const unsub = scrollYProgress.on("change", v => {
+            if (v < 0.33) setActive(0)
+            else if (v < 0.66) setActive(1)
+            else setActive(2)
+        })
+        return unsub
+    }, [scrollYProgress])
+
+    if (isMobile || isTablet) {
+        return (
+            <SectionWrapper>
+                <section style={{ background: T.bg, padding: isMobile ? "80px 20px" : "80px 40px" }}>
+                    <SectionLabel>The platform</SectionLabel>
+                    <h2 style={{ fontFamily: F, fontSize: isMobile ? "clamp(1.8rem,8vw,2.4rem)" : "clamp(2rem,5vw,3rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: T.ink, marginBottom: 40 }}>
+                        <StaggerWords text="200+ deep agents," /><br /><StaggerWords text="working as one." delay={0.15} />
+                    </h2>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                        {SOLUTION_ITEMS.map((item, i) => (
+                            <SlideIn key={item.num} from="left" delay={i * 0.1}>
+                                <div style={{ background: T.card, border: "1px solid " + T.border, borderRadius: 20, padding: 28 }}>
+                                    <span style={{ fontSize: 11, fontFamily: F, fontWeight: 700, color: item.accent, letterSpacing: "0.08em" }}>{item.num}</span>
+                                    <p style={{ fontSize: 18, fontFamily: F, fontWeight: 800, color: T.ink, margin: "10px 0 12px" }}>{item.title}</p>
+                                    <p style={{ fontSize: 14, fontFamily: F, lineHeight: 1.65, color: T.muted, margin: "0 0 20px" }}>{item.body}</p>
+                                    <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                                        <span style={{ fontSize: 36, fontFamily: F, fontWeight: 900, color: item.accent, letterSpacing: "-0.04em" }}>{item.stat}</span>
+                                        <span style={{ fontSize: 11, fontFamily: F, fontWeight: 600, color: T.muted, textTransform: "uppercase" as const, letterSpacing: "0.08em" }}>{item.statLabel}</span>
+                                    </div>
+                                </div>
+                            </SlideIn>
+                        ))}
+                    </div>
+                </section>
+            </SectionWrapper>
+        )
+    }
+
+    const item = SOLUTION_ITEMS[active]
+    return (
+        <section ref={sectionRef} style={{ position: "relative", height: "300vh", background: T.bg }}>
+            <div style={{ position: "sticky", top: 0, height: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", overflow: "hidden" }}>
+                {/* LEFT — item list */}
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 clamp(32px,5vw,64px)", borderRight: "1px solid " + T.border, background: T.bg }}>
+                    <SectionLabel>The platform</SectionLabel>
+                    <h2 style={{ fontFamily: F, fontSize: "clamp(1.8rem,3vw,3rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: T.ink, marginBottom: 52 }}>
+                        <StaggerWords text="200+ deep agents," /><br />
+                        <StaggerWords text="working as one." delay={0.15} />
+                    </h2>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                        {SOLUTION_ITEMS.map((s, i) => (
+                            <motion.div key={s.num}
+                                animate={{ borderColor: active === i ? s.accent + "40" : T.border, backgroundColor: active === i ? s.accent + "07" : "transparent" }}
+                                transition={{ duration: 0.4 }}
+                                style={{ display: "flex", alignItems: "flex-start", gap: 20, padding: "20px 20px", borderRadius: 14, border: "1px solid", cursor: "default" }}>
+                                {/* Active indicator bar */}
+                                <motion.div animate={{ background: active === i ? s.accent : T.border, height: active === i ? 44 : 20 }} transition={{ duration: 0.4, ease: EO }}
+                                    style={{ width: 3, borderRadius: 2, flexShrink: 0, marginTop: 4 }} />
+                                <div style={{ flex: 1 }}>
+                                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
+                                        <motion.span animate={{ color: active === i ? s.accent : T.muted }} transition={{ duration: 0.3 }}
+                                            style={{ fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.1em" }}>{s.num}</motion.span>
+                                        <motion.p animate={{ color: active === i ? T.ink : T.muted }} transition={{ duration: 0.3 }}
+                                            style={{ fontSize: 16, fontFamily: F, fontWeight: 700, margin: 0 }}>{s.title}</motion.p>
+                                    </div>
+                                    <AnimatePresence>
+                                        {active === i && (
+                                            <motion.p key={s.num}
+                                                initial={{ opacity: 0, height: 0 }}
+                                                animate={{ opacity: 1, height: "auto" }}
+                                                exit={{ opacity: 0, height: 0 }}
+                                                transition={{ duration: 0.35, ease: EO }}
+                                                style={{ fontSize: 13, fontFamily: F, lineHeight: 1.6, color: T.muted, margin: 0, overflow: "hidden" }}>
+                                                {s.body}
+                                            </motion.p>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                    {/* Scroll hint */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 40 }}>
+                        <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity }} style={{ width: 1, height: 24, background: "linear-gradient(to bottom, " + T.orange + ", transparent)" }} />
+                        <span style={{ fontSize: 10, fontFamily: F, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: T.muted }}>scroll through</span>
+                    </div>
+                </div>
+                {/* RIGHT — active content panel */}
+                <div style={{ position: "relative", overflow: "hidden", background: T.bg2 }}>
+                    {/* Background accent blob */}
+                    <AnimatePresence mode="wait">
+                        <motion.div key={active + "-blob"}
+                            initial={{ opacity: 0, scale: 0.6 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 1.2 }}
+                            transition={{ duration: 0.6, ease: EO }}
+                            style={{ position: "absolute", top: "20%", right: "-10%", width: "70%", height: "70%", borderRadius: "50%", background: "radial-gradient(circle, " + item.accent + "12 0%, transparent 65%)", filter: "blur(48px)", pointerEvents: "none" }}
+                        />
+                    </AnimatePresence>
+                    {/* Content */}
+                    <AnimatePresence mode="wait">
+                        <motion.div key={active}
+                            initial={{ opacity: 0, y: 40, clipPath: "inset(10% 0 0 0)" }}
+                            animate={{ opacity: 1, y: 0, clipPath: "inset(0% 0 0 0)" }}
+                            exit={{ opacity: 0, y: -30, clipPath: "inset(0 0 10% 0)" }}
+                            transition={{ duration: 0.55, ease: EO }}
+                            style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 clamp(32px,5vw,64px)" }}>
+                            {/* Icon */}
+                            <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1, duration: 0.5, ease: EO }}
+                                style={{ fontSize: 48, color: item.accent, marginBottom: 32, lineHeight: 1 }}>
+                                {item.icon}
+                            </motion.div>
+                            {/* Giant stat */}
+                            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15, duration: 0.5, ease: EO }}>
+                                <div style={{ fontSize: "clamp(5rem,9vw,9rem)", fontFamily: F, fontWeight: 900, color: item.accent, letterSpacing: "-0.05em", lineHeight: 0.9, marginBottom: 8 }}>{item.stat}</div>
+                                <div style={{ fontSize: 12, fontFamily: F, fontWeight: 700, color: T.muted, textTransform: "uppercase" as const, letterSpacing: "0.12em", marginBottom: 40 }}>{item.statLabel}</div>
+                            </motion.div>
+                            {/* Step label */}
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25, duration: 0.4 }}
+                                style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+                                <div style={{ width: 32, height: 1.5, background: item.accent }} />
+                                <span style={{ fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: item.accent }}>Step {item.num}</span>
+                            </motion.div>
+                            {/* Title */}
+                            <motion.h3 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.5, ease: EO }}
+                                style={{ fontSize: "clamp(1.8rem,3vw,2.8rem)", fontFamily: F, fontWeight: 800, letterSpacing: "-0.03em", color: T.ink, margin: "0 0 20px", lineHeight: 1.1 }}>
+                                {item.title}
+                            </motion.h3>
+                            {/* Progress indicator */}
+                            <div style={{ display: "flex", gap: 6, marginTop: 40 }}>
+                                {SOLUTION_ITEMS.map((_, i) => (
+                                    <motion.div key={i}
+                                        animate={{ width: i === active ? 32 : 8, background: i === active ? item.accent : T.border }}
+                                        transition={{ duration: 0.4 }}
+                                        style={{ height: 4, borderRadius: 2 }}
+                                    />
+                                ))}
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+            </div>
+        </section>
     )
 }

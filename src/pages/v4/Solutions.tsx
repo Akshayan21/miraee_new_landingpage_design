@@ -1,12 +1,13 @@
 import { V4Page, V4Hero, V4Cta, Reveal, MiniTable } from "../../components/V4Kit"
 import { SixViews } from "./SixViews"
 import type { SixViewRole } from "./SixViews"
+import { UseCasesV11 } from "./RefSections"
 import { useWindowWidth } from "../../hooks/useWindowSize"
 import "../SubpagesV2.css"
 import "./V4.css"
 
-// Solutions. Section order per the Part 1 structure doc:
-//   six views (very minimal text) → persona table → use cases (reduced)
+// Solutions. Section order:
+//   six views (very minimal text) → use cases (V1.1) → persona table
 //   → duty of care (reduced).
 //
 // The six roles are the canonical set from ForTeams.tsx. Slugs are the
@@ -67,14 +68,6 @@ const PERSONA_TABLE: string[][] = [
     ["Travel leads", "Supplier program, group travel, analytics", "Run a program, not a booking queue", "Direct supply through Mondee", "Program-level, by exception"],
 ]
 
-const USE_CASES: { id: string; label: string; title: string; copy: string }[] = [
-    { id: "use-business", label: "Business travel", title: "Every business trip, end to end.", copy: "Booking, changes and expense for everyday trips — flights, hotels, cars and rail — inside policy, without a queue." },
-    { id: "use-events", label: "Meetings & events", title: "Group travel and events, intelligently managed.", copy: "MICE, group booking, venue sourcing and attendee management on the same platform and the same ledger." },
-    { id: "use-executive", label: "Executive travel", title: "White-glove travel, automated.", copy: "High-touch itineraries and preference learning give executives a premium experience without a dedicated handler." },
-    { id: "use-mobility", label: "Global mobility", title: "Cross-border travel for a distributed workforce.", copy: "Entity-level policy, currency and data residency handled, with global supply and local rates everywhere." },
-    { id: "use-disruption", label: "Emergency & disruption", title: "When plans break, Miraee doesn't.", copy: "Cancellations, delays and reroutes managed proactively in one thread, confirmed before the traveler is stranded." },
-]
-
 const DUTY_ROWS: [string, string][] = [
     ["Real-time location", "Know where every traveler is, from booked segments and check-ins, with role-based access."],
     ["Risk monitoring", "Disruption, weather and advisory alerts matched to itineraries."],
@@ -97,6 +90,10 @@ export default function V4Solutions() {
 
             <SixViews roles={ROLES} isMobile={isMobile} />
 
+            {/* V1.1's "Every kind of trip your company takes" — see
+                RefSections.tsx for the source citation (ForTeams.tsx `UseCases`). */}
+            <UseCasesV11 />
+
             <section className="v4-section" id="personas" aria-labelledby="personas-title">
                 <div className="v4-shell">
                     <Reveal>
@@ -109,27 +106,6 @@ export default function V4Solutions() {
                                 headers={["Persona", "What they control", "What changes", "The perk", "Operating model"]}
                                 rows={PERSONA_TABLE}
                                 caption="What each persona controls and gains" />
-                        </div>
-                    </Reveal>
-                </div>
-            </section>
-
-            <section className="v4-section v4-section--tint" id="use-cases" aria-labelledby="use-cases-title">
-                <div className="v4-shell">
-                    <Reveal>
-                        <span className="v4-eyebrow">By use case</span>
-                        <h2 className="v4-h2" id="use-cases-title">Every kind of company travel.</h2>
-                    </Reveal>
-                    <Reveal delay={0.1}>
-                        <div className="v4-steps" style={{ marginTop: 36 }}>
-                            {USE_CASES.map((useCase, index) => (
-                                <div className="v4-step" key={useCase.id} id={useCase.id}>
-                                    <b className="v4-step__num">0{index + 1}</b>
-                                    <h3>{useCase.title}</h3>
-                                    <p>{useCase.copy}</p>
-                                    <span className="v4-step__tag">{useCase.label}</span>
-                                </div>
-                            ))}
                         </div>
                     </Reveal>
                 </div>
