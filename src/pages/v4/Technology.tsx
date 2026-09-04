@@ -91,7 +91,7 @@ export default function V4Technology() {
             <section className="v4-section v4-section--tint" id="assistant" aria-labelledby="assistant-title">
                 <div className="v4-shell">
                     <Reveal>
-                        <span className="v4-eyebrow">What is agentic AI?</span>
+                        <span className="v4-eyebrow">AI Assistant for Every Employee</span>
                         <h2 className="v4-h2" id="assistant-title">From assistants to agents.</h2>
                         <p className="v4-lede">Most AI travel products suggest while you execute. Miraee takes action end to end — agentic AI travel, not an assistant with a travel skin.</p>
                     </Reveal>
@@ -108,7 +108,7 @@ export default function V4Technology() {
                     <Reveal>
                         <span className="v4-eyebrow">The architecture</span>
                         <h2 className="v4-h2" id="architecture-title">Not one agent. A workforce.</h2>
-                        <p className="v4-lede">Six specialized agents run each trip, all reading the same thread. Beneath them sits Tabhi's automation fabric — 200+ bots connecting supply, policy, payment and expense into one framework, so a trip never leaves the platform.</p>
+                        <p className="v4-lede">Six different specialized agents each running their own allotted task, under the same thread. Beneath them sits Tabhi intelligence connecting Mondee supply, policy, payment and expense all together woven into one framework, dedicatedly working to complete one single trip.</p>
                     </Reveal>
                     <Reveal delay={0.1}>
                         <ul className="v4-chips" style={{ marginTop: 30 }}>

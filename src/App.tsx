@@ -54,6 +54,20 @@ const V4ResourcesGuides = lazy(() => import("./pages/v4/ResourceStub").then(m =>
 const V4ResourcesBlog = lazy(() => import("./pages/v4/ResourceStub").then(m => ({ default: m.V4ResourcesBlog })))
 const V4ResourcesNews = lazy(() => import("./pages/v4/ResourceStub").then(m => ({ default: m.V4ResourcesNews })))
 const V4ResourcesLife = lazy(() => import("./pages/v4/ResourceStub").then(m => ({ default: m.V4ResourcesLife })))
+const V4Implementation = lazy(() => import("./pages/v4/Implementation"))
+const V4Integrations = lazy(() => import("./pages/v4/Integrations"))
+const V4AiAssistant = lazy(() => import("./pages/v4/AiAssistant"))
+const V4SolutionEmployees = lazy(() => import("./pages/v4/solutions/Employees"))
+const V4SolutionManagers = lazy(() => import("./pages/v4/solutions/Managers"))
+const V4SolutionFinance = lazy(() => import("./pages/v4/solutions/Finance"))
+const V4SolutionTravelLeads = lazy(() => import("./pages/v4/solutions/TravelLeads"))
+const V4SolutionAdmins = lazy(() => import("./pages/v4/solutions/Admins"))
+const V4SolutionChros = lazy(() => import("./pages/v4/solutions/Chros"))
+const V4SolutionBusinessTravel = lazy(() => import("./pages/v4/solutions/BusinessTravel"))
+const V4SolutionMeetingsEvents = lazy(() => import("./pages/v4/solutions/MeetingsEvents"))
+const V4SolutionExecutiveTravel = lazy(() => import("./pages/v4/solutions/ExecutiveTravel"))
+const V4SolutionGlobalMobility = lazy(() => import("./pages/v4/solutions/GlobalMobility"))
+const V4SolutionEmergencyDisruption = lazy(() => import("./pages/v4/solutions/EmergencyDisruption"))
 
 function PageFallback() {
     return (
@@ -93,6 +107,20 @@ export default function App() {
                     <Route path="/v4/resources/news" element={<V4ResourcesNews />} />
                     <Route path="/v4/resources/calculator" element={<V4Calculator />} />
                     <Route path="/v4/resources/help-center" element={<V4HelpCenter />} />
+                    <Route path="/v4/implementation" element={<V4Implementation />} />
+                    <Route path="/v4/integrations" element={<V4Integrations />} />
+                    <Route path="/v4/ai-assistant" element={<V4AiAssistant />} />
+                    <Route path="/v4/solutions/employees" element={<V4SolutionEmployees />} />
+                    <Route path="/v4/solutions/managers" element={<V4SolutionManagers />} />
+                    <Route path="/v4/solutions/finance" element={<V4SolutionFinance />} />
+                    <Route path="/v4/solutions/travel-leads" element={<V4SolutionTravelLeads />} />
+                    <Route path="/v4/solutions/admins" element={<V4SolutionAdmins />} />
+                    <Route path="/v4/solutions/chros" element={<V4SolutionChros />} />
+                    <Route path="/v4/solutions/business-travel" element={<V4SolutionBusinessTravel />} />
+                    <Route path="/v4/solutions/meetings-events" element={<V4SolutionMeetingsEvents />} />
+                    <Route path="/v4/solutions/executive-travel" element={<V4SolutionExecutiveTravel />} />
+                    <Route path="/v4/solutions/global-mobility" element={<V4SolutionGlobalMobility />} />
+                    <Route path="/v4/solutions/emergency-disruption" element={<V4SolutionEmergencyDisruption />} />
                     <Route path="/v1/product" element={<V1Product />} />
                     <Route path="/v1/technology" element={<V1Technology />} />
                     <Route path="/v1/solutions" element={<V1Solutions />} />
