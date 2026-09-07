@@ -1,7 +1,10 @@
+import type { ReactNode } from "react"
 import { V4Page, Reveal } from "../../../components/V4Kit"
 import PersonaExperience, { PERSONA_SCRIPTS } from "../../../components/PersonaExperience"
 import "../../SubpagesV2.css"
 import "../V4.css"
+
+export type RoleDetail = { icon: ReactNode; title: string; body: string }
 
 interface RoleShowcaseProps {
     roleSlug: string
@@ -10,6 +13,17 @@ interface RoleShowcaseProps {
     body: string
     controls: string[]
     ctaText?: string
+    // Optional overrides for copy that doesn't fit the "You used to X. Now Y."
+    // template splitShift() expects (e.g. Finance's "Before -" / "With Miraee -"
+    // pair). When omitted, splitShift(shift) is used as before.
+    before?: string
+    afterHeading?: string
+    // Optional deeper-dive feature grid rendered below the diptych, full
+    // width -- reuses Platform.tsx's .v4-adaptive-grid/card recipe (icon
+    // badge, bold title, body) so role pages and the Platform page share one
+    // visual language for "here's the depth behind the claim" content.
+    detailsHeading?: string
+    details?: RoleDetail[]
 }
 
 function splitShift(shift: string): [string, string] {
@@ -25,8 +39,14 @@ export default function RoleShowcasePage({
     body,
     controls,
     ctaText,
+    before: beforeOverride,
+    afterHeading,
+    detailsHeading,
+    details,
 }: RoleShowcaseProps) {
-    const [before, after] = splitShift(shift)
+    const [splitBefore, splitAfter] = splitShift(shift)
+    const before = beforeOverride ?? splitBefore
+    const after = afterHeading ?? splitAfter
     const script = PERSONA_SCRIPTS[roleSlug]
 
     return (
@@ -98,6 +118,27 @@ export default function RoleShowcasePage({
                             </div>
                         </Reveal>
                     </div>
+
+                    {details && details.length > 0 && (
+                        <div style={{ marginTop: "clamp(48px, 6vw, 72px)" }}>
+                            {detailsHeading && (
+                                <Reveal>
+                                    <h2 style={{ margin: "0 0 28px", fontSize: "clamp(1.5rem, 2.6vw, 2.1rem)", fontWeight: 800, letterSpacing: "-.02em", color: "var(--m-maroon)" }}>
+                                        {detailsHeading}
+                                    </h2>
+                                </Reveal>
+                            )}
+                            <div className="v4-adaptive-grid">
+                                {details.map((d, i) => (
+                                    <Reveal className="v4-adaptive-card" key={d.title} delay={i * 0.1}>
+                                        <span className="v4-adaptive-card__icon" aria-hidden="true">{d.icon}</span>
+                                        <h3>{d.title}</h3>
+                                        <p>{d.body}</p>
+                                    </Reveal>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </section>
         </V4Page>

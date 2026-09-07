@@ -20,7 +20,7 @@ export default function V4HelpCenter() {
     return (
         <V4Page
             title="Help Center | Contact Miraee"
-            description="Answers to common questions about policy, integrations, implementation and data — and a direct line to a human.">
+            description="Answers to common questions about policy, integrations, implementation and data, and a direct line to a human.">
 
             <V4Hero
                 eyebrow="Help center"
@@ -47,7 +47,7 @@ export default function V4HelpCenter() {
                             <b>24/7</b>
                             <div>
                                 <h2 id="contact-title">Still stuck? Talk to a person.</h2>
-                                <p>Support requests go to the same team that backs the agents. If it concerns a live trip, say so — those are picked up first.</p>
+                                <p>Support requests go to the same team that backs the agents. If it concerns a live trip, say so: those are picked up first.</p>
                                 <p style={{ marginTop: 16 }}>
                                     <Link className="v4-btn v4-btn--solid" to="/support">Raise a support request</Link>
                                 </p>

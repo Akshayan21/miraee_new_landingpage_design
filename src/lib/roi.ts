@@ -101,7 +101,7 @@ export const ASSUMPTION_NOTES: Record<keyof RoiAssumptions, { label: string; for
     addressableSpendShare: { label: "Spend the band applies to", format: "pct", why: "The band prices fares. Ground transport, meals and incidentals sit in the same T&E line but are not priced against published fares." },
     existingDiscountOnManaged: { label: "Discount already on managed spend", format: "pct", why: "Spend inside a program already carries a negotiated discount, so only the incremental delta is new saving." },
     adoptionRate: { label: "Trips routed through Miraee", format: "pct", why: "Not every trip moves onto the platform in a first steady-state year." },
-    adminTimeEliminated: { label: "Admin time removed", format: "pct", why: "Deliberately below the published 97% agent-managed figure — journey automation and human admin hours are different measures." },
+    adminTimeEliminated: { label: "Admin time removed", format: "pct", why: "Deliberately below the published 97% agent-managed figure: journey automation and human admin hours are different measures." },
     visibilityCapture: { label: "Off-program spend recovered", format: "pct", why: "Some employee-booked spend stays outside any system." },
     toolSeatCostPerYear: { label: "Seat cost per replaced tool", format: "money", why: "Per traveler, per year, for each tool the platform replaces." },
     toolAdminHoursPerToolPerYear: { label: "Admin hours per replaced tool", format: "hours", why: "Vendor management, SSO upkeep and cross-system reconciliation." },

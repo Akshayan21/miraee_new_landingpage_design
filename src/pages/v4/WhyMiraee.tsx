@@ -80,7 +80,7 @@ const HARD_QUESTIONS: [string, ReactNode][] = [
     ["We just signed with our TMC.", "Most programs run a pilot on one entity or one region alongside the incumbent, then compare like for like. Nothing has to be torn out to see the number."],
     ["Our travelers won't adopt another tool.", "Miraee is a conversation, not a portal. There is no interface to learn: employees describe the trip in the tools they already have open, and the itinerary comes back in policy."],
     ["We can't let AI book without approval.", "Then don't. Every agent has a written limit on what it may do alone, and you set it. Many programs start with approval on everything and relax it once the audit trail earns trust."],
-    ["Our travel policy is too complex.", "Policy is configured by route, grade, trip type and entity, and it is applied at search rather than at approval — the more complex the policy, the more that matters."],
+    ["Our travel policy is too complex.", "Policy is configured by route, grade, trip type and entity, and it is applied at search rather than at approval: the more complex the policy, the more that matters."],
     ["What happens when a trip goes badly wrong?", "The agent detects the disruption, prices the alternatives, and escalates to a human travel specialist with the whole trip already attached. The traveler never starts over."],
     ["You're new.", "The software is. The supply, the payments and the engineering are the Tabhi group's, which already reaches 125M+ travelers across 500+ airlines and 2M+ properties."],
 ]
@@ -96,7 +96,7 @@ export default function V4WhyMiraee() {
     return (
         <V4Page
             title="Why Miraee | Same Trip, Different Operating Model"
-            description="Your travel program isn't broken — its architecture is. How Miraee compares to a legacy TMC and first-generation T&E, and what switching actually takes.">
+            description="Your travel program isn't broken: its architecture is. How Miraee compares to a legacy TMC and first-generation T&E, and what switching actually takes.">
 
             <V4Hero
                 eyebrow="Why Miraee"

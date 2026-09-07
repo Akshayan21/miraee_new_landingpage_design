@@ -6,6 +6,7 @@ import { Reveal } from "../../components/V4Kit"
 import productPageImg from "../../../images/weavy/v1/v1-home-hero.webp"
 import financeDashboard from "../../assets/ui-admin-dashboard.png"
 import miraeeMobileUi from "../../assets/miraee-mobile-phone.png"
+import supplierCabin from "../../assets/miraee-supplier-cabin.webp"
 
 // Verbatim ports of the sections the site-architecture doc names by version —
 // layout, structure and reveal timing copied from the source, not
@@ -19,6 +20,10 @@ import miraeeMobileUi from "../../assets/miraee-mobile-phone.png"
 //               src/pages/Product.tsx:504 (`Integrations`)
 //   UseCasesV11  "Every kind of trip your company takes" — from V1.1 For Teams
 //               src/pages/ForTeams.tsx:547 (`UseCases`)
+//   MondeeAdvantageV2  "The Mondee Advantage" (Tabhi/Mondee trust bar) — from V2
+//               src/pages/ProductV2.tsx:198 (`.pv2-supply`)
+//   TMCGenerationsV2  "Miraee vs legacy TMCs" — from V2 Product page
+//               src/pages/ProductV2.tsx:215 (`.pv2-generation`)
 //   OutcomesV1  "Less work, better journeys — from V1 homepage"
 //               src/pages/HomeElegant.tsx:133 + .el-outcome* in HomeElegant.css
 //   SecurityV1  "Fast for people. Safe for business — from V1 homepage"
@@ -231,7 +236,7 @@ export function UseCasesV11() {
 
 const OUTCOMES: [string, string, string, string, string][] = [
     ["For employees", "Ask once. Get a complete, policy-safe trip.", "A trip that feels personal - not procedural.", "4.8/5", "traveler experience"],
-    ["For finance", "See committed spend before it becomes an expense.", "Complete transparency over company expenditure.", "20–30%", "wholesale savings"],
+    ["For finance", "See committed spend before it becomes an expense.", "Complete transparency over company expenditure.", "20-30%", "wholesale savings"],
     ["For travel teams", "Set the rules once and run the program by exception.", "No more managing every single booking and update.", "24/7", "agent + human care"],
 ]
 
@@ -289,7 +294,7 @@ const LOOP: [string, string][] = [
     ["Employee chooses smart", "Miraee surfaces a better option and a price to beat."],
     ["Company saves", "Savings are captured and visible in real time."],
     ["Employee earns", "Rewards land in the Miraee Wallet."],
-    ["Adoption grows", "More trips on Miraee — more savings next quarter."],
+    ["Adoption grows", "More trips on Miraee, more savings next quarter."],
 ]
 
 export function SavingsV3() {
@@ -298,7 +303,7 @@ export function SavingsV3() {
             <div className="v4-shell">
                 <Reveal>
                     <h2 className="v4-h2">Savings that compound on their own.</h2>
-                    <p className="v4-lede">Miraee doesn't enforce savings with restrictive policy alone — it rewards the behavior that creates them.</p>
+                    <p className="v4-lede">Miraee doesn't enforce savings with restrictive policy alone: it rewards the behavior that creates them.</p>
                 </Reveal>
                 <div className="v4r-timeline">
                     {LOOP.map(([title, copy]) => (
@@ -309,6 +314,79 @@ export function SavingsV3() {
                         </Reveal>
                     ))}
                 </div>
+            </div>
+        </section>
+    )
+}
+
+const SUPPLY_ADVANTAGES: [string, string, string, string][] = [
+    ["01", "Global content", "Millions of hotels and airline partners, sourced through direct connections and wholesale agreements rather than resold inventory.", "2M+ hotels"],
+    ["02", "Wholesale economics", "Negotiated rates that travel with the trip, applied automatically at booking rather than claimed back later.", "500+ airlines"],
+    ["03", "Reach", "The Tabhi network already serves a traveler base at global scale. That volume is what makes the rates possible.", "125M+ travelers reached"],
+    ["04", "Local experiences", "Festivals, performances, markets and makers - content that no corporate channel has ever carried.", "Hyperlocal"],
+]
+
+export function MondeeAdvantageV2() {
+    return (
+        <section className="v4r-supply" aria-labelledby="supply-title">
+            <div className="v4r-supply__media">
+                <img src={supplierCabin} alt="Business traveler receiving service in an aircraft cabin" loading="lazy" />
+            </div>
+            <div className="v4r-supply__content">
+                <Reveal>
+                    <span className="v4r-supply__eyebrow">The Mondee Advantage</span>
+                    <h2 id="supply-title">Global reach.<br />Personal execution.</h2>
+                    <p>Miraee runs on Tabhi's own supply marketplace, Mondee - the supply depth behind enterprise travel solutions that others resell rather than own. Its inventory is full of wholesale contracts, direct connections, and hyperlocal content that nobody else has digitized.</p>
+                </Reveal>
+                <div className="v4r-supply__rows">
+                    {SUPPLY_ADVANTAGES.map(([number, title, copy, proof], index) => (
+                        <Reveal key={title} delay={index * .04}>
+                            <span>{number}</span>
+                            <div><h3>{title}</h3><p>{copy}</p></div>
+                            <strong>{proof}</strong>
+                        </Reveal>
+                    ))}
+                </div>
+                <Reveal className="v4r-supply__close">
+                    <p>Most platforms compete on software.</p>
+                    <strong>We compete on software and supply.</strong>
+                </Reveal>
+            </div>
+        </section>
+    )
+}
+
+const GENERATIONS: [string, string, string][] = [
+    ["Legacy TMC", "Expert humans brokering complex trips, with negotiated rates and real support behind them.", "Offline, slow, and priced per transaction, so the vendor earned more the more friction there was."],
+    ["First-generation T&E", "Self-serve booking and digital expense, which removed the phone call and paper receipt.", "The work moved to the traveler. Booking, approval, changes and expense stayed in four separate stages with four separate owners."],
+    ["Agentic", "The stages collapse. One agent carries one context from request to reconciliation.", "Nothing is handed off."],
+]
+
+export function TMCGenerationsV2() {
+    return (
+        <section className="v4r-generation" aria-labelledby="generation-title">
+            <div className="v4-shell">
+                <Reveal className="v4r-generation__head">
+                    <div>
+                        <span className="v4r-label">Miraee vs legacy TMCs</span>
+                        <h2 id="generation-title">Built different from the tools you're used to.</h2>
+                    </div>
+                    <p>While other tools solve parts of the journey, Miraee sits distinctly apart. Here's how the operating model changed.</p>
+                </Reveal>
+                <div className="v4r-generation__grid">
+                    {GENERATIONS.map(([name, solved, left], index) => (
+                        <Reveal className={index === 2 ? "is-agentic" : ""} key={name} delay={index * .05}>
+                            <span>0{index + 1}</span>
+                            <h3>{name}</h3>
+                            <div><small>What it solved</small><p>{solved}</p></div>
+                            <div><small>What it left behind</small><p>{left}</p></div>
+                        </Reveal>
+                    ))}
+                </div>
+                <Reveal className="v4r-generation__close">
+                    <span>The new generation of travel planning.</span>
+                    <strong>Powered by agentic AI.</strong>
+                </Reveal>
             </div>
         </section>
     )

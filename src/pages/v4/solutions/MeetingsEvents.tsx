@@ -29,7 +29,7 @@ function MeetingsEventsSimulation() {
             <div className="v4-sim-checklist">
                 <div className="v4-sim-check-row">
                     <span className="v4-sim-badge v4-sim-badge--success">✓ SYNCED</span>
-                    <span>Arrivals aligned: 32 flights landing 2:00 PM – 4:30 PM</span>
+                    <span>Arrivals aligned: 32 flights landing 2:00 PM, 4:30 PM</span>
                 </div>
                 <div className="v4-sim-check-row">
                     <span className="v4-sim-badge v4-sim-badge--success">✓ ONE LEDGER</span>

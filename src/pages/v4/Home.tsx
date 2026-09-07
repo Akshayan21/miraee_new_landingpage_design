@@ -22,7 +22,7 @@ import "./V4.css"
 export default function V4Home() {
     usePageMeta(
         "A Private Travel Assistant for Every Employee | Miraee",
-        "Travel Limitless. Business travel, personalized — one platform for booking, travel management and expenses, plus the personal trips people love.",
+        "Travel Limitless. Business travel, personalized: one platform for booking, travel management and expenses, plus the personal trips people love.",
     )
 
     // The intro's state lives here, not inside <IntroCover>, so the real page

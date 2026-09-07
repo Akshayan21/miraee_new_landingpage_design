@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import avatarImg from "../../assets/Avatar.png"
@@ -14,10 +14,37 @@ import avatarImg from "../../assets/Avatar.png"
 // control back to the parent AND resets this component's own conversation
 // state, so reopening always starts clean.
 
-const GREETING = "Good morning. Where are you travelling?"
+// A rotating fact instead of a fixed "Good morning" greeting — general,
+// widely-known travel trivia, not a claim about Miraee's own product, so
+// nothing here needs the "illustrative data" labelling the site uses
+// elsewhere for numbers that ARE about Miraee.
+const TRAVEL_FACTS = [
+    "Singapore's Changi Airport has its own rooftop swimming pool and a butterfly garden.",
+    "The world's shortest scheduled flight, in Scotland, can take under two minutes in the air.",
+    "Tuesday afternoons are often quoted as the cheapest time to book a flight.",
+    "More business trips now end with a personal day or two tacked on than a separate holiday.",
+    "Japan's bullet trains are famous for averaging only seconds of delay a year.",
+    "A window seat has no more legroom than an aisle seat, most travelers pick it for the view alone.",
+]
+function randomFact() {
+    return TRAVEL_FACTS[Math.floor(Math.random() * TRAVEL_FACTS.length)]
+}
 
-const MIC_ICON = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="2" width="6" height="12" rx="3" /><path d="M5 10a7 7 0 0 0 14 0M12 19v3" /></svg>
-const SEND_ICON = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="m3 11 18-8-8 18-2-8-8-2Z" /></svg>
+// Rotating placeholder examples for the collapsed input — covers the main
+// prompt shapes the assistant actually handles: planning, changes, expense
+// submission, preferences/personalization, and a bleisure (business +
+// leisure) request.
+const PLACEHOLDER_PROMPTS = [
+    "Tell Miraee about your trip",
+    "Plan a trip to Singapore next week, within policy",
+    "Submit yesterday's taxi receipt for reimbursement",
+    "Remember I prefer window seats and quiet hotel rooms",
+    "Add two personal days after my Berlin trip",
+    "Find a policy-friendly hotel near tomorrow's meeting",
+]
+
+const MIC_ICON = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="2" width="6" height="12" rx="3" /><path d="M5 10a7 7 0 0 0 14 0M12 19v3" /></svg>
+const SEND_ICON = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="m3 11 18-8-8 18-2-8-8-2Z" /></svg>
 const PLANE_ICON = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.4.7c-.2.4-.1.9.3 1.2L8.7 12l-2 3H4l-1 1 3 2 2 3 1-1v-2.7l3-2 3.3 5.2c.3.4.8.6 1.3.4l.7-.3c.4-.2.6-.6.5-1.1z" /></svg>
 const CHANGE_ICON = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" /><path d="m9 15 2 2 4-4" /></svg>
 const RECEIPT_ICON = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z" /><path d="M9 8h6M9 12h6" /></svg>
@@ -46,10 +73,85 @@ const EXPANDED_RIGHT: { label: string; prompt: string; icon: ReactNode }[] = [
 
 function respondTo(text: string): string {
     const t = text.toLowerCase()
-    if (/change|resched|move|earlier|later|cancel|extend/.test(t)) return "Checking fare rules for a change — I'll hold the best option and confirm before anything is booked."
-    if (/receipt|expense|reimburse/.test(t)) return "Got it. I'll code this to the right category and post it automatically — no report to file."
-    if (/trip|flight|book|fly|hotel|travel|singapore|meeting/.test(t)) return "On it. Building an in-policy itinerary now — I'll have the best option in a moment."
+    if (/change|resched|move|earlier|later|cancel|extend/.test(t)) return "Checking fare rules for a change. I'll hold the best option and confirm before anything is booked."
+    if (/receipt|expense|reimburse/.test(t)) return "Got it. I'll code this to the right category and post it automatically, no report to file."
+    if (/trip|flight|book|fly|hotel|travel|singapore|meeting/.test(t)) return "On it. Building an in-policy itinerary now, I'll have the best option in a moment."
     return "Tell me the trip, the dates, or what needs to change, and I'll take it from there."
+}
+
+// Shown while "thinking" — a filler that matches what respondTo() is about to
+// say, so the wait reads as purposeful rather than a bare, contentless "…".
+function fillerFor(text: string): string {
+    const t = text.toLowerCase()
+    if (/change|resched|move|earlier|later|cancel|extend/.test(t)) return "Checking fare rules…"
+    if (/receipt|expense|reimburse/.test(t)) return "Coding the expense…"
+    if (/trip|flight|book|fly|hotel|travel|singapore|meeting/.test(t)) return "Building the itinerary…"
+    return "Thinking…"
+}
+
+// Types each phrase out character by character, holds, deletes it back out,
+// then moves to the next — a real typewriter loop, not a cross-fade between
+// full phrases. A plain recursive setTimeout (not setInterval) so each step's
+// delay can differ (typing vs. deleting vs. the hold) without drift.
+function useTypewriter(phrases: string[], reduce: boolean): string {
+    const [typed, setTyped] = useState(() => (reduce ? phrases[0] : ""))
+    useEffect(() => {
+        if (reduce) {
+            // Not the initial render (the lazy useState initializer already
+            // covers that) — only reachable if the OS preference flips while
+            // mounted. Deferred so the state update isn't synchronous inside
+            // the effect body itself.
+            const id = window.setTimeout(() => setTyped(phrases[0]), 0)
+            return () => window.clearTimeout(id)
+        }
+        let phraseIndex = 0
+        let charIndex = 0
+        let deleting = false
+        let cancelled = false
+        let t = 0
+        const TYPE_MS = 38, DELETE_MS = 22, HOLD_MS = 1500, GAP_MS = 400
+
+        const tick = () => {
+            if (cancelled) return
+            const phrase = phrases[phraseIndex]
+            if (!deleting) {
+                charIndex++
+                setTyped(phrase.slice(0, charIndex))
+                if (charIndex >= phrase.length) {
+                    t = window.setTimeout(() => { deleting = true; tick() }, HOLD_MS)
+                    return
+                }
+                t = window.setTimeout(tick, TYPE_MS)
+            } else {
+                charIndex--
+                setTyped(phrase.slice(0, charIndex))
+                if (charIndex <= 0) {
+                    deleting = false
+                    phraseIndex = (phraseIndex + 1) % phrases.length
+                    t = window.setTimeout(tick, GAP_MS)
+                    return
+                }
+                t = window.setTimeout(tick, DELETE_MS)
+            }
+        }
+        t = window.setTimeout(tick, TYPE_MS)
+        return () => { cancelled = true; window.clearTimeout(t) }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [reduce])
+    return typed
+}
+
+// Real placeholder text stays empty (nothing to announce twice — aria-label
+// already names the field) and this decorative, `aria-hidden` layer sits on
+// top of it instead, with a blinking caret at the end of whatever's typed
+// so far.
+function AnimatedPlaceholder({ text, show }: { text: string; show: boolean }) {
+    if (!show) return null
+    return (
+        <span className="v4-assistant__placeholder-fx" aria-hidden="true">
+            {text}<span className="v4-assistant__caret" />
+        </span>
+    )
 }
 
 type Props = {
@@ -65,10 +167,12 @@ type Props = {
 
 export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
     const reduce = useReducedMotion()
-    const [caption, setCaption] = useState(GREETING)
+    const [caption, setCaption] = useState(randomFact)
     const [value, setValue] = useState("")
     const [status, setStatus] = useState<"idle" | "thinking">("idle")
+    const [pending, setPending] = useState("")
     const [listening, setListening] = useState(false)
+    const typedPlaceholder = useTypewriter(PLACEHOLDER_PROMPTS, !!reduce)
     const timer = useRef<number>(0)
 
     const submit = (text: string) => {
@@ -80,6 +184,7 @@ export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
             setCaption(respondTo(trimmed))
             return
         }
+        setPending(trimmed)
         setStatus("thinking")
         window.clearTimeout(timer.current)
         timer.current = window.setTimeout(() => {
@@ -90,9 +195,10 @@ export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
 
     const close = () => {
         window.clearTimeout(timer.current)
-        setCaption(GREETING)
+        setCaption(randomFact())
         setValue("")
         setStatus("idle")
+        setPending("")
         setListening(false)
         onClose?.()
     }
@@ -108,7 +214,7 @@ export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
             initial={reduce ? undefined : { opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.28 }}>
-            {status === "thinking" ? "…" : caption}
+            {status === "thinking" ? fillerFor(pending) : caption}
         </motion.span>
     )
 
@@ -123,12 +229,21 @@ export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
         </div>
     )
 
+    // Both branches share one duration/easing with the hero row's own CSS
+    // transitions (grid-template-columns and the copy column's fade, in
+    // V4.css) so the grid reflow, the copy fading out and this card fading
+    // in all move in the same rhythm instead of at three different speeds.
+    // A scale+fade ("grow into place") reads as a takeover expanding, not a
+    // generic slide-up -- and using it on BOTH branches means closing back
+    // down looks and feels like the same motion in reverse, not a silent pop.
+    const swapTransition = { duration: 0.5, ease: [0.4, 0, 0.2, 1] as const }
+
     if (expanded) {
         return (
             <motion.div className="v4-assistant v4-assistant--expanded"
-                initial={reduce ? undefined : { opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}>
+                initial={reduce ? undefined : { opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={swapTransition}>
                 <button type="button" className="v4-assistant__close" aria-label="Close assistant" onClick={close}>
                     {CLOSE_ICON}
                 </button>
@@ -143,7 +258,7 @@ export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
                 </div>
 
                 <div className="v4-assistant__stage">
-                    <div className="v4-assistant__oval" aria-hidden="true">{avatar}</div>
+                    <div className="v4-assistant__frame v4-assistant__frame--lg" aria-hidden="true">{avatar}</div>
                     <p className="v4-assistant__caption v4-assistant__caption--lg" aria-live="polite">{captionEl}</p>
                     {waveEl}
                     <button type="button" className="v4-assistant__listen" onClick={() => setListening(l => !l)}>
@@ -164,13 +279,16 @@ export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
                     <span className="v4-assistant__bar-keyboard" aria-hidden="true">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="6" width="20" height="12" rx="2" /><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8" /></svg>
                     </span>
-                    <input
-                        type="text"
-                        value={value}
-                        onChange={e => setValue(e.target.value)}
-                        placeholder="Ask Miraee anything…"
-                        aria-label="Ask Miraee anything"
-                    />
+                    <div className="v4-assistant__input-wrap">
+                        <input
+                            type="text"
+                            value={value}
+                            onChange={e => setValue(e.target.value)}
+                            placeholder=""
+                            aria-label="Ask Miraee anything"
+                        />
+                        <AnimatedPlaceholder text={typedPlaceholder} show={!value} />
+                    </div>
                     <button type="button" className="v4-assistant__mic" aria-label="Try a sample voice prompt"
                         onClick={() => submit(QUICK_PROMPTS[0].prompt)}>{MIC_ICON}</button>
                     <button type="submit" className="v4-assistant__send" aria-label="Send" disabled={!value.trim() || status === "thinking"}>{SEND_ICON}</button>
@@ -180,10 +298,18 @@ export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
     }
 
     return (
-        <div className="v4-assistant">
+        <motion.div className="v4-assistant"
+            initial={reduce ? undefined : { opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={swapTransition}>
             <span className="v4-assistant__live"><i aria-hidden="true" /> Live</span>
 
-            <div className="v4-assistant__avatar" aria-hidden="true">{avatar}</div>
+            <div className="v4-assistant__avatar" aria-hidden="true">
+                <div className="v4-assistant__frame v4-assistant__frame--sm">
+                    {avatar}
+                    <span className="v4-assistant__frame-glow" aria-hidden="true" />
+                </div>
+            </div>
 
             {/* No AnimatePresence/exit here on purpose — a changed `key` makes
                 React swap the DOM node synchronously, so the new text is
@@ -194,13 +320,16 @@ export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
             {waveEl}
 
             <form className="v4-assistant__form" onSubmit={e => { e.preventDefault(); submit(value) }}>
-                <input
-                    type="text"
-                    value={value}
-                    onChange={e => setValue(e.target.value)}
-                    placeholder="Tell Miraee about your trip"
-                    aria-label="Tell Miraee about your trip"
-                />
+                <div className="v4-assistant__input-wrap">
+                    <input
+                        type="text"
+                        value={value}
+                        onChange={e => setValue(e.target.value)}
+                        placeholder=""
+                        aria-label="Tell Miraee about your trip"
+                    />
+                    <AnimatedPlaceholder text={typedPlaceholder} show={!value} />
+                </div>
                 <button type="button" className="v4-assistant__mic" aria-label="Try a sample voice prompt"
                     onClick={() => submit(QUICK_PROMPTS[0].prompt)}>{MIC_ICON}</button>
                 <button type="submit" className="v4-assistant__send" aria-label="Send" disabled={!value.trim() || status === "thinking"}>{SEND_ICON}</button>
@@ -213,6 +342,6 @@ export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
                     </button>
                 ))}
             </div>
-        </div>
+        </motion.div>
     )
 }

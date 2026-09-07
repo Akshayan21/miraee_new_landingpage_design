@@ -354,7 +354,7 @@ function MeetingsEventsSimulation() {
             <div className="v4-sim-checklist">
                 <div className="v4-sim-check-row">
                     <span className="v4-sim-badge v4-sim-badge--success">✓ SYNCED</span>
-                    <span>Arrivals aligned: 32 flights landing 2:00 PM – 4:30 PM</span>
+                    <span>Arrivals aligned: 32 flights landing 2:00 PM, 4:30 PM</span>
                 </div>
                 <div className="v4-sim-check-row">
                     <span className="v4-sim-badge v4-sim-badge--success">✓ ONE LEDGER</span>
@@ -372,7 +372,7 @@ function ExecutiveTravelSimulation() {
                 <div className="v4-sim-exec-head">
                     <div className="v4-sim-avatar">EV</div>
                     <div>
-                        <h5 className="v4-sim-exec-name">Elena Vance — Executive Profile</h5>
+                        <h5 className="v4-sim-exec-name">Elena Vance · Executive Profile</h5>
                         <span className="v4-sim-exec-sub">VP Product & Partnerships</span>
                     </div>
                     <span className="v4-sim-badge v4-sim-badge--orange">PRIORITY VIP</span>

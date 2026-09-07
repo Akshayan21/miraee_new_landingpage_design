@@ -92,7 +92,7 @@ export function StatStrip() {
     const STATS = [
         { val: "2M+", label: "Properties" }, { val: "500+", label: "Airlines" },
         { val: "6", label: "Specialized agents" }, { val: "125M+", label: "Travelers reached" },
-        { val: "20–30%", label: "Wholesale savings" }, { val: "24/7", label: "Human support" },
+        { val: "20-30%", label: "Wholesale savings" }, { val: "24/7", label: "Human support" },
         { val: "100%", label: "Agent-managed" }, { val: "1", label: "Platform" },
     ]
     const items = [...STATS, ...STATS]
@@ -505,7 +505,7 @@ export function Experiences() {
 
 // ─── BUSINESS CASE ───────────────────────────────────────────────────────────
 const CASE_STATS = [
-    { stat: "20–30%", label: "Travel savings, validated apples-to-apples vs. incumbents", accent: T.orange },
+    { stat: "20-30%", label: "Travel savings, validated apples-to-apples vs. incumbents", accent: T.orange },
     { stat: "100%", label: "Of the journey managed by the agent, end to end", accent: T.accent },
     { stat: "1", label: "Platform for business and personal travel alike", accent: T.orange },
 ]
@@ -630,7 +630,7 @@ export function CtaRoutes() {
 // the ring has no room to read.
 const CAPS = [
     { num: "01", title: "Plan", body: "Describe the trip in plain language. Miraee builds an in-policy itinerary in seconds.", icon: "◈", accent: T.orange, stat: "<60s", statLabel: "to an itinerary" },
-    { num: "02", title: "Book", body: "Flights, hotels and cars from Mondee wholesale inventory: real savings, one tap.", icon: "⬡", accent: T.accent, stat: "20–30%", statLabel: "wholesale savings" },
+    { num: "02", title: "Book", body: "Flights, hotels and cars from Mondee wholesale inventory: real savings, one tap.", icon: "⬡", accent: T.accent, stat: "20-30%", statLabel: "wholesale savings" },
     { num: "03", title: "Expense", body: "Receipts, reports and reconciliation handled automatically. No forms, no chasing.", icon: "◉", accent: T.orange, stat: "0", statLabel: "forms to fill" },
     { num: "04", title: "Change", body: "Plans shift, the agent rebooks itself: within policy, before you even ask.", icon: "◈", accent: T.accent, stat: "100%", statLabel: "handled by the agent" },
     { num: "05", title: "24/7 support", body: "A human-in-the-loop backup whenever a trip needs a real person.", icon: "⬡", accent: T.orange, stat: "24/7", statLabel: "human backup" },

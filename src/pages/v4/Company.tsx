@@ -43,7 +43,7 @@ export default function V4Company() {
             <V4Hero
                 eyebrow="The company"
                 title={<>The <em>agentic core.</em></>}
-                lede="Miraee is the employee travel platform of the Tabhi group — built on the supply, payments and engineering the group already runs." />
+                lede="Miraee is the employee travel platform of the Tabhi group, built on the supply, payments and engineering the group already runs." />
 
             <section className="v4-section v4-section--tint" id="scale" aria-labelledby="scale-title">
                 <div className="v4-shell">
