@@ -304,13 +304,6 @@ export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
             transition={swapTransition}>
             <span className="v4-assistant__live"><i aria-hidden="true" /> Live</span>
 
-            <div className="v4-assistant__avatar" aria-hidden="true">
-                <div className="v4-assistant__frame v4-assistant__frame--sm">
-                    {avatar}
-                    <span className="v4-assistant__frame-glow" aria-hidden="true" />
-                </div>
-            </div>
-
             {/* No AnimatePresence/exit here on purpose — a changed `key` makes
                 React swap the DOM node synchronously, so the new text is
                 never gated behind an exit animation completing. Only the
@@ -343,5 +336,110 @@ export function HeroAssistant({ expanded = false, onExpand, onClose }: Props) {
                 ))}
             </div>
         </motion.div>
+    )
+}
+
+// The face that used to live inside the collapsed hero card, now given its
+// own section directly under the hero — a proper introduction ("meet the
+// assistant") instead of a small thumbnail competing with the hero photo for
+// attention. Same avatar image and idle breathing motion as the card's
+// expanded view, just presented at spotlight size.
+//
+// Not a static portrait: it carries its own input, mic and quick prompts and
+// answers through the same respondTo()/fillerFor() scripted logic as the
+// hero card, so a visitor who scrolls past the hero without touching it
+// still gets a second, equally real chance to talk to the assistant.
+export function AvatarSpotlight() {
+    const reduce = useReducedMotion()
+    const [caption, setCaption] = useState(randomFact)
+    const [value, setValue] = useState("")
+    const [status, setStatus] = useState<"idle" | "thinking">("idle")
+    const [pending, setPending] = useState("")
+    const typedPlaceholder = useTypewriter(PLACEHOLDER_PROMPTS, !!reduce)
+    const timer = useRef<number>(0)
+
+    const submit = (text: string) => {
+        const trimmed = text.trim()
+        if (!trimmed || status === "thinking") return
+        setValue("")
+        if (reduce) {
+            setCaption(respondTo(trimmed))
+            return
+        }
+        setPending(trimmed)
+        setStatus("thinking")
+        window.clearTimeout(timer.current)
+        timer.current = window.setTimeout(() => {
+            setCaption(respondTo(trimmed))
+            setStatus("idle")
+        }, 650)
+    }
+
+    useEffect(() => () => window.clearTimeout(timer.current), [])
+
+    const captionEl = (
+        <motion.span key={status === "thinking" ? "thinking" : caption}
+            initial={reduce ? undefined : { opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.28 }}>
+            {status === "thinking" ? fillerFor(pending) : caption}
+        </motion.span>
+    )
+
+    return (
+        <section className="v4-avatar-spotlight">
+            {/* Same left/right chip columns as the hero card's expanded takeover
+                (EXPANDED_LEFT / EXPANDED_RIGHT, 3 each) instead of the smaller
+                3-chip QUICK_PROMPTS set — this is the "extended" chip set the
+                user asked to bring over. The row is capped to a max-width and
+                the side columns are fixed-width flex children (not `1fr` grid
+                tracks), so it stays anchored close to the portrait instead of
+                stretching the chips out to the viewport edges on wide screens. */}
+            <div className="v4-shell v4-avatar-spotlight__row">
+                <div className="v4-assistant__chips v4-avatar-spotlight__chips">
+                    {EXPANDED_LEFT.map(q => (
+                        <button type="button" key={q.label} onClick={() => submit(q.prompt)}>
+                            {q.icon}<span>{q.label}</span>
+                        </button>
+                    ))}
+                </div>
+
+                <div className="v4-avatar-spotlight__stage">
+                    <div className="v4-assistant__frame v4-assistant__frame--lg" aria-hidden="true">
+                        <motion.img className="v4-assistant__photo--lg" src={avatarImg} alt=""
+                            animate={reduce ? undefined : { scale: [1, 1.012, 1] }}
+                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} />
+                        <span className="v4-assistant__frame-glow" aria-hidden="true" />
+                    </div>
+
+                    <span className="v4-avatar-spotlight__eyebrow">Meet your assistant</span>
+                    <p className="v4-avatar-spotlight__caption" aria-live="polite">{captionEl}</p>
+
+                    <form className="v4-assistant__form v4-avatar-spotlight__form" onSubmit={e => { e.preventDefault(); submit(value) }}>
+                    <div className="v4-assistant__input-wrap">
+                        <input
+                            type="text"
+                            value={value}
+                            onChange={e => setValue(e.target.value)}
+                            placeholder=""
+                            aria-label="Tell Miraee about your trip"
+                        />
+                        <AnimatedPlaceholder text={typedPlaceholder} show={!value} />
+                    </div>
+                    <button type="button" className="v4-assistant__mic" aria-label="Try a sample voice prompt"
+                        onClick={() => submit(QUICK_PROMPTS[0].prompt)}>{MIC_ICON}</button>
+                    <button type="submit" className="v4-assistant__send" aria-label="Send" disabled={!value.trim() || status === "thinking"}>{SEND_ICON}</button>
+                    </form>
+                </div>
+
+                <div className="v4-assistant__chips v4-assistant__chips--right v4-avatar-spotlight__chips">
+                    {EXPANDED_RIGHT.map(q => (
+                        <button type="button" key={q.label} onClick={() => submit(q.prompt)}>
+                            {q.icon}<span>{q.label}</span>
+                        </button>
+                    ))}
+                </div>
+            </div>
+        </section>
     )
 }

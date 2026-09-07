@@ -1,13 +1,14 @@
-import { useState } from "react"
 import { Link } from "react-router-dom"
 import { MotionConfig } from "framer-motion"
 import { V4Nav, V4Footer, Reveal } from "../../components/V4Kit"
 import { usePageMeta } from "../../hooks/usePageMeta"
 import { StatStrip, HowItWorks, KineticBand, BusinessCase, Experiences, CtaRoutes, PlatformSolution } from "./V0Sections"
-import { HeroAssistant } from "./HeroAssistant"
+import { AvatarSpotlight } from "./HeroAssistant"
 import { Magnetic, ScrollProgress, GrainOverlay, CustomCursor } from "../../animations"
 import { IntroCover } from "./V0Intro"
 import { useIntroActive } from "./useIntroActive"
+import travelerPhoto from "../../assets/miraee-traveler-hero.png"
+import flightCardImg from "../../assets/flight_card_updated.png"
 import "../SubpagesV2.css"
 import "./V4.css"
 
@@ -34,14 +35,6 @@ export default function V4Home() {
     // active, then hands it back — no extra library, no manual tabindex bookkeeping.
     const intro = useIntroActive()
 
-    // The hero's copy column hides once the assistant card is given a prompt,
-    // and the card takes the full row. Lives here (not inside HeroAssistant)
-    // because the H1/eyebrow/actions it hides are siblings, not children, of
-    // the assistant. Also releases the pinned hero's 100vh/overflow:hidden
-    // stage while expanded — the expanded card is meant to breathe, and a
-    // deliberate takeover is a reasonable moment to give up the scroll-pin.
-    const [assistantExpanded, setAssistantExpanded] = useState(false)
-
     return (
         <MotionConfig reducedMotion="user">
         {/* V0's ambient stack, minus SmoothScroll. SmoothScroll hijacks every
@@ -65,24 +58,15 @@ export default function V4Home() {
             <V4Nav />
 
             <main id="main">
-                <div className={"v4-hero-pin" + (assistantExpanded ? " is-expanded" : "")}>
+                <div className="v4-hero-pin">
                     <section className="v4-hero">
                         {/* Ambient blobs are static — no scroll-linked scale/fade and no
                             mousemove tracking (V0 spring-followed the cursor here too). */}
                         <div className="v4-hero__bg" aria-hidden="true" />
                         <div className="v4-hero__bg2" aria-hidden="true" />
                         <div className="v4-shell" style={{ position: "relative", zIndex: 1 }}>
-                            <div className={"v4-hero__row" + (assistantExpanded ? " v4-hero__row--expanded" : "")} style={{ position: "relative" }}>
-                                {/* Plain CSS class toggle, not AnimatePresence/exit — the
-                                    `--hidden` modifier's `position: absolute` applies the
-                                    instant React commits the class, with zero dependency on an
-                                    animation frame ever running. The opacity/transform fade is
-                                    still a real CSS transition for whoever's tab can paint it;
-                                    it just isn't load-bearing for the layout. Always mounted
-                                    (never conditionally removed) so there's nothing to race. */}
-                                <div className={"v4-hero__copy" + (assistantExpanded ? " v4-hero__copy--hidden" : "")}
-                                    aria-hidden={assistantExpanded || undefined}
-                                    inert={assistantExpanded || undefined}>
+                            <div className="v4-hero__row" style={{ position: "relative" }}>
+                                <div className="v4-hero__copy">
                                     <Reveal>
                                         <span className="v4-hero__eyebrow">Travel Limitless · Business travel, personalized</span>
                                         {/* Static now — the per-letter masked entrance (WaveLetters) was
@@ -101,15 +85,32 @@ export default function V4Home() {
                                     </Reveal>
                                 </div>
                                 <Reveal delay={0.12}>
-                                    <HeroAssistant
-                                        expanded={assistantExpanded}
-                                        onExpand={() => setAssistantExpanded(true)}
-                                        onClose={() => setAssistantExpanded(false)} />
+                                    {/* .v4-hero__media allows the flight card to overlap OUTSIDE
+                                        the photo's own edge (Navan's layered-depth placement) —
+                                        the photo-frame itself keeps overflow:hidden for its
+                                        rounded corners, so the card has to be a sibling, not a
+                                        child, of it. */}
+                                    <div className="v4-hero__media">
+                                        <div className="v4-hero__photo-frame v4-hero__photo-frame--rect">
+                                            <img src={travelerPhoto} alt="A traveler checking her itinerary on her phone in an airport lounge" />
+                                        </div>
+                                        {/* Sample only, same honesty convention as the persona
+                                            cards elsewhere ("Scripted preview" / "Illustrative
+                                            voices") — a real UI asset from the design library
+                                            (src/assets/ui-flight-card.png), not a live booking. */}
+                                        <img className="v4-flight-card-img" src={flightCardImg}
+                                            alt="Sample flight option: Emirates, JFK to SFO, non-stop, $220 economy" />
+                                    </div>
                                 </Reveal>
                             </div>
                         </div>
                     </section>
                 </div>
+
+                {/* The avatar used to live inside the collapsed hero card; it now
+                    gets its own introduction directly below the hero instead of
+                    competing with the hero photo for attention. */}
+                <AvatarSpotlight />
 
                 {/* V0's "200+ deep agents, working as one" split-screen panel. */}
                 <PlatformSolution />

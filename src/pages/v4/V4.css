@@ -165,6 +165,12 @@
 .v4-section--dark p { color: rgba(255, 250, 246, .68); }
 
 .v4-eyebrow { display: block; margin: 0 0 14px; color: var(--m-orange); font-size: 10.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+
+/* Persona table (Solutions.tsx) — a face per row, matching table order. */
+.v4-persona-faces { display: flex; flex-wrap: wrap; gap: 24px; }
+.v4-persona-faces__item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.v4-persona-faces__item img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; box-shadow: 0 10px 24px rgba(69, 14, 20, .15); }
+.v4-persona-faces__item span { font-size: 11px; font-weight: 700; color: var(--m-muted); }
 .v4-h2 { margin: 0 0 16px; font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 800; line-height: 1.1; }
 .v4-lede { max-width: 62ch; font-size: clamp(1rem, 1.5vw, 1.125rem); }
 
@@ -213,39 +219,64 @@
   background: radial-gradient(circle, rgba(69, 14, 20, 0.05) 0%, transparent 60%);
   filter: blur(40px); pointer-events: none;
 }
+/* Generic split hero (Platform, Solutions, Technology, Why Miraee, Company)
+   -- same Navan-style photo placement as the homepage, but a plain grid
+   since these pages don't have a pinned/sticky hero to interpolate against. */
+.v4-hero__split { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+.v4-hero__photo-frame--static { aspect-ratio: 1 / 1; }
+@media (max-width: 900px) {
+  .v4-hero__split { grid-template-columns: 1fr; }
+}
 .v4-hero__eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; padding: 6px 14px; border: 1px solid var(--m-line); border-radius: 100px; color: var(--m-orange); font-size: 11.5px; font-weight: 700; }
 .v4-hero h1 { margin: 0 0 20px; font-size: clamp(2.4rem, 6vw, 4.25rem); font-weight: 800; line-height: 1.04; }
 .v4-hero h1 em { color: var(--m-orange); font-style: normal; }
 .v4-hero__lede { max-width: 56ch; margin: 0 0 32px; font-size: clamp(1.02rem, 1.7vw, 1.25rem); }
 .v4-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* Homepage-only: the pinned hero's two-column row (copy + live assistant
-   card). Only .v4-hero-pin's own hero uses this, so it can't affect the
-   generic <V4Hero> single-column layout every other page renders. */
-/* grid-template-columns is interpolable in current browsers, so this one
-   rule is what makes the row reflow AT THE SAME SPEED as the copy fading
-   out and the card fading in below, instead of snapping to one column
-   instantly while both of those are still mid-transition over it. */
-.v4-hero-pin .v4-hero__row { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: center; transition: grid-template-columns .5s cubic-bezier(.4, 0, .2, 1); }
-.v4-hero-pin .v4-hero__row--expanded { grid-template-columns: 1fr; }
-.v4-hero__copy { transition: opacity .5s cubic-bezier(.4, 0, .2, 1), transform .5s cubic-bezier(.4, 0, .2, 1); }
-.v4-hero__copy--hidden { position: absolute; inset: 0; opacity: 0; transform: translateX(-14px); pointer-events: none; }
+/* Homepage-only: the pinned hero's two-column row (copy + photo). Only
+   .v4-hero-pin's own hero uses this, so it can't affect the generic
+   <V4Hero> single-column layout every other page renders. */
+.v4-hero-pin .v4-hero__row { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
 
-/* Expanding the assistant releases the pin: the takeover is meant to breathe,
-   not fit inside the same 100vh/overflow:hidden budget the compact card did. */
-.v4-hero-pin.is-expanded { height: auto; }
-/* The compact hero's huge top padding exists to clear the fixed nav while
-   pinned/sticky; expanded mode isn't sticky, so it only needs enough to
-   clear the fixed nav bar itself (~78px), not the original clamp. Padding
-   transitions alongside the row reflow above instead of jumping with it. */
-.v4-hero-pin.is-expanded .v4-hero { position: relative; top: auto; height: auto; min-height: 0; overflow: visible; justify-content: flex-start; padding-top: clamp(96px, 9vw, 116px); padding-bottom: clamp(32px, 5vw, 56px); }
-.v4-hero-pin .v4-hero { transition: padding-top .5s cubic-bezier(.4, 0, .2, 1), padding-bottom .5s cubic-bezier(.4, 0, .2, 1); }
+/* Plain rectangular photo — no floating card overlapping it, so no gradient
+   scrim is needed for legibility and the aspect ratio can be a simple
+   landscape rectangle instead of the portrait crop a corner-overlap needed. */
+.v4-hero__photo-frame {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -20px rgba(69, 14, 20, 0.28), 0 4px 12px rgba(69, 14, 20, 0.08);
+}
+.v4-hero__photo-frame img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.v4-hero__photo-frame--rect { aspect-ratio: 1 / 1; }
+
+/* Flight card overlay — the real ui-flight-card.png asset, floated over the
+   photo's lower-right corner and offset half OUTSIDE the frame edge, same
+   layered-depth placement Navan uses for its own route card. .v4-hero__media
+   keeps overflow visible (unlike .v4-hero__photo-frame, which needs
+   overflow:hidden for its own rounded corners) so the card is free to hang
+   past the photo's boundary instead of being clipped by it. */
+.v4-hero__media { position: relative; }
+.v4-flight-card-img {
+  position: absolute;
+  left: -32px; bottom: -32px;
+  width: min(300px, 58%);
+  filter: drop-shadow(0 20px 40px rgba(35, 8, 11, 0.3));
+  z-index: 2;
+}
+@media (max-width: 900px) {
+  .v4-flight-card-img { left: -12px; bottom: -20px; width: min(240px, 62%); }
+}
+@media (max-width: 640px) {
+  .v4-flight-card-img { position: static; display: block; width: 220px; margin: -28px auto 0; filter: drop-shadow(0 14px 28px rgba(35, 8, 11, 0.25)); }
+}
 
 /* ── Hero assistant card ─────────────────────────────────────────────────── */
 .v4-assistant { position: relative; max-width: 420px; margin-left: auto; padding: 22px 22px 20px; border: 1px solid var(--m-line); border-radius: var(--v4-panel-radius); background: var(--v4-panel-bg); box-shadow: var(--v4-panel-shadow); }
 .v4-assistant__live { position: absolute; top: 16px; right: 16px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 100px; background: var(--m-paper); border: 1px solid var(--m-line); font-size: 10.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--m-orange); }
 .v4-assistant__live i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--m-orange); animation: v4-live-dot-pulse 2.2s ease-in-out infinite; }
-.v4-assistant__avatar { display: flex; justify-content: center; padding-top: 6px; margin-bottom: 6px; }
 
 /* Shared frame recipe for the avatar photo, collapsed and expanded alike --
    one bordered-oval language instead of a bare mask (collapsed) vs a
@@ -284,6 +315,30 @@
   .v4-assistant__frame:hover .v4-assistant__photo,
   .v4-assistant__frame:hover .v4-assistant__photo--lg { transform: none; }
 }
+/* ── Avatar spotlight — its own section, directly below the hero ────────── */
+.v4-avatar-spotlight { padding: clamp(48px, 7vw, 88px) 0; text-align: center; }
+/* Same left/right chip columns as the hero card's expanded takeover — but
+   `flex` here, not `1fr` grid tracks, and the whole row is capped to a
+   max-width and centered, so the columns stay close to the portrait instead
+   of stretching out to the viewport edges on wide screens (that's what broke
+   last time). */
+.v4-avatar-spotlight__row { display: flex; justify-content: center; align-items: center; gap: clamp(24px, 4vw, 56px); max-width: 1040px; margin: 0 auto; }
+.v4-avatar-spotlight__chips { flex: 0 0 220px; }
+.v4-avatar-spotlight__stage { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.v4-avatar-spotlight .v4-assistant__frame--lg { margin-bottom: 24px; }
+.v4-avatar-spotlight__eyebrow { display: inline-flex; padding: 6px 14px; border: 1px solid var(--m-line); border-radius: 100px; margin-bottom: 14px; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--m-orange); }
+.v4-avatar-spotlight__caption { max-width: 46ch; margin: 0 0 28px; font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 600; line-height: 1.4; color: var(--m-maroon); }
+.v4-avatar-spotlight__form { width: 100%; max-width: 420px; margin-bottom: 14px; }
+@media (max-width: 1100px) {
+  .v4-avatar-spotlight__row { flex-direction: column; }
+  .v4-avatar-spotlight__chips { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .v4-avatar-spotlight .v4-assistant__chips--right { align-items: center; }
+  .v4-avatar-spotlight__stage { order: -1; }
+}
+@media (max-width: 640px) {
+  .v4-avatar-spotlight .v4-assistant__frame--lg { width: 220px; height: 300px; border-radius: 110px; }
+}
+
 .v4-assistant__caption { min-height: 48px; margin: 0 0 12px; text-align: center; font-size: 1.02rem; font-weight: 600; line-height: 1.35; color: var(--m-maroon); }
 .v4-assistant__caption > span { display: block; }
 .v4-assistant__wave { display: flex; align-items: center; justify-content: center; gap: 2px; height: 22px; margin-bottom: 16px; }
@@ -357,6 +412,7 @@
 .v4-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
 .v4-step { padding: 24px; border: 1px solid var(--m-line); border-radius: 16px; background: var(--m-surface); }
 .v4-step__num { display: block; margin-bottom: 12px; color: var(--m-orange); font-size: 12px; font-weight: 800; letter-spacing: .1em; }
+.v4-step__photo { display: block; width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 14px; }
 .v4-step h3 { margin: 0 0 8px; font-size: 1.15rem; font-weight: 700; letter-spacing: -.02em; }
 .v4-step p { margin: 0; font-size: .94rem; }
 .v4-step__tag { display: inline-block; margin-top: 14px; color: var(--m-muted); font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
@@ -716,9 +772,10 @@
 .v4r-section-head h2 { margin: 0; color: #f7f8f7; font-size: clamp(3rem, 5.8vw, 6.4rem); line-height: 1.1; letter-spacing: -.065em; }
 .v4r-section-head h2 em { font-style: normal; color: #ff825f; }
 .v4r-outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.v4r-outcome { min-height: 420px; padding: 24px; border: 1px solid rgba(255, 255, 255, .1); border-radius: 20px; background: linear-gradient(145deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .025)); display: flex; flex-direction: column; }
+.v4r-outcome { min-height: 420px; padding: 24px; border: 1px solid rgba(255, 255, 255, .1); border-radius: 20px; background: linear-gradient(145deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .025)); display: flex; flex-direction: column; position: relative; }
+.v4r-outcome__photo { position: absolute; top: 24px; right: 24px; width: 64px; height: 64px; object-fit: cover; border-radius: 14px; box-shadow: 0 12px 28px rgba(0, 0, 0, .35); }
 .v4r-outcome > span { color: #ff825f; font-size: 10px; }
-.v4r-outcome h3 { margin: 70px 0 12px; color: #f7f8f7; font-size: 26px; }
+.v4r-outcome h3 { margin: 70px 0 12px; color: #f7f8f7; font-size: 26px; max-width: calc(100% - 80px); }
 .v4r-outcome p { color: rgba(255, 246, 240, 0.72); line-height: 1.6; }
 .v4r-outcome__shift { color: #f2f3f0; font-weight: 650; margin: 0 0 8px; }
 .v4r-outcome__expect { margin: 0; }
@@ -1317,6 +1374,23 @@
 .v4-role-header-content {
   margin-bottom: 24px;
 }
+.v4-role-header-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.v4-role-avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--m-orange);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+@media (max-width: 640px) {
+  .v4-role-avatar { width: 56px; height: 56px; }
+}
 .v4-role-eyebrow {
   display: inline-flex;
   align-items: center;
@@ -1521,30 +1595,12 @@
   background: linear-gradient(160deg, color-mix(in srgb, var(--m-orange) 45%, transparent), transparent 55%);
   box-shadow: 0 30px 70px rgba(69, 14, 20, .16);
 }
-.v4-personalization-loop__inner {
-  border: 1px solid var(--m-line); border-radius: var(--v4-panel-radius);
-  overflow: hidden; background: var(--v4-panel-bg);
+.v4-personalization-loop__video {
+  display: block; width: 100%; max-width: 320px; margin: 0 auto;
+  aspect-ratio: 394 / 852; object-fit: contain;
+  border-radius: var(--v4-panel-radius);
+  background: var(--m-surface);
 }
-.v4-personalization-loop__bar {
-  display: flex; align-items: center; gap: .55rem;
-  padding: .9rem 1.15rem; border-bottom: 1px solid var(--m-line);
-  color: var(--m-muted); font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-  background: var(--m-soft);
-}
-.v4-personalization-loop__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--m-orange); box-shadow: 0 0 0 4px color-mix(in srgb, var(--m-orange) 18%, transparent); }
-.v4-personalization-loop__body { position: relative; min-height: 6.4rem; padding: 1.35rem 1.15rem; overflow: hidden; }
-.v4-personalization-loop__row { width: calc(100% - 2.3rem); }
-.v4-personalization-loop__row b { display: block; margin-bottom: .45rem; color: var(--m-orange); font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
-.v4-personalization-loop__row p { margin: 0; font-size: 1.05rem; font-weight: 600; line-height: 1.4; color: var(--m-ink); }
-.v4-personalization-loop__dots { display: flex; gap: .4rem; padding: 0 1.15rem 1rem; }
-.v4-personalization-loop__dots button { width: 1.6rem; height: 3px; border: 0; border-radius: 2px; background: var(--m-line); cursor: pointer; padding: 0; transition: background .2s var(--m-ease), width .2s var(--m-ease); }
-.v4-personalization-loop__dots button.active { width: 2.4rem; background: var(--m-orange); }
-.v4-personalization-loop__foot {
-  display: flex; align-items: center; gap: 8px;
-  padding: .85rem 1.15rem; border-top: 1px solid var(--m-line);
-  color: var(--m-muted); font-size: .78rem;
-}
-.v4-personalization-loop__foot b { color: var(--m-ink); }
 @media (max-width: 900px) {
   .v4-personalization-grid { grid-template-columns: 1fr; gap: 40px; }
   .v4-personalization-loop { max-width: 30rem; }

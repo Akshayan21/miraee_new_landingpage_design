@@ -1,54 +1,20 @@
-import { useEffect, useState, type ReactNode } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { type ReactNode } from "react"
 import { V4Page, V4Cta, Reveal, Faq } from "../../components/V4Kit"
 import { PlatformHeroV1, TwoViewsV1, OutcomesV1, SavingsV3, IntegrationsV1, MondeeAdvantageV2, TMCGenerationsV2 } from "./RefSections"
 import { Capabilities } from "./V0Sections"
+import personalizationVideo from "../../assets/personalization.mp4"
 import "../SubpagesV2.css"
 import "./V4.css"
 
-// Looping "live" interface widget — ported from V3's ProductV3.tsx
-// PersonalizationLoop (layout + animation), cycling through what Miraee
-// already knows instead of describing it in prose.
-const PERSONALIZATION_ITEMS: [string, string][] = [
-    ["Traveler context", "Aisle seat · Delta Diamond · vegetarian meal on file"],
-    ["Company policy", "$450/night cap, Northeast — auto-approved, in policy"],
-    ["Trip state", "Flight booked · hotel confirmed · 2 receipts matched"],
-]
-
 const PERSONALIZATION_KNOWS = ["Who the traveler is", "Company travel policy", "Seat preferences", "Airline & hotel preferences", "Loyalty programs", "Previous behavior", "Office & location context", "Preferred timings"]
 
+// Replaces the hand-built cycling-card mock (V3's PersonalizationLoop) with
+// an actual looping screen recording — real product, not a simulation of one.
 function PersonalizationLoop() {
-    const [active, setActive] = useState(0)
-    useEffect(() => {
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-        const id = setInterval(() => setActive(v => (v + 1) % PERSONALIZATION_ITEMS.length), 2800)
-        return () => clearInterval(id)
-    }, [])
-    const [tag, text] = PERSONALIZATION_ITEMS[active]
     return (
         <div className="v4-personalization-loop">
-            <div className="v4-personalization-loop__inner">
-                <div className="v4-personalization-loop__bar">
-                    <motion.span className="v4-personalization-loop__dot" animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.6, repeat: Infinity }} />
-                    <span>Personalization — live</span>
-                </div>
-                <div className="v4-personalization-loop__body">
-                    <AnimatePresence initial={false}>
-                        <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="v4-personalization-loop__row" style={{ position: "absolute" }}>
-                            <b>{tag}</b>
-                            <p>{text}</p>
-                        </motion.div>
-                    </AnimatePresence>
-                </div>
-                <div className="v4-personalization-loop__dots">
-                    {PERSONALIZATION_ITEMS.map(([itemTag], i) => (
-                        <button key={itemTag} aria-label={`Show ${itemTag}`} onClick={() => setActive(i)} className={i === active ? "active" : ""} />
-                    ))}
-                </div>
-                <div className="v4-personalization-loop__foot">
-                    <span>Synced from <b>trip, profile & policy</b> — zero manual entry.</span>
-                </div>
-            </div>
+            <video className="v4-personalization-loop__video" src={personalizationVideo}
+                autoPlay loop muted playsInline aria-label="Miraee personalizing a trip request from context it already holds" />
         </div>
     )
 }

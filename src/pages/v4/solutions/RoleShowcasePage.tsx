@@ -58,8 +58,15 @@ export default function RoleShowcasePage({
                 <div className="v4-shell">
                     <header className="v4-role-header-content">
                         <Reveal>
-                            <span className="v4-role-eyebrow">BUILT FOR EACH SEAT</span>
-                            <h1 className="v4-role-title">{roleTitle}</h1>
+                            <div className="v4-role-header-row">
+                                {script?.avatar && (
+                                    <img className="v4-role-avatar" src={script.avatar} alt="" aria-hidden="true" />
+                                )}
+                                <div>
+                                    <span className="v4-role-eyebrow">BUILT FOR EACH SEAT</span>
+                                    <h1 className="v4-role-title">{roleTitle}</h1>
+                                </div>
+                            </div>
                             <p className="v4-role-lede">Everyone lands on a dashboard shaped to their role.</p>
                         </Reveal>
                     </header>
