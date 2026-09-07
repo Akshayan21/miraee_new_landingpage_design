@@ -27,22 +27,27 @@ function PersonalizationLoop() {
     const [tag, text] = PERSONALIZATION_ITEMS[active]
     return (
         <div className="v4-personalization-loop">
-            <div className="v4-personalization-loop__bar">
-                <motion.span className="v4-personalization-loop__dot" animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.6, repeat: Infinity }} />
-                <span>Personalization — live</span>
-            </div>
-            <div className="v4-personalization-loop__body">
-                <AnimatePresence initial={false}>
-                    <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="v4-personalization-loop__row" style={{ position: "absolute" }}>
-                        <b>{tag}</b>
-                        <p>{text}</p>
-                    </motion.div>
-                </AnimatePresence>
-            </div>
-            <div className="v4-personalization-loop__dots">
-                {PERSONALIZATION_ITEMS.map(([itemTag], i) => (
-                    <button key={itemTag} aria-label={`Show ${itemTag}`} onClick={() => setActive(i)} className={i === active ? "active" : ""} />
-                ))}
+            <div className="v4-personalization-loop__inner">
+                <div className="v4-personalization-loop__bar">
+                    <motion.span className="v4-personalization-loop__dot" animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.6, repeat: Infinity }} />
+                    <span>Personalization — live</span>
+                </div>
+                <div className="v4-personalization-loop__body">
+                    <AnimatePresence initial={false}>
+                        <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="v4-personalization-loop__row" style={{ position: "absolute" }}>
+                            <b>{tag}</b>
+                            <p>{text}</p>
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+                <div className="v4-personalization-loop__dots">
+                    {PERSONALIZATION_ITEMS.map(([itemTag], i) => (
+                        <button key={itemTag} aria-label={`Show ${itemTag}`} onClick={() => setActive(i)} className={i === active ? "active" : ""} />
+                    ))}
+                </div>
+                <div className="v4-personalization-loop__foot">
+                    <span>Synced from <b>trip, profile & policy</b> — zero manual entry.</span>
+                </div>
             </div>
         </div>
     )
@@ -105,7 +110,7 @@ export default function V4Platform() {
 
             {/* V3's PersonalizationLoop, ported exactly (layout + animation) —
                 see ProductV3.tsx `PersonalizationLoop` for the source. */}
-            <section className="v4-section" id="personalization" aria-labelledby="personalization-title">
+            <section className="v4-section v4-section--tint" id="personalization" aria-labelledby="personalization-title">
                 <div className="v4-shell v4-personalization-grid">
                     <Reveal>
                         <span className="v4-eyebrow">Built on context</span>
