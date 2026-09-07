@@ -36,8 +36,12 @@ function usePerfFlag() {
     }, [search])
 }
 
-export function V4Page({ title, description, children }: { title: string; description: string; children: ReactNode }) {
-    usePageMeta(title, description)
+// `noindex` is optional and defaults to false, so the 20-odd existing call
+// sites are unaffected. It sits alongside title/description deliberately: the
+// reason V4 has meta on every route is that this shell demands it as a prop,
+// and indexability is the same kind of decision.
+export function V4Page({ title, description, noindex, children }: { title: string; description: string; noindex?: boolean; children: ReactNode }) {
+    usePageMeta(title, description, { noindex })
     usePerfFlag()
     return (
         // reducedMotion="user" makes every framer-motion animation beneath this

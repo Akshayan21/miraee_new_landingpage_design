@@ -1,4 +1,7 @@
 import { V4Page, V4Hero, V4Cta, Reveal, EditorialRows } from "../../components/V4Kit"
+import mondeeLogo from "../../assets/mondee_logo.png"
+import miraeeLogo from "../../assets/Miraee_Logo.png"
+import abheeLogoDark from "../../assets/abhee-logo-dark.png"
 import "../SubpagesV2.css"
 import "./V4.css"
 
@@ -12,10 +15,10 @@ import "./V4.css"
 
 const TRUST = ["23 companies", "3 AI platforms", "500+ airlines", "2M+ hotels", "125M+ travelers reached"]
 
-const PLATFORMS: string[][] = [
-    ["Mondee", "The agentic AI travel marketplace"],
-    ["Miraee", "The employee travel platform"],
-    ["Abhee", "The hyperlocal experiential marketplace"],
+const PLATFORMS = [
+    { name: "Mondee", logo: mondeeLogo, desc: "The agentic AI travel marketplace" },
+    { name: "Miraee", logo: miraeeLogo, desc: "The employee travel platform" },
+    { name: "Abhee", logo: abheeLogoDark, desc: "The hyperlocal experiential marketplace" },
 ]
 
 const ADVANTAGE: string[][] = [
@@ -74,8 +77,25 @@ export default function V4Company() {
                         <h2 className="v4-h2" id="tabhi-title">23 companies. Three platforms. One vision.</h2>
                     </Reveal>
                     <Reveal delay={0.1}>
-                        <div style={{ marginTop: 28 }}>
-                            <EditorialRows headers={["Platform", "What it is"]} rows={PLATFORMS} caption="The Tabhi group platforms" />
+                        <div className="m-edrows" role="table" aria-label="The Tabhi group platforms" style={{ marginTop: 28 }}>
+                            {PLATFORMS.map((platform) => (
+                                <div className="m-edrow" role="row" key={platform.name} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                                    <div style={{ display: "flex", alignItems: "center" }}>
+                                        <img
+                                            src={platform.logo}
+                                            alt={platform.name}
+                                            style={{
+                                                height: 28,
+                                                width: "auto",
+                                                maxWidth: 170,
+                                                objectFit: "contain",
+                                                display: "block",
+                                            }}
+                                        />
+                                    </div>
+                                    <p className="m-edrow__desc">{platform.desc}</p>
+                                </div>
+                            ))}
                         </div>
                     </Reveal>
                 </div>

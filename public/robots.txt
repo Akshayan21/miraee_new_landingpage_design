@@ -1,0 +1,80 @@
+# Miraee — https://miraee.ai
+#
+# NOTE: production currently serves a DIFFERENT robots.txt, injected at the edge
+# by Cloudflare's managed AI-crawler block. This file does not override that on
+# its own — the block has to be switched off in the Cloudflare dashboard for
+# what follows to take effect. Until then, ClaudeBot, GPTBot, Google-Extended,
+# CCBot, Bytespider, Applebot-Extended, Amazonbot and meta-externalagent are all
+# disallowed in production regardless of what this file says. Verify with:
+#   curl -s https://miraee.ai/robots.txt
+#
+# Posture below: allow the crawlers that put the site into answer engines,
+# block the bulk scrapers that return nothing. Flip any group to taste — this
+# is a policy decision, and this file is the one place to make it.
+
+# ─── Default: everything is crawlable ────────────────────────────────
+User-agent: *
+Content-Signal: search=yes, ai-train=yes, use=reference
+Allow: /
+Disallow: /arbitration-opt-out
+Disallow: /dispute-notice
+Disallow: /*?perf=
+
+# ─── Answer engines: allowed (retrieval + citation) ──────────────────
+# OpenAI — GPTBot indexes for retrieval, OAI-SearchBot serves ChatGPT
+# search, ChatGPT-User fetches on a user's explicit request.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic — ClaudeBot is the crawler, Claude-User the on-demand fetcher.
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Google AI surfaces (AI Overviews, Gemini grounding). Separate from
+# Googlebot, which is covered by the wildcard above.
+User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Microsoft Copilot
+User-agent: Bingbot
+Allow: /
+
+# ─── Bulk scrapers: blocked ──────────────────────────────────────────
+# These feed training corpora and content farms without surfacing the site
+# in any product a buyer uses.
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+Sitemap: https://miraee.ai/sitemap.xml
