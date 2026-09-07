@@ -1,5 +1,7 @@
 import { V4Page, V4Hero, V4Cta, Reveal, MiniTable, Faq } from "../../components/V4Kit"
 import type { ReactNode } from "react"
+import whyMiraeePhoto from "../../assets/role-traveller.jpg"
+import whyMiraeeCard from "../../assets/ui-changes-card.png"
 import "../SubpagesV2.css"
 import "./V4.css"
 
@@ -101,7 +103,9 @@ export default function V4WhyMiraee() {
             <V4Hero
                 eyebrow="Why Miraee"
                 title={<>Your travel program isn't broken.<br /><em>Its architecture is.</em></>}
-                lede="Booking in one tool, policy in another, expense in a third. Miraee runs the whole journey as one system." />
+                lede="Booking in one tool, policy in another, expense in a third. Miraee runs the whole journey as one system."
+                image={{ src: whyMiraeePhoto, alt: "A traveler working from an airport lounge" }}
+                card={{ src: whyMiraeeCard, alt: "Sample modification request: agent handling a booking change, pending traveler confirmation" }} />
 
             <section className="v4-section v4-section--tint" id="what-changes" aria-labelledby="what-changes-title">
                 <div className="v4-shell">

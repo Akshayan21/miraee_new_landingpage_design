@@ -2,6 +2,7 @@ import { V4Page, V4Hero, V4Cta, Reveal, EditorialRows } from "../../components/V
 import mondeeLogo from "../../assets/mondee_logo.png"
 import miraeeLogo from "../../assets/Miraee_Logo.png"
 import abheeLogoDark from "../../assets/abhee-logo-dark.png"
+import companyPhoto from "../../assets/miraee-about-company.png"
 import "../SubpagesV2.css"
 import "./V4.css"
 
@@ -46,7 +47,8 @@ export default function V4Company() {
             <V4Hero
                 eyebrow="The company"
                 title={<>The <em>agentic core.</em></>}
-                lede="Miraee is the employee travel platform of the Tabhi group, built on the supply, payments and engineering the group already runs." />
+                lede="Miraee is the employee travel platform of the Tabhi group, built on the supply, payments and engineering the group already runs."
+                image={{ src: companyPhoto, alt: "The Miraee team walking through the office, mid-conversation" }} />
 
             <section className="v4-section v4-section--tint" id="scale" aria-labelledby="scale-title">
                 <div className="v4-shell">

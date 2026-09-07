@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import { useReducedMotion } from "framer-motion"
 import "./PersonaExperience.css"
+import employeeAvatar from "../assets/miraee-role-employee.png"
+import financeAvatar from "../assets/Finance .jpg"
+import travelLeadAvatar from "../assets/Travel Lead.jpg"
+import adminAvatar from "../assets/Admin.jpg"
+import hrAvatar from "../assets/HR.jpg"
+import managerAvatar from "../assets/Manager Image.jpg"
 
 // ─── Persona placeholder experience ───────────────────────────────────────────
 // The content doc (Part 1.4) calls these "the single most important build on
@@ -24,6 +30,10 @@ export type PersonaScript = {
     label: string
     /** One-line description of what this experience shows. */
     summary: string
+    /** Photo of a real person in this role, shown in the thread header — the
+     *  single biggest lever for making a scripted-preview card read as a
+     *  person rather than a UI mockup. */
+    avatar?: string
     lines: PersonaLine[]
 }
 
@@ -109,7 +119,11 @@ export default function PersonaExperience({ script, autoPlay = false, playOnInte
             {...interact}>
             {!flush && (
                 <div className="persona-exp__bar">
-                    <span className="persona-exp__dot" aria-hidden="true" />
+                    {script.avatar ? (
+                        <img className="persona-exp__avatar" src={script.avatar} alt="" aria-hidden="true" />
+                    ) : (
+                        <span className="persona-exp__dot" aria-hidden="true" />
+                    )}
                     <span className="persona-exp__role">{script.label}</span>
                     <span className="persona-exp__tag">Scripted preview</span>
                 </div>
@@ -154,6 +168,7 @@ export const PERSONA_SCRIPTS: Record<string, PersonaScript> = {
     employees: {
         slug: "employees",
         label: "Employees",
+        avatar: employeeAvatar,
         summary: "A trip planned from a sentence, in policy, with receipts captured.",
         lines: [
             { from: "traveler", text: "Singapore next Tuesday. Window seat. Within policy." },
@@ -164,6 +179,7 @@ export const PERSONA_SCRIPTS: Record<string, PersonaScript> = {
     finance: {
         slug: "finance",
         label: "Finance",
+        avatar: financeAvatar,
         summary: "Committed spend visible at booking, reconciled and synced to the ERP.",
         lines: [
             { from: "agent", text: "Committed spend updated at booking, before the invoice arrives." },
@@ -174,6 +190,7 @@ export const PERSONA_SCRIPTS: Record<string, PersonaScript> = {
     "travel-leads": {
         slug: "travel-leads",
         label: "Travel leads",
+        avatar: travelLeadAvatar,
         summary: "Program analytics, and an exception cleared with full context.",
         lines: [
             { from: "agent", text: "One exception on this route: fare above the agreed band." },
@@ -184,6 +201,7 @@ export const PERSONA_SCRIPTS: Record<string, PersonaScript> = {
     admins: {
         slug: "admins",
         label: "Admins",
+        avatar: adminAvatar,
         summary: "A policy rule set once, then applied at search on every trip.",
         lines: [
             { from: "traveler", text: "Set the per diem for tier-two cities." },
@@ -194,6 +212,7 @@ export const PERSONA_SCRIPTS: Record<string, PersonaScript> = {
     chros: {
         slug: "chros",
         label: "CHROs",
+        avatar: hrAvatar,
         summary: "The traveler experience and duty of care, in action.",
         lines: [
             { from: "agent", text: "Delay detected on tonight's flight, before the airline notified." },
@@ -204,6 +223,7 @@ export const PERSONA_SCRIPTS: Record<string, PersonaScript> = {
     managers: {
         slug: "managers",
         label: "Managers",
+        avatar: managerAvatar,
         summary: "One exception approved in seconds; routine trips never reach you.",
         lines: [
             { from: "agent", text: "One approval waiting, above band, with the reason attached." },

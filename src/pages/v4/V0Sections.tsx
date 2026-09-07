@@ -3,6 +3,9 @@ import type { CSSProperties, ReactNode } from "react"
 import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from "framer-motion"
 import { EO, FadeUp, SectionWrapper, StaggerWords, ScrambleText, TiltCard } from "../../animations"
 import { useWindowWidth } from "../../hooks/useWindowSize"
+import employeeAvatar from "../../assets/miraee-role-employee.png"
+import financeAvatar from "../../assets/Finance .jpg"
+import managerAvatar from "../../assets/Manager Image.jpg"
 
 // Verbatim ports of the V0 homepage sections the site-architecture doc calls
 // for by name — layout and animation, not just the copy. Source is
@@ -510,6 +513,38 @@ const CASE_STATS = [
     { stat: "1", label: "Platform for business and personal travel alike", accent: T.orange },
 ]
 
+// A face against each claim above — "loved by employees, trusted by
+// finance" reads as a slogan until it's backed by someone who'd say it.
+const CASE_VOICES = [
+    { photo: employeeAvatar, quote: "I said the trip out loud on my way to lunch. It was booked, in policy, before I sat back down.", name: "Traveler", role: "Employee" },
+    { photo: financeAvatar, quote: "Spend shows up the moment it's booked, not when the invoice lands weeks later.", name: "Finance lead", role: "Finance" },
+    { photo: managerAvatar, quote: "Routine trips never reach me anymore. What lands in my queue actually needs a decision.", name: "Team manager", role: "Manager" },
+]
+
+function CaseVoices() {
+    const w = useWindowWidth()
+    const isMobile = w < 640
+    return (
+        <div style={{ marginTop: 64 }}>
+            <span style={{ display: "block", fontSize: 10.5, fontFamily: F, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: T.muted, marginBottom: 20, opacity: 0.7 }}>Illustrative voices</span>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 28 : 32 }}>
+            {CASE_VOICES.map((v, i) => (
+                <FadeUp key={v.name} delay={i * 0.1}>
+                    <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+                        <img src={v.photo} alt="" aria-hidden="true"
+                            style={{ width: 52, height: 52, borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: "2px solid " + T.orange }} />
+                        <div>
+                            <p style={{ fontFamily: F, fontSize: 15, lineHeight: 1.55, color: T.ink, margin: "0 0 10px" }}>&ldquo;{v.quote}&rdquo;</p>
+                            <p style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: T.muted, margin: 0 }}>{v.name} <span style={{ fontWeight: 400, opacity: 0.7 }}>· {v.role}</span></p>
+                        </div>
+                    </div>
+                </FadeUp>
+            ))}
+        </div>
+        </div>
+    )
+}
+
 export function BusinessCase({ children }: { children?: ReactNode }) {
     const w = useWindowWidth()
     const isMobile = w < 640
@@ -533,6 +568,7 @@ export function BusinessCase({ children }: { children?: ReactNode }) {
                             </FadeUp>
                         ))}
                     </div>
+                    <CaseVoices />
                     {children}
                 </div>
             </section>

@@ -1,6 +1,8 @@
 import { Fragment } from "react"
 import { V4Page, V4Hero, V4Cta, Reveal } from "../../components/V4Kit"
 import { SecurityV1 } from "./RefSections"
+import technologyPhoto from "../../assets/security-hero.jpg"
+import technologyCard from "../../assets/ui-multi-city-card.png"
 import "../SubpagesV2.css"
 import "./V4.css"
 
@@ -91,7 +93,9 @@ export default function V4Technology() {
             <V4Hero
                 eyebrow="AI & Technology"
                 title={<>The intelligence<br /><em>beneath every trip.</em></>}
-                lede="Miraee runs on Tabhi intelligence, the same engineering group behind the supply, the payments and the automation the trip already depends on." />
+                lede="Miraee runs on Tabhi intelligence, the same engineering group behind the supply, the payments and the automation the trip already depends on."
+                image={{ src: technologyPhoto, alt: "Engineers reviewing a system on screen together" }}
+                card={{ src: technologyCard, alt: "Sample multi-city itinerary priced and booked in one pass" }} />
 
             <section className="v4-section v4-section--tint" id="assistant" aria-labelledby="assistant-title">
                 <div className="v4-shell">

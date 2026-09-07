@@ -59,16 +59,41 @@ export function V4Page({ title, description, noindex, children }: { title: strin
     )
 }
 
-// A page hero. `lede` is the one-line promise under the headline.
-export function V4Hero({ eyebrow, title, lede, actions }: { eyebrow?: string; title: ReactNode; lede?: string; actions?: ReactNode }) {
+// A page hero. `lede` is the one-line promise under the headline. `image`
+// is optional — when passed, the hero splits into the same Navan-style
+// layout as the homepage: copy on the left, a real photo framed with depth
+// on the right, instead of a single centred column.
+export function V4Hero({ eyebrow, title, lede, actions, image, card }: { eyebrow?: string; title: ReactNode; lede?: string; actions?: ReactNode; image?: { src: string; alt: string }; card?: { src: string; alt: string } }) {
+    const copy = (
+        <Reveal>
+            {eyebrow && <span className="v4-hero__eyebrow">{eyebrow}</span>}
+            <h1>{title}</h1>
+            {lede && <p className="v4-hero__lede">{lede}</p>}
+            {actions && <div className="v4-hero__actions">{actions}</div>}
+        </Reveal>
+    )
+    if (!image) {
+        return (
+            <section className="v4-hero">
+                <div className="v4-shell">{copy}</div>
+            </section>
+        )
+    }
     return (
         <section className="v4-hero">
-            <div className="v4-shell">
-                <Reveal>
-                    {eyebrow && <span className="v4-hero__eyebrow">{eyebrow}</span>}
-                    <h1>{title}</h1>
-                    {lede && <p className="v4-hero__lede">{lede}</p>}
-                    {actions && <div className="v4-hero__actions">{actions}</div>}
+            <div className="v4-shell v4-hero__split">
+                {copy}
+                <Reveal delay={0.12}>
+                    {/* .v4-hero__media matches the homepage hero's structure —
+                        overflow visible so an optional UI-card image (same
+                        Navan pattern: real photo + a floating real product
+                        card) can hang past the photo's own rounded edge. */}
+                    <div className="v4-hero__media">
+                        <div className="v4-hero__photo-frame v4-hero__photo-frame--static">
+                            <img src={image.src} alt={image.alt} />
+                        </div>
+                        {card && <img className="v4-flight-card-img" src={card.src} alt={card.alt} />}
+                    </div>
                 </Reveal>
             </div>
         </section>

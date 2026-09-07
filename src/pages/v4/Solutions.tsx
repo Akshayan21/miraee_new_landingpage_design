@@ -3,6 +3,12 @@ import { SixViews } from "./SixViews"
 import type { SixViewRole } from "./SixViews"
 import UseCasesShowcase from "./solutions/UseCasesShowcase"
 import { useWindowWidth } from "../../hooks/useWindowSize"
+import solutionsPhoto from "../../assets/team-travellers.jpg"
+import solutionsCard from "../../assets/ui-expenses-card.png"
+import employeePersonaPhoto from "../../assets/v2-home-hero.jpg"
+import adminPersonaPhoto from "../../assets/partner-with-miraee.jpg"
+import financePersonaPhoto from "../../assets/role-finance-manager.jpg"
+import travelLeadPersonaPhoto from "../../assets/miraee-role-travel-team.png"
 import "../SubpagesV2.css"
 import "./V4.css"
 
@@ -122,6 +128,16 @@ const PERSONA_TABLE: string[][] = [
     ["Travel leads", "Supplier program, group travel, analytics", "Run a program, not a booking queue", "Direct supply through Mondee", "Program-level, by exception"],
 ]
 
+// A face per row of the table above — same order as PERSONA_TABLE. MiniTable
+// itself is shared with V2 (WhyMiraeeV2.tsx), so the photos are rendered here
+// as a strip above the table rather than inside the shared component.
+const PERSONA_PHOTOS: [string, string][] = [
+    [employeePersonaPhoto, "Employee"],
+    [adminPersonaPhoto, "Admin"],
+    [financePersonaPhoto, "Finance"],
+    [travelLeadPersonaPhoto, "Travel lead"],
+]
+
 const DUTY_ROWS: [string, string][] = [
     ["Real-time location", "Know where every traveler is, from booked segments and check-ins, with role-based access."],
     ["Risk monitoring", "Disruption, weather and advisory alerts matched to itineraries."],
@@ -140,7 +156,9 @@ export default function V4Solutions() {
             <V4Hero
                 eyebrow="Solutions"
                 title={<>Six views.<br /><em>What changes, role by role.</em></>}
-                lede="Same trip. A different problem solved for each of you." />
+                lede="Same trip. A different problem solved for each of you."
+                image={{ src: solutionsPhoto, alt: "Colleagues walking together outside the office" }}
+                card={{ src: solutionsCard, alt: "Sample expense feed: flight, hotel and meals auto-coded, two flagged for policy" }} />
 
             <SixViews roles={ROLES} isMobile={isMobile} />
 
@@ -151,7 +169,15 @@ export default function V4Solutions() {
                         <h2 className="v4-h2" id="personas-title">Control, benefit and model, side by side.</h2>
                     </Reveal>
                     <Reveal delay={0.1}>
-                        <div style={{ marginTop: 28 }}>
+                        <div className="v4-persona-faces" style={{ marginTop: 28 }}>
+                            {PERSONA_PHOTOS.map(([photo, label]) => (
+                                <div className="v4-persona-faces__item" key={label}>
+                                    <img src={photo} alt="" aria-hidden="true" />
+                                    <span>{label}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <div style={{ marginTop: 16 }}>
                             <MiniTable
                                 headers={["Persona", "What they control", "What changes", "The perk", "Operating model"]}
                                 rows={PERSONA_TABLE}

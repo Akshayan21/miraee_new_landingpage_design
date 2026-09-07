@@ -7,6 +7,9 @@ import productPageImg from "../../../images/weavy/v1/v1-home-hero.webp"
 import financeDashboard from "../../assets/ui-admin-dashboard.png"
 import miraeeMobileUi from "../../assets/miraee-mobile-phone.png"
 import supplierCabin from "../../assets/miraee-supplier-cabin.webp"
+import outcomeEmployeePhoto from "../../assets/Handle_every_change.jpg"
+import outcomeFinancePhoto from "../../assets/Expense_loop.jpg"
+import outcomeTravelTeamPhoto from "../../assets/Plan_Book.jpg"
 
 // Verbatim ports of the sections the site-architecture doc names by version —
 // layout, structure and reveal timing copied from the source, not
@@ -234,10 +237,10 @@ export function UseCasesV11() {
     )
 }
 
-const OUTCOMES: [string, string, string, string, string][] = [
-    ["For employees", "Ask once. Get a complete, policy-safe trip.", "A trip that feels personal - not procedural.", "4.8/5", "traveler experience"],
-    ["For finance", "See committed spend before it becomes an expense.", "Complete transparency over company expenditure.", "20-30%", "wholesale savings"],
-    ["For travel teams", "Set the rules once and run the program by exception.", "No more managing every single booking and update.", "24/7", "agent + human care"],
+const OUTCOMES: [string, string, string, string, string, string][] = [
+    ["For employees", "Ask once. Get a complete, policy-safe trip.", "A trip that feels personal - not procedural.", "4.8/5", "traveler experience", outcomeEmployeePhoto],
+    ["For finance", "See committed spend before it becomes an expense.", "Complete transparency over company expenditure.", "20-30%", "wholesale savings", outcomeFinancePhoto],
+    ["For travel teams", "Set the rules once and run the program by exception.", "No more managing every single booking and update.", "24/7", "agent + human care", outcomeTravelTeamPhoto],
 ]
 
 export function OutcomesV1() {
@@ -248,8 +251,9 @@ export function OutcomesV1() {
                 <h2>Less work.<br /><em>Better journeys.</em></h2>
             </Reveal>
             <div className="v4r-outcome-grid">
-                {OUTCOMES.map(([title, shift, expect, stat, statLabel], i) => (
+                {OUTCOMES.map(([title, shift, expect, stat, statLabel, photo], i) => (
                     <Reveal className="v4r-outcome" key={title} delay={i * 0.1}>
+                        <img className="v4r-outcome__photo" src={photo} alt="" aria-hidden="true" />
                         <span>0{i + 1}</span>
                         <h3>{title}</h3>
                         <p className="v4r-outcome__shift">{shift}</p>

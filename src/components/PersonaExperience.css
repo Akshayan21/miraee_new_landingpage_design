@@ -65,6 +65,13 @@
   flex-shrink: 0;
 }
 
+.persona-exp__avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1.5px solid var(--pe-accent);
+}
+
 .persona-exp__role {
   font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
   color: var(--pe-accent);
