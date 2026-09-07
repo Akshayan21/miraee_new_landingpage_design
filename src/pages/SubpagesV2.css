@@ -57,8 +57,8 @@
 .m-mini__row > span { font-size: 14px; color: var(--m-muted); }
 .m-mini__label { color: var(--m-maroon) !important; font-weight: 600; font-size: 14px !important; }
 .m-mini__win { color: var(--m-orange) !important; font-weight: 700; }
-.m-mini__head { padding-top: 0; }
-.m-mini__head > span { color: var(--m-muted); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.m-mini__head { padding: 16px 0 12px; }
+.m-mini__head > span { color: var(--m-muted); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; line-height: 1.4; }
 
 /* Contained comparison panels on Why Miraee ----------------------------- */
 .m-compare-block {
