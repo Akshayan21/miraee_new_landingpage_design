@@ -118,7 +118,7 @@ const ROLES: SixViewRole[] = [
 const PERSONA_TABLE: string[][] = [
     ["Employees", "Their own trip, inside policy", "Ask once, book in policy, keep moving", "Personal travel on the same agent", "Self-serve, agent-led"],
     ["Admins", "Policy, approval routing, profiles", "Set the rule once, enforced at search", "One dashboard for the program", "Rule-based, by exception"],
-    ["Finance", "Chart of accounts, spend ceilings, sign-off", "Committed spend visible at booking", "20–30% wholesale savings", "Continuous reconciliation"],
+    ["Finance", "Chart of accounts, spend ceilings, sign-off", "Committed spend visible at booking", "20-30% wholesale savings", "Continuous reconciliation"],
     ["Travel leads", "Supplier program, group travel, analytics", "Run a program, not a booking queue", "Direct supply through Mondee", "Program-level, by exception"],
 ]
 
@@ -135,7 +135,7 @@ export default function V4Solutions() {
     return (
         <V4Page
             title="Solutions by Role and Use Case | Miraee"
-            description="One platform, six views. What changes for employees, finance, travel leads, admins, CHROs and managers — plus every kind of company travel.">
+            description="One platform, six views. What changes for employees, finance, travel leads, admins, CHROs and managers, plus every kind of company travel.">
 
             <V4Hero
                 eyebrow="Solutions"
@@ -181,7 +181,7 @@ export default function V4Solutions() {
                         </div>
                     </Reveal>
                     <Reveal>
-                        <p className="v4-foot-note" style={{ marginTop: 24 }}>*Savings of 20–30% against published fares on comparable itineraries. Based on itineraries booked, compared with publicly available fares for the same route, travel date, cabin, and booking window. Individual results may vary by route, lead time, and travel mix.</p>
+                        <p className="v4-foot-note" style={{ marginTop: 24 }}>*Savings of 20 to 30% against published fares on comparable itineraries. Based on itineraries booked, compared with publicly available fares for the same route, travel date, cabin, and booking window. Individual results may vary by route, lead time, and travel mix.</p>
                     </Reveal>
                 </div>
             </section>

@@ -131,7 +131,7 @@ export default function PersonaExperience({ script, autoPlay = false, playOnInte
 
             {/* Full transcript for assistive tech and for anyone with motion off. */}
             <div className="persona-exp__sr">
-                <p>{script.label} — scripted preview. {script.summary}</p>
+                <p>{script.label}: scripted preview. {script.summary}</p>
                 <ol>
                     {script.lines.map(l => (
                         <li key={l.text}>{l.from === "traveler" ? "Traveler" : "Miraee"}: {l.text}</li>
@@ -158,7 +158,7 @@ export const PERSONA_SCRIPTS: Record<string, PersonaScript> = {
         lines: [
             { from: "traveler", text: "Singapore next Tuesday. Window seat. Within policy." },
             { from: "agent", text: "Three in-policy options. Recommended: 08:30 departure, window seat held." },
-            { from: "agent", text: "Booked with the hotel. Receipts will be captured for you — no report to file." },
+            { from: "agent", text: "Booked with the hotel. Receipts will be captured for you, no report to file." },
         ],
     },
     finance: {
@@ -177,7 +177,7 @@ export const PERSONA_SCRIPTS: Record<string, PersonaScript> = {
         summary: "Program analytics, and an exception cleared with full context.",
         lines: [
             { from: "agent", text: "One exception on this route: fare above the agreed band." },
-            { from: "agent", text: "Context attached — traveler, rule applied, alternatives and cost delta." },
+            { from: "agent", text: "Context attached: traveler, rule applied, alternatives and cost delta." },
             { from: "agent", text: "Cleared. The rest of the program ran without reaching you." },
         ],
     },
@@ -206,7 +206,7 @@ export const PERSONA_SCRIPTS: Record<string, PersonaScript> = {
         label: "Managers",
         summary: "One exception approved in seconds; routine trips never reach you.",
         lines: [
-            { from: "agent", text: "One approval waiting — above band, with the reason attached." },
+            { from: "agent", text: "One approval waiting, above band, with the reason attached." },
             { from: "traveler", text: "Approved." },
             { from: "agent", text: "Traveler notified. The trip continues in the same thread." },
         ],

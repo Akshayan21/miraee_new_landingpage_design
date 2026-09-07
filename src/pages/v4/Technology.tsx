@@ -86,14 +86,14 @@ export default function V4Technology() {
             <V4Hero
                 eyebrow="AI & Technology"
                 title={<>The intelligence<br /><em>beneath every trip.</em></>}
-                lede="Miraee runs on Tabhi intelligence — the same engineering group behind the supply, the payments and the automation the trip already depends on." />
+                lede="Miraee runs on Tabhi intelligence, the same engineering group behind the supply, the payments and the automation the trip already depends on." />
 
             <section className="v4-section v4-section--tint" id="assistant" aria-labelledby="assistant-title">
                 <div className="v4-shell">
                     <Reveal>
                         <span className="v4-eyebrow">AI Assistant for Every Employee</span>
                         <h2 className="v4-h2" id="assistant-title">From assistants to agents.</h2>
-                        <p className="v4-lede">Most AI travel products suggest while you execute. Miraee takes action end to end — agentic AI travel, not an assistant with a travel skin.</p>
+                        <p className="v4-lede">Most AI travel products suggest while you execute. Miraee takes action end to end: agentic AI travel, not an assistant with a travel skin.</p>
                     </Reveal>
                     <Reveal delay={0.1}>
                         <div style={{ marginTop: 36 }}>

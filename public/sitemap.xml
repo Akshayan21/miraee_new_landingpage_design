@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Miraee sitemap — v4 only.
+
+  Scope: the 23 indexable /v4/* routes, plus the 4 shared pages the v4 footer
+  links to. Deliberately EXCLUDED:
+    - "/" and every /v1, /v1.1, /v2, /v3 route — prototype versions pending
+      removal. Submitting them would invite Google to pick one as canonical.
+    - /v4/resources/{guides,blog,news,life-at-miraee} — the four empty stubs,
+      now marked noindex. A noindex URL must never appear in a sitemap.
+    - /arbitration-opt-out, /dispute-notice — legal form endpoints.
+    - Anything carrying ?perf= — a debug switch, not a page.
+
+  MAINTENANCE: this is a static file and will drift. Routes live in
+  src/App.tsx and src/components/V4NavData.ts. When /v4/* moves to unprefixed
+  paths, regenerate this from the route table rather than editing by hand.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- ── v4 home ────────────────────────────────────────────────── -->
+  <url>
+    <loc>https://miraee.ai/v4</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+
+  <!-- ── Product ────────────────────────────────────────────────── -->
+  <url>
+    <loc>https://miraee.ai/v4/platform</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/ai-assistant</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/integrations</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/implementation</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+
+  <!-- ── Why Miraee ─────────────────────────────────────────────── -->
+  <url>
+    <loc>https://miraee.ai/v4/why-miraee</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/technology</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+
+  <!-- ── Solutions hub ──────────────────────────────────────────── -->
+  <url>
+    <loc>https://miraee.ai/v4/solutions</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+
+  <!-- ── Solutions by role ──────────────────────────────────────── -->
+  <url>
+    <loc>https://miraee.ai/v4/solutions/employees</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/solutions/managers</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/solutions/finance</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/solutions/travel-leads</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/solutions/admins</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/solutions/chros</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+
+  <!-- ── Solutions by use case ──────────────────────────────────── -->
+  <url>
+    <loc>https://miraee.ai/v4/solutions/business-travel</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/solutions/meetings-events</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/solutions/executive-travel</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/solutions/global-mobility</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/solutions/emergency-disruption</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+
+  <!-- ── Resources (hub + the two with real content) ────────────── -->
+  <url>
+    <loc>https://miraee.ai/v4/resources</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/resources/calculator</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/v4/resources/help-center</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+
+  <!-- ── Company ────────────────────────────────────────────────── -->
+  <url>
+    <loc>https://miraee.ai/v4/company</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+
+  <!-- ── Shared pages the v4 footer links to ────────────────────── -->
+  <url>
+    <loc>https://miraee.ai/book-a-demo</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/support</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/terms</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+  <url>
+    <loc>https://miraee.ai/privacy</loc>
+    <lastmod>2026-09-07</lastmod>
+  </url>
+
+</urlset>

@@ -7,6 +7,16 @@ import "./V4.css"
 // exist because the mega menu links to them and a 404 from your own nav is
 // worse than an honest empty state — but nothing here invents guides, posts or
 // announcements that don't exist.
+//
+// Because there is nothing to rank, every route rendered through this shell is
+// `noindex, follow`: the nav keeps working and the outbound links still pass
+// discovery, but four near-identical "nothing published yet" pages stay out of
+// the index instead of reading as thin content under the Resources hub. These
+// URLs are excluded from public/sitemap.xml for the same reason — a noindex
+// page in a sitemap is a contradiction crawlers report as an error.
+//
+// Drop the `noindex` here the day this shell stops being used, or lift it per
+// page by giving that page its own component with real content.
 
 export function ResourceStub({ title, metaTitle, description, eyebrow, lede }: {
     title: string
@@ -16,7 +26,7 @@ export function ResourceStub({ title, metaTitle, description, eyebrow, lede }: {
     lede: string
 }) {
     return (
-        <V4Page title={metaTitle} description={description}>
+        <V4Page title={metaTitle} description={description} noindex>
             <V4Hero eyebrow={eyebrow} title={title} lede={lede} />
             <section className="v4-section" aria-labelledby="soon-title">
                 <div className="v4-shell">

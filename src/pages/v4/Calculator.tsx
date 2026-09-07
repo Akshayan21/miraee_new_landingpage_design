@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { V4Page, V4Hero, V4Cta, Reveal, MiniTable, Faq } from "../../components/V4Kit"
-import type { ReactNode } from "react"
+import type { CSSProperties, ReactNode } from "react"
 import {
     DEFAULT_ASSUMPTIONS, DEFAULT_INPUTS, INPUT_LABELS, LOCALE, RANGES,
     SAVINGS_FOOTNOTE, ASSUMPTION_NOTES, clampToRange, computeRoi, roundToSigFigs,
@@ -29,6 +29,7 @@ function NumberField({ id, value, range, label, hint, format, onChange }: {
     onChange: (value: number) => void
 }) {
     const [raw, setRaw] = useState<string | null>(null)
+    const pct = ((clampToRange(value, range) - range.min) / (range.max - range.min)) * 100
 
     return (
         <div className="v4-field">
@@ -55,6 +56,7 @@ function NumberField({ id, value, range, label, hint, format, onChange }: {
                     max={range.max}
                     step={range.step}
                     value={clampToRange(value, range)}
+                    style={{ "--v4-range-pct": `${pct}%` } as CSSProperties}
                     aria-labelledby={`${id}-label`}
                     aria-valuetext={format(value)}
                     onChange={event => onChange(Number(event.target.value))} />
@@ -65,10 +67,10 @@ function NumberField({ id, value, range, label, hint, format, onChange }: {
 }
 
 const FAQS: [string, ReactNode][] = [
-    ["Where does 20–30% come from?", `It is Miraee's published savings band against comparable published fares, achieved through wholesale rates and direct supplier connections. ${SAVINGS_FOOTNOTE}`],
-    ["Why does the band only apply to 75% of spend?", "The band prices fares — air, hotel, rail and car. Ground transport, meals and incidentals sit in the same T&E line but are not priced against published fares, so applying the band to all of your spend would overstate the result."],
+    ["Where does 20 to 30% come from?", `It is Miraee's published savings band against comparable published fares, achieved through wholesale rates and direct supplier connections. ${SAVINGS_FOOTNOTE}`],
+    ["Why does the band only apply to 75% of spend?", "The band prices fares: air, hotel, rail and car. Ground transport, meals and incidentals sit in the same T&E line but are not priced against published fares, so applying the band to all of your spend would overstate the result."],
     ["Why 70% admin time removed, and not the 97% you publish elsewhere?", "They measure different things. 97% describes how much of the journey the agent manages; this figure describes human admin hours removed from your team. Borrowing the higher number would be a category error, so the model uses the more conservative one."],
-    ["Why isn't spend brought under management added to the total?", "Because it is already counted. Off-program spend pays published fare, so it earns the full 20–30% inside the fare-savings figure. Adding it a second time as its own line would inflate the headline by roughly 4–5% of your annual spend."],
+    ["Why isn't spend brought under management added to the total?", "Because it is already counted. Off-program spend pays published fare, so it earns the full 20 to 30% inside the fare-savings figure. Adding it a second time as its own line would inflate the headline by roughly 4 to 5% of your annual spend."],
     ["Does this include Miraee's subscription cost?", "No. Pricing is agreed per program, so the total is a gross figure before any Miraee cost. We would rather show you a number you can check than guess at one and call it net."],
 ]
 
@@ -98,6 +100,18 @@ export default function V4Calculator() {
 
     const fieldFormat = (key: NumericInputKey) => (value: number) =>
         key === "annualTravelSpend" || key === "loadedHourlyCost" ? fmt.moneyExact(value) : fmt.number(value)
+
+    // Composition of the headline total, at the midpoint of the fare-savings
+    // range -- the three numbers sum exactly to totalLow/totalHigh (see
+    // computeRoi in roi.ts), so this bar is a literal picture of the total,
+    // not an illustrative one.
+    const fareMid = (result.fareSavingsLow + result.fareSavingsHigh) / 2
+    const totalMid = fareMid + result.adminCostReclaimed + result.toolConsolidationSaving
+    const composition = totalMid > 0 ? [
+        { key: "fare", label: "Fare savings", value: fareMid, share: fareMid / totalMid },
+        { key: "admin", label: "Admin time reclaimed", value: result.adminCostReclaimed, share: result.adminCostReclaimed / totalMid },
+        { key: "tools", label: "Tool consolidation", value: result.toolConsolidationSaving, share: result.toolConsolidationSaving / totalMid },
+    ] : []
 
     const assumptionRows = (Object.keys(ASSUMPTION_NOTES) as (keyof RoiAssumptions)[]).map(key => {
         const note = ASSUMPTION_NOTES[key]
@@ -155,8 +169,28 @@ export default function V4Calculator() {
                             <div className="v4-calc__headline">
                                 {isCustom && <span className="v4-calc__badge">Custom assumptions</span>}
                                 <span className="v4-eyebrow">Projected annual return</span>
-                                <strong>{fmt.money(result.totalLow)} – {fmt.money(result.totalHigh)}</strong>
+                                <strong>{fmt.money(result.totalLow)} to {fmt.money(result.totalHigh)}</strong>
                                 <p className="v4-calc__qualifier">Gross, before any Miraee subscription cost.</p>
+
+                                {composition.length > 0 && (
+                                    <div className="v4-calc__chart" role="img"
+                                        aria-label={`Return composition: ${composition.map(c => `${c.label} ${Math.round(c.share * 100)}%`).join(", ")}`}>
+                                        <div className="v4-calc__chart-bar">
+                                            {composition.map(c => (
+                                                <span key={c.key} className={`v4-calc__chart-seg v4-calc__chart-seg--${c.key}`}
+                                                    style={{ width: `${c.share * 100}%` }} />
+                                            ))}
+                                        </div>
+                                        <ul className="v4-calc__chart-legend">
+                                            {composition.map(c => (
+                                                <li key={c.key}>
+                                                    <i className={`v4-calc__chart-dot v4-calc__chart-seg--${c.key}`} aria-hidden="true" />
+                                                    {c.label} <b>{fmt.money(c.value)}</b> · {Math.round(c.share * 100)}%
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
 
                             <p className="v4-calc__disclaimer">
@@ -166,13 +200,21 @@ export default function V4Calculator() {
                             <div className="v4-calc__grid">
                                 <div className="v4-calc__tile">
                                     <span className="v4-eyebrow">Fare savings</span>
-                                    <strong>{fmt.money(result.fareSavingsLow)} – {fmt.money(result.fareSavingsHigh)}</strong>
+                                    <strong>{fmt.money(result.fareSavingsLow)} to {fmt.money(result.fareSavingsHigh)}</strong>
+                                    {result.fareSavingsHigh > 0 && (
+                                        <div className="v4-calc__range" aria-hidden="true">
+                                            <span className="v4-calc__range-band" style={{
+                                                left: `${(result.fareSavingsLow / result.fareSavingsHigh) * 100}%`,
+                                                right: 0,
+                                            }} />
+                                        </div>
+                                    )}
                                     <small>Assumes {Math.round(assumptions.adoptionRate * 100)}% adoption of the {Math.round(assumptions.addressableSpendShare * 100)}% of spend priced against published fares.</small>
                                 </div>
                                 <div className="v4-calc__tile">
                                     <span className="v4-eyebrow">Admin time reclaimed</span>
                                     <strong>{fmt.money(result.adminCostReclaimed)}</strong>
-                                    <small>{fmt.number(Math.round(result.adminHoursReclaimed))} hours across {fmt.number(result.trips)} trips — about {result.fteEquivalent.toFixed(1)} FTE.</small>
+                                    <small>{fmt.number(Math.round(result.adminHoursReclaimed))} hours across {fmt.number(result.trips)} trips, about {result.fteEquivalent.toFixed(1)} FTE.</small>
                                 </div>
                                 <div className="v4-calc__tile">
                                     <span className="v4-eyebrow">Tool consolidation</span>
@@ -214,13 +256,14 @@ export default function V4Calculator() {
                                     {(["savingsRateLow", "savingsRateHigh", "addressableSpendShare", "existingDiscountOnManaged", "adoptionRate", "adminTimeEliminated", "visibilityCapture"] as const).map(key => (
                                         <div className="v4-field" key={key}>
                                             <label className="v4-field__label" htmlFor={`a-${key}`} id={`a-${key}-label`}>
-                                                {ASSUMPTION_NOTES[key].label} — {Math.round(assumptions[key] * 100)}%
+                                                {ASSUMPTION_NOTES[key].label}: {Math.round(assumptions[key] * 100)}%
                                             </label>
                                             <input
                                                 id={`a-${key}`}
                                                 className="v4-field__slider"
                                                 type="range" min={0} max={100} step={1}
                                                 value={Math.round(assumptions[key] * 100)}
+                                                style={{ "--v4-range-pct": `${Math.round(assumptions[key] * 100)}%` } as CSSProperties}
                                                 aria-valuetext={`${Math.round(assumptions[key] * 100)} percent`}
                                                 onChange={event => setAssumptions(prev => ({ ...prev, [key]: Number(event.target.value) / 100 }))} />
                                         </div>

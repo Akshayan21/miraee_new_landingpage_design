@@ -7,7 +7,7 @@ function ExecutiveTravelSimulation() {
                 <div className="v4-sim-exec-head">
                     <div className="v4-sim-avatar">EV</div>
                     <div>
-                        <h5 className="v4-sim-exec-name">Elena Vance — Executive Profile</h5>
+                        <h5 className="v4-sim-exec-name">Elena Vance · Executive Profile</h5>
                         <span className="v4-sim-exec-sub">VP Product & Partnerships</span>
                     </div>
                     <span className="v4-sim-badge v4-sim-badge--orange">PRIORITY VIP</span>
