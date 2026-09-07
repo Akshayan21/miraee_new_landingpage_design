@@ -38,26 +38,31 @@ function AgenticContrast({ panels }: { panels: { tag: string; title: string; cop
     )
 }
 
-// Named only, no explanation — the structure doc flags the full descriptions as
-// repetitive with the Platform page's six capabilities.
-const AGENTS = ["Booking agent", "Policy agent", "Negotiation agent", "Rebooking agent", "Expense agent", "Support agent"]
+const AGENT_ROWS: string[][] = [
+    ["Booking agent", "Turns a sentence into a trip, in policy from the first result"],
+    ["Policy agent", "Applies per diem, grade and rules at search, before you see options"],
+    ["Negotiation agent", "Works wholesale and direct supply to land the best available rate"],
+    ["Rebooking agent", "Watches for disruption and rebooks in the same thread"],
+    ["Expense agent", "Matches receipts to trips and reconciles automatically"],
+    ["Support agent", "Answers questions and pulls in a human when it matters"],
+]
 
 const GUARDRAIL_ICONS = [
-    // Full audit trail — a log/list.
-    <svg key="audit" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d="M8 4h11a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H8" /><path d="M4 4h2v16H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" /><path d="M12 9h5M12 13h5M12 17h3" /></svg>,
     // Policy and budget guardrails — a shield.
     <svg key="shield" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d="M12 3 4 6v6c0 4.5 3 7.7 8 9 5-1.3 8-4.5 8-9V6l-8-3Z" /><path d="m9 12 2 2 4-4" /></svg>,
-    // Role-based permissions — a keyed lock.
-    <svg key="lock" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /><circle cx="12" cy="15" r="1.4" /></svg>,
     // Human in the loop — a person.
     <svg key="human" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="7.5" r="3.2" /><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7" /></svg>,
+    // Full audit trail — a log/list.
+    <svg key="audit" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d="M8 4h11a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H8" /><path d="M4 4h2v16H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" /><path d="M12 9h5M12 13h5M12 17h3" /></svg>,
+    // Role-based permissions — a keyed lock.
+    <svg key="lock" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /><circle cx="12" cy="15" r="1.4" /></svg>,
 ]
 
 const GUARDRAILS: string[][] = [
-    ["Full audit trail", "Every agent action is recorded and attributable."],
-    ["Policy and budget guardrails", "Every agent acts inside the rules and thresholds you set."],
-    ["Role-based permissions", "Approvals and access follow each person's responsibilities."],
-    ["Human in the loop", "Genuine exceptions pause for human judgment."],
+    ["Policy and budget guardrails", "The agents search, match and rebook; choices that carry cost or risk still come to a person, always inside the policy and budget you set."],
+    ["Human in the loop", "It stops and asks. Genuine exceptions pause and route to the right person, with full context."],
+    ["Full audit trail", "Every agent action is logged and attributable. Nothing is invisible after the fact."],
+    ["Role-based permissions", "Only within each person's existing access. Permissions follow responsibilities."],
 ]
 
 // A flat row list undersold the section's job: this is the trust page's
@@ -111,9 +116,15 @@ export default function V4Technology() {
                         <p className="v4-lede">Six different specialized agents each running their own allotted task, under the same thread. Beneath them sits Tabhi intelligence connecting Mondee supply, policy, payment and expense all together woven into one framework, dedicatedly working to complete one single trip.</p>
                     </Reveal>
                     <Reveal delay={0.1}>
-                        <ul className="v4-chips" style={{ marginTop: 30 }}>
-                            {AGENTS.map(agent => <li key={agent}>{agent}</li>)}
-                        </ul>
+                        <div className="v4-agents" style={{ marginTop: 30 }}>
+                            {AGENT_ROWS.map(([name, desc], i) => (
+                                <div className="v4-agent" key={name}>
+                                    <span className="v4-agent__num">{String(i + 1).padStart(2, "0")}</span>
+                                    <h3>{name}</h3>
+                                    <p>{desc}</p>
+                                </div>
+                            ))}
+                        </div>
                     </Reveal>
                     <Reveal delay={0.15}>
                         <div className="v4-note" style={{ marginTop: 28 }}>
@@ -136,12 +147,15 @@ export default function V4Technology() {
                     <Reveal>
                         <span className="v4-eyebrow">Safety & governance</span>
                         <h2 className="v4-h2" id="guardrails-title">Autonomy with guardrails.</h2>
-                        <p className="v4-lede">Every action is bounded by policy, budget and permissions, then recorded in a complete audit trail. An agent that reaches the edge of what you authorised stops and asks.</p>
+                        <p className="v4-lede">Four guardrails is easy to claim. Here's how each one holds.</p>
                     </Reveal>
                     <Reveal delay={0.1}>
                         <div style={{ marginTop: 32 }}>
                             <GuardrailGrid rows={GUARDRAILS} />
                         </div>
+                    </Reveal>
+                    <Reveal delay={0.15}>
+                        <p className="v4-lede" style={{ marginTop: 32 }}>The agents move fast because the guardrails are fixed, speed for the traveler, safety for the business.</p>
                     </Reveal>
                 </div>
             </section>
