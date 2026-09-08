@@ -238,8 +238,8 @@
 .v4-hero__backers { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
 .v4-hero__backers > span:first-child { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--m-muted); }
 .v4-hero__backer-logos { display: flex; align-items: center; gap: 10px; }
-.v4-hero__backer-chip { display: inline-flex; align-items: center; justify-content: center; height: 36px; padding: 6px 12px; border-radius: 10px; background: var(--m-surface); border: 1px solid var(--m-line); }
-.v4-hero__backer-chip img { height: 100%; width: auto; max-width: 84px; object-fit: contain; display: block; }
+.v4-hero__backer-chip { display: inline-flex; align-items: center; justify-content: center; height: 52px; padding: 8px 18px; border-radius: 12px; background: var(--m-surface); border: 1px solid var(--m-line); }
+.v4-hero__backer-chip img { height: 100%; width: auto; max-width: 120px; object-fit: contain; display: block; }
 @media (max-width: 640px) {
   .v4-hero__backers { margin-top: 24px; }
 }
@@ -283,7 +283,7 @@
    mirrored to the opposite corner. */
 .v4-hero__confirm-card {
   position: absolute;
-  right: -32px; bottom: -20px;
+  left: -32px; bottom: -20px;
   display: flex; align-items: center; gap: 12px;
   width: min(300px, 58%);
   padding: 14px 16px;
@@ -299,7 +299,7 @@
 .v4-hero__confirm-card__meta { font-size: 11.5px; color: var(--m-muted); }
 @media (max-width: 900px) {
   .v4-flight-card-img { left: -12px; width: min(240px, 62%); }
-  .v4-hero__confirm-card { right: -12px; bottom: -14px; width: min(240px, 62%); padding: 11px 13px; }
+  .v4-hero__confirm-card { left: -12px; bottom: -14px; width: min(240px, 62%); padding: 11px 13px; }
 }
 @media (max-width: 640px) {
   .v4-flight-card-img { position: static; display: block; width: 220px; margin: -28px auto 0; transform: none; filter: drop-shadow(0 14px 28px rgba(35, 8, 11, 0.25)); }
@@ -629,6 +629,14 @@
   transition: flex-grow .6s var(--m-ease), background .5s var(--m-ease), border-color .3s var(--m-ease), box-shadow .3s var(--m-ease), transform .3s var(--m-ease);
 }
 .v4-apart-panel--maroon { background: linear-gradient(165deg, color-mix(in srgb, var(--m-maroon) 12%, var(--m-surface)) 0%, var(--m-surface) 65%); }
+/* Photo panel — the image is set inline (per-item asset), always visible in
+   both the closed and expanded state; only the icon reveal and body-copy
+   height still change with .is-active, same as every other panel. */
+.v4-apart-panel--photo { background-size: cover !important; background-position: var(--apart-photo-pos, 80% center) !important; border-color: transparent; }
+.v4-apart-panel--photo.is-active { background-position: var(--apart-photo-pos-active, 68% center) !important; }
+.v4-apart-panel--photo .v4-apart-panel__body h3 { color: #fffaf6; }
+.v4-apart-panel--photo .v4-apart-panel__body p { color: rgba(255, 250, 246, .8); }
+.v4-apart-panel--photo .v4-apart-panel__icon { display: none; }
 .v4-apart-panel:hover:not(.is-active) { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(69, 14, 20, .12); }
 
 .v4-apart-panel.is-active {
