@@ -1,8 +1,10 @@
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { Link, useLocation } from "react-router-dom"
 import PersonaExperience, { PERSONA_SCRIPTS } from "../../components/PersonaExperience"
 import { Reveal } from "../../components/V4Kit"
+import financeVideo from "../../assets/Video/Finance.mp4"
+import adminVideo from "../../assets/Video/Admin.mp4"
 
 // Verbatim port of V1.1's "One platform, six views" (src/pages/ForTeams.tsx:374).
 //
@@ -23,6 +25,7 @@ const T = {
     accentLight: "#ff8a52",
 }
 const F = "\"Plus Jakarta Sans\", system-ui, sans-serif"
+const FB = "\"Sora\", system-ui, sans-serif"
 const spring = { type: "spring" as const, stiffness: 420, damping: 38 }
 
 export type SixViewRole = {
@@ -52,7 +55,7 @@ function RoleStatement({ role, isMobile }: { role: SixViewRole; isMobile: boolea
                 Before
             </div>
             <p style={{
-                fontFamily: F, fontSize: isMobile ? 18 : "clamp(19px, 1.5vw, 24px)", fontWeight: 400,
+                fontFamily: FB, fontSize: isMobile ? 18 : "clamp(19px, 1.5vw, 24px)", fontWeight: 400,
                 lineHeight: 1.32, letterSpacing: "-0.02em", color: T.onDarkSoft, margin: "0 0 24px",
                 textDecoration: "line-through", textDecorationColor: T.accentLight,
                 textDecorationThickness: "1.5px", textUnderlineOffset: "2px",
@@ -70,7 +73,7 @@ function RoleStatement({ role, isMobile }: { role: SixViewRole; isMobile: boolea
             </h3>
 
             {role.body && (
-                <p style={{ fontFamily: F, fontSize: isMobile ? 14 : 15, lineHeight: 1.65, color: T.onDarkSoft, margin: "0 0 16px" }}>
+                <p style={{ fontFamily: FB, fontSize: isMobile ? 14 : 15, lineHeight: 1.65, color: T.onDarkSoft, margin: "0 0 16px" }}>
                     {role.body}
                 </p>
             )}
@@ -117,7 +120,7 @@ function RoleLedger({ role, isMobile, animate }: { role: SixViewRole; isMobile: 
                         padding: "20px 0", borderBottom: "1px solid " + T.onDarkFaint,
                     }}>
                     <span aria-hidden="true" style={{ color: T.accentLight, fontSize: 13, lineHeight: 1.7, flexShrink: 0 }}>&#9679;</span>
-                    <span style={{ fontFamily: F, fontSize: isMobile ? 15 : 16, lineHeight: 1.6, letterSpacing: "-0.005em", color: T.onDark }}>{row}</span>
+                    <span style={{ fontFamily: FB, fontSize: isMobile ? 15 : 16, lineHeight: 1.6, letterSpacing: "-0.005em", color: T.onDark }}>{row}</span>
                 </motion.li>
             ))}
         </ul>
@@ -164,6 +167,18 @@ export function SixViews({ roles, isMobile }: { roles: SixViewRole[]; isMobile: 
         setActive(next)
         tabRefs.current[next]?.focus()
     }
+
+    const roleVideo = role.slug === "finance" ? financeVideo : role.slug === "admins" ? adminVideo : null
+    const [videoMuted, setVideoMuted] = useState(true)
+    const [showVideo, setShowVideo] = useState<Record<string, boolean>>({ finance: true, admins: true })
+    const isVideoMode = Boolean(roleVideo && (showVideo[role.slug] ?? true))
+    const stageVideoRef = useRef<HTMLVideoElement>(null)
+
+    useEffect(() => {
+        if (stageVideoRef.current) {
+            stageVideoRef.current.muted = videoMuted
+        }
+    }, [videoMuted, active, isVideoMode])
 
     return (
         <section id="roles" className="v4-sixviews" aria-labelledby="sixviews-title">
@@ -280,14 +295,31 @@ export function SixViews({ roles, isMobile }: { roles: SixViewRole[]; isMobile: 
                                 <span style={{ fontFamily: F, fontSize: 10.5, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: T.accentLight }}>
                                     {role.label}
                                 </span>
+                                
                                 <span style={{ marginLeft: "auto", fontFamily: F, fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.onDarkSoft }}>
-                                    Scripted preview
+                                    {roleVideo ? "Live Preview" : "Scripted Preview"}
                                 </span>
                             </div>
-                            {/* Reserves the tallest of the six scripts at each breakpoint. */}
+
+                            {/* Stage Visual Viewport */}
                             <div style={{ minHeight: isMobile ? 268 : 232 }}>
-                                {PERSONA_SCRIPTS[role.slug] && (
-                                    <PersonaExperience script={PERSONA_SCRIPTS[role.slug]} autoPlay tone="dark" flush />
+                                {roleVideo ? (
+                                    <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", border: "1px solid rgba(255,246,240,0.15)", background: "#0b0607" }}>
+                                        <video
+                                            ref={stageVideoRef}
+                                            src={roleVideo}
+                                            autoPlay
+                                            loop
+                                            muted
+                                            playsInline
+                                            preload="auto"
+                                            style={{ width: "100%", display: "block", borderRadius: 16, maxHeight: 380, objectFit: "cover" }}
+                                        />
+                                    </div>
+                                ) : (
+                                    PERSONA_SCRIPTS[role.slug] && (
+                                        <PersonaExperience script={PERSONA_SCRIPTS[role.slug]} autoPlay tone="dark" flush />
+                                    )
                                 )}
                             </div>
                         </motion.div>
