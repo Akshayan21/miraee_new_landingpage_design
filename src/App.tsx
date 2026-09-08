@@ -5,32 +5,8 @@ import SiteAtmosphere from "./components/SiteAtmosphere"
 import { MiraeeLogo } from "./components/LegalFormKit"
 import "./pages/V11AlternatingSections.css"
 
-// Home is routed at "/". Product/Technology/Solutions source files are kept in
-// src/pages/ (unrouted, not deleted) in case they're needed again.
-const Home = lazy(() => import("./pages/HomeElegant"))
-const HomeV11 = lazy(() => import("./pages/HomeV11"))
-const HomeV2 = lazy(() => import("./pages/HomeV2"))
-const HomeV3 = lazy(() => import("./pages/HomeV3"))
-const ProductV3 = lazy(() => import("./pages/ProductV3"))
-const SavingsV3 = lazy(() => import("./pages/SavingsV3"))
-const HrV3 = lazy(() => import("./pages/HrV3"))
-const EnterpriseV3 = lazy(() => import("./pages/EnterpriseV3"))
-const DemoV3 = lazy(() => import("./pages/DemoV3"))
-const V1Product = lazy(() => import("./pages/Product"))
-const V1ForTeams = lazy(() => import("./pages/ForTeams"))
-const V1Technology = lazy(() => import("./pages/Technology"))
-const V1Solutions = lazy(() => import("./pages/Solutions"))
-const V1Security = lazy(() => import("./pages/Security"))
-const V1About = lazy(() => import("./pages/About"))
-const V1WhyMiraee = lazy(() => import("./pages/WhyMiraee"))
-const V1Resources = lazy(() => import("./pages/Resources"))
-const ProductV2 = lazy(() => import("./pages/ProductV2"))
-const ForTeamsV2 = lazy(() => import("./pages/ForTeamsV2"))
-const ResourcesV2 = lazy(() => import("./pages/ResourcesV2"))
-const TechnologyV2 = lazy(() => import("./pages/TechnologyV2"))
-const SecurityV2 = lazy(() => import("./pages/SecurityV2"))
-const AboutV2 = lazy(() => import("./pages/AboutV2"))
-const WhyMiraeeV2 = lazy(() => import("./pages/WhyMiraeeV2"))
+// v1/v1.1/v2/v3 are unrouted (source files kept in src/pages/, not deleted)
+// in case they're needed again. "/" now serves v4.
 const Support = lazy(() => import("./pages/Support"))
 const Terms = lazy(() => import("./pages/Terms"))
 const Privacy = lazy(() => import("./pages/Privacy"))
@@ -85,64 +61,60 @@ export default function App() {
             <SiteAtmosphere />
             <Suspense fallback={<PageFallback />}>
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/v1.1" element={<HomeV11 />} />
-                    <Route path="/v2" element={<HomeV2 />} />
-                    <Route path="/v3" element={<HomeV3 />} />
-                    <Route path="/v3/product" element={<ProductV3 />} />
-                    <Route path="/v3/savings" element={<SavingsV3 />} />
-                    <Route path="/v3/hr" element={<HrV3 />} />
-                    <Route path="/v3/enterprise" element={<EnterpriseV3 />} />
-                    <Route path="/v3/demo" element={<DemoV3 />} />
+                    <Route path="/" element={<V4Home />} />
                     <Route path="/v4" element={<V4Home />} />
+                    <Route path="/platform" element={<V4Platform />} />
                     <Route path="/v4/platform" element={<V4Platform />} />
+                    <Route path="/solutions" element={<V4Solutions />} />
                     <Route path="/v4/solutions" element={<V4Solutions />} />
+                    <Route path="/technology" element={<V4Technology />} />
                     <Route path="/v4/technology" element={<V4Technology />} />
+                    <Route path="/why-miraee" element={<V4WhyMiraee />} />
                     <Route path="/v4/why-miraee" element={<V4WhyMiraee />} />
+                    <Route path="/company" element={<V4Company />} />
                     <Route path="/v4/company" element={<V4Company />} />
+                    <Route path="/resources" element={<V4Resources />} />
                     <Route path="/v4/resources" element={<V4Resources />} />
+                    <Route path="/resources/guides" element={<V4ResourcesGuides />} />
                     <Route path="/v4/resources/guides" element={<V4ResourcesGuides />} />
+                    <Route path="/resources/life-at-miraee" element={<V4ResourcesLife />} />
                     <Route path="/v4/resources/life-at-miraee" element={<V4ResourcesLife />} />
+                    <Route path="/resources/blog" element={<V4ResourcesBlog />} />
                     <Route path="/v4/resources/blog" element={<V4ResourcesBlog />} />
+                    <Route path="/resources/news" element={<V4ResourcesNews />} />
                     <Route path="/v4/resources/news" element={<V4ResourcesNews />} />
+                    <Route path="/resources/calculator" element={<V4Calculator />} />
                     <Route path="/v4/resources/calculator" element={<V4Calculator />} />
+                    <Route path="/resources/help-center" element={<V4HelpCenter />} />
                     <Route path="/v4/resources/help-center" element={<V4HelpCenter />} />
+                    <Route path="/implementation" element={<V4Implementation />} />
                     <Route path="/v4/implementation" element={<V4Implementation />} />
+                    <Route path="/integrations" element={<V4Integrations />} />
                     <Route path="/v4/integrations" element={<V4Integrations />} />
+                    <Route path="/ai-assistant" element={<V4AiAssistant />} />
                     <Route path="/v4/ai-assistant" element={<V4AiAssistant />} />
+                    <Route path="/solutions/employees" element={<V4SolutionEmployees />} />
                     <Route path="/v4/solutions/employees" element={<V4SolutionEmployees />} />
+                    <Route path="/solutions/managers" element={<V4SolutionManagers />} />
                     <Route path="/v4/solutions/managers" element={<V4SolutionManagers />} />
+                    <Route path="/solutions/finance" element={<V4SolutionFinance />} />
                     <Route path="/v4/solutions/finance" element={<V4SolutionFinance />} />
+                    <Route path="/solutions/travel-leads" element={<V4SolutionTravelLeads />} />
                     <Route path="/v4/solutions/travel-leads" element={<V4SolutionTravelLeads />} />
+                    <Route path="/solutions/admins" element={<V4SolutionAdmins />} />
                     <Route path="/v4/solutions/admins" element={<V4SolutionAdmins />} />
+                    <Route path="/solutions/chros" element={<V4SolutionChros />} />
                     <Route path="/v4/solutions/chros" element={<V4SolutionChros />} />
+                    <Route path="/solutions/business-travel" element={<V4SolutionBusinessTravel />} />
                     <Route path="/v4/solutions/business-travel" element={<V4SolutionBusinessTravel />} />
+                    <Route path="/solutions/meetings-events" element={<V4SolutionMeetingsEvents />} />
                     <Route path="/v4/solutions/meetings-events" element={<V4SolutionMeetingsEvents />} />
+                    <Route path="/solutions/executive-travel" element={<V4SolutionExecutiveTravel />} />
                     <Route path="/v4/solutions/executive-travel" element={<V4SolutionExecutiveTravel />} />
+                    <Route path="/solutions/global-mobility" element={<V4SolutionGlobalMobility />} />
                     <Route path="/v4/solutions/global-mobility" element={<V4SolutionGlobalMobility />} />
+                    <Route path="/solutions/emergency-disruption" element={<V4SolutionEmergencyDisruption />} />
                     <Route path="/v4/solutions/emergency-disruption" element={<V4SolutionEmergencyDisruption />} />
-                    <Route path="/v1/product" element={<V1Product />} />
-                    <Route path="/v1/technology" element={<V1Technology />} />
-                    <Route path="/v1/solutions" element={<V1Solutions />} />
-                    <Route path="/v1/security" element={<V1Security />} />
-                    <Route path="/v1/about" element={<V1About />} />
-                    <Route path="/v1/why-miraee" element={<V1WhyMiraee />} />
-                    <Route path="/v1/resources" element={<V1Resources />} />
-                    <Route path="/v1.1/product" element={<div className="v11-route v11-alternating-route"><V1Product /></div>} />
-                    <Route path="/v1.1/technology" element={<div className="v11-route v11-alternating-route"><V1Technology /></div>} />
-                    <Route path="/v1.1/solutions" element={<div className="v11-route v11-alternating-route"><V1Solutions /></div>} />
-                    <Route path="/v1.1/for-teams" element={<div className="v11-route v11-alternating-route"><V1ForTeams /></div>} />
-                    <Route path="/v1.1/security" element={<div className="v11-route v11-alternating-route"><V1Security /></div>} />
-                    <Route path="/v1.1/about" element={<div className="v11-route v11-alternating-route"><V1About /></div>} />
-                    <Route path="/v1.1/why-miraee" element={<div className="v11-route v11-alternating-route"><V1WhyMiraee /></div>} />
-                    <Route path="/v1.1/resources" element={<div className="v11-route v11-alternating-route"><V1Resources /></div>} />
-                    <Route path="/product" element={<ProductV2 />} />
-                    <Route path="/for-teams" element={<ForTeamsV2 />} />
-                    <Route path="/resources" element={<ResourcesV2 />} />
-                    <Route path="/technology" element={<TechnologyV2 />} />
-                    <Route path="/security" element={<SecurityV2 />} />
-                    <Route path="/about" element={<AboutV2 />} />
-                    <Route path="/why-miraee" element={<WhyMiraeeV2 />} />
                     <Route path="/support" element={<Support />} />
                     <Route path="/terms" element={<Terms />} />
                     <Route path="/privacy" element={<Privacy />} />

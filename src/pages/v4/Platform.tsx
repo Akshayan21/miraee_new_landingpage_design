@@ -143,7 +143,7 @@ function WhatSetsApart() {
                     <h2 className="v4-h2" id="apart-title">Not AI added to travel.<br /><em>Travel rebuilt around AI.</em></h2>
                     <p className="v4-lede">Most tools bolted a chatbot onto a booking engine. Miraee started from the agents up, so the whole trip runs as one system, and you stay the one who decides.</p>
                 </Reveal>
-                <div className="v4-apart-strip" role="tablist">
+                <div className="v4-apart-strip" role="tablist" onMouseLeave={() => setActive(0)}>
                     {WHAT_SETS_APART.map((item, i) => {
                         const isActive = i === active
                         return (
@@ -163,6 +163,7 @@ function WhatSetsApart() {
                                     ...(item.imagePosActive ? { "--apart-photo-pos-active": item.imagePosActive } as CSSProperties : {}),
                                 } : undefined}
                                 onClick={() => setActive(i)}
+                                onMouseEnter={() => setActive(i)}
                             >
                                 <span className="v4-apart-panel__icon" aria-hidden="true">{item.icon}</span>
                                 <div className="v4-apart-panel__body">
