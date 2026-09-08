@@ -4,6 +4,8 @@ import type { ReactNode } from "react"
 import { Link } from "react-router-dom"
 import { Reveal } from "../../components/V4Kit"
 import productPageImg from "../../assets/platform_hero.jpg"
+import expenseCardGif from "../../assets/expense card.gif"
+import paxMasterGif from "../../assets/PAX MASTER.gif"
 import financeDashboard from "../../assets/ui-admin-dashboard.png"
 import miraeeMobileUi from "../../assets/miraee-mobile-phone.png"
 import supplierCabin from "../../assets/miraee-supplier-cabin.webp"
@@ -71,6 +73,8 @@ export function PlatformHeroV1() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.9, delay: 0.12, ease: heroEase }}>
                     <img src={productPageImg} alt="Business traveler using Miraee during a journey" fetchPriority="high" decoding="async" />
+                    <img className="v4r-phero__gif v4r-phero__gif--br" src={expenseCardGif} alt="Miraee automatically categorizing a trip expense" />
+                    <img className="v4r-phero__gif v4r-phero__gif--tl" src={paxMasterGif} alt="Miraee tracking a traveler's live trip status" />
                 </motion.div>
             </div>
         </section>
