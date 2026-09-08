@@ -1,8 +1,9 @@
-import { type ReactNode } from "react"
+import { type ReactNode, useState } from "react"
+import { motion } from "framer-motion"
 import { V4Page, V4Cta, Reveal, Faq } from "../../components/V4Kit"
 import { PlatformHeroV1, TwoViewsV1, OutcomesV1, SavingsV3, IntegrationsV1, MondeeAdvantageV2, TMCGenerationsV2 } from "./RefSections"
 import { Capabilities } from "./V0Sections"
-import personalizationVideo from "../../assets/personalization.mp4"
+import personalizationGif from "../../assets/CHAT MASTER.gif"
 import "../SubpagesV2.css"
 import "./V4.css"
 
@@ -13,8 +14,8 @@ const PERSONALIZATION_KNOWS = ["Who the traveler is", "Company travel policy", "
 function PersonalizationLoop() {
     return (
         <div className="v4-personalization-loop">
-            <video className="v4-personalization-loop__video" src={personalizationVideo}
-                autoPlay loop muted playsInline aria-label="Miraee personalizing a trip request from context it already holds" />
+            <img className="v4-personalization-loop__video" src={personalizationGif}
+                alt="Miraee personalizing a trip request from context it already holds" />
         </div>
     )
 }
@@ -26,28 +27,38 @@ function PersonalizationLoop() {
 //   Miraee vs legacy TMCs (V2) → the platform adapts (duty of care,
 //   reporting, onboarding) → FAQs.
 
-const ICON_LOCATION = (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 21s7-7.58 7-12a7 7 0 10-14 0c0 4.42 7 12 7 12z" />
-        <circle cx="12" cy="9" r="2.6" />
-    </svg>
+// Real mini-visualizations instead of a single line-icon each — a small
+// live map, a bar chart and a progress ring, each echoing the card's own
+// tag ("one live map", "exportable in one click", "live completion %").
+const VISUAL_MAP = (
+    <div className="v4-mini-map" aria-hidden="true">
+        <span className="v4-mini-map__route" />
+        <span className="v4-mini-map__pin v4-mini-map__pin--a" />
+        <span className="v4-mini-map__pin v4-mini-map__pin--b" />
+        <span className="v4-mini-map__pin v4-mini-map__pin--c is-active"><i /></span>
+    </div>
 )
-const ICON_REPORT = (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 20V11M12 20V4M20 20v-7" />
-    </svg>
+const VISUAL_CHART = (
+    <div className="v4-mini-chart" aria-hidden="true">
+        {[38, 62, 46, 80, 55].map((h, i) => (
+            <span key={i} style={{ height: `${h}%` }} className={i === 3 ? "is-accent" : undefined} />
+        ))}
+    </div>
 )
-const ICON_ONBOARD = (
-    <svg viewBox="0 0 24 24" fill="none" strokeLinecap="round">
-        <circle cx="12" cy="12" r="8.4" stroke="currentColor" strokeWidth={1.6} opacity={.25} />
-        <path d="M12 3.6a8.4 8.4 0 015.94 14.34" stroke="currentColor" strokeWidth={1.6} />
-    </svg>
+const VISUAL_PROGRESS = (
+    <div className="v4-mini-ring" aria-hidden="true">
+        <svg viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="26" className="v4-mini-ring__track" />
+            <circle cx="32" cy="32" r="26" className="v4-mini-ring__fill" />
+        </svg>
+        <span className="v4-mini-ring__label">72%</span>
+    </div>
 )
 
 const ADAPTIVE_FEATURES: [ReactNode, string, string, string][] = [
-    [ICON_LOCATION, "Live location tracking, real reassurance.", "See every active traveler on one live map, with any itinerary change flagged in real time, real-time traveler tracking built for duty of care, so the team always knows where someone's headed, especially when things go sideways. Travelers who feel looked after on the road tend to stay longer. Care shown on the journey has a way of returning as loyalty.", "Real-time, one live map"],
-    [ICON_REPORT, "Your travel data, read your way.", "Custom travel reports that surface the fine detail: spend by team, entity or route, alongside the bigger picture: policy compliance, out-of-policy overage, savings and reimbursement cycle time. Each report is shaped to the reader and exportable in a click, so no one's left wrestling a spreadsheet to make corporate travel spend data make sense.", "Exportable in one click"],
-    [ICON_ONBOARD, "Guided self-setup & onboarding", "A guided, self-service setup on the main page walks every employee through their own travel profile, with a live completion percentage showing exactly what's left, so people maintain their own corner, no implementation team required.", "Live completion %"],
+    [VISUAL_MAP, "Live location tracking, real reassurance.", "See every active traveler on one live map, with itinerary changes flagged in real time. Built for duty of care, so teams always know where travelers are headed when it matters most.", "Real-time, one live map"],
+    [VISUAL_CHART, "Your travel data, read your way.", "Get tailored reports on spend, compliance, savings and reimbursements by team, entity or route. Export insights instantly without wrestling with spreadsheets.", "Exportable in one click"],
+    [VISUAL_PROGRESS, "Guided self-setup & onboarding", "A guided self-service setup lets employees build their travel profiles, with live progress tracking. Simple onboarding, with no implementation team required.", "Live completion %"],
 ]
 
 const FAQS: [string, ReactNode][] = [
@@ -62,6 +73,99 @@ const FAQS: [string, ReactNode][] = [
     ["Which systems does Miraee integrate with?", "Miraee connects to identity providers via SSO and SCIM, to HRIS platforms for traveler and cost centre data, to ERP and accounting systems for expense posting, to corporate card networks for payment, and to calendar and messaging tools for itineraries."],
     ["How long does implementation take?", "Pilots reach full deployment in as little as 90 days."],
 ]
+
+// "What sets us apart" — six-card bento below the Mondee/Tabhi trust bar.
+// Each card carries a large translucent ghost numeral (same device
+// StepPanel/RefSections use elsewhere for a section's own number) plus a
+// small line icon, so the grid reads as a deliberate system rather than six
+// interchangeable text blocks.
+const APART_ICON_AGENTS = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" />
+        <rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" />
+        <path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4" />
+    </svg>
+)
+const APART_ICON_CONVO = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3.5" y="4.5" width="17" height="12" rx="3" />
+        <path d="M8.5 16.5v3l3.7-3M8 9h8M8 12h5.5" />
+    </svg>
+)
+const APART_ICON_LEARNS = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="10.5" cy="8" r="3.5" /><path d="M3.5 20c0-3.9 3.1-7 7-7s7 3.1 7 7" />
+        <path d="M19 3v4M17 5h4" />
+    </svg>
+)
+const APART_ICON_LEDGER = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+        <ellipse cx="12" cy="5.5" rx="7.5" ry="2.5" />
+        <path d="M4.5 5.5v13c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5v-13" />
+        <path d="M4.5 12c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5" />
+    </svg>
+)
+const APART_ICON_SHIELD = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3 19.5 6v6c0 4.6-3.1 7.7-7.5 8.9-4.4-1.2-7.5-4.3-7.5-8.9V6L12 3Z" />
+        <path d="M8.75 12.2 11 14.5l4.5-4.9" />
+    </svg>
+)
+const APART_ICON_SUPPLY = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 8.5 3.5 12l3.5 3.5M17 8.5 20.5 12 17 15.5" />
+        <path d="M14 6.5 10 17.5" />
+    </svg>
+)
+
+const WHAT_SETS_APART: { icon: ReactNode; title: string; body: string; accent?: "orange" | "maroon" }[] = [
+    { icon: APART_ICON_AGENTS, title: "Agentic by design, not AI as a feature", body: "Six agents do the searching, matching and reconciling. Decisions that carry cost or risk still come to you." },
+    { icon: APART_ICON_CONVO, title: "Whole trip in one conversation", body: "Describe it in a sentence; it comes back planned, priced and in policy. No tabs, no report to file. The conversation is the workflow.", accent: "orange" },
+    { icon: APART_ICON_LEARNS, title: "Travel that learns you", body: "Preferred airlines, seats, hotels and timing, applied from the first result. Personal identity stays separate from account login.", accent: "maroon" },
+    { icon: APART_ICON_LEDGER, title: "One platform, one ledger, one source of truth", body: "Booking, policy, expense and reconciliation on one system. Every agent reads from real data, not tools stitched together.", accent: "orange" },
+    { icon: APART_ICON_SHIELD, title: "Enterprise control, consumer ease", body: "A traveler experience people want to use, on governance the business trusts for full audit trails.", accent: "maroon" },
+    { icon: APART_ICON_SUPPLY, title: "Direct supply, better economics", body: "Wholesale and direct supply through Mondee, with the negotiation agent working the best rate on every booking.", accent: "orange" },
+]
+
+function WhatSetsApart() {
+    const [active, setActive] = useState(0)
+    return (
+        <section className="v4-section" id="apart" aria-labelledby="apart-title">
+            <div className="v4-shell">
+                <Reveal>
+                    <span className="v4-eyebrow">What sets us apart</span>
+                    <h2 className="v4-h2" id="apart-title">Not AI added to travel.<br /><em>Travel rebuilt around AI.</em></h2>
+                    <p className="v4-lede">Most tools bolted a chatbot onto a booking engine. Miraee started from the agents up, so the whole trip runs as one system, and you stay the one who decides.</p>
+                </Reveal>
+                <div className="v4-apart-strip" role="tablist">
+                    {WHAT_SETS_APART.map((item, i) => {
+                        const isActive = i === active
+                        return (
+                            <motion.button
+                                type="button"
+                                role="tab"
+                                aria-expanded={isActive}
+                                key={item.title}
+                                initial={{ opacity: 0, y: 12 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-8% 0px" }}
+                                transition={{ duration: 0.6, delay: i * 0.05 }}
+                                className={"v4-apart-panel" + (isActive ? " is-active" : "") + (item.accent ? ` v4-apart-panel--${item.accent}` : "")}
+                                onClick={() => setActive(i)}
+                            >
+                                <span className="v4-apart-panel__icon" aria-hidden="true">{item.icon}</span>
+                                <div className="v4-apart-panel__body">
+                                    <h3>{item.title}</h3>
+                                    <p>{item.body}</p>
+                                </div>
+                            </motion.button>
+                        )
+                    })}
+                </div>
+            </div>
+        </section>
+    )
+}
 
 export default function V4Platform() {
     return (
@@ -82,12 +186,19 @@ export default function V4Platform() {
                         <span className="v4-eyebrow">Built on context</span>
                         <h2 className="v4-h2" id="personalization-title">One sentence works because Miraee already knows.</h2>
                         <p className="v4-lede">No profile to fill out, no policy to look up. Every trip request lands on top of everything Miraee already holds about the traveler, the company, and the trip in progress.</p>
-                        <div className="v4-personalization-knows">
-                            {PERSONALIZATION_KNOWS.map((item, index) => <p key={item}><b>{String(index + 1).padStart(2, "0")}</b>{item}</p>)}
+                        <div className="v4-context-grid">
+                            {PERSONALIZATION_KNOWS.map((item, index) => (
+                                <div className="v4-context-chip" key={item}>
+                                    <span>{String(index + 1).padStart(2, "0")}</span>
+                                    <p>{item}</p>
+                                </div>
+                            ))}
                         </div>
                     </Reveal>
                     <Reveal delay={0.1}>
-                        <PersonalizationLoop />
+                        <div className="v4-personalization-media">
+                            <PersonalizationLoop />
+                        </div>
                     </Reveal>
                 </div>
             </section>
@@ -132,10 +243,10 @@ export default function V4Platform() {
                 the source citation (ProductV2.tsx `.pv2-supply`). */}
             <MondeeAdvantageV2 />
 
-            {/* V2's "Miraee vs legacy TMCs" — see RefSections.tsx for the
-                source citation (ProductV2.tsx `.pv2-generation`). */}
-            <TMCGenerationsV2 />
+            <WhatSetsApart />
 
+            {/* Moved directly below the bento on request — was previously
+                further down, after TMCGenerationsV2. */}
             <section className="v4-section" id="adaptive" aria-labelledby="adaptive-title">
                 <div className="v4-shell">
                     <Reveal>
@@ -143,9 +254,9 @@ export default function V4Platform() {
                         <h2 className="v4-h2" id="adaptive-title">The Miraee platform adapts. So your people don't have to.</h2>
                     </Reveal>
                     <div className="v4-adaptive-grid">
-                        {ADAPTIVE_FEATURES.map(([icon, title, body, tag], i) => (
-                            <Reveal className="v4-adaptive-card" key={title} delay={i * 0.1}>
-                                <span className="v4-adaptive-card__icon" aria-hidden="true">{icon}</span>
+                        {ADAPTIVE_FEATURES.map(([visual, title, body, tag], i) => (
+                            <Reveal className="v4-adaptive-card v4-adaptive-card--visual" key={title} delay={i * 0.1}>
+                                {visual}
                                 <h3>{title}</h3>
                                 <p>{body}</p>
                                 <span className="v4-adaptive-card__tag">{tag}</span>
@@ -154,6 +265,10 @@ export default function V4Platform() {
                     </div>
                 </div>
             </section>
+
+            {/* V2's "Miraee vs legacy TMCs" — see RefSections.tsx for the
+                source citation (ProductV2.tsx `.pv2-generation`). */}
+            <TMCGenerationsV2 />
 
             <section className="v4-section v4-section--tint" id="faq" aria-labelledby="faq-title">
                 <div className="v4-shell">
