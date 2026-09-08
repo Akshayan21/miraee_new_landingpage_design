@@ -9,7 +9,7 @@ import managerAvatar from "../../assets/Manager Image.jpg"
 import adminAvatar from "../../assets/Admin.jpg"
 import planStepPhoto from "../../assets/platform_hero_image .jpg"
 import bookStepPhoto from "../../assets/post-5pm.jpg"
-import expenseStepPhoto from "../../assets/resources-hero.webp"
+import expenseStepPhoto from "../../assets/expenses.jpg"
 import changeStepPhoto from "../../assets/miraee-flight-cancelled-notification.png"
 
 // Verbatim ports of the V0 homepage sections the site-architecture doc calls
@@ -244,7 +244,7 @@ function StepVisual({ index, accent, inView }: { index: number; accent: string; 
 
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: 10, width: 300 }}>
-            {[{ t: "Calendar synced", s: "Flight + hotel on your schedule" }, { t: "Receipt captured", s: "$18.40 airport cab · auto-coded" }, { t: "Rebooked automatically", s: "6:00 AM cancelled → on the 9:15 AM" }].map((n, i) => (
+            {[{ t: "Calendars synced", s: "Flight + hotel on your schedule" }, { t: "Difference of rebooking paid", s: "$18.40 airport cab · auto-coded" }, { t: "Rebook confirmed", s: "6:00 AM cancelled → on the 9:15 AM" }].map((n, i) => (
                 <motion.div key={i} initial={{ opacity: 0, x: 40 }} animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }} transition={{ duration: 0.55, delay: 0.4 + i * 0.2, ease: EO }}
                     style={{ background: T.card, border: "1px solid " + T.border, borderRadius: 16, boxShadow: "0 16px 40px rgba(69,14,20,0.07)", padding: "13px 16px", display: "flex", alignItems: "center", gap: 11, fontFamily: F }}>
                     <CheckDot size={17} />

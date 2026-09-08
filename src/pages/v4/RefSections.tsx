@@ -102,7 +102,7 @@ export function TwoViewsV1() {
                 <div className="v4r-views__head">
                     <DirReveal direction="none">
                         <span className="v4r-label">One Platform, Two Views</span>
-                        <h2>One platform.<br /><em>Two views.</em></h2>
+                        <h2>Two access points.<br /><em>One experience.</em></h2>
                     </DirReveal>
                 </div>
                 <div className="v4r-views__grid">
