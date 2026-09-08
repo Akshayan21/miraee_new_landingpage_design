@@ -1827,3 +1827,341 @@
   line-height: 1.4;
   font-size: 11px;
 }
+
+/* ==========================================================================
+   V4 Role Solutions: Navan & Apple 2-Column Hero & Bento Layout
+   ========================================================================== */
+
+.v4-navan-hero-section {
+  padding-top: clamp(60px, 8vw, 90px);
+  padding-bottom: clamp(60px, 8vw, 100px);
+  position: relative;
+  overflow: hidden;
+}
+
+.v4-navan-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(360px, 1.15fr);
+  gap: clamp(32px, 4.5vw, 60px);
+  align-items: center;
+}
+
+.v4-navan-hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.v4-navan-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  background: var(--m-soft);
+  border: 1px solid var(--m-line);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--m-muted);
+  margin-bottom: 16px;
+}
+
+.v4-navan-headline {
+  font-size: clamp(2.2rem, 3.6vw, 3.3rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--m-maroon);
+  line-height: 1.1;
+  margin: 0 0 16px;
+}
+
+.v4-navan-lede {
+  font-size: clamp(1.02rem, 1.35vw, 1.12rem);
+  line-height: 1.65;
+  color: var(--m-ink);
+  margin: 0 0 24px;
+}
+
+/* Compact Transformation Switcher */
+.v4-navan-shift-box {
+  width: 100%;
+  border-radius: 18px;
+  background: var(--m-surface);
+  border: 1px solid var(--m-line);
+  padding: 16px 18px;
+  box-shadow: 0 8px 24px rgba(69, 14, 20, 0.04);
+  margin-bottom: 22px;
+}
+
+.v4-navan-shift-nav {
+  display: flex;
+  gap: 6px;
+  background: var(--m-soft);
+  padding: 3px;
+  border-radius: 100px;
+  width: fit-content;
+  margin-bottom: 12px;
+}
+
+.v4-navan-tab-trigger {
+  border: none;
+  background: transparent;
+  padding: 5px 13px;
+  border-radius: 100px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--m-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.v4-navan-tab-trigger.active {
+  background: #ffffff;
+  color: var(--m-maroon);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+
+.v4-navan-panel-label {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.v4-navan-panel-label.text-orange {
+  color: var(--m-orange);
+}
+
+.v4-navan-panel-label.text-muted {
+  color: var(--m-muted);
+}
+
+.v4-navan-panel-text {
+  font-size: 0.96rem;
+  line-height: 1.58;
+  margin: 0;
+  color: var(--m-ink);
+}
+
+.v4-navan-panel-text.text-muted {
+  color: var(--m-muted);
+}
+
+/* Capabilities Chips */
+.v4-navan-controls {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.v4-navan-controls-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--m-muted);
+  margin-bottom: 9px;
+}
+
+.v4-navan-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.v4-navan-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 13px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--m-soft);
+  border: 1px solid var(--m-line);
+  color: var(--m-ink);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.v4-navan-chip:hover {
+  border-color: var(--m-orange);
+  transform: translateY(-1px);
+}
+
+.v4-navan-hero-cta {
+  margin-top: 4px;
+}
+
+/* Right Column: Hero Stage (Video or Script) */
+.v4-navan-hero-stage {
+  width: 100%;
+}
+
+.v4-apple-video-frame {
+  position: relative;
+  width: 100%;
+  border-radius: 22px;
+  box-shadow: 0 24px 60px -15px rgba(69, 14, 20, 0.12), 0 0 0 1px rgba(69, 14, 20, 0.08);
+  background: var(--m-surface);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.v4-apple-video-frame:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 28px 70px -12px rgba(69, 14, 20, 0.16), 0 0 0 1px rgba(229, 86, 2, 0.25);
+}
+
+.v4-apple-video-glow {
+  position: absolute;
+  inset: -14px;
+  background: radial-gradient(circle at 60% 40%, rgba(229, 86, 2, 0.12), transparent 70%);
+  filter: blur(22px);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 28px;
+}
+
+.v4-apple-video-canvas {
+  position: relative;
+  z-index: 1;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--m-line);
+}
+
+.v4-apple-video-element {
+  width: 100%;
+  display: block;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+.v4-navan-script-frame {
+  border-radius: 22px;
+  background: var(--m-surface);
+  border: 1px solid var(--m-line);
+  box-shadow: 0 20px 50px -10px rgba(69, 14, 20, 0.08);
+  overflow: hidden;
+}
+
+.v4-navan-script-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--m-line);
+  background: var(--m-soft);
+}
+
+.v4-navan-bar-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.v4-navan-bar-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--m-line);
+}
+
+.v4-navan-bar-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--m-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.v4-navan-script-body {
+  padding: 18px;
+}
+
+/* 2. Pillars Bento Grid Below Hero */
+.v4-navan-pillars-wrap {
+  margin-top: clamp(60px, 8vw, 96px);
+  padding-top: clamp(36px, 5vw, 60px);
+  border-top: 1px solid var(--m-line);
+}
+
+.v4-navan-pillars-header {
+  margin-bottom: 32px;
+}
+
+.v4-navan-pillars-title {
+  font-size: clamp(1.75rem, 2.6vw, 2.3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--m-maroon);
+  margin: 8px 0 0;
+  line-height: 1.18;
+}
+
+.v4-navan-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.v4-navan-pillar-card {
+  padding: clamp(24px, 3vw, 36px);
+  border-radius: 20px;
+  background: var(--m-surface);
+  border: 1px solid var(--m-line);
+  box-shadow: 0 8px 24px rgba(69, 14, 20, 0.03);
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.v4-navan-pillar-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(229, 86, 2, 0.35);
+  box-shadow: 0 16px 40px rgba(229, 86, 2, 0.06);
+}
+
+.v4-navan-pillar-num {
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--m-orange);
+  line-height: 1;
+  margin-bottom: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.v4-navan-pillar-heading {
+  font-size: 1.2rem;
+  font-weight: 750;
+  color: var(--m-maroon);
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+
+.v4-navan-pillar-desc {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--m-ink);
+  margin: 0;
+}
+
+/* Responsive queries */
+@media (max-width: 980px) {
+  .v4-navan-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .v4-navan-pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+
+
