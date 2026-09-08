@@ -748,8 +748,24 @@
 .v4r-phero__proof i { width: 3px; height: 3px; border-radius: 50%; background: var(--m-line); }
 .v4r-phero__chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .v4r-phero__chips span { padding: 5px 12px; border: 1px solid var(--m-line); border-radius: 100px; font-size: 11px; font-weight: 600; color: var(--m-muted); }
-.v4r-phero__media { flex: 1 1 420px; max-width: 520px; }
-.v4r-phero__media img { display: block; width: 100%; border-radius: 24px; box-shadow: 0 30px 70px rgba(23,10,12,.14); }
+.v4r-phero__media { position: relative; flex: 1 1 420px; max-width: 520px; }
+.v4r-phero__media > img:first-child { display: block; width: 100%; border-radius: 24px; box-shadow: 0 30px 70px rgba(23,10,12,.14); }
+/* GIF overlays — float past the hero photo's own corners, same
+   layered-depth pattern as the flight-card overlay elsewhere in V4. */
+.v4r-phero__gif {
+  position: absolute;
+  width: min(220px, 42%);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px -12px rgba(35, 8, 11, .3);
+  z-index: 2;
+}
+.v4r-phero__gif--br { right: -32px; bottom: -32px; }
+.v4r-phero__gif--tl { left: -32px; top: -32px; aspect-ratio: 1 / 1; object-fit: contain; background: #fffaf6; }
+@media (max-width: 900px) {
+  .v4r-phero__gif { width: min(180px, 46%); }
+  .v4r-phero__gif--br { right: -12px; bottom: -12px; }
+  .v4r-phero__gif--tl { left: -12px; top: -12px; }
+}
 @media (max-width: 900px) {
   .v4r-phero__row { flex-direction: column; text-align: center; }
   .v4r-phero__copy h1 { text-align: center; margin: 0 auto; }
