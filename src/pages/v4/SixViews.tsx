@@ -1,8 +1,10 @@
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { Link, useLocation } from "react-router-dom"
 import PersonaExperience, { PERSONA_SCRIPTS } from "../../components/PersonaExperience"
 import { Reveal } from "../../components/V4Kit"
+import financeVideo from "../../assets/Video/Finance.mp4"
+import adminVideo from "../../assets/Video/Admin.mp4"
 
 // Verbatim port of V1.1's "One platform, six views" (src/pages/ForTeams.tsx:374).
 //
@@ -165,6 +167,18 @@ export function SixViews({ roles, isMobile }: { roles: SixViewRole[]; isMobile: 
         tabRefs.current[next]?.focus()
     }
 
+    const roleVideo = role.slug === "finance" ? financeVideo : role.slug === "admins" ? adminVideo : null
+    const [videoMuted, setVideoMuted] = useState(true)
+    const [showVideo, setShowVideo] = useState<Record<string, boolean>>({ finance: true, admins: true })
+    const isVideoMode = Boolean(roleVideo && (showVideo[role.slug] ?? true))
+    const stageVideoRef = useRef<HTMLVideoElement>(null)
+
+    useEffect(() => {
+        if (stageVideoRef.current) {
+            stageVideoRef.current.muted = videoMuted
+        }
+    }, [videoMuted, active, isVideoMode])
+
     return (
         <section id="roles" className="v4-sixviews" aria-labelledby="sixviews-title">
             <div style={{ position: "relative", maxWidth: 1240, margin: "0 auto", padding: isMobile ? "0 20px" : "0 56px" }}>
@@ -280,14 +294,31 @@ export function SixViews({ roles, isMobile }: { roles: SixViewRole[]; isMobile: 
                                 <span style={{ fontFamily: F, fontSize: 10.5, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: T.accentLight }}>
                                     {role.label}
                                 </span>
+                                
                                 <span style={{ marginLeft: "auto", fontFamily: F, fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T.onDarkSoft }}>
-                                    Scripted preview
+                                    {roleVideo ? "Live Preview" : "Scripted Preview"}
                                 </span>
                             </div>
-                            {/* Reserves the tallest of the six scripts at each breakpoint. */}
+
+                            {/* Stage Visual Viewport */}
                             <div style={{ minHeight: isMobile ? 268 : 232 }}>
-                                {PERSONA_SCRIPTS[role.slug] && (
-                                    <PersonaExperience script={PERSONA_SCRIPTS[role.slug]} autoPlay tone="dark" flush />
+                                {roleVideo ? (
+                                    <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", border: "1px solid rgba(255,246,240,0.15)", background: "#0b0607" }}>
+                                        <video
+                                            ref={stageVideoRef}
+                                            src={roleVideo}
+                                            autoPlay
+                                            loop
+                                            muted
+                                            playsInline
+                                            preload="auto"
+                                            style={{ width: "100%", display: "block", borderRadius: 16, maxHeight: 380, objectFit: "cover" }}
+                                        />
+                                    </div>
+                                ) : (
+                                    PERSONA_SCRIPTS[role.slug] && (
+                                        <PersonaExperience script={PERSONA_SCRIPTS[role.slug]} autoPlay tone="dark" flush />
+                                    )
                                 )}
                             </div>
                         </motion.div>
