@@ -11,7 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
-docs/
+docs/*
+!docs/v0-home-reference.md
 
 .env
 .env.local
@@ -29,3 +30,6 @@ docs/
 *.sw?
 
 
+
+# V0 production landing page repo (nested git checkout, reference only)
+Miraee_landing_page/

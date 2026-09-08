@@ -9,7 +9,7 @@ import managerAvatar from "../../assets/Manager Image.jpg"
 import adminAvatar from "../../assets/Admin.jpg"
 import planStepPhoto from "../../assets/platform_hero_image .jpg"
 import bookStepPhoto from "../../assets/post-5pm.jpg"
-import expenseStepPhoto from "../../assets/resources-hero.webp"
+import expenseStepPhoto from "../../assets/expenses.jpg"
 import changeStepPhoto from "../../assets/miraee-flight-cancelled-notification.png"
 
 // Verbatim ports of the V0 homepage sections the site-architecture doc calls
@@ -28,6 +28,9 @@ const T = {
     cream: "#FBF6F2", accent: "var(--m-orange)",
 }
 const F = "\"Plus Jakarta Sans\", system-ui, sans-serif"
+// Body-copy face — headings/labels/stats stay on F (Plus Jakarta Sans);
+// only the actual reading paragraphs below use this.
+const FB = "\"Sora\", system-ui, sans-serif"
 
 function SectionLabel({ children, accent = T.orange }: { children: string; accent?: string }) {
     const ref = useRef<HTMLDivElement>(null)
@@ -244,7 +247,7 @@ function StepVisual({ index, accent, inView }: { index: number; accent: string; 
 
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: 10, width: 300 }}>
-            {[{ t: "Calendar synced", s: "Flight + hotel on your schedule" }, { t: "Receipt captured", s: "$18.40 airport cab · auto-coded" }, { t: "Rebooked automatically", s: "6:00 AM cancelled → on the 9:15 AM" }].map((n, i) => (
+            {[{ t: "Calendars synced", s: "Flight + hotel on your schedule" }, { t: "Difference of rebooking paid", s: "$18.40 airport cab · auto-coded" }, { t: "Rebook confirmed", s: "6:00 AM cancelled → on the 9:15 AM" }].map((n, i) => (
                 <motion.div key={i} initial={{ opacity: 0, x: 40 }} animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }} transition={{ duration: 0.55, delay: 0.4 + i * 0.2, ease: EO }}
                     style={{ background: T.card, border: "1px solid " + T.border, borderRadius: 16, boxShadow: "0 16px 40px rgba(69,14,20,0.07)", padding: "13px 16px", display: "flex", alignItems: "center", gap: 11, fontFamily: F }}>
                     <CheckDot size={17} />
@@ -338,7 +341,7 @@ function StepPanel({ num, title, body, accent, bg, tag, index, total }: typeof S
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ duration: 0.7, delay: 0.35, ease: EO }}
-                    style={{ fontSize: isMobile ? 15 : 18, fontFamily: F, fontWeight: 400, lineHeight: 1.7, color: T.muted, margin: 0, maxWidth: 520 }}>
+                    style={{ fontSize: isMobile ? 15 : 18, fontFamily: FB, fontWeight: 400, lineHeight: 1.7, color: T.muted, margin: 0, maxWidth: 520 }}>
                     {body}
                 </motion.p>
                 <motion.div
@@ -442,7 +445,7 @@ function RoleCard({ tag, headline, body, stat, statLabel, accent, bg, img, index
                         }} />
                     </div>
                 ) : null}
-                {body ? <p style={{ fontSize: 14, fontFamily: F, lineHeight: 1.65, color: T.muted, margin: 0 }}>{body}</p> : null}
+                {body ? <p style={{ fontSize: 14, fontFamily: FB, lineHeight: 1.65, color: T.muted, margin: 0 }}>{body}</p> : null}
                 {stat ? (
                     <div style={{ marginTop: "auto", paddingTop: 24, borderTop: "1px solid " + T.border }}>
                         <div style={{ fontSize: 36, fontFamily: F, fontWeight: 800, color: accent, letterSpacing: "-0.04em", lineHeight: 1 }}>{stat}</div>
@@ -591,7 +594,7 @@ function CaseVoices() {
                         <div style={{ display: "flex", minHeight: 220, borderRadius: 20, overflow: "hidden", background: r.bg }}>
                             <div style={{ flex: "1 1 55%", padding: isMobile ? 24 : 32, display: "flex", flexDirection: "column", justifyContent: "center", gap: 10 }}>
                                 <h3 style={{ fontFamily: F, fontSize: 18, fontWeight: 800, color: T.ink, margin: 0, letterSpacing: "-0.01em" }}>{r.title}</h3>
-                                <p style={{ fontFamily: F, fontSize: 14, lineHeight: 1.6, color: T.muted, margin: 0 }}>{r.body}</p>
+                                <p style={{ fontFamily: FB, fontSize: 14, lineHeight: 1.6, color: T.muted, margin: 0 }}>{r.body}</p>
                             </div>
                             <div style={{ flex: "0 0 40%", position: "relative" }}>
                                 <img src={r.photo} alt="" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
@@ -834,7 +837,7 @@ export function Capabilities() {
                                 <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 2, background: cap.accent, borderRadius: 2 }} />
                                 <p style={{ fontSize: 11, fontFamily: F, fontWeight: 700, color: cap.accent, letterSpacing: "0.1em", margin: "0 0 6px" }}>{cap.num}</p>
                                 <p style={{ fontSize: 16, fontFamily: F, fontWeight: 700, color: T.ink, margin: "0 0 8px" }}>{cap.title}</p>
-                                <p style={{ fontSize: 13, fontFamily: F, lineHeight: 1.6, color: T.muted, margin: 0 }}>{cap.body}</p>
+                                <p style={{ fontSize: 13, fontFamily: FB, lineHeight: 1.6, color: T.muted, margin: 0 }}>{cap.body}</p>
                             </div>
                         ))}
                     </div>
@@ -897,7 +900,7 @@ export function Capabilities() {
                                 transition={{ duration: 0.45, ease: EO }}>
                                 <div style={{ fontSize: 12, fontFamily: F, fontWeight: 700, letterSpacing: "0.12em", color: CAPS[activeIndex].accent, marginBottom: 14 }}>{CAPS[activeIndex].num} · {CAPS[activeIndex].statLabel.toUpperCase()}</div>
                                 <h3 style={{ fontFamily: F, fontSize: "clamp(2rem,3.2vw,3.2rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.08, color: T.ink, margin: "0 0 20px", maxWidth: 520 }}>{CAPS[activeIndex].title}</h3>
-                                <p style={{ fontSize: 16, fontFamily: F, lineHeight: 1.7, color: T.muted, margin: 0, maxWidth: 440 }}>{CAPS[activeIndex].body}</p>
+                                <p style={{ fontSize: 16, fontFamily: FB, lineHeight: 1.7, color: T.muted, margin: 0, maxWidth: 440 }}>{CAPS[activeIndex].body}</p>
                             </motion.div>
                         </AnimatePresence>
                         {/* Progress ticks. */}
@@ -955,7 +958,7 @@ export function PlatformSolution() {
                                 <div style={{ background: T.card, border: "1px solid " + T.border, borderRadius: 20, padding: 28 }}>
                                     <span style={{ fontSize: 11, fontFamily: F, fontWeight: 700, color: item.accent, letterSpacing: "0.08em" }}>{item.num}</span>
                                     <p style={{ fontSize: 18, fontFamily: F, fontWeight: 800, color: T.ink, margin: "10px 0 12px" }}>{item.title}</p>
-                                    <p style={{ fontSize: 14, fontFamily: F, lineHeight: 1.65, color: T.muted, margin: "0 0 20px" }}>{item.body}</p>
+                                    <p style={{ fontSize: 14, fontFamily: FB, lineHeight: 1.65, color: T.muted, margin: "0 0 20px" }}>{item.body}</p>
                                     <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
                                         <span style={{ fontSize: 36, fontFamily: F, fontWeight: 900, color: item.accent, letterSpacing: "-0.04em" }}>{item.stat}</span>
                                         <span style={{ fontSize: 11, fontFamily: F, fontWeight: 600, color: T.muted, textTransform: "uppercase" as const, letterSpacing: "0.08em" }}>{item.statLabel}</span>
@@ -1003,7 +1006,7 @@ export function PlatformSolution() {
                                                 animate={{ opacity: 1, height: "auto" }}
                                                 exit={{ opacity: 0, height: 0 }}
                                                 transition={{ duration: 0.35, ease: EO }}
-                                                style={{ fontSize: 13, fontFamily: F, lineHeight: 1.6, color: T.muted, margin: 0, overflow: "hidden" }}>
+                                                style={{ fontSize: 13, fontFamily: FB, lineHeight: 1.6, color: T.muted, margin: 0, overflow: "hidden" }}>
                                                 {s.body}
                                             </motion.p>
                                         )}

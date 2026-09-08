@@ -1,9 +1,15 @@
-import { type ReactNode, useState } from "react"
+import { type ReactNode, type CSSProperties, useState } from "react"
 import { motion } from "framer-motion"
 import { V4Page, V4Cta, Reveal, Faq } from "../../components/V4Kit"
 import { PlatformHeroV1, TwoViewsV1, OutcomesV1, SavingsV3, IntegrationsV1, MondeeAdvantageV2, TMCGenerationsV2 } from "./RefSections"
 import { Capabilities } from "./V0Sections"
 import personalizationGif from "../../assets/CHAT MASTER.gif"
+import supplyImage from "../../assets/supply_image.png"
+import ledgerImage from "../../assets/Booking_image.png"
+import avatarImg from "../../assets/Avatar.png"
+import wholeTripImage from "../../assets/whole trip.webp"
+import learnsYouImage from "../../assets/tarvel that learns you.jpg"
+import enterpriseImage from "../../assets/Entreprices control.png"
 import "../SubpagesV2.css"
 import "./V4.css"
 
@@ -118,13 +124,13 @@ const APART_ICON_SUPPLY = (
     </svg>
 )
 
-const WHAT_SETS_APART: { icon: ReactNode; title: string; body: string; accent?: "orange" | "maroon" }[] = [
-    { icon: APART_ICON_AGENTS, title: "Agentic by design, not AI as a feature", body: "Six agents do the searching, matching and reconciling. Decisions that carry cost or risk still come to you." },
-    { icon: APART_ICON_CONVO, title: "Whole trip in one conversation", body: "Describe it in a sentence; it comes back planned, priced and in policy. No tabs, no report to file. The conversation is the workflow.", accent: "orange" },
-    { icon: APART_ICON_LEARNS, title: "Travel that learns you", body: "Preferred airlines, seats, hotels and timing, applied from the first result. Personal identity stays separate from account login.", accent: "maroon" },
-    { icon: APART_ICON_LEDGER, title: "One platform, one ledger, one source of truth", body: "Booking, policy, expense and reconciliation on one system. Every agent reads from real data, not tools stitched together.", accent: "orange" },
-    { icon: APART_ICON_SHIELD, title: "Enterprise control, consumer ease", body: "A traveler experience people want to use, on governance the business trusts for full audit trails.", accent: "maroon" },
-    { icon: APART_ICON_SUPPLY, title: "Direct supply, better economics", body: "Wholesale and direct supply through Mondee, with the negotiation agent working the best rate on every booking.", accent: "orange" },
+const WHAT_SETS_APART: { icon: ReactNode; title: string; body: string; accent?: "orange" | "maroon"; image?: string; imagePosClosed?: string; imagePosActive?: string }[] = [
+    { icon: APART_ICON_AGENTS, title: "Agentic by design, not AI as a feature", body: "Six agents do the searching, matching and reconciling. Decisions that carry cost or risk still come to you.", image: avatarImg, imagePosClosed: "50% 20%", imagePosActive: "50% 22%" },
+    { icon: APART_ICON_CONVO, title: "Whole trip in one conversation", body: "Describe it in a sentence; it comes back planned, priced and in policy. No tabs, no report to file. The conversation is the workflow.", accent: "orange", image: wholeTripImage, imagePosClosed: "37% 15%", imagePosActive: "37% 20%" },
+    { icon: APART_ICON_LEARNS, title: "Travel that learns you", body: "Preferred airlines, seats, hotels and timing, applied from the first result. Personal identity stays separate from account login.", accent: "maroon", image: learnsYouImage, imagePosClosed: "43% 18%", imagePosActive: "43% 22%" },
+    { icon: APART_ICON_LEDGER, title: "One platform, one ledger, one source of truth", body: "Booking, policy, expense and reconciliation on one system. Every agent reads from real data, not tools stitched together.", accent: "orange", image: ledgerImage },
+    { icon: APART_ICON_SHIELD, title: "Enterprise control, consumer ease", body: "A traveler experience people want to use, on governance the business trusts for full audit trails.", accent: "maroon", image: enterpriseImage },
+    { icon: APART_ICON_SUPPLY, title: "Direct supply, better economics", body: "Wholesale and direct supply through Mondee, with the negotiation agent working the best rate on every booking.", accent: "orange", image: supplyImage },
 ]
 
 function WhatSetsApart() {
@@ -150,7 +156,12 @@ function WhatSetsApart() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-8% 0px" }}
                                 transition={{ duration: 0.6, delay: i * 0.05 }}
-                                className={"v4-apart-panel" + (isActive ? " is-active" : "") + (item.accent ? ` v4-apart-panel--${item.accent}` : "")}
+                                className={"v4-apart-panel" + (isActive ? " is-active" : "") + (item.accent ? ` v4-apart-panel--${item.accent}` : "") + (item.image ? " v4-apart-panel--photo" : "")}
+                                style={item.image ? {
+                                    backgroundImage: `linear-gradient(180deg, rgba(43,10,13,.32) 0%, rgba(43,10,13,.8) 100%), url(${item.image})`,
+                                    ...(item.imagePosClosed ? { "--apart-photo-pos": item.imagePosClosed } as CSSProperties : {}),
+                                    ...(item.imagePosActive ? { "--apart-photo-pos-active": item.imagePosActive } as CSSProperties : {}),
+                                } : undefined}
                                 onClick={() => setActive(i)}
                             >
                                 <span className="v4-apart-panel__icon" aria-hidden="true">{item.icon}</span>
