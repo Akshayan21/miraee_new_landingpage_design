@@ -9,6 +9,10 @@ import { IntroCover } from "./V0Intro"
 import { useIntroActive } from "./useIntroActive"
 import travelerPhoto from "../../assets/miraee-traveler-hero.png"
 import flightCardImg from "../../assets/flight_card_updated.png"
+import faviconImg from "../../assets/favicon-180.png"
+import morganStanleyLogo from "../../assets/morgan stanley logo.jpeg"
+import tcwLogo from "../../assets/TCW-group-logo.jpg"
+import tabhiLogo from "../../assets/Tabhi logo.png"
 import "../SubpagesV2.css"
 import "./V4.css"
 
@@ -82,6 +86,14 @@ export default function V4Home() {
                                             <Magnetic><Link className="v4-btn v4-btn--solid" to="/book-a-demo">Book a demo</Link></Magnetic>
                                             <Magnetic><a className="v4-btn v4-btn--ghost" href="#how-it-works">See how it works</a></Magnetic>
                                         </div>
+                                        <div className="v4-hero__backers">
+                                            <span>Backed by</span>
+                                            <div className="v4-hero__backer-logos">
+                                                <span className="v4-hero__backer-chip"><img src={morganStanleyLogo} alt="Morgan Stanley" /></span>
+                                                <span className="v4-hero__backer-chip"><img src={tcwLogo} alt="TCW Group" /></span>
+                                                <span className="v4-hero__backer-chip"><img src={tabhiLogo} alt="Tabhi" /></span>
+                                            </div>
+                                        </div>
                                     </Reveal>
                                 </div>
                                 <Reveal delay={0.12}>
@@ -100,6 +112,16 @@ export default function V4Home() {
                                             (src/assets/ui-flight-card.png), not a live booking. */}
                                         <img className="v4-flight-card-img" src={flightCardImg}
                                             alt="Sample flight option: Emirates, JFK to SFO, non-stop, $220 economy" />
+                                        {/* Sits below the flight card, same illustrative-sample
+                                            convention — the trip just booked, confirmed. */}
+                                        <div className="v4-hero__confirm-card" aria-hidden="true">
+                                            <img src={faviconImg} alt="" />
+                                            <div>
+                                                <span className="v4-hero__confirm-card__title">Booking confirmed</span>
+                                                <span className="v4-hero__confirm-card__meta">JFK → SFO · Emirates</span>
+                                            </div>
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+                                        </div>
                                     </div>
                                 </Reveal>
                             </div>

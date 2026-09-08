@@ -6,6 +6,11 @@ import { useWindowWidth } from "../../hooks/useWindowSize"
 import employeeAvatar from "../../assets/miraee-role-employee.png"
 import financeAvatar from "../../assets/Finance .jpg"
 import managerAvatar from "../../assets/Manager Image.jpg"
+import adminAvatar from "../../assets/Admin.jpg"
+import planStepPhoto from "../../assets/platform_hero_image .jpg"
+import bookStepPhoto from "../../assets/post-5pm.jpg"
+import expenseStepPhoto from "../../assets/resources-hero.webp"
+import changeStepPhoto from "../../assets/miraee-flight-cancelled-notification.png"
 
 // Verbatim ports of the V0 homepage sections the site-architecture doc calls
 // for by name — layout and animation, not just the copy. Source is
@@ -166,6 +171,18 @@ const STEPS = [
     { num: "04", title: "Change", body: "Plans shift, the agent rebooks itself: within policy, before you even ask.", accent: T.accent, bg: T.bg, tag: "Self-rebooking" },
 ]
 
+// One real photo per step, framed behind the chat-card mock — kept as a
+// side lookup (not merged into STEPS) so STEPS' own shape stays simple.
+// Change's is a phone-notification screenshot rather than a lifestyle photo
+// (it's the literal payoff of "self-rebooking"), so it gets object-fit:
+// contain instead of cover to avoid cropping the phone oddly.
+const STEP_PHOTOS: { src: string; fit: "cover" | "contain" }[] = [
+    { src: planStepPhoto, fit: "cover" },
+    { src: bookStepPhoto, fit: "cover" },
+    { src: expenseStepPhoto, fit: "cover" },
+    { src: changeStepPhoto, fit: "contain" },
+]
+
 // Per-step product vignette, rendered at >=1200px only.
 function StepVisual({ index, accent, inView }: { index: number; accent: string; inView: boolean }) {
     const card: CSSProperties = { background: T.card, border: "1px solid " + T.border, borderRadius: 20, boxShadow: "0 24px 64px rgba(69,14,20,0.09)", padding: 20, width: 300, fontFamily: F }
@@ -278,8 +295,24 @@ function StepPanel({ num, title, body, accent, bg, tag, index, total }: typeof S
                 ))}
             </div>
             {w >= 1200 && (
-                <div style={{ position: "absolute", right: "7%", top: "50%", transform: "translateY(-50%)", zIndex: 2 }}>
-                    <StepVisual index={index} accent={accent} inView={inView} />
+                <div style={{ position: "absolute", right: "7%", top: "50%", transform: "translateY(-50%)" }}>
+                    {/* A real photo as the visual anchor for every step, the
+                        chat-card mock floating over its bottom-left corner
+                        and spilling half outside the frame edge — same
+                        layered-overlay depth as the homepage hero's photo +
+                        flight card. */}
+                    <div style={{ position: "relative", width: 560, height: 400 }}>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 1.04 }}
+                            animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.04 }}
+                            transition={{ duration: 0.9, ease: EO }}
+                            style={{ position: "absolute", inset: 0, padding: 14, background: T.cream, borderRadius: 28, boxShadow: "0 50px 100px -24px rgba(69,14,20,0.45), 0 1px 0 rgba(255,255,255,0.7) inset" }}>
+                            <img src={STEP_PHOTOS[index].src} alt="" style={{ width: "100%", height: "100%", objectFit: STEP_PHOTOS[index].fit, borderRadius: 18, display: "block", background: T.card }} />
+                        </motion.div>
+                        <div style={{ position: "absolute", left: -44, bottom: -32, zIndex: 2 }}>
+                            <StepVisual index={index} accent={accent} inView={inView} />
+                        </div>
+                    </div>
                 </div>
             )}
             <div style={{ position: "relative", zIndex: 2, padding: isMobile ? "0 24px" : isTablet ? "0 40px" : "0 80px", maxWidth: isMobile ? "100%" : isTablet ? "100%" : 720 }}>
@@ -357,14 +390,23 @@ const ROLES = [
 
 function RoleCard({ tag, headline, body, stat, statLabel, accent, bg, img, index }: typeof ROLES[0] & { index: number }) {
     const [hov, setHov] = useState(false)
+    // Separate from imgInView below: the card's own entrance (opacity/y)
+    // must not depend on a ref that only exists when `img` is set — ROLES[0]
+    // (the text-only "Not bookable anywhere else" intro tile, img: "") never
+    // renders that inner div, so imgRef.current stayed null forever and the
+    // card sat at its initial opacity: 0 permanently — the "white gap"
+    // before card 01 in the row was actually this invisible-but-still-
+    // taking-up-width intro card, not a scroll/positioning bug at all.
+    const cardRef = useRef<HTMLDivElement>(null)
+    const cardInView = useInView(cardRef, { once: true, margin: "-8% 0px" })
     const imgRef = useRef<HTMLDivElement>(null)
     const imgInView = useInView(imgRef, { once: true, margin: "-8% 0px" })
     const reduced = useReducedMotion()
     return (
         <TiltCard max={9} style={{ width: "min(380px, 84vw)", flexShrink: 0, display: "flex", borderRadius: 24 }}>
-            <motion.div onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+            <motion.div ref={cardRef} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
                 initial={{ opacity: 0, y: 24 }}
-                animate={imgInView ? { opacity: 1, y: 0 } : {}}
+                animate={cardInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: reduced ? 0 : index * 0.06, ease: EO }}
                 style={{ flex: 1, background: hov ? T.card : bg, border: "1px solid " + T.border, borderRadius: 24, padding: 36, display: "flex", flexDirection: "column", gap: 20, boxShadow: hov ? "0 24px 70px rgba(69,14,20,0.16)" : "0 1px 0 rgba(69,14,20,0.03)", transition: "box-shadow 0.35s ease, background 0.3s ease" }}>
                 <motion.span
@@ -430,30 +472,42 @@ export function Experiences() {
     const pad = Math.min(64, Math.max(32, w * 0.05))
     const contentW = ROLES.length * cardWidth + (ROLES.length - 1) * gap + 64
     const panPx = Math.max(0, Math.round(pad + contentW - w))
+    // Gate the rAF loop below to roughly when the section could be on
+    // screen — matching StatStrip's own inView gate elsewhere in this file,
+    // so this doesn't become a permanent per-frame cost for the whole time
+    // Home is mounted, most of which this section isn't anywhere near.
+    const sectionInView = useInView(sectionRef, { margin: "400px 0px" })
 
     useEffect(() => {
-        if (isMobile || isTablet || panPx === 0) return
+        if (isMobile || isTablet || panPx === 0 || !sectionInView) return
         const section = sectionRef.current
         const track = trackRef.current
         if (!section || !track) return
-        // Coalesce to one read+write per frame. Reading the rect and writing the
-        // transform on every scroll event forces a synchronous layout per tick,
-        // which is what made the pan janky.
-        let frame = 0
-        const apply = () => {
-            frame = 0
+        // V0 ran this under SmoothScroll (a wheel-event lerp applied
+        // site-wide), which meant every scroll gesture arrived as many small
+        // eased steps — the pan could never visually skip past its own
+        // starting frame. V4 dropped SmoothScroll everywhere else for
+        // performance, so a single fast trackpad flick now applies its full
+        // native delta in one tick: without any smoothing here, the pan
+        // would snap straight from 0 to wherever that flick landed, and the
+        // section reads as starting mid-pan instead of flush with the H1.
+        // Easing `current` toward the scroll-derived `target` every frame
+        // (instead of writing `target` straight to the transform) restores
+        // that same "always animates through its own start" feel, scoped to
+        // just this one number instead of hijacking scroll globally.
+        let raf = 0
+        let current = 0
+        const loop = () => {
             const scrolledIn = -section.getBoundingClientRect().top
-            const progress = Math.max(0, Math.min(1, scrolledIn / panPx))
-            track.style.transform = `translateX(${-progress * panPx}px)`
+            const target = Math.max(0, Math.min(1, scrolledIn / panPx))
+            current += (target - current) * 0.12
+            if (Math.abs(target - current) < 0.0005) current = target
+            track.style.transform = `translateX(${-current * panPx}px)`
+            raf = requestAnimationFrame(loop)
         }
-        const onScroll = () => { if (!frame) frame = requestAnimationFrame(apply) }
-        window.addEventListener("scroll", onScroll, { passive: true })
-        apply()
-        return () => {
-            window.removeEventListener("scroll", onScroll)
-            if (frame) cancelAnimationFrame(frame)
-        }
-    }, [isMobile, isTablet, panPx])
+        raf = requestAnimationFrame(loop)
+        return () => cancelAnimationFrame(raf)
+    }, [isMobile, isTablet, panPx, sectionInView])
 
     if (isMobile || isTablet) {
         return (
@@ -513,12 +567,16 @@ const CASE_STATS = [
     { stat: "1", label: "Platform for business and personal travel alike", accent: T.orange },
 ]
 
-// A face against each claim above — "loved by employees, trusted by
-// finance" reads as a slogan until it's backed by someone who'd say it.
-const CASE_VOICES = [
-    { photo: employeeAvatar, quote: "I said the trip out loud on my way to lunch. It was booked, in policy, before I sat back down.", name: "Traveler", role: "Employee" },
-    { photo: financeAvatar, quote: "Spend shows up the moment it's booked, not when the invoice lands weeks later.", name: "Finance lead", role: "Finance" },
-    { photo: managerAvatar, quote: "Routine trips never reach me anymore. What lands in my queue actually needs a decision.", name: "Team manager", role: "Manager" },
+// A 2x2 role grid — colour-tinted card, copy on the left, a real person's
+// photo bleeding to the card's own edges on the right. Same reference
+// pattern as a well-known expense-management competitor's "who this is
+// for" section, adapted to Miraee's four seats instead of one persona per
+// finance function.
+const ROLE_GRID = [
+    { photo: employeeAvatar, title: "Employees", body: "Ask once. Get a complete, in-policy trip booked before you sit back down — no forms, no chasing receipts.", bg: T.surface2 },
+    { photo: financeAvatar, title: "Finance teams", body: "See spend the moment it's booked, not when the invoice lands weeks later. Reconciliation runs itself.", bg: T.cream },
+    { photo: managerAvatar, title: "Managers", body: "Routine trips self-book inside policy. What actually reaches your queue needs a real decision.", bg: T.cream },
+    { photo: adminAvatar, title: "Admins", body: "Set the policy once; it's applied at search on every trip. One dashboard for the whole program.", bg: T.surface2 },
 ]
 
 function CaseVoices() {
@@ -526,21 +584,22 @@ function CaseVoices() {
     const isMobile = w < 640
     return (
         <div style={{ marginTop: 64 }}>
-            <span style={{ display: "block", fontSize: 10.5, fontFamily: F, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: T.muted, marginBottom: 20, opacity: 0.7 }}>Illustrative voices</span>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 28 : 32 }}>
-            {CASE_VOICES.map((v, i) => (
-                <FadeUp key={v.name} delay={i * 0.1}>
-                    <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
-                        <img src={v.photo} alt="" aria-hidden="true"
-                            style={{ width: 52, height: 52, borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: "2px solid " + T.orange }} />
-                        <div>
-                            <p style={{ fontFamily: F, fontSize: 15, lineHeight: 1.55, color: T.ink, margin: "0 0 10px" }}>&ldquo;{v.quote}&rdquo;</p>
-                            <p style={{ fontFamily: F, fontSize: 13, fontWeight: 700, color: T.muted, margin: 0 }}>{v.name} <span style={{ fontWeight: 400, opacity: 0.7 }}>· {v.role}</span></p>
+            <span style={{ display: "block", fontSize: 10.5, fontFamily: F, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: T.muted, marginBottom: 20, opacity: 0.7 }}>Built for every seat</span>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 16 }}>
+                {ROLE_GRID.map((r, i) => (
+                    <FadeUp key={r.title} delay={i * 0.08}>
+                        <div style={{ display: "flex", minHeight: 220, borderRadius: 20, overflow: "hidden", background: r.bg }}>
+                            <div style={{ flex: "1 1 55%", padding: isMobile ? 24 : 32, display: "flex", flexDirection: "column", justifyContent: "center", gap: 10 }}>
+                                <h3 style={{ fontFamily: F, fontSize: 18, fontWeight: 800, color: T.ink, margin: 0, letterSpacing: "-0.01em" }}>{r.title}</h3>
+                                <p style={{ fontFamily: F, fontSize: 14, lineHeight: 1.6, color: T.muted, margin: 0 }}>{r.body}</p>
+                            </div>
+                            <div style={{ flex: "0 0 40%", position: "relative" }}>
+                                <img src={r.photo} alt="" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+                            </div>
                         </div>
-                    </div>
-                </FadeUp>
-            ))}
-        </div>
+                    </FadeUp>
+                ))}
+            </div>
         </div>
     )
 }
@@ -664,13 +723,57 @@ export function CtaRoutes() {
 // 6-node ring, crossfades the centre stat, and crossfades the right-hand
 // title/body panel. Falls back to a plain numbered list under 1200px, where
 // the ring has no room to read.
+// One purpose-drawn line icon per capability instead of abstract geometric
+// glyphs — each reads as its own concept at a glance (compass for planning,
+// ticket for booking, receipt for expense, swap arrows for change, headset
+// for support, suitcase for personal travel).
+const CAP_ICON_PLAN = (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="8.2" />
+        <path d="M14.6 9.4 13 13l-3.6 1.6L11 11l3.6-1.6Z" />
+    </svg>
+)
+const CAP_ICON_BOOK = (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3.2" y="6" width="17.6" height="12" rx="2.2" />
+        <path d="M9.5 6v12" strokeDasharray="1.8 2.4" />
+    </svg>
+)
+const CAP_ICON_EXPENSE = (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6.5 3h11v17.2l-2.2-1.5-2 1.5-2-1.5-2 1.5-2.2-1.5L6.5 20.2V3Z" />
+        <path d="M9 8.4h6M9 12h6M9 15.6h3.4" />
+    </svg>
+)
+const CAP_ICON_CHANGE = (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6.5 8h11.5l-3-3" />
+        <path d="M17.5 16H6l3 3" />
+    </svg>
+)
+const CAP_ICON_SUPPORT = (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4.5 14v-2a7.5 7.5 0 0 1 15 0v2" />
+        <rect x="3.2" y="14" width="4" height="5.4" rx="1.6" />
+        <rect x="16.8" y="14" width="4" height="5.4" rx="1.6" />
+        <path d="M19.5 19.4a3.5 3.5 0 0 1-3.5 3.1h-2.6" />
+    </svg>
+)
+const CAP_ICON_PERSONAL = (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="8" width="16" height="11.5" rx="2.2" />
+        <path d="M9 8V6.2A2.2 2.2 0 0 1 11.2 4h1.6A2.2 2.2 0 0 1 15 6.2V8" />
+        <path d="M4 13.4h16" />
+    </svg>
+)
+
 const CAPS = [
-    { num: "01", title: "Plan", body: "Describe the trip in plain language. Miraee builds an in-policy itinerary in seconds.", icon: "◈", accent: T.orange, stat: "<60s", statLabel: "to an itinerary" },
-    { num: "02", title: "Book", body: "Flights, hotels and cars from Mondee wholesale inventory: real savings, one tap.", icon: "⬡", accent: T.accent, stat: "20-30%", statLabel: "wholesale savings" },
-    { num: "03", title: "Expense", body: "Receipts, reports and reconciliation handled automatically. No forms, no chasing.", icon: "◉", accent: T.orange, stat: "0", statLabel: "forms to fill" },
-    { num: "04", title: "Change", body: "Plans shift, the agent rebooks itself: within policy, before you even ask.", icon: "◈", accent: T.accent, stat: "100%", statLabel: "handled by the agent" },
-    { num: "05", title: "24/7 support", body: "A human-in-the-loop backup whenever a trip needs a real person.", icon: "⬡", accent: T.orange, stat: "24/7", statLabel: "human backup" },
-    { num: "06", title: "Personal travel", body: "The same agent plans employees’ own trips: a perk they actually use.", icon: "◎", accent: T.accent, stat: "1", statLabel: "agent for everything" },
+    { num: "01", title: "Plan", body: "Describe the trip in plain language. Miraee builds an in-policy itinerary in seconds.", icon: CAP_ICON_PLAN, accent: T.orange, stat: "<60s", statLabel: "to an itinerary" },
+    { num: "02", title: "Book", body: "Flights, hotels and cars from Mondee wholesale inventory: real savings, one tap.", icon: CAP_ICON_BOOK, accent: T.accent, stat: "20-30%", statLabel: "wholesale savings" },
+    { num: "03", title: "Expense", body: "Receipts, reports and reconciliation handled automatically. No forms, no chasing.", icon: CAP_ICON_EXPENSE, accent: T.orange, stat: "0", statLabel: "forms to fill" },
+    { num: "04", title: "Change", body: "Plans shift, the agent rebooks itself: within policy, before you even ask.", icon: CAP_ICON_CHANGE, accent: T.accent, stat: "100%", statLabel: "handled by the agent" },
+    { num: "05", title: "24/7 support", body: "A human-in-the-loop backup whenever a trip needs a real person.", icon: CAP_ICON_SUPPORT, accent: T.orange, stat: "24/7", statLabel: "human backup" },
+    { num: "06", title: "Personal travel", body: "The same agent plans employees’ own trips: a perk they actually use.", icon: CAP_ICON_PERSONAL, accent: T.accent, stat: "1", statLabel: "agent for everything" },
 ]
 
 // Orbital dial node: sits on the wheel, stays upright while the wheel turns.

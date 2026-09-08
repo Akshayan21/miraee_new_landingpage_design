@@ -1,9 +1,9 @@
 import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, useScroll, useTransform, useReducedMotion } from "framer-motion"
 import type { ReactNode } from "react"
 import { Link } from "react-router-dom"
 import { Reveal } from "../../components/V4Kit"
-import productPageImg from "../../../images/weavy/v1/v1-home-hero.webp"
+import productPageImg from "../../assets/platform_hero.jpg"
 import financeDashboard from "../../assets/ui-admin-dashboard.png"
 import miraeeMobileUi from "../../assets/miraee-mobile-phone.png"
 import supplierCabin from "../../assets/miraee-supplier-cabin.webp"
@@ -243,6 +243,44 @@ const OUTCOMES: [string, string, string, string, string, string][] = [
     ["For travel teams", "Set the rules once and run the program by exception.", "No more managing every single booking and update.", "24/7", "agent + human care", outcomeTravelTeamPhoto],
 ]
 
+// Each row pins via `position: sticky` and the next row's higher z-index
+// covers it as the page scrolls, so the card underneath needs to visibly
+// recede rather than just vanish — scale and dim it down over the same
+// scroll range the next card takes to arrive. Tracked per-card (not as one
+// shared scroll range) because sticky elements don't share a scroll
+// timeline the way a single pinned container's children would.
+function OutcomeRow({ title, shift, expect, stat, statLabel, photo, index, total }: { title: string; shift: string; expect: string; stat: string; statLabel: string; photo: string; index: number; total: number }) {
+    const ref = useRef<HTMLDivElement>(null)
+    const isLast = index === total - 1
+    const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.8", "start 0.15"] })
+    const reduced = useReducedMotion()
+    const scale = useTransform(scrollYProgress, [0, 1], [1, reduced || isLast ? 1 : 0.93])
+    const brightness = useTransform(scrollYProgress, [0, 1], [1, reduced || isLast ? 1 : 0.82])
+    const filter = useTransform(brightness, b => `brightness(${b})`)
+    return (
+        <motion.div
+            ref={ref}
+            className="v4r-outcome-row"
+            style={{ scale, filter, top: 96 + index * 6, zIndex: index + 1 }}
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10% 0px" }}
+            transition={{ duration: 0.6, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+        >
+            <div className="v4r-outcome-row__panel">
+                <span className="v4r-outcome-row__num">0{index + 1}</span>
+                <h3>{title}</h3>
+                <p className="v4r-outcome-row__shift">{shift}</p>
+                <p className="v4r-outcome-row__expect">{expect}</p>
+            </div>
+            <div className="v4r-outcome-row__media">
+                <img src={photo} alt="" aria-hidden="true" />
+                <div className="v4r-outcome-row__stat"><strong>{stat}</strong><small>{statLabel}</small></div>
+            </div>
+        </motion.div>
+    )
+}
+
 export function OutcomesV1() {
     return (
         <section id="outcomes" className="v4r-outcomes">
@@ -250,16 +288,9 @@ export function OutcomesV1() {
                 <span>Designed for everyone</span>
                 <h2>Less work.<br /><em>Better journeys.</em></h2>
             </Reveal>
-            <div className="v4r-outcome-grid">
+            <div className="v4r-outcome-rows">
                 {OUTCOMES.map(([title, shift, expect, stat, statLabel, photo], i) => (
-                    <Reveal className="v4r-outcome" key={title} delay={i * 0.1}>
-                        <img className="v4r-outcome__photo" src={photo} alt="" aria-hidden="true" />
-                        <span>0{i + 1}</span>
-                        <h3>{title}</h3>
-                        <p className="v4r-outcome__shift">{shift}</p>
-                        <p className="v4r-outcome__expect">{expect}</p>
-                        <div><strong>{stat}</strong><small>{statLabel}</small></div>
-                    </Reveal>
+                    <OutcomeRow key={title} title={title} shift={shift} expect={expect} stat={stat} statLabel={statLabel} photo={photo} index={i} total={OUTCOMES.length} />
                 ))}
             </div>
         </section>
@@ -360,10 +391,31 @@ export function MondeeAdvantageV2() {
     )
 }
 
-const GENERATIONS: [string, string, string][] = [
-    ["Legacy TMC", "Expert humans brokering complex trips, with negotiated rates and real support behind them.", "Offline, slow, and priced per transaction, so the vendor earned more the more friction there was."],
-    ["First-generation T&E", "Self-serve booking and digital expense, which removed the phone call and paper receipt.", "The work moved to the traveler. Booking, approval, changes and expense stayed in four separate stages with four separate owners."],
-    ["Agentic", "The stages collapse. One agent carries one context from request to reconciliation.", "Nothing is handed off."],
+const GEN_ICON_PHONE = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
+    </svg>
+)
+const GEN_ICON_CLIPBOARD = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+        <rect x="8" y="2" width="8" height="4" rx="1" />
+        <path d="M9 13.5l2 2 4-4.5" />
+    </svg>
+)
+const GEN_ICON_AGENT = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="5" r="2.2" />
+        <circle cx="5" cy="19" r="2.2" />
+        <circle cx="19" cy="19" r="2.2" />
+        <path d="M12 7.2v3.8M12 11l-5.5 6M12 11l5.5 6" />
+    </svg>
+)
+
+const GENERATIONS: [string, string, string, string, ReactNode][] = [
+    ["Legacy TMC", "Offline era", "Expert humans brokering complex trips, with negotiated rates and real support behind them.", "Offline, slow, and priced per transaction, so the vendor earned more the more friction there was.", GEN_ICON_PHONE],
+    ["First-generation T&E", "Self-serve era", "Self-serve booking and digital expense, which removed the phone call and paper receipt.", "The work moved to the traveler. Booking, approval, changes and expense stayed in four separate stages with four separate owners.", GEN_ICON_CLIPBOARD],
+    ["Agentic", "Miraee, today", "The stages collapse. One agent carries one context from request to reconciliation.", "Nothing is handed off.", GEN_ICON_AGENT],
 ]
 
 export function TMCGenerationsV2() {
@@ -378,12 +430,17 @@ export function TMCGenerationsV2() {
                     <p>While other tools solve parts of the journey, Miraee sits distinctly apart. Here's how the operating model changed.</p>
                 </Reveal>
                 <div className="v4r-generation__grid">
-                    {GENERATIONS.map(([name, solved, left], index) => (
+                    {GENERATIONS.map(([name, era, solved, left, icon], index) => (
                         <Reveal className={index === 2 ? "is-agentic" : ""} key={name} delay={index * .05}>
-                            <span>0{index + 1}</span>
+                            <div className="v4r-generation__top">
+                                <span className="v4r-generation__icon" aria-hidden="true">{icon}</span>
+                                <span>0{index + 1}</span>
+                            </div>
                             <h3>{name}</h3>
                             <div><small>What it solved</small><p>{solved}</p></div>
                             <div><small>What it left behind</small><p>{left}</p></div>
+                            <span className="v4r-generation__era">{era}</span>
+                            {index < 2 && <span className="v4r-generation__arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg></span>}
                         </Reveal>
                     ))}
                 </div>
