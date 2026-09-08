@@ -23,6 +23,7 @@ const T = {
     accentLight: "#ff8a52",
 }
 const F = "\"Plus Jakarta Sans\", system-ui, sans-serif"
+const FB = "\"Sora\", system-ui, sans-serif"
 const spring = { type: "spring" as const, stiffness: 420, damping: 38 }
 
 export type SixViewRole = {
@@ -52,7 +53,7 @@ function RoleStatement({ role, isMobile }: { role: SixViewRole; isMobile: boolea
                 Before
             </div>
             <p style={{
-                fontFamily: F, fontSize: isMobile ? 18 : "clamp(19px, 1.5vw, 24px)", fontWeight: 400,
+                fontFamily: FB, fontSize: isMobile ? 18 : "clamp(19px, 1.5vw, 24px)", fontWeight: 400,
                 lineHeight: 1.32, letterSpacing: "-0.02em", color: T.onDarkSoft, margin: "0 0 24px",
                 textDecoration: "line-through", textDecorationColor: T.accentLight,
                 textDecorationThickness: "1.5px", textUnderlineOffset: "2px",
@@ -70,7 +71,7 @@ function RoleStatement({ role, isMobile }: { role: SixViewRole; isMobile: boolea
             </h3>
 
             {role.body && (
-                <p style={{ fontFamily: F, fontSize: isMobile ? 14 : 15, lineHeight: 1.65, color: T.onDarkSoft, margin: "0 0 16px" }}>
+                <p style={{ fontFamily: FB, fontSize: isMobile ? 14 : 15, lineHeight: 1.65, color: T.onDarkSoft, margin: "0 0 16px" }}>
                     {role.body}
                 </p>
             )}
@@ -117,7 +118,7 @@ function RoleLedger({ role, isMobile, animate }: { role: SixViewRole; isMobile: 
                         padding: "20px 0", borderBottom: "1px solid " + T.onDarkFaint,
                     }}>
                     <span aria-hidden="true" style={{ color: T.accentLight, fontSize: 13, lineHeight: 1.7, flexShrink: 0 }}>&#9679;</span>
-                    <span style={{ fontFamily: F, fontSize: isMobile ? 15 : 16, lineHeight: 1.6, letterSpacing: "-0.005em", color: T.onDark }}>{row}</span>
+                    <span style={{ fontFamily: FB, fontSize: isMobile ? 15 : 16, lineHeight: 1.6, letterSpacing: "-0.005em", color: T.onDark }}>{row}</span>
                 </motion.li>
             ))}
         </ul>

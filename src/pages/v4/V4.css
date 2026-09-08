@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&display=swap");
 @import "../../styles/tokens-m.css";
 
 /* V4 extends V2's design system: it shares the `--m-*` tokens above and reuses
@@ -23,7 +23,7 @@
   min-width: 0;
   background: var(--m-paper);
   color: var(--m-ink);
-  font-family: "Plus Jakarta Sans", Arial, sans-serif;
+  font-family: "Sora", Arial, sans-serif;
   font-size: 100%;
   line-height: 1.5;
 }
@@ -31,9 +31,11 @@
 .v4-site *, .v4-site *::before, .v4-site *::after { box-sizing: border-box; }
 .v4-site h1, .v4-site h2, .v4-site h3, .v4-site p { margin-top: 0; }
 .v4-site h1, .v4-site h2, .v4-site h3 { color: var(--m-maroon); letter-spacing: -0.045em; }
-/* Explicit, not just inherited from .v4-site's own font-family — every H1
-   in V4 gets this regardless of what else changes upstream in the cascade. */
-.v4-site h1 { font-family: "Plus Jakarta Sans", Arial, sans-serif; }
+/* Headings stay on the display face; body copy (the base .v4-site rule
+   above) is Sora — explicit here, not just left to inherit, so every
+   heading in V4 gets this regardless of what else changes upstream in the
+   cascade. */
+.v4-site h1, .v4-site h2, .v4-site h3 { font-family: "Plus Jakarta Sans", Arial, sans-serif; }
 .v4-site p { color: var(--m-muted); line-height: 1.7; }
 .v4-site a { color: inherit; transition: color .25s var(--m-ease), background .25s var(--m-ease), border-color .25s var(--m-ease); }
 .v4-site :is(a, button):focus-visible { border-radius: 3px; outline: 3px solid var(--m-ink); outline-offset: 3px; }
