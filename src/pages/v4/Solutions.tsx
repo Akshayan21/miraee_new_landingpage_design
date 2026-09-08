@@ -58,7 +58,7 @@ const ROLES: SixViewRole[] = [
     {
         slug: "finance",
         label: "Finance",
-        shift: "You used to reconcile the past. Now you watch the present.",
+        shift: "Rechecking each department's spend separately, untangling one misfiled entry or a missing one that keeps the books from matching, and delays in reporting all round. Now Full control on spends, all in one place.",
         body: "Committed spend shows at booking, not month-end. Track by department, category and top spenders, and move reimbursements from pending to paid in one table. The CFO Dashboard rolls up spend vs budget, savings and cycle time, all exportable.",
         controls: ["Accounts", "Approval chains", "Ceilings", "Suppliers", "Sign-off", "Audit log"],
         cta: "Explore Finance Solution",
