@@ -8,10 +8,6 @@
 export type SiteVersion = "v1" | "v1.1" | "v2" | "v3" | "v4"
 
 export const SITE_VERSIONS: readonly (readonly [SiteVersion, string])[] = [
-    ["v1", "/"],
-    ["v1.1", "/v1.1"],
-    ["v2", "/v2"],
-    ["v3", "/v3"],
     ["v4", "/v4"],
 ] as const
 

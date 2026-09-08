@@ -63,7 +63,7 @@ export function V4Page({ title, description, noindex, children }: { title: strin
 // is optional — when passed, the hero splits into the same Navan-style
 // layout as the homepage: copy on the left, a real photo framed with depth
 // on the right, instead of a single centred column.
-export function V4Hero({ eyebrow, title, lede, actions, image, card }: { eyebrow?: string; title: ReactNode; lede?: string; actions?: ReactNode; image?: { src: string; alt: string }; card?: { src: string; alt: string } }) {
+export function V4Hero({ eyebrow, title, lede, actions, image, card }: { eyebrow?: string; title: ReactNode; lede?: string; actions?: ReactNode; image?: { src: string; alt: string; position?: string }; card?: { src: string; alt: string; crop?: number; width?: string; anchor?: "middle" | "bottom"; left?: string; bottom?: string } }) {
     const copy = (
         <Reveal>
             {eyebrow && <span className="v4-hero__eyebrow">{eyebrow}</span>}
@@ -90,9 +90,25 @@ export function V4Hero({ eyebrow, title, lede, actions, image, card }: { eyebrow
                         card) can hang past the photo's own rounded edge. */}
                     <div className="v4-hero__media">
                         <div className="v4-hero__photo-frame v4-hero__photo-frame--static">
-                            <img src={image.src} alt={image.alt} />
+                            <img src={image.src} alt={image.alt} style={image.position ? { objectPosition: image.position } : undefined} />
                         </div>
-                        {card && <img className="v4-flight-card-img" src={card.src} alt={card.alt} />}
+                        {/* `crop` (0-1) trims a flat-colour margin baked into a
+                            source image/gif by clipping that fraction off each
+                            edge, then scaling back up so the remaining content
+                            fills the frame — used when an asset can't be
+                            re-exported with its own background stripped.
+                            `anchor: "bottom"` repoints the card from the base
+                            class's vertical-middle position to the frame's
+                            bottom edge; `width` shrinks it from the base 58%. */}
+                        {card && <img className="v4-flight-card-img" src={card.src} alt={card.alt}
+                            style={{
+                                ...(card.crop ? { clipPath: `inset(${card.crop * 100}% round 16px)` } : {}),
+                                ...(card.width ? { width: card.width } : {}),
+                                ...(card.anchor === "bottom"
+                                    ? { top: "auto", bottom: card.bottom ?? "-20px", transform: card.crop ? `scale(${1 / (1 - card.crop * 2)})` : undefined }
+                                    : card.crop ? { transform: `translateY(-50%) scale(${1 / (1 - card.crop * 2)})` } : {}),
+                                ...(card.left ? { left: card.left } : {}),
+                            }} />}
                     </div>
                 </Reveal>
             </div>

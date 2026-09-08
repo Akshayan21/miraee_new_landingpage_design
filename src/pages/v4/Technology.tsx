@@ -95,7 +95,7 @@ export default function V4Technology() {
                 title={<>The intelligence<br /><em>beneath every trip.</em></>}
                 lede="Miraee runs on Tabhi intelligence, the same engineering group behind the supply, the payments and the automation the trip already depends on."
                 image={{ src: technologyPhoto, alt: "Engineers reviewing a system on screen together" }}
-                card={{ src: technologyCard, alt: "Sample multi-city itinerary priced and booked in one pass" }} />
+                card={{ src: technologyCard, alt: "Sample multi-city itinerary priced and booked in one pass", width: "34%", anchor: "bottom", bottom: "-60px" }} />
 
             <section className="v4-section v4-section--tint" id="assistant" aria-labelledby="assistant-title">
                 <div className="v4-shell">
