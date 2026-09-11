@@ -2,7 +2,6 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { MiraeeLogo } from "./LegalFormKit"
-import { VersionSwitch } from "./VersionSwitch"
 import { ease } from "./V2Kit"
 import { useWindowWidth } from "../hooks/useWindowSize"
 import { V4_NAV, V4_NAV_ITEMS, isSectionActive } from "./V4NavData"
@@ -240,31 +239,38 @@ export function V4Nav() {
     return (
         <>
             <header className={"v4-nav" + (scrolled ? " is-scrolled" : "")} ref={navRef}>
-                <Link to="/v4" aria-label="Miraee home" className="v4-nav__logo" onClick={() => setMobileOpen(false)}>
-                    <MiraeeLogo fill="#E55602" height={20} />
-                </Link>
-                {!isCompact && (
-                    <nav aria-label="Primary navigation">
-                        <ul className="v4-nav__bar">
-                            {V4_NAV_ITEMS.map(item => item.kind === "link"
-                                ? (
-                                    <li key={item.key} className="v4-nav__item">
-                                        <Link className="v4-nav__trigger" to={item.to} data-current={pathname === item.to || undefined}>{item.label}</Link>
-                                    </li>
-                                )
-                                : renderPanelItem(item))}
-                        </ul>
-                    </nav>
-                )}
-                <div className="v4-nav__actions">
-                    {!isCompact && <VersionSwitch className="v4-nav__version" />}
-                    {!isCompact && <a href="https://app.miraee.ai">Sign in</a>}
-                    <Link to="/book-a-demo" className="v4-nav__cta">Book a demo</Link>
-                    {isCompact && (
-                        <button type="button" ref={burgerRef} className="v4-nav__burger" aria-label={mobileOpen ? "Close menu" : "Open menu"} aria-expanded={mobileOpen} aria-controls="v4-nav-mobile" onClick={() => setMobileOpen(open => !open)}>
-                            <span /><span />
-                        </button>
+                {/* Constrained to the exact same width formula as `.v4-shell`
+                    (min(calc(100% - 40px), 1200px), margin-inline: auto) so the
+                    logo's left edge and the CTA's right edge land on the same
+                    vertical lines as every section's content below, at every
+                    desktop width -- independent of the pill's own (deliberately
+                    wider) floating width. */}
+                <div className="v4-nav__inner">
+                    <Link to="/v4" aria-label="Miraee home" className="v4-nav__logo" onClick={() => setMobileOpen(false)}>
+                        <MiraeeLogo fill="#E55602" height={20} />
+                    </Link>
+                    {!isCompact && (
+                        <nav aria-label="Primary navigation">
+                            <ul className="v4-nav__bar">
+                                {V4_NAV_ITEMS.map(item => item.kind === "link"
+                                    ? (
+                                        <li key={item.key} className="v4-nav__item">
+                                            <Link className="v4-nav__trigger" to={item.to} data-current={pathname === item.to || undefined}>{item.label}</Link>
+                                        </li>
+                                    )
+                                    : renderPanelItem(item))}
+                            </ul>
+                        </nav>
                     )}
+                    <div className="v4-nav__actions">
+                        {!isCompact && <a href="https://app.miraee.ai">Sign in</a>}
+                        <Link to="/book-a-demo" className="v4-nav__cta">Book a demo</Link>
+                        {isCompact && (
+                            <button type="button" ref={burgerRef} className="v4-nav__burger" aria-label={mobileOpen ? "Close menu" : "Open menu"} aria-expanded={mobileOpen} aria-controls="v4-nav-mobile" onClick={() => setMobileOpen(open => !open)}>
+                                <span /><span />
+                            </button>
+                        )}
+                    </div>
                 </div>
             </header>
 
@@ -284,7 +290,7 @@ export function V4Nav() {
                             key="v4-nav-mobile"
                             initial={{ opacity: 0, y: -12, scale: 0.985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8, scale: 0.99 }}
                             transition={{ duration: reduced ? 0 : 0.24, ease }}>
-                            <div className="v4-nav__sheet-head"><span>Navigate</span><VersionSwitch className="v4-nav__version v4-nav__version--mobile" /></div>
+                            <div className="v4-nav__sheet-head"><span>Navigate</span></div>
                             <nav className="v4-nav__acc" aria-label="Primary navigation">
                                 {V4_NAV_ITEMS.map(item => item.kind === "link"
                                     ? (
