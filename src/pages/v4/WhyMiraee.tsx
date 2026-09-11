@@ -107,7 +107,7 @@ export default function V4WhyMiraee() {
                 image={{ src: whyMiraeePhoto, alt: "A traveler working from an airport lounge", position: "48% 40%" }}
                 card={{ src: whyMiraeeCard, alt: "Miraee automatically categorizing a trip expense", crop: 0.08, width: "42%", anchor: "bottom" }} />
 
-            <section className="v4-section v4-section--tint" id="what-changes" aria-labelledby="what-changes-title">
+            <section className="v4-section v4-section--tint v4-section--tight-bottom" id="what-changes" aria-labelledby="what-changes-title">
                 <div className="v4-shell">
                     <Reveal>
                         <span className="v4-eyebrow">What actually changes</span>
@@ -121,7 +121,7 @@ export default function V4WhyMiraee() {
                 </div>
             </section>
 
-            <section className="v4-section" id="compare" aria-labelledby="compare-title">
+            <section className="v4-section v4-section--tight-top v4-section--tight-bottom" id="compare" aria-labelledby="compare-title">
                 <div className="v4-shell">
                     <Reveal>
                         <span className="v4-eyebrow">Side by side</span>
@@ -137,7 +137,7 @@ export default function V4WhyMiraee() {
                 </div>
             </section>
 
-            <section className="v4-section v4-section--tint" id="questions" aria-labelledby="questions-title">
+            <section className="v4-section v4-section--tint v4-section--tight-top v4-section--tight-bottom" id="questions" aria-labelledby="questions-title">
                 <div className="v4-shell">
                     <Reveal>
                         <span className="v4-eyebrow">The hard questions</span>
@@ -149,7 +149,7 @@ export default function V4WhyMiraee() {
                 </div>
             </section>
 
-            <section className="v4-section" id="switching" aria-labelledby="switching-title">
+            <section className="v4-section v4-section--tight-top" id="switching" aria-labelledby="switching-title">
                 <div className="v4-shell">
                     <Reveal>
                         <span className="v4-eyebrow">Implementation & onboarding</span>

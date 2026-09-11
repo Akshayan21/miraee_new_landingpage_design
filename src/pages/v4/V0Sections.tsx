@@ -8,10 +8,10 @@ import employeeAvatar from "../../assets/miraee-role-employee.png"
 import financeAvatar from "../../assets/Finance .jpg"
 import managerAvatar from "../../assets/Manager Image.jpg"
 import adminAvatar from "../../assets/Admin.jpg"
-import planStepPhoto from "../../assets/platform_hero_image .jpg"
-import bookStepPhoto from "../../assets/post-5pm.jpg"
-import expenseStepPhoto from "../../assets/expenses.jpg"
-import changeStepPhoto from "../../assets/miraee-flight-cancelled-notification.png"
+import planStepPhoto from "../../assets/plan.webp"
+import bookStepPhoto from "../../assets/book.jpg"
+import expenseStepPhoto from "../../assets/expense11.jpg"
+import changeStepPhoto from "../../assets/manage.jpg"
 
 // Verbatim ports of the V0 homepage sections the site-architecture doc calls
 // for by name — layout and animation, not just the copy. Source is
@@ -184,7 +184,7 @@ const STEP_PHOTOS: { src: string; fit: "cover" | "contain" }[] = [
     { src: planStepPhoto, fit: "cover" },
     { src: bookStepPhoto, fit: "cover" },
     { src: expenseStepPhoto, fit: "cover" },
-    { src: changeStepPhoto, fit: "contain" },
+    { src: changeStepPhoto, fit: "cover" },
 ]
 
 // Per-step product vignette, rendered at >=1200px only.
@@ -475,14 +475,18 @@ export function HowItWorks() {
 const ROLES = [
     { tag: "Experiences", headline: "Not bookable anywhere else.", body: "The city after 5pm, the festival, the family weekend bolted onto a work trip. Booked and expensed separately, one tap.", stat: "90%", statLabel: "of experiences", accent: T.accent, bg: T.bg, img: "" },
     { tag: "01", headline: "Festivals and culture", body: "", stat: "", statLabel: "", accent: T.orange, bg: T.surface2, img: "https://framerusercontent.com/images/LMZ3ugguI8VTpFeCKuOrrEUXDY.jpg" },
-    { tag: "02", headline: "Once-in-a-trip moments", body: "", stat: "", statLabel: "", accent: T.accent, bg: T.bg, img: "https://framerusercontent.com/images/lS1MsTKdDET0sJLlXRCt44HdDFY.jpg" },
-    { tag: "03", headline: "Local performances", body: "", stat: "", statLabel: "", accent: T.orange, bg: T.surface2, img: "https://framerusercontent.com/images/AANz7Gv2v4OLJICanNZTO4cDyE.jpg" },
+    // These two source photos are square with faces sitting in the top third,
+    // so the default center-cropped `object-fit: cover` (needed to fill the
+    // card's wider 16:10 frame) was cutting heads off -- `objectPosition`
+    // biases the crop toward the top instead so faces stay in frame.
+    { tag: "02", headline: "Once-in-a-trip moments", body: "", stat: "", statLabel: "", accent: T.accent, bg: T.bg, img: "https://framerusercontent.com/images/lS1MsTKdDET0sJLlXRCt44HdDFY.jpg", objectPosition: "center 15%" },
+    { tag: "03", headline: "Local performances", body: "", stat: "", statLabel: "", accent: T.orange, bg: T.surface2, img: "https://framerusercontent.com/images/AANz7Gv2v4OLJICanNZTO4cDyE.jpg", objectPosition: "center 10%" },
     { tag: "04", headline: "Markets and makers", body: "", stat: "", statLabel: "", accent: T.accent, bg: T.bg, img: "https://framerusercontent.com/images/v0MpWd9NHbV98F3GxQZzhtAp0o.jpg" },
     { tag: "05", headline: "The bleisure weekend", body: "", stat: "", statLabel: "", accent: T.orange, bg: T.surface2, img: "https://framerusercontent.com/images/OLnrOVVrjhLnXULOt0RWBQJJ30.jpg" },
     { tag: "06", headline: "Food and discovery", body: "", stat: "", statLabel: "", accent: T.accent, bg: T.bg, img: "https://framerusercontent.com/images/KqpDMVbbYgwoEAK6vQioHlDmeQ.jpg" },
 ]
 
-function RoleCard({ tag, headline, body, stat, statLabel, accent, bg, img, index }: typeof ROLES[0] & { index: number }) {
+function RoleCard({ tag, headline, body, stat, statLabel, accent, bg, img, objectPosition = "center", index }: typeof ROLES[number] & { index: number }) {
     const [hov, setHov] = useState(false)
     // Separate from imgInView below: the card's own entrance (opacity/y)
     // must not depend on a ref that only exists when `img` is set — ROLES[0]
@@ -502,14 +506,14 @@ function RoleCard({ tag, headline, body, stat, statLabel, accent, bg, img, index
                 initial={{ opacity: 0, y: 24 }}
                 animate={cardInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: reduced ? 0 : index * 0.06, ease: EO }}
-                style={{ flex: 1, background: hov ? T.card : bg, border: "1px solid " + T.border, borderRadius: 24, padding: 36, display: "flex", flexDirection: "column", gap: 20, boxShadow: hov ? "0 24px 70px rgba(69,14,20,0.16)" : "0 1px 0 rgba(69,14,20,0.03)", transition: "box-shadow 0.35s ease, background 0.3s ease" }}>
+                style={{ flex: 1, background: hov ? T.card : bg, border: "1px solid " + T.border, borderRadius: 24, padding: "clamp(20px, 3.4vh, 40px)", display: "flex", flexDirection: "column", gap: "clamp(10px, 2vh, 20px)", boxShadow: hov ? "0 24px 70px rgba(69,14,20,0.16)" : "0 1px 0 rgba(69,14,20,0.03)", transition: "box-shadow 0.35s ease, background 0.3s ease" }}>
                 <motion.span
                     animate={reduced ? undefined : { opacity: [0.55, 1, 0.55] }}
                     transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut", delay: index * 0.15 }}
                     style={{ display: "inline-block", fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: accent, border: "1.5px solid " + T.border, borderRadius: 100, padding: "4px 12px", alignSelf: "flex-start" }}>{tag}</motion.span>
                 <p style={{ fontSize: 22, fontFamily: F, fontWeight: 800, lineHeight: 1.2, margin: "0 0 12px", color: T.ink }}>{headline}</p>
                 {img ? (
-                    <div ref={imgRef} style={{ borderRadius: 14, overflow: "hidden", height: 200, position: "relative" }}>
+                    <div ref={imgRef} style={{ borderRadius: 18, overflow: "hidden", width: "100%", aspectRatio: "16 / 10", maxHeight: "clamp(150px, 27vh, 280px)", position: "relative" }}>
                         {/* Idle Ken Burns drift while the card sits unhovered, so the tile
                             never looks like a static photo — it settles the instant a
                             pointer arrives and TiltCard's own hover scale takes over. */}
@@ -525,7 +529,7 @@ function RoleCard({ tag, headline, body, stat, statLabel, accent, bg, img, index
                                     ? { duration: 0.6, ease: EO }
                                     : { duration: 9 + index * 1.3, repeat: Infinity, ease: "easeInOut", delay: 0.9 },
                             }}
-                            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", willChange: "clip-path, transform" }} />
+                            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition, display: "block", willChange: "clip-path, transform" }} />
                         {/* Brand wash: a duotone tint at rest that clears on hover so the
                             photo reveals itself in full colour, like light hitting it. */}
                         <div aria-hidden="true" style={{
@@ -632,22 +636,22 @@ export function Experiences() {
                 platform-solution panel -- centering a shorter-than-100vh
                 block inside a full-height sticky section grows the gap right
                 along with the screen. */}
-            <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "flex-start", paddingTop: "clamp(120px, 14vw, 160px)" }}>
-                <div style={{ paddingLeft: "clamp(32px,5vw,64px)", paddingRight: "clamp(32px,5vw,64px)", marginBottom: 48 }}>
+            <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "flex-start", paddingTop: "clamp(48px, 5vw, 80px)", paddingBottom: "clamp(10px, 1.6vh, 24px)" }}>
+                <div style={{ paddingLeft: "clamp(32px,5vw,64px)", paddingRight: "clamp(32px,5vw,64px)", marginBottom: "clamp(10px, 1.6vh, 24px)", flexShrink: 0 }}>
                     <SectionLabel>Experiences</SectionLabel>
-                    <h2 style={{ fontFamily: F, fontSize: "clamp(2rem,3.5vw,3.2rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: T.ink, margin: 0 }}>
+                    <h2 style={{ fontFamily: F, fontSize: "clamp(1.7rem,2.8vw,2.6rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: T.ink, margin: 0 }}>
                         <StaggerWords text="Business travel, meet the" /><br />
                         <StaggerWords text="trips people love." delay={0.15} />
                     </h2>
                 </div>
-                <div style={{ overflow: "hidden", paddingLeft: "clamp(32px,5vw,64px)" }}>
+                <div style={{ flex: 1, minHeight: 0, display: "flex", alignItems: "center", overflow: "hidden", paddingLeft: "clamp(32px,5vw,64px)" }}>
                     <div ref={trackRef} style={{ display: "flex", gap: 20, willChange: "transform" }}>
                         {ROLES.map((role, index) => <RoleCard key={role.tag} {...role} index={index} />)}
                         <div style={{ minWidth: 64, flexShrink: 0 }} />
                     </div>
                 </div>
                 {panPx > 0 && (
-                    <FadeUp style={{ paddingLeft: "clamp(32px,5vw,64px)", marginTop: 24 }}>
+                    <FadeUp style={{ paddingLeft: "clamp(32px,5vw,64px)", marginTop: 24, flexShrink: 0 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <div style={{ width: 28, height: 1, background: T.orange }} />
                             <span style={{ fontSize: 11, fontFamily: F, letterSpacing: "0.1em", textTransform: "uppercase", color: T.muted }}>scroll to explore</span>
@@ -946,7 +950,13 @@ export function Capabilities() {
         <SectionWrapper>
             {/* Tall container drives scroll progress. */}
             <div ref={containerRef} id="capabilities" style={{ height: CAPS.length * 100 + "vh", position: "relative" }}>
-                <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", background: T.bg, display: "flex", alignItems: "center", paddingTop: 110 }}>
+                {/* alignItems: flex-start, not "center" -- centering the dial +
+                    text row inside the full 100vh sticky box left a band of
+                    empty space above (and below) it that grew with viewport
+                    height, same issue fixed elsewhere on this page. A fixed
+                    paddingTop (clearing the absolutely-positioned header)
+                    keeps the row's position constant across screen sizes. */}
+                <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", background: T.bg, display: "flex", alignItems: "flex-start", paddingTop: "clamp(190px, 20vw, 230px)" }}>
                     {/* Header pinned top-left (below fixed nav). */}
                     <div style={{ position: "absolute", top: 92, left: "clamp(32px,5vw,64px)", right: "clamp(32px,5vw,64px)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", zIndex: 3 }}>
                         <div>
