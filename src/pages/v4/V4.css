@@ -2208,7 +2208,7 @@
 .v4-role-photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .v4-role-overlay {
   position: absolute;
-  left: -32px; bottom: -28px;
+  right: -32px; bottom: -28px;
   z-index: 2;
   width: min(320px, 76%);
 }
@@ -2226,10 +2226,10 @@
     gap: 18px;
   }
   .v4-role-photo-frame { aspect-ratio: 1 / 1; }
-  .v4-role-overlay { left: -12px; bottom: -18px; width: min(260px, 78%); }
+  .v4-role-overlay { right: -12px; bottom: -18px; width: min(260px, 78%); }
 }
 @media (max-width: 480px) {
-  .v4-role-overlay { position: static; width: 220px; margin: -32px auto 0; left: auto; bottom: auto; }
+  .v4-role-overlay { position: static; width: 220px; margin: -32px auto 0; right: auto; bottom: auto; }
 }
 
 
