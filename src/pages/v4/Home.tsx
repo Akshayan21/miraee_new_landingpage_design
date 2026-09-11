@@ -6,7 +6,7 @@ import { StatStrip, HowItWorks, KineticBand, BusinessCase, Experiences, CtaRoute
 import { Magnetic, ScrollProgress, GrainOverlay, CustomCursor } from "../../animations"
 import { IntroCover } from "./V0Intro"
 import { useIntroActive } from "./useIntroActive"
-import heroVideo from "../../assets/Video/hero section video.mp4"
+import travelerPhoto from "../../assets/miraee-traveler-hero.png"
 import flightCardImg from "../../assets/flight_card_updated.png"
 import faviconImg from "../../assets/favicon-180.png"
 import "../SubpagesV2.css"
@@ -92,7 +92,7 @@ export default function V4Home() {
                                         child, of it. */}
                                     <div className="v4-hero__media">
                                         <div className="v4-hero__photo-frame v4-hero__photo-frame--rect">
-                                            <video src={heroVideo} autoPlay loop muted playsInline />
+                                            <img src={travelerPhoto} alt="A traveler checking her itinerary on her phone in an airport lounge" />
                                         </div>
                                         {/* Sample only, same honesty convention as the persona
                                             cards elsewhere ("Scripted preview" / "Illustrative
