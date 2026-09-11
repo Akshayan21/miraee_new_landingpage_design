@@ -174,7 +174,7 @@
 
 /* ── Page shells ─────────────────────────────────────────────────────────── */
 .v4-shell { width: min(100% - 40px, var(--v4-shell)); margin-inline: auto; }
-.v4-section { padding: clamp(64px, 9vw, 120px) 0; }
+.v4-section { padding: clamp(56px, 6vw, 88px) 0; }
 .v4-section--tight-top { padding-top: clamp(24px, 3vw, 40px); }
 .v4-section--tight-bottom { padding-bottom: clamp(24px, 3vw, 40px); }
 .v4-section--tint { background: var(--m-soft); }
@@ -219,7 +219,7 @@
    flow (the baseline block just below) — without that scope, `position:
    sticky` with no tall ancestor to scroll past just pins in place forever,
    letting the rest of the page scroll up and visually collide with it. */
-.v4-hero { padding: clamp(130px, 16vw, 190px) 0 clamp(56px, 8vw, 96px); }
+.v4-hero { padding: clamp(120px, 10vw, 150px) 0 clamp(32px, 4vw, 56px); }
 
 .v4-hero-pin { position: relative; height: 150vh; }
 .v4-hero-pin .v4-hero {
@@ -247,8 +247,17 @@
 /* Generic split hero (Platform, Solutions, Technology, Why Miraee, Company)
    -- same Navan-style photo placement as the homepage, but a plain grid
    since these pages don't have a pinned/sticky hero to interpolate against. */
-.v4-hero__split { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
-.v4-hero__photo-frame--static { aspect-ratio: 1 / 1; }
+/* align-items: start, not "center" -- a perfectly square photo next to a
+   shorter text block means the row's height is set by the (taller) photo,
+   and centering the text within that row splits the leftover height into a
+   blank band above AND below it. Top-aligning both columns puts all of that
+   slack in one place (below the text, beside the photo) instead of pushing
+   the heading down under a band of empty space first. */
+.v4-hero__split { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+/* 4:3, not a full square -- a 1:1 photo scales up to a very tall box on wide
+   screens (the image column can be 500-600px+ wide), which is what made the
+   text/photo height mismatch above so large in the first place. */
+.v4-hero__photo-frame--static { aspect-ratio: 4 / 3; }
 @media (max-width: 900px) {
   .v4-hero__split { grid-template-columns: 1fr; }
 }
@@ -1023,7 +1032,7 @@
 .v4r-outcome-row__stat small { margin-top: 2px; font-size: 11px; color: var(--m-muted); }
 
 /* V1 — "Fast for people. Safe for the business." (.el-security / .el-trust) */
-.v4r-security { margin: 20px; padding: 130px max(24px, calc((100vw - 1200px) / 2)); border-radius: 32px; background: #ffffff; }
+.v4r-security { margin: 20px; padding: 64px max(24px, calc((100vw - 1200px) / 2)); border-radius: 32px; background: #ffffff; }
 .v4r-label { display: block; margin-bottom: 22px; color: var(--m-orange); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .v4r-security h2 { margin: 0; font-size: clamp(3rem, 5.8vw, 6.4rem); line-height: 1.1; letter-spacing: -.065em; color: var(--m-maroon); }
 .v4r-security > div > p, .v4r-security p { max-width: 540px; margin: 28px 0 0; color: var(--m-muted); font-size: 17px; line-height: 1.7; }

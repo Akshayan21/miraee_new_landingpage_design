@@ -112,7 +112,7 @@ export default function V4Technology() {
                 </div>
             </section>
 
-            <section className="v4-section" id="architecture" aria-labelledby="architecture-title">
+            <section className="v4-section v4-section--tight-bottom" id="architecture" aria-labelledby="architecture-title">
                 <div className="v4-shell">
                     <Reveal>
                         <span className="v4-eyebrow">The architecture</span>
@@ -130,15 +130,6 @@ export default function V4Technology() {
                             ))}
                         </div>
                     </Reveal>
-                    <Reveal delay={0.15}>
-                        <div className="v4-note" style={{ marginTop: 28 }}>
-                            <b>7</b>
-                            <div>
-                                <h3>Two layers, one system.</h3>
-                                <p>An agent is a bounded, permissioned worker with one job, its own tools, and a written limit on what it may do alone. Competitors bolt AI onto a booking tool; here the intelligence and the supply were built together.</p>
-                            </div>
-                        </div>
-                    </Reveal>
                 </div>
             </section>
 
@@ -146,7 +137,7 @@ export default function V4Technology() {
                 treatment verbatim; the guardrail table follows it. */}
             <SecurityV1 />
 
-            <section className="v4-section" id="guardrails" aria-labelledby="guardrails-title">
+            <section className="v4-section v4-section--tight-top" id="guardrails" aria-labelledby="guardrails-title">
                 <div className="v4-shell">
                     <Reveal>
                         <span className="v4-eyebrow">Safety & governance</span>
