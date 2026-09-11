@@ -18,6 +18,7 @@ interface RoleShowcaseProps {
     before?: string
     afterHeading?: string
     videoSrc?: string
+    roleImage: string
     detailsHeading?: string
     details?: RoleDetail[]
 }
@@ -38,6 +39,7 @@ export default function RoleShowcasePage({
     before: beforeOverride,
     afterHeading,
     videoSrc,
+    roleImage,
     detailsHeading,
     details,
 }: RoleShowcaseProps) {
@@ -139,24 +141,36 @@ export default function RoleShowcasePage({
                             </Reveal>
                         </div>
 
-                        {/* Right Column: Clean Looping Video or Scripted Preview */}
+                        {/* Right Column: real role photo as the base frame (same
+                            layered-depth convention as the homepage hero's photo +
+                            floating flight card), with the existing looping video
+                            or scripted console preview floated over it as the
+                            overlay -- same content, now framed like a real product
+                            moment instead of sitting on its own. */}
                         <div className="v4-navan-hero-stage">
                             <Reveal delay={0.12}>
-                                {videoSrc ? (
-                                    <RoleVideoShowcase videoSrc={videoSrc} title={roleTitle} />
-                                ) : script ? (
-                                    <div className="v4-navan-script-frame">
-                                        <div className="v4-navan-script-bar">
-                                            <div className="v4-navan-bar-dots">
-                                                <span /><span /><span />
-                                            </div>
-                                            <span className="v4-navan-bar-title">{roleTitle} Console Preview</span>
-                                        </div>
-                                        <div className="v4-navan-script-body">
-                                            <PersonaExperience script={script} tone="light" autoPlay />
-                                        </div>
+                                <div className="v4-role-media">
+                                    <div className="v4-role-photo-frame">
+                                        <img src={roleImage} alt={`${roleTitle} using Miraee`} />
                                     </div>
-                                ) : null}
+                                    <div className="v4-role-overlay">
+                                        {videoSrc ? (
+                                            <RoleVideoShowcase videoSrc={videoSrc} title={roleTitle} />
+                                        ) : script ? (
+                                            <div className="v4-navan-script-frame">
+                                                <div className="v4-navan-script-bar">
+                                                    <div className="v4-navan-bar-dots">
+                                                        <span /><span /><span />
+                                                    </div>
+                                                    <span className="v4-navan-bar-title">{roleTitle} Console Preview</span>
+                                                </div>
+                                                <div className="v4-navan-script-body">
+                                                    <PersonaExperience script={script} tone="light" autoPlay />
+                                                </div>
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                </div>
                             </Reveal>
                         </div>
                     </div>

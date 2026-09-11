@@ -1,5 +1,6 @@
 import RoleShowcasePage from "./RoleShowcasePage"
 import financeVideo from "../../../assets/Video/Finance.mp4"
+import financePhoto from "../../../assets/finance.jpg"
 
 // Solutions: Finance Page
 // Content strictly from Miraee Website Content - V4 & User Instructions
@@ -16,6 +17,7 @@ export default function V4SolutionFinance() {
             body="Committed spend shows at booking, not month-end. Track by department, category and top spenders, and move reimbursements from pending to paid in one table. The CFO Dashboard rolls up spend vs budget, savings and cycle time, all exportable."
             controls={["Accounts", "Approval chains", "Ceilings", "Suppliers", "Sign-off", "Audit log"]}
             videoSrc={financeVideo}
+            roleImage={financePhoto}
             detailsHeading="Close the books without chasing them:"
             details={[
                 {
@@ -28,7 +30,7 @@ export default function V4SolutionFinance() {
                 },
                 {
                     title: "Reimbursements that move themselves.",
-                    body: "Expenses connected directly to My Trips so categorisation is easy or travelers can file expenses via receipts uploads or bank statements that would directly extract the specifc trip expenses divided into business and personal expenses which are connected directly to the ERP systems, without the manual chase.",
+                    body: "Expenses link directly to My Trips. Upload receipts or bank statements, and Miraee automatically extracts, categorises and separates business and personal expenses then connects them to your ERP, with no manual chasing.",
                 },
             ]}
         />

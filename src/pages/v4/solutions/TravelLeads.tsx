@@ -1,4 +1,5 @@
 import RoleShowcasePage from "./RoleShowcasePage"
+import travelLeadPhoto from "../../../assets/Travell_lead.jpg"
 
 // Solutions: Travel Leads Page
 // Content strictly from Miraee Website Content - V4 & User Instructions
@@ -13,6 +14,7 @@ export default function V4SolutionTravelLeads() {
             afterHeading="Now you run a program."
             body="A Live Tracker shows route, status and ETA for every traveler in motion. The Booking Queue holds every open request in one place, with analytics by team, entity and route. MICE and group booking built in, direct supply through Mondee."
             controls={["Live Tracker", "Booking Queue", "Program analytics"]}
+            roleImage={travelLeadPhoto}
             detailsHeading="An assistant that handles all your work, digitally:"
             details={[
                 {

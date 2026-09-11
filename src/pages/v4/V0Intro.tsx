@@ -44,7 +44,7 @@ export function IntroCover({ active, phase }: { active: boolean; phase: IntroPha
                     <MiraeeLogo fill="#FFFFFF" height={isMobile ? 64 : 130} />
                 </motion.div>
                 <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.7, ease: EO }}
-                    style={{ fontSize: isMobile ? 13 : 15, fontFamily: "\"Plus Jakarta Sans\", system-ui, sans-serif", fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(251,246,242,0.6)", margin: 0, textAlign: "center" }}>
+                    style={{ fontSize: isMobile ? 13 : 15, fontFamily: "\"Plus Jakarta Sans\", system-ui, sans-serif", fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255, 255, 255,0.6)", margin: 0, textAlign: "center" }}>
                     A private travel assistant for every employee.
                 </motion.p>
             </motion.div>
@@ -52,9 +52,9 @@ export function IntroCover({ active, phase }: { active: boolean; phase: IntroPha
             {/* Scroll hint */}
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: phase === "reveal" ? 0 : 1 }} transition={{ delay: phase === "reveal" ? 0 : 1.4, duration: 0.5 }}
                 style={{ position: "absolute", bottom: 42, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 10, fontFamily: "\"Plus Jakarta Sans\", system-ui, sans-serif", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(251,246,242,0.55)" }}>scroll to enter</span>
+                <span style={{ fontSize: 10, fontFamily: "\"Plus Jakarta Sans\", system-ui, sans-serif", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255, 255, 255,0.55)" }}>scroll to enter</span>
                 <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                    style={{ width: 1.5, height: 36, background: "linear-gradient(to bottom, rgba(251,246,242,0.8), transparent)" }} />
+                    style={{ width: 1.5, height: 36, background: "linear-gradient(to bottom, rgba(255, 255, 255,0.8), transparent)" }} />
             </motion.div>
         </motion.div>
     )

@@ -62,9 +62,9 @@ const VISUAL_PROGRESS = (
 )
 
 const ADAPTIVE_FEATURES: [ReactNode, string, string, string][] = [
-    [VISUAL_MAP, "Live location tracking, real reassurance.", "See every active traveler on one live map, with itinerary changes flagged in real time. Built for duty of care, so teams always know where travelers are headed when it matters most.", "Real-time, one live map"],
-    [VISUAL_CHART, "Your travel data, read your way.", "Get tailored reports on spend, compliance, savings and reimbursements by team, entity or route. Export insights instantly without wrestling with spreadsheets.", "Exportable in one click"],
-    [VISUAL_PROGRESS, "Guided self-setup & onboarding", "A guided self-service setup lets employees build their travel profiles, with live progress tracking. Simple onboarding, with no implementation team required.", "Live completion %"],
+    [VISUAL_MAP, "Live location tracking, real reassurance.", "See every active traveler on one live map, with itinerary changes flagged in real time. Built for duty of care, so teams know where travelers are when it matters.", "Real-time. One live map."],
+    [VISUAL_CHART, "Your travel data, your way.", "Get tailored reports on spend, compliance, savings and reimbursements by team, entity or route. Export insights instantly—no spreadsheets required.", "Export in one click."],
+    [VISUAL_PROGRESS, "Guided self-setup & onboarding", "Employees can build their travel profiles through guided self-setup, with live progress tracking. Simple onboarding, with no implementation team required.", "Live completion %"],
 ]
 
 const FAQS: [string, ReactNode][] = [
@@ -232,7 +232,7 @@ export default function V4Platform() {
 
             <SavingsV3 />
 
-            <section className="v4-section v4-section--tight-top" aria-labelledby="savings-note-title">
+            <section className="v4-section v4-section--tight-top v4-section--tight-bottom" aria-labelledby="savings-note-title">
                 <div className="v4-shell">
                     <Reveal>
                         <div className="v4-note">

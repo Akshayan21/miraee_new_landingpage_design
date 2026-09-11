@@ -7,12 +7,9 @@ import { AvatarSpotlight } from "./HeroAssistant"
 import { Magnetic, ScrollProgress, GrainOverlay, CustomCursor } from "../../animations"
 import { IntroCover } from "./V0Intro"
 import { useIntroActive } from "./useIntroActive"
-import travelerPhoto from "../../assets/miraee-traveler-hero.png"
+import heroVideo from "../../assets/Video/hero section video.mp4"
 import flightCardImg from "../../assets/flight_card_updated.png"
 import faviconImg from "../../assets/favicon-180.png"
-import morganStanleyLogo from "../../assets/morgan stanley logo.jpeg"
-import tcwLogo from "../../assets/TCW-group-logo.jpg"
-import tabhiLogo from "../../assets/Tabhi logo.png"
 import "../SubpagesV2.css"
 import "./V4.css"
 
@@ -86,14 +83,6 @@ export default function V4Home() {
                                             <Magnetic><Link className="v4-btn v4-btn--solid" to="/book-a-demo">Book a demo</Link></Magnetic>
                                             <Magnetic><a className="v4-btn v4-btn--ghost" href="#how-it-works">See how it works</a></Magnetic>
                                         </div>
-                                        <div className="v4-hero__backers">
-                                            <span>Backed by</span>
-                                            <div className="v4-hero__backer-logos">
-                                                <span className="v4-hero__backer-chip"><img src={morganStanleyLogo} alt="Morgan Stanley" /></span>
-                                                <span className="v4-hero__backer-chip"><img src={tcwLogo} alt="TCW Group" /></span>
-                                                <span className="v4-hero__backer-chip"><img src={tabhiLogo} alt="Tabhi" /></span>
-                                            </div>
-                                        </div>
                                     </Reveal>
                                 </div>
                                 <Reveal delay={0.12}>
@@ -104,7 +93,7 @@ export default function V4Home() {
                                         child, of it. */}
                                     <div className="v4-hero__media">
                                         <div className="v4-hero__photo-frame v4-hero__photo-frame--rect">
-                                            <img src={travelerPhoto} alt="A traveler checking her itinerary on her phone in an airport lounge" />
+                                            <video src={heroVideo} autoPlay loop muted playsInline />
                                         </div>
                                         {/* Sample only, same honesty convention as the persona
                                             cards elsewhere ("Scripted preview" / "Illustrative

@@ -1,5 +1,6 @@
 import RoleShowcasePage from "./RoleShowcasePage"
 import adminVideo from "../../../assets/Video/Admin.mp4"
+import adminPhoto from "../../../assets/Admin2.jpg"
 
 // Solutions: Admins Page
 // Content strictly from Miraee Website Content - V4 & User Instructions
@@ -16,6 +17,7 @@ export default function V4SolutionAdmins() {
             body="Policy applies at search, so out-of-policy trips rarely get built. The Overview shows the whole program in one place — onboarding gaps, exceptions, budget, adoption, compliance and AI-surfaced savings. Manage travelers and rules, run duty of care from the Live Map, and reconcile without switching screens. The Agentic ROI Dashboard shows exactly what the agent saved in hours and dollars."
             controls={["Overview", "Policies", "Live Map", "Agentic ROI"]}
             videoSrc={adminVideo}
+            roleImage={adminPhoto}
             detailsHeading="Govern the program, not each trip."
             details={[
                 {

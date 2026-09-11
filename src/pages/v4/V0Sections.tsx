@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import type { CSSProperties, ReactNode } from "react"
 import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from "framer-motion"
+import type { MotionValue } from "framer-motion"
 import { EO, FadeUp, SectionWrapper, StaggerWords, ScrambleText, TiltCard } from "../../animations"
 import { useWindowWidth } from "../../hooks/useWindowSize"
 import employeeAvatar from "../../assets/miraee-role-employee.png"
@@ -261,25 +262,93 @@ function StepVisual({ index, accent, inView }: { index: number; accent: string; 
     )
 }
 
-function StepPanel({ num, title, body, accent, bg, tag, index, total }: typeof STEPS[0] & { index: number; total: number }) {
+// Stack tuning: STACK_TOP is the resting gap between the header and the
+// front card (kept tight — it used to be sized for the deepest receded
+// card's nav clearance, which left a big dead gap under the header before
+// anything had a chance to recede into it); STACK_STEP is how far each
+// further-back card recedes upward per layer; STACK_MAX_DEPTH caps how many
+// layers keep receding so the deck doesn't shrink forever past four cards.
+const STACK_TOP = 72
+const STACK_STEP = 20
+const STACK_MAX_DEPTH = 3
+const STACK_CARD_H = "min(560px, 66vh)"
+
+function StepPanel({ num, title, body, accent, bg, tag, index, total, scrollYProgress }: typeof STEPS[0] & { index: number; total: number; scrollYProgress: MotionValue<number> }) {
     const ref = useRef<HTMLDivElement>(null)
-    const inView = useInView(ref, { once: false, margin: "-20% 0px" })
+    const inView = useInView(ref, { once: false, margin: "-10% 0px" })
     const w = useWindowWidth()
     const isMobile = w < 640
     const isTablet = w >= 640 && w < 1024
+    // `depth` is a continuous "how many cards deep is this one" value: negative
+    // before its turn, 0→1 as it arrives at the front, then keeps climbing as
+    // later cards arrive on top of it — so every earlier card stays a visible,
+    // slightly smaller, slightly dimmer layer peeking out above the current
+    // one instead of ever being fully swapped out.
+    const depth = useTransform(scrollYProgress, (v) => v * total - index)
+    // Card 0 has nothing behind it to cover the screen while it slides up
+    // from y:100%, unlike every later card (the previous one is still on
+    // screen during its arrival) -- so it renders already arrived instead
+    // of sliding in, avoiding a blank frame right as the section is entered.
+    const arrive = useTransform(depth, (d) => Math.min(Math.max(index === 0 ? d + 1 : d, 0), 1))
+    const stacked = useTransform(depth, (d) => Math.min(Math.max(d - 1, 0), STACK_MAX_DEPTH - 1))
+    // Each layer recedes upward AND alternates a slight tilt/lateral drift —
+    // a stack that only shrinks straight up reads as a resize, not a pile of
+    // cards; the alternating rotation is what actually sells "physical deck".
+    const tiltSign = index % 2 === 0 ? -1 : 1
+    const y = useTransform([arrive, stacked], (vals) => {
+        const [a, sd] = vals as number[]
+        return a < 1 ? `${(1 - a) * 100}%` : `${-(sd * STACK_STEP)}px`
+    })
+    const x = useTransform([arrive, stacked], (vals) => {
+        const [a, sd] = vals as number[]
+        return a < 1 ? 0 : tiltSign * sd * 5
+    })
+    const rotate = useTransform([arrive, stacked], (vals) => {
+        const [a, sd] = vals as number[]
+        return a < 1 ? 0 : tiltSign * sd * 1.4
+    })
+    const scale = useTransform([arrive, stacked], (vals) => {
+        const [a, sd] = vals as number[]
+        return a < 1 ? 0.96 + a * 0.04 : 1 - sd * 0.045
+    })
+    const dim = useTransform([arrive, stacked], (vals) => {
+        const [a, sd] = vals as number[]
+        return a < 1 ? 0 : Math.min(sd * 0.15, 0.5)
+    })
+    // Contact shadow softens and tightens with depth (like real cards further
+    // down a pile casting less of their own shadow), while the front card
+    // keeps the strongest "lifted off the stack" shadow.
+    const shadow = useTransform([arrive, stacked], (vals) => {
+        const [a, sd] = vals as number[]
+        const depthFactor = a < 1 ? 0 : sd
+        const blur = 90 - depthFactor * 20
+        const spread = -30 + depthFactor * 6
+        const alpha = Math.max(0.35 - depthFactor * 0.08, 0.14)
+        const y2 = 40 - depthFactor * 8
+        return `0 ${y2}px ${blur}px ${spread}px rgba(69,14,20,${alpha})`
+    })
+    const blurFilter = useTransform([arrive, stacked], (vals) => {
+        const [a, sd] = vals as number[]
+        const depthFactor = a < 1 ? 0 : sd
+        return depthFactor > 0.1 ? `blur(${Math.min(depthFactor * 0.7, 2)}px)` : "none"
+    })
     return (
-        <div ref={ref} className="v4-step-panel" style={{ position: "sticky", top: 0, height: "100vh", background: bg, display: "flex", alignItems: "center", overflow: "hidden", zIndex: index + 1 }}>
-            {/* Massive ghost number. willChange is gated on inView rather than
-                permanent: all four panels are mounted as siblings for the whole
-                section, so an unconditional will-change here means four
-                GPU-promoted 28vw-glyph layers held simultaneously for the entire
-                scroll — right through the transition into the kinetic band that
-                follows. Only the panel actually settling needs the layer. */}
+        <motion.div
+            ref={ref}
+            style={{
+                position: "absolute", left: isMobile ? 12 : isTablet ? 24 : 40, right: isMobile ? 12 : isTablet ? 24 : 40, top: STACK_TOP,
+                height: STACK_CARD_H, zIndex: index + 1, y, x, rotate, scale, transformOrigin: "top center",
+                background: bg, borderRadius: 28, overflow: "hidden", display: "flex", alignItems: "center",
+                border: "1px solid " + T.border, boxShadow: shadow, filter: blurFilter,
+                willChange: "transform",
+            }}>
+            <motion.div aria-hidden style={{ position: "absolute", inset: 0, background: T.ink, opacity: dim, pointerEvents: "none", zIndex: 5 }} />
+            {/* Massive ghost number. */}
             <motion.div
                 initial={{ opacity: 0, x: 60 }}
                 animate={inView ? { opacity: 0.045, x: 0 } : { opacity: 0, x: 60 }}
                 transition={{ duration: 0.9, ease: EO }}
-                style={{ position: "absolute", right: isMobile ? -20 : -10, top: "50%", transform: "translateY(-50%)", fontSize: isMobile ? "42vw" : "28vw", fontFamily: F, fontWeight: 900, color: T.ink, lineHeight: 1, userSelect: "none", pointerEvents: "none", letterSpacing: "-0.06em", willChange: inView ? "transform, opacity" : "auto" }}>
+                style={{ position: "absolute", right: isMobile ? -20 : -10, top: "50%", transform: "translateY(-50%)", fontSize: isMobile ? "38vw" : "22vw", fontFamily: F, fontWeight: 900, color: T.ink, lineHeight: 1, userSelect: "none", pointerEvents: "none", letterSpacing: "-0.06em" }}>
                 {num}
             </motion.div>
             {/* Orange side accent bar */}
@@ -289,7 +358,7 @@ function StepPanel({ num, title, body, accent, bg, tag, index, total }: typeof S
                 transition={{ duration: 0.7, delay: 0.1, ease: EO }}
                 style={{ position: "absolute", left: 0, top: "15%", height: "70%", width: 3, background: accent, transformOrigin: "top", borderRadius: 2 }} />
             {/* Step counter top-right */}
-            <div style={{ position: "absolute", top: 92, right: isMobile ? 20 : 64, display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ position: "absolute", top: isMobile ? 24 : 40, right: isMobile ? 20 : 48, display: "flex", alignItems: "center", gap: 12 }}>
                 {Array.from({ length: total }).map((_, i) => (
                     <motion.div key={i}
                         animate={{ width: i === index ? 24 : 6, background: i === index ? accent : T.border }}
@@ -298,32 +367,32 @@ function StepPanel({ num, title, body, accent, bg, tag, index, total }: typeof S
                 ))}
             </div>
             {w >= 1200 && (
-                <div style={{ position: "absolute", right: "7%", top: "50%", transform: "translateY(-50%)" }}>
+                <div style={{ position: "absolute", right: "6%", top: "50%", transform: "translateY(-50%)" }}>
                     {/* A real photo as the visual anchor for every step, the
                         chat-card mock floating over its bottom-left corner
                         and spilling half outside the frame edge — same
                         layered-overlay depth as the homepage hero's photo +
                         flight card. */}
-                    <div style={{ position: "relative", width: 560, height: 400 }}>
+                    <div style={{ position: "relative", width: 460, height: 320 }}>
                         <motion.div
                             initial={{ opacity: 0, scale: 1.04 }}
                             animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.04 }}
                             transition={{ duration: 0.9, ease: EO }}
-                            style={{ position: "absolute", inset: 0, padding: 14, background: T.cream, borderRadius: 28, boxShadow: "0 50px 100px -24px rgba(69,14,20,0.45), 0 1px 0 rgba(255,255,255,0.7) inset" }}>
-                            <img src={STEP_PHOTOS[index].src} alt="" style={{ width: "100%", height: "100%", objectFit: STEP_PHOTOS[index].fit, borderRadius: 18, display: "block", background: T.card }} />
+                            style={{ position: "absolute", inset: 0, padding: 12, background: T.cream, borderRadius: 24, boxShadow: "0 40px 80px -20px rgba(69,14,20,0.4), 0 1px 0 rgba(255,255,255,0.7) inset" }}>
+                            <img src={STEP_PHOTOS[index].src} alt="" style={{ width: "100%", height: "100%", objectFit: STEP_PHOTOS[index].fit, borderRadius: 16, display: "block", background: T.card }} />
                         </motion.div>
-                        <div style={{ position: "absolute", left: -44, bottom: -32, zIndex: 2 }}>
+                        <div style={{ position: "absolute", left: -36, bottom: -26, zIndex: 2, transform: "scale(0.82)", transformOrigin: "bottom left" }}>
                             <StepVisual index={index} accent={accent} inView={inView} />
                         </div>
                     </div>
                 </div>
             )}
-            <div style={{ position: "relative", zIndex: 2, padding: isMobile ? "0 24px" : isTablet ? "0 40px" : "0 80px", maxWidth: isMobile ? "100%" : isTablet ? "100%" : 720 }}>
+            <div style={{ position: "relative", zIndex: 2, padding: isMobile ? "0 24px" : isTablet ? "0 40px" : "0 64px", maxWidth: isMobile ? "100%" : isTablet ? "100%" : 620 }}>
                 <motion.div
                     initial={{ opacity: 0, y: 16 }}
                     animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                     transition={{ duration: 0.5, delay: 0.05, ease: EO }}
-                    style={{ marginBottom: 24, display: "inline-flex", alignItems: "center", gap: 8, fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: accent }}>
+                    style={{ marginBottom: 18, display: "inline-flex", alignItems: "center", gap: 8, fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: accent }}>
                     <span style={{ width: 20, height: 1.5, background: accent, display: "inline-block" }} />
                     {tag}
                 </motion.div>
@@ -331,26 +400,26 @@ function StepPanel({ num, title, body, accent, bg, tag, index, total }: typeof S
                     initial={{ opacity: 0, x: -20 }}
                     animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ duration: 0.55, delay: 0.1, ease: EO }}
-                    style={{ fontSize: 13, fontFamily: F, fontWeight: 700, color: accent, letterSpacing: "0.08em", margin: "0 0 12px" }}>
+                    style={{ fontSize: 13, fontFamily: F, fontWeight: 700, color: accent, letterSpacing: "0.08em", margin: "0 0 10px" }}>
                     {num} / {String(total).padStart(2, "0")}
                 </motion.p>
-                <h3 style={{ fontFamily: F, fontSize: isMobile ? "clamp(3rem,12vw,5rem)" : isTablet ? "clamp(3.5rem,8vw,5.5rem)" : "clamp(4rem,7vw,7rem)", fontWeight: 900, lineHeight: 0.95, letterSpacing: "-0.045em", color: T.ink, margin: "0 0 32px" }}>
+                <h3 style={{ fontFamily: F, fontSize: isMobile ? "clamp(2.4rem,10vw,3.6rem)" : isTablet ? "clamp(2.8rem,6vw,4rem)" : "clamp(3rem,5vw,5rem)", fontWeight: 900, lineHeight: 0.95, letterSpacing: "-0.045em", color: T.ink, margin: "0 0 22px" }}>
                     <StaggerWords text={title} delay={0.15} stagger={0.08} />
                 </h3>
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ duration: 0.7, delay: 0.35, ease: EO }}
-                    style={{ fontSize: isMobile ? 15 : 18, fontFamily: FB, fontWeight: 400, lineHeight: 1.7, color: T.muted, margin: 0, maxWidth: 520 }}>
+                    style={{ fontSize: isMobile ? 14 : 16, fontFamily: FB, fontWeight: 400, lineHeight: 1.65, color: T.muted, margin: 0, maxWidth: 480 }}>
                     {body}
                 </motion.p>
                 <motion.div
                     initial={{ width: 0 }}
                     animate={inView ? { width: 64 } : { width: 0 }}
                     transition={{ duration: 0.6, delay: 0.5, ease: EO }}
-                    style={{ height: 2, background: accent, borderRadius: 2, marginTop: 40 }} />
+                    style={{ height: 2, background: accent, borderRadius: 2, marginTop: 28 }} />
             </div>
-        </div>
+        </motion.div>
     )
 }
 
@@ -358,9 +427,17 @@ export function HowItWorks() {
     const w = useWindowWidth()
     const isMobile = w < 640
     const isTablet = w >= 640 && w < 1024
+    const trackRef = useRef<HTMLDivElement>(null)
+    const { scrollYProgress: rawProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] })
+    // Springed rather than wired 1:1 to the scrollbar: raw scroll progress
+    // makes every card in the deck jump exactly as fast as the mouse wheel
+    // ticks, which reads as mechanical. The spring gives the whole stack a
+    // shared bit of inertia — it keeps settling for a beat after the scroll
+    // stops, the way a real dropped stack of cards would.
+    const scrollYProgress = useSpring(rawProgress, { stiffness: 260, damping: 38, mass: 0.4 })
     return (
         <section id="how-it-works" style={{ position: "relative" }}>
-            <div style={{ background: T.bg2, padding: isMobile ? "80px 20px 40px" : isTablet ? "80px 40px 40px" : "80px 64px 48px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+            <div style={{ background: T.bg2, padding: isMobile ? "80px 20px 16px" : isTablet ? "80px 40px 16px" : "80px 64px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
                 <div>
                     <SectionLabel>How it works</SectionLabel>
                     <h2 style={{ fontFamily: F, fontSize: isMobile ? "1.1rem" : "1.2rem", fontWeight: 500, color: T.muted, margin: 0, letterSpacing: "-0.01em" }}>
@@ -369,9 +446,18 @@ export function HowItWorks() {
                 </div>
                 <span style={{ fontSize: 13, fontFamily: F, color: T.muted }}>Voice, chat or avatar · It remembers your preferences.</span>
             </div>
-            {STEPS.map((step, i) => (
-                <StepPanel key={step.num} {...step} index={i} total={STEPS.length} />
-            ))}
+            {/* Scroll track: STEPS.length viewport-heights of runway behind one
+                pinned stage. `scrollYProgress` (0→1 across that whole runway)
+                drives every card's depth below — a plain, non-sticky div, since
+                a sticky element's own rect stays pinned at top:0 for its whole
+                pin span and can't itself report continuous scroll progress. */}
+            <div ref={trackRef} style={{ position: "relative", height: `${STEPS.length * 100}vh`, background: T.bg2 }}>
+                <div className="v4-step-panel" style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
+                    {STEPS.map((step, i) => (
+                        <StepPanel key={step.num} {...step} index={i} total={STEPS.length} scrollYProgress={scrollYProgress} />
+                    ))}
+                </div>
+            </div>
         </section>
     )
 }
