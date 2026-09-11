@@ -1,4 +1,5 @@
 import RoleShowcasePage from "./RoleShowcasePage"
+import hrPhoto from "../../../assets/HR_2.jpg"
 
 // Solutions: CHROs Page
 // Content strictly from Miraee Website Content - V4 & User Instructions
@@ -13,6 +14,7 @@ export default function V4SolutionChros() {
             afterHeading="Now you support people."
             body="Your view leads with people: Total People, Travel Ready, Currently Traveling and Compliance. Duty of Care shows every active traveler with a live location, plus on-trip tracking, a travelers-by-day calendar and compliance by team pulled from HRIS. Same policy for everyone, a consumer-grade experience."
             controls={["Duty of Care", "Readiness", "Compliance by Team"]}
+            roleImage={hrPhoto}
             detailsHeading="Built around people, not policy."
             details={[
                 {

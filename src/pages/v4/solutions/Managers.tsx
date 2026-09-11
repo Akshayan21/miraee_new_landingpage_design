@@ -1,4 +1,5 @@
 import RoleShowcasePage from "./RoleShowcasePage"
+import managerPhoto from "../../../assets/Manager.jpg"
 
 // Solutions: Managers Page
 // Content strictly from Miraee Website Content - V4 & User Instructions
@@ -13,6 +14,7 @@ export default function V4SolutionManagers() {
             afterHeading="Now only exceptions reach you."
             body="Routine trips inside policy self-book. What reaches you arrives with estimated cost, exact policy overage and an AI confidence score, so you can decide in one glance. Team Analytics gives you spend vs budget, compliance and travel outcomes in one view, and you can allocate rewards per employee across the team, all without pulling a month's report."
             controls={["Approvals", "Team Analytics", "Team Trips", "Points Pool"]}
+            roleImage={managerPhoto}
             detailsHeading="Run the team, not the paperwork:"
             details={[
                 {

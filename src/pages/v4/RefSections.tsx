@@ -3,9 +3,8 @@ import { motion, useInView, useScroll, useTransform, useReducedMotion } from "fr
 import type { ReactNode } from "react"
 import { Link } from "react-router-dom"
 import { Reveal } from "../../components/V4Kit"
-import productPageImg from "../../assets/platform_hero.jpg"
+import platformHeroVideo from "../../assets/Video/platform_hero_video.mp4"
 import expenseCardGif from "../../assets/expense card.gif"
-import paxMasterGif from "../../assets/PAX MASTER.gif"
 import financeDashboard from "../../assets/ui-admin-dashboard.png"
 import miraeeMobileUi from "../../assets/miraee-mobile-phone.png"
 import supplierCabin from "../../assets/miraee-supplier-cabin.webp"
@@ -72,9 +71,8 @@ export function PlatformHeroV1() {
                     initial={{ opacity: 0, y: 32 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.9, delay: 0.12, ease: heroEase }}>
-                    <img src={productPageImg} alt="Business traveler using Miraee during a journey" fetchPriority="high" decoding="async" />
+                    <video src={platformHeroVideo} autoPlay loop muted playsInline aria-label="Business traveler using Miraee during a journey" />
                     <img className="v4r-phero__gif v4r-phero__gif--br" src={expenseCardGif} alt="Miraee automatically categorizing a trip expense" />
-                    <img className="v4r-phero__gif v4r-phero__gif--tl" src={paxMasterGif} alt="Miraee tracking a traveler's live trip status" />
                 </motion.div>
             </div>
         </section>
@@ -185,7 +183,7 @@ export function IntegrationsV1() {
                                             whileInView={{ opacity: 1, scale: 1 }}
                                             viewport={{ once: true }}
                                             transition={{ delay: ci * 0.1 + pi * 0.06 }}
-                                            whileHover={{ scale: 1.05, background: "var(--m-maroon)", color: "#FBF6F2" }}
+                                            whileHover={{ scale: 1.05, background: "var(--m-maroon)", color: "#FFFFFF" }}
                                             className="v4r-integration-card__pill">
                                             {p}
                                         </motion.div>
@@ -338,7 +336,7 @@ const LOOP: [string, string][] = [
 
 export function SavingsV3() {
     return (
-        <section id="savings" className="v4-section">
+        <section id="savings" className="v4-section v4-section--tight-bottom">
             <div className="v4-shell">
                 <Reveal>
                     <h2 className="v4-h2">Savings that compound on their own.</h2>

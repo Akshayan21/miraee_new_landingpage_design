@@ -1,4 +1,5 @@
 import RoleShowcasePage from "./RoleShowcasePage"
+import travellerPhoto from "../../../assets/traveller.jpg"
 
 // Solutions: Employees Page
 // Content strictly from Miraee Website Content - V4 & User Instructions
@@ -13,6 +14,7 @@ export default function V4SolutionEmployees() {
             afterHeading="Now they describe one."
             body="Book from a sentence, checked against policy as you go. The Receipt Scanner matches receipts to trips automatically, so there's no report to file. Your briefing carries currency, safety, visa and emergency numbers; Rewards tracks points to your next milestone."
             controls={["My Trips", "Receipt Scanner", "Rewards"]}
+            roleImage={travellerPhoto}
             detailsHeading="Navigate the whole trip in one platform:"
             details={[
                 {

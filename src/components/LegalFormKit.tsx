@@ -14,7 +14,7 @@ export const useVW = useWindowWidth
 export const T = {
     bg: "var(--page-bg)", ink: "var(--text)", maroon: "#450E14", orange: "#E55602",
     accent: "var(--accent-strong)",
-    muted: "rgba(var(--text-rgb),0.42)", border: "rgba(var(--text-rgb),0.10)", card: "var(--surface)", cream: "#FBF6F2",
+    muted: "rgba(var(--text-rgb),0.42)", border: "rgba(var(--text-rgb),0.10)", card: "var(--surface)", cream: "#FFFFFF",
 }
 export const F = "\"Plus Jakarta Sans\", system-ui, sans-serif"
 
@@ -152,10 +152,10 @@ export function SiteFooter({ version }: { version?: SiteVersion } = {}) {
     const wmY = useTransform(scrollYProgress, [0, 1], [160, 0])
     const wmOpacity = useTransform(scrollYProgress, [0.3, 1], [0, 0.06])
 
-    const linkStyle: React.CSSProperties = { display: "block", fontSize: 14, fontFamily: F, fontWeight: 500, color: "rgba(251,246,242,0.55)", textDecoration: "none", marginBottom: 10, transition: "color 0.2s" }
-    const disabledStyle: React.CSSProperties = { display: "block", fontSize: 14, fontFamily: F, fontWeight: 500, color: "rgba(251,246,242,0.28)", marginBottom: 10 }
+    const linkStyle: React.CSSProperties = { display: "block", fontSize: 14, fontFamily: F, fontWeight: 500, color: "rgba(255, 255, 255,0.55)", textDecoration: "none", marginBottom: 10, transition: "color 0.2s" }
+    const disabledStyle: React.CSSProperties = { display: "block", fontSize: 14, fontFamily: F, fontWeight: 500, color: "rgba(255, 255, 255,0.28)", marginBottom: 10 }
     const hoverIn = (e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.color = T.cream)
-    const hoverOut = (e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.color = "rgba(251,246,242,0.55)")
+    const hoverOut = (e: React.MouseEvent<HTMLAnchorElement>) => (e.currentTarget.style.color = "rgba(255, 255, 255,0.55)")
 
     // V1.1 uses the content doc's footer (Part 2.2): Product / Company /
     // Resources. Pricing and Newsroom are omitted until they exist, as the doc
@@ -232,11 +232,11 @@ export function SiteFooter({ version }: { version?: SiteVersion } = {}) {
                 <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 48 : 64, marginBottom: 64, flexWrap: "wrap" as const }}>
                     <div style={{ flex: "0 0 auto", maxWidth: 280 }}>
                         <MiraeeLogo fill={T.orange} height={28} />
-                        <p style={{ fontSize: 14, fontFamily: F, lineHeight: 1.65, color: "rgba(251,246,242,0.45)", marginTop: 20, marginBottom: 0 }}>The AI-native corporate travel platform. A Tabhi company.</p>
+                        <p style={{ fontSize: 14, fontFamily: F, lineHeight: 1.65, color: "rgba(255, 255, 255,0.45)", marginTop: 20, marginBottom: 0 }}>The AI-native corporate travel platform. A Tabhi company.</p>
                         <div style={{ marginTop: 28, display: "flex", gap: 10, flexWrap: "wrap" }}>
                             <motion.a href="/book-a-demo" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }} style={{ display: "inline-flex", background: T.orange, color: "#FFFFFF", border: "none", borderRadius: 10, padding: "11px 22px", fontSize: 13, fontFamily: F, fontWeight: 700, cursor: "pointer", textDecoration: "none" }}>Book a demo</motion.a>
-                            <motion.a href="/support" whileHover={{ scale: 1.03, borderColor: "rgba(251,246,242,0.5)" }} whileTap={{ scale: 0.96 }}
-                                style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "transparent", color: T.cream, border: "1.5px solid rgba(251,246,242,0.25)", borderRadius: 10, padding: "11px 20px", fontSize: 13, fontFamily: F, fontWeight: 700, cursor: "pointer", textDecoration: "none" }}>
+                            <motion.a href="/support" whileHover={{ scale: 1.03, borderColor: "rgba(255, 255, 255,0.5)" }} whileTap={{ scale: 0.96 }}
+                                style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "transparent", color: T.cream, border: "1.5px solid rgba(255, 255, 255,0.25)", borderRadius: 10, padding: "11px 20px", fontSize: 13, fontFamily: F, fontWeight: 700, cursor: "pointer", textDecoration: "none" }}>
                                 <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></svg>
                                 Support
                             </motion.a>
@@ -245,7 +245,7 @@ export function SiteFooter({ version }: { version?: SiteVersion } = {}) {
                     <div style={{ flex: 1, display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr", gap: 32, minWidth: isMobile ? undefined : 320 }}>
                         {COLS.map(col => (
                             <div key={col.title}>
-                                <p style={{ fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "rgba(251,246,242,0.35)", margin: "0 0 16px" }}>{col.title}</p>
+                                <p style={{ fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "rgba(255, 255, 255,0.35)", margin: "0 0 16px" }}>{col.title}</p>
                                 {col.links.map(link => link.disabled ? (
                                     <span key={link.label} style={disabledStyle}>{link.label} <em style={{ fontStyle: "normal", fontSize: 11 }}>· coming soon</em></span>
                                 ) : (
@@ -262,17 +262,17 @@ export function SiteFooter({ version }: { version?: SiteVersion } = {}) {
                 {isV11 && (
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 28 }}>
                         {["SOC 2", "GDPR", "SSO/SCIM", "Audit logs"].map(chip => (
-                            <span key={chip} style={{ padding: "6px 14px", borderRadius: 100, border: "1px solid rgba(251,246,242,0.16)", fontSize: 11, fontFamily: F, fontWeight: 600, color: "rgba(251,246,242,0.55)" }}>{chip}</span>
+                            <span key={chip} style={{ padding: "6px 14px", borderRadius: 100, border: "1px solid rgba(255, 255, 255,0.16)", fontSize: 11, fontFamily: F, fontWeight: 600, color: "rgba(255, 255, 255,0.55)" }}>{chip}</span>
                         ))}
                     </div>
                 )}
-                <div style={{ borderTop: "1px solid rgba(251,246,242,0.08)", paddingTop: 28, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-                    <p style={{ fontSize: 13, fontFamily: F, color: "rgba(251,246,242,0.28)", margin: 0 }}>
+                <div style={{ borderTop: "1px solid rgba(255, 255, 255,0.08)", paddingTop: 28, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+                    <p style={{ fontSize: 13, fontFamily: F, color: "rgba(255, 255, 255,0.28)", margin: 0 }}>
                         {/* Doc Part 2.2 group line. */}
                         {isV11 ? "Miraee is part of Tabhi, alongside Mondee and Abhee. " : "© 2026 Miraee, a Tabhi company. "}
-                        <a href="/privacy" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Privacy</a> · <a href="/terms" style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Terms</a> · <a href={versionHref("/v1/security", "/security")} style={{ color: "rgba(251,246,242,0.5)", textDecoration: "none", fontWeight: 600 }}>Security</a>
+                        <a href="/privacy" style={{ color: "rgba(255, 255, 255,0.5)", textDecoration: "none", fontWeight: 600 }}>Privacy</a> · <a href="/terms" style={{ color: "rgba(255, 255, 255,0.5)", textDecoration: "none", fontWeight: 600 }}>Terms</a> · <a href={versionHref("/v1/security", "/security")} style={{ color: "rgba(255, 255, 255,0.5)", textDecoration: "none", fontWeight: 600 }}>Security</a>
                     </p>
-                    <p style={{ fontSize: 13, fontFamily: F, color: "rgba(251,246,242,0.28)", margin: 0 }}>{isV11 ? "© 2026 Miraee" : "Built by Tabhi AI"}</p>
+                    <p style={{ fontSize: 13, fontFamily: F, color: "rgba(255, 255, 255,0.28)", margin: 0 }}>{isV11 ? "© 2026 Miraee" : "Built by Tabhi AI"}</p>
                 </div>
             </div>
         </footer>

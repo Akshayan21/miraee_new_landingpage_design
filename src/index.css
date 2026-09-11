@@ -10,7 +10,7 @@
   --color-orange: #E55602;
   --color-maroon: #450E14;
   --color-ink: #0F0407;
-  --color-cream: #FBF6F2;
+  --color-cream: #FFFFFF;
   --color-white: #FFFFFF;
 
   --color-page: var(--page-bg);
@@ -56,26 +56,26 @@
 
 /* ─── Theme tokens (brand colors only) ────────────────────────────────
    Brand palette is fixed: orange #E55602, maroon #450E14, ink #0F0407,
-   cream #FBF6F2, white #FFFFFF. Only page *surfaces* and *text* flip
+   white #FFFFFF. Only page *surfaces* and *text* flip
    between modes — brand accents (orange/maroon) stay constant. */
 :root {
   color-scheme: light;
-  --page-bg: #FBF6F2;      /* cream */
+  --page-bg: #FFFFFF;      /* white */
   --surface: #FFFFFF;      /* white cards */
-  --surface-2: #FFF8F4;    /* faint peach panels */
+  --surface-2: #FFFFFF;    /* white panels */
   --text: #0F0407;         /* ink */
   --text-rgb: 15, 4, 7;    /* ink triplet — for opacity variants */
   --text-muted: rgba(15, 4, 7, 0.42);
   --hairline: rgba(15, 4, 7, 0.08);
-  --glass-bg: rgba(251, 246, 242, 0.9);
+  --glass-bg: rgba(255, 255, 255, 0.9);
   --glass-border: rgba(15, 4, 7, 0.08);
   --accent-strong: #450E14; /* maroon — deep accent on light surfaces */
 
   /* Shared section roles for V1 and V2. */
-  --section-canvas: #FBF6F2;
+  --section-canvas: #FFFFFF;
   --section-surface: #FFFFFF;
-  --section-tint: #FFF0E6;
-  --section-tint-strong: #F5E9E2;
+  --section-tint: #FFFFFF;
+  --section-tint-strong: #FFFFFF;
   --section-ink: #0F0407;
   --section-muted: #786C69;
   --section-brand: #E55602;
@@ -103,19 +103,19 @@ html[data-theme="dark"] {
   --page-bg: #211015;      /* warm dark maroon-charcoal (lifted, not black) */
   --surface: #2E1720;      /* raised card surface */
   --surface-2: #3A222B;    /* highest panel */
-  --text: #FBF6F2;         /* cream */
-  --text-rgb: 251, 246, 242;
-  --text-muted: rgba(251, 246, 242, 0.62);
-  --hairline: rgba(251, 246, 242, 0.14);
+  --text: #FFFFFF;         /* white */
+  --text-rgb: 255, 255, 255;
+  --text-muted: rgba(255, 255, 255, 0.62);
+  --hairline: rgba(255, 255, 255, 0.14);
   --glass-bg: rgba(46, 23, 32, 0.9);
-  --glass-border: rgba(251, 246, 242, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.12);
   --accent-strong: #E55602; /* maroon is unreadable on dark → brand orange accent */
 
   /* V1/V2 keep their branded section palette in either application theme. */
-  --section-canvas: #FBF6F2;
+  --section-canvas: #FFFFFF;
   --section-surface: #FFFFFF;
-  --section-tint: #FFF0E6;
-  --section-tint-strong: #F5E9E2;
+  --section-tint: #FFFFFF;
+  --section-tint-strong: #FFFFFF;
   --section-ink: #0F0407;
   --section-muted: #786C69;
   --section-brand: #E55602;
@@ -169,7 +169,7 @@ body {
 }
 
 ::selection {
-  color: #FBF6F2;
+  color: #FFFFFF;
   background: #E55602;
 }
 
@@ -233,7 +233,7 @@ body::before {
 
 [data-theme="dark"] .site-atmosphere__cursor { mix-blend-mode: screen; opacity: .07; }
 
-.page-preloader{position:fixed;inset:0;z-index:var(--z-overlay);overflow:hidden;background:radial-gradient(circle at 68% 24%,rgba(229,86,2,.19),transparent 31%),radial-gradient(circle at 20% 82%,rgba(69,14,20,.09),transparent 34%),linear-gradient(145deg,#fff 0%,#fbf6f2 48%,#f4e9df 100%)}
+.page-preloader{position:fixed;inset:0;z-index:var(--z-overlay);overflow:hidden;background:radial-gradient(circle at 68% 24%,rgba(229,86,2,.19),transparent 31%),radial-gradient(circle at 20% 82%,rgba(69,14,20,.09),transparent 34%),linear-gradient(145deg,#fff 0%,#FFFFFF 48%,#FFFFFF 100%)}
 .page-preloader:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(69,14,20,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(69,14,20,.035) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.8),transparent 82%)}
 .page-preloader svg{width:clamp(9rem,20vw,13rem);height:auto}
 .page-preloader>*{position:relative;z-index:var(--z-base)}.page-preloader__line{width:min(190px,48vw);height:2px;overflow:hidden;border-radius:999px;background:rgba(229,86,2,.14)}

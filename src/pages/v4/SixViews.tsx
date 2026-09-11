@@ -19,9 +19,9 @@ import adminVideo from "../../assets/Video/Admin.mp4"
 // from the source. Colours are re-pointed at V4's dark band.
 
 const T = {
-    onDark: "#fff6f0",
-    onDarkSoft: "rgba(255,246,240,0.62)",
-    onDarkFaint: "rgba(255,246,240,0.16)",
+    onDark: "#ffffff",
+    onDarkSoft: "rgba(255, 255, 255,0.62)",
+    onDarkFaint: "rgba(255, 255, 255,0.16)",
     accentLight: "#ff8a52",
 }
 const F = "\"Plus Jakarta Sans\", system-ui, sans-serif"
@@ -198,7 +198,7 @@ export function SixViews({ roles, isMobile }: { roles: SixViewRole[]; isMobile: 
                             <div style={{ textAlign: "right", paddingBottom: 8 }}>
                                 <div style={{ fontFamily: F, fontSize: 46, fontWeight: 300, letterSpacing: "-0.04em", color: T.onDark, fontVariantNumeric: "tabular-nums", lineHeight: 1 }}>
                                     {String(active + 1).padStart(2, "0")}
-                                    <span style={{ color: "rgba(255,246,240,0.32)" }}> / {String(roles.length).padStart(2, "0")}</span>
+                                    <span style={{ color: "rgba(255, 255, 255,0.32)" }}> / {String(roles.length).padStart(2, "0")}</span>
                                 </div>
                             </div>
                         )}
@@ -281,13 +281,13 @@ export function SixViews({ roles, isMobile }: { roles: SixViewRole[]; isMobile: 
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: reduce ? 0.2 : 0.54, ease: [0.16, 1, 0.3, 1] }}
                             style={{
-                                background: "linear-gradient(168deg, rgba(255,246,240,0.085), rgba(255,246,240,0.028))",
-                                border: "1px solid rgba(255,246,240,0.12)",
+                                background: "linear-gradient(168deg, rgba(255, 255, 255,0.085), rgba(255, 255, 255,0.028))",
+                                border: "1px solid rgba(255, 255, 255,0.12)",
                                 borderRadius: 26,
                                 padding: isMobile ? "22px 20px 24px" : "26px 28px 30px",
-                                boxShadow: "inset 0 1px 0 rgba(255,246,240,0.14), 0 40px 80px -34px rgba(0,0,0,0.6)",
+                                boxShadow: "inset 0 1px 0 rgba(255, 255, 255,0.14), 0 40px 80px -34px rgba(0,0,0,0.6)",
                             }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: 10, paddingBottom: 16, marginBottom: 20, borderBottom: "1px solid rgba(255,246,240,0.14)" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 10, paddingBottom: 16, marginBottom: 20, borderBottom: "1px solid rgba(255, 255, 255,0.14)" }}>
                                 <motion.span aria-hidden="true"
                                     animate={reduce ? undefined : { opacity: [0.35, 1, 0.35] }}
                                     transition={{ duration: 2.1, repeat: Infinity, ease: "easeInOut" }}
@@ -304,7 +304,7 @@ export function SixViews({ roles, isMobile }: { roles: SixViewRole[]; isMobile: 
                             {/* Stage Visual Viewport */}
                             <div style={{ minHeight: isMobile ? 268 : 232 }}>
                                 {roleVideo ? (
-                                    <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", border: "1px solid rgba(255,246,240,0.15)", background: "#0b0607" }}>
+                                    <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", border: "1px solid rgba(255, 255, 255,0.15)", background: "#0b0607" }}>
                                         <video
                                             ref={stageVideoRef}
                                             src={roleVideo}
