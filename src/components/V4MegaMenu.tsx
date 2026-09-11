@@ -2,7 +2,6 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { MiraeeLogo } from "./LegalFormKit"
-import { VersionSwitch } from "./VersionSwitch"
 import { ease } from "./V2Kit"
 import { useWindowWidth } from "../hooks/useWindowSize"
 import { V4_NAV, V4_NAV_ITEMS, isSectionActive } from "./V4NavData"
@@ -264,7 +263,6 @@ export function V4Nav() {
                         </nav>
                     )}
                     <div className="v4-nav__actions">
-                        {!isCompact && <VersionSwitch className="v4-nav__version" />}
                         {!isCompact && <a href="https://app.miraee.ai">Sign in</a>}
                         <Link to="/book-a-demo" className="v4-nav__cta">Book a demo</Link>
                         {isCompact && (
@@ -292,7 +290,7 @@ export function V4Nav() {
                             key="v4-nav-mobile"
                             initial={{ opacity: 0, y: -12, scale: 0.985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8, scale: 0.99 }}
                             transition={{ duration: reduced ? 0 : 0.24, ease }}>
-                            <div className="v4-nav__sheet-head"><span>Navigate</span><VersionSwitch className="v4-nav__version v4-nav__version--mobile" /></div>
+                            <div className="v4-nav__sheet-head"><span>Navigate</span></div>
                             <nav className="v4-nav__acc" aria-label="Primary navigation">
                                 {V4_NAV_ITEMS.map(item => item.kind === "link"
                                     ? (

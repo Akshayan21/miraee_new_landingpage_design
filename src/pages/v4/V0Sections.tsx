@@ -452,7 +452,12 @@ export function HowItWorks() {
                 a sticky element's own rect stays pinned at top:0 for its whole
                 pin span and can't itself report continuous scroll progress. */}
             <div ref={trackRef} style={{ position: "relative", height: `${STEPS.length * 100}vh`, background: T.bg2 }}>
-                <div className="v4-step-panel" style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
+                {/* Capped to the site's shell width and centered -- without this,
+                    the card's `left/right` insets below are relative to the full
+                    viewport, so past ~1240px the text block (max-width 620) and
+                    the right-side photo (anchored at right: 6%) drift apart into
+                    a growing empty gap on wide screens. */}
+                <div className="v4-step-panel" style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", maxWidth: 1240, margin: "0 auto" }}>
                     {STEPS.map((step, i) => (
                         <StepPanel key={step.num} {...step} index={i} total={STEPS.length} scrollYProgress={scrollYProgress} />
                     ))}
@@ -622,7 +627,12 @@ export function Experiences() {
 
     return (
         <section id="experiences" ref={sectionRef} style={{ position: "relative", height: panPx === 0 ? "100vh" : `calc(${panPx}px + 100vh)`, background: T.bg }}>
-            <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            {/* flex-start + fixed top padding, not "center": the same
+                viewport-height-dependent empty band as the hero and the
+                platform-solution panel -- centering a shorter-than-100vh
+                block inside a full-height sticky section grows the gap right
+                along with the screen. */}
+            <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "flex-start", paddingTop: "clamp(120px, 14vw, 160px)" }}>
                 <div style={{ paddingLeft: "clamp(32px,5vw,64px)", paddingRight: "clamp(32px,5vw,64px)", marginBottom: 48 }}>
                     <SectionLabel>Experiences</SectionLabel>
                     <h2 style={{ fontFamily: F, fontSize: "clamp(2rem,3.5vw,3.2rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: T.ink, margin: 0 }}>
@@ -1063,7 +1073,12 @@ export function PlatformSolution() {
         <section ref={sectionRef} style={{ position: "relative", height: "300vh", background: T.bg }}>
             <div style={{ position: "sticky", top: 0, height: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", overflow: "hidden" }}>
                 {/* LEFT — item list */}
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 clamp(32px,5vw,64px)", borderRight: "1px solid " + T.border, background: T.bg }}>
+                {/* flex-start + a fixed nav clearance, not "center": centering
+                    this list inside the full 100vh sticky panel left a band of
+                    empty space above it that grew with viewport height, same
+                    issue as the homepage hero. Starting right below the nav
+                    keeps it constant across screen sizes. */}
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "clamp(120px, 14vw, 160px) clamp(32px,5vw,64px) 0", borderRight: "1px solid " + T.border, background: T.bg }}>
                     <SectionLabel>The platform</SectionLabel>
                     <h2 style={{ fontFamily: F, fontSize: "clamp(1.8rem,3vw,3rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: T.ink, marginBottom: 52 }}>
                         <StaggerWords text="200+ deep agents," /><br />
@@ -1126,7 +1141,7 @@ export function PlatformSolution() {
                             animate={{ opacity: 1, y: 0, clipPath: "inset(0% 0 0 0)" }}
                             exit={{ opacity: 0, y: -30, clipPath: "inset(0 0 10% 0)" }}
                             transition={{ duration: 0.55, ease: EO }}
-                            style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 clamp(32px,5vw,64px)" }}>
+                            style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "clamp(120px, 14vw, 160px) clamp(32px,5vw,64px) 0" }}>
                             {/* Icon */}
                             <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1, duration: 0.5, ease: EO }}
                                 style={{ fontSize: 48, color: item.accent, marginBottom: 32, lineHeight: 1 }}>

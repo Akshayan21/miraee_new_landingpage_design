@@ -221,14 +221,15 @@
    letting the rest of the page scroll up and visually collide with it. */
 .v4-hero { padding: clamp(130px, 16vw, 190px) 0 clamp(56px, 8vw, 96px); }
 
-.v4-hero-pin { position: relative; height: 220vh; }
+.v4-hero-pin { position: relative; height: 150vh; }
 .v4-hero-pin .v4-hero {
-  position: sticky; top: 0; height: 100vh;
-  /* flex-start, not center: centering inside a fixed 100vh box stacks a
-     second, viewport-height-dependent gap on top of the padding below --
-     the taller the viewport, the bigger that extra empty band above the
-     content gets. Starting the content right after the (fixed) padding
-     keeps the gap under the nav constant across all screen sizes. */
+  position: sticky; top: 0;
+  /* No forced height: 100vh here. A fixed viewport-height box left a
+     visible band of empty space below the (shorter) content, and that band
+     grew right along with the screen -- both in height and in how long it
+     sat on screen while the pin released. Sizing to content instead makes
+     the sticky hero exactly as tall as what's actually in it, so there's
+     nothing left over to look "dead" regardless of viewport size. */
   display: flex; flex-direction: column; justify-content: flex-start;
   overflow: hidden;
   padding: clamp(100px, 11vw, 140px) 0 clamp(56px, 8vw, 96px);
