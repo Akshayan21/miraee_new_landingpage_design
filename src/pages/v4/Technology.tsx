@@ -132,7 +132,7 @@ export default function V4Technology() {
                     </Reveal>
                     <Reveal delay={0.15}>
                         <div className="v4-note" style={{ marginTop: 28 }}>
-                            <b>6</b>
+                            <b>7</b>
                             <div>
                                 <h3>Two layers, one system.</h3>
                                 <p>An agent is a bounded, permissioned worker with one job, its own tools, and a written limit on what it may do alone. Competitors bolt AI onto a booking tool; here the intelligence and the supply were built together.</p>

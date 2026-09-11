@@ -33,7 +33,7 @@ export default function V4AiAssistant() {
                 <div className="v4-shell">
                     <Reveal>
                         <span className="v4-eyebrow">The architecture</span>
-                        <h2 className="v4-h2" id="architecture-title">Not one agent. A workforce.</h2>
+                        <h1 className="v4-h2" id="architecture-title">Not one agent. A workforce.</h1>
                         <p className="v4-lede">
                             Six different specialized agents each running their own allotted task, under the same thread. Beneath them sits Tabhi intelligence connecting Mondee supply, policy, payment and expense all together woven into one framework, dedicatedly working to complete one single trip.
                         </p>
@@ -49,7 +49,7 @@ export default function V4AiAssistant() {
 
                     <Reveal delay={0.15}>
                         <div className="v4-note" style={{ marginTop: 28 }}>
-                            <b>6</b>
+                            <b>7</b>
                             <div>
                                 <h3>Two layers, one system.</h3>
                                 <p>

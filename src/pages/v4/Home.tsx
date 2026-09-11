@@ -3,7 +3,6 @@ import { MotionConfig } from "framer-motion"
 import { V4Nav, V4Footer, Reveal } from "../../components/V4Kit"
 import { usePageMeta } from "../../hooks/usePageMeta"
 import { StatStrip, HowItWorks, KineticBand, BusinessCase, Experiences, CtaRoutes, PlatformSolution } from "./V0Sections"
-import { AvatarSpotlight } from "./HeroAssistant"
 import { Magnetic, ScrollProgress, GrainOverlay, CustomCursor } from "../../animations"
 import { IntroCover } from "./V0Intro"
 import { useIntroActive } from "./useIntroActive"
@@ -117,11 +116,6 @@ export default function V4Home() {
                         </div>
                     </section>
                 </div>
-
-                {/* The avatar used to live inside the collapsed hero card; it now
-                    gets its own introduction directly below the hero instead of
-                    competing with the hero photo for attention. */}
-                <AvatarSpotlight />
 
                 {/* V0's "200+ deep agents, working as one" split-screen panel. */}
                 <PlatformSolution />
