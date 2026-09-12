@@ -7,6 +7,7 @@ import "../../SubpagesV2.css"
 import "../V4.css"
 
 export type RoleDetail = { icon?: ReactNode; title: string; body: string }
+export type RoleDetailGroup = { eyebrow?: string; heading: string; items: RoleDetail[]; footnote?: string }
 
 interface RoleShowcaseProps {
     roleSlug: string
@@ -21,6 +22,10 @@ interface RoleShowcaseProps {
     roleImage: string
     detailsHeading?: string
     details?: RoleDetail[]
+    // Alternative to detailsHeading/details: several independently-headed
+    // pillar groups instead of one flat list (e.g. "How it works for you" +
+    // "What makes it easy" as two separate blocks rather than one).
+    detailGroups?: RoleDetailGroup[]
 }
 
 function splitShift(shift: string): [string, string] {
@@ -42,6 +47,7 @@ export default function RoleShowcasePage({
     roleImage,
     detailsHeading,
     details,
+    detailGroups,
 }: RoleShowcaseProps) {
     const [splitBefore, splitAfter] = splitShift(shift)
     const before = beforeOverride ?? splitBefore
@@ -52,7 +58,7 @@ export default function RoleShowcasePage({
     return (
         <V4Page
             title={`${roleTitle} | Solutions | Miraee`}
-            description={`Everyone lands on a dashboard shaped to their role. ${shift}`}>
+            description={shift ? `Everyone lands on a dashboard shaped to their role. ${shift}` : body}>
 
             <section className="v4-section v4-navan-hero-section">
                 <div className="v4-shell">
@@ -67,57 +73,62 @@ export default function RoleShowcasePage({
                                 <h1 className="v4-navan-headline">{after || roleTitle}</h1>
                                 <p className="v4-navan-lede">{body}</p>
 
-                                {/* Interactive Shift Switcher (Before vs With Miraee) */}
-                                <div className="v4-navan-shift-box">
-                                    <div className="v4-navan-shift-nav" role="tablist" aria-label="Transformation comparison">
-                                        <button
-                                            type="button"
-                                            role="tab"
-                                            aria-selected={viewShift === "miraee"}
-                                            className={`v4-navan-tab-trigger ${viewShift === "miraee" ? "active" : ""}`}
-                                            onClick={() => setViewShift("miraee")}
-                                        >
-                                            With Miraee
-                                        </button>
-                                        <button
-                                            type="button"
-                                            role="tab"
-                                            aria-selected={viewShift === "before"}
-                                            className={`v4-navan-tab-trigger ${viewShift === "before" ? "active" : ""}`}
-                                            onClick={() => setViewShift("before")}
-                                        >
-                                            The Old Way
-                                        </button>
-                                    </div>
+                                {/* Interactive Shift Switcher (Before vs With Miraee) — only
+                                    when there's an actual before/after narrative to switch
+                                    between; pages built around a single hands-free-assistant
+                                    story (no "used to X" framing) skip this entirely. */}
+                                {shift && (
+                                    <div className="v4-navan-shift-box">
+                                        <div className="v4-navan-shift-nav" role="tablist" aria-label="Transformation comparison">
+                                            <button
+                                                type="button"
+                                                role="tab"
+                                                aria-selected={viewShift === "miraee"}
+                                                className={`v4-navan-tab-trigger ${viewShift === "miraee" ? "active" : ""}`}
+                                                onClick={() => setViewShift("miraee")}
+                                            >
+                                                With Miraee
+                                            </button>
+                                            <button
+                                                type="button"
+                                                role="tab"
+                                                aria-selected={viewShift === "before"}
+                                                className={`v4-navan-tab-trigger ${viewShift === "before" ? "active" : ""}`}
+                                                onClick={() => setViewShift("before")}
+                                            >
+                                                The Old Way
+                                            </button>
+                                        </div>
 
-                                    <div className="v4-navan-shift-panel">
-                                        <AnimatePresence mode="wait">
-                                            {viewShift === "miraee" ? (
-                                                <motion.div
-                                                    key="miraee"
-                                                    initial={{ opacity: 0, y: 6 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    exit={{ opacity: 0, y: -6 }}
-                                                    transition={{ duration: 0.2 }}
-                                                >
-                                                    <div className="v4-navan-panel-label text-orange">Modern Operating Model</div>
-                                                    <p className="v4-navan-panel-text">{shift || after}</p>
-                                                </motion.div>
-                                            ) : (
-                                                <motion.div
-                                                    key="before"
-                                                    initial={{ opacity: 0, y: 6 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    exit={{ opacity: 0, y: -6 }}
-                                                    transition={{ duration: 0.2 }}
-                                                >
-                                                    <div className="v4-navan-panel-label text-muted">Manual Friction</div>
-                                                    <p className="v4-navan-panel-text text-muted">{before}</p>
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
+                                        <div className="v4-navan-shift-panel">
+                                            <AnimatePresence mode="wait">
+                                                {viewShift === "miraee" ? (
+                                                    <motion.div
+                                                        key="miraee"
+                                                        initial={{ opacity: 0, y: 6 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        exit={{ opacity: 0, y: -6 }}
+                                                        transition={{ duration: 0.2 }}
+                                                    >
+                                                        <div className="v4-navan-panel-label text-orange">Modern Operating Model</div>
+                                                        <p className="v4-navan-panel-text">{shift || after}</p>
+                                                    </motion.div>
+                                                ) : (
+                                                    <motion.div
+                                                        key="before"
+                                                        initial={{ opacity: 0, y: 6 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        exit={{ opacity: 0, y: -6 }}
+                                                        transition={{ duration: 0.2 }}
+                                                    >
+                                                        <div className="v4-navan-panel-label text-muted">Manual Friction</div>
+                                                        <p className="v4-navan-panel-text text-muted">{before}</p>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 {/* Capabilities Chips */}
                                 {controls && controls.length > 0 && (
@@ -197,6 +208,34 @@ export default function RoleShowcasePage({
                             </div>
                         </div>
                     )}
+
+                    {/* Independently-headed pillar groups — same visual language as the
+                        single detailsHeading/details block above, just repeated once per
+                        group so each group carries its own heading. */}
+                    {detailGroups && detailGroups.map(group => (
+                        <div className="v4-navan-pillars-wrap" key={group.heading}>
+                            <Reveal>
+                                <div className="v4-navan-pillars-header">
+                                    <span className="v4-navan-eyebrow">{group.eyebrow || "Operating Model"}</span>
+                                    <h2 className="v4-navan-pillars-title">{group.heading}</h2>
+                                </div>
+                            </Reveal>
+                            <div className="v4-navan-pillars-grid" style={{ gridTemplateColumns: `repeat(${Math.min(group.items.length, 3)}, 1fr)` }}>
+                                {group.items.map((d, i) => (
+                                    <Reveal className="v4-navan-pillar-card" key={d.title} delay={i * 0.08}>
+                                        <span className="v4-navan-pillar-num">0{i + 1}</span>
+                                        <h3 className="v4-navan-pillar-heading">{d.title}</h3>
+                                        <p className="v4-navan-pillar-desc">{d.body}</p>
+                                    </Reveal>
+                                ))}
+                            </div>
+                            {group.footnote && (
+                                <Reveal>
+                                    <p className="v4-navan-pillar-footnote">{group.footnote}</p>
+                                </Reveal>
+                            )}
+                        </div>
+                    ))}
                 </div>
             </section>
         </V4Page>

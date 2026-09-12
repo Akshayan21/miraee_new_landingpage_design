@@ -44,15 +44,22 @@ export default function ExecutiveTravelPage() {
         <UseCasePageTemplate
             slug="executive-travel"
             title="Executive Travel"
-            perks="White-glove trips. Preferences remembered. A human on call."
-            benefits={[
-                "Agent learns preferences over time.",
-                "Named human support.",
-                "Traveler profile kept separate from account login.",
-                "Trips routed with full context.",
+            headline="White-glove travel, quietly handled."
+            subline="Preferences remembered, trips routed with full context, and a named human on call when it matters."
+            blocks={[
+                {
+                    title: "An assistant that learns you.",
+                    body: "Miraee remembers preferred airlines, seats, hotels and timing, and applies them from the first result.",
+                },
+                {
+                    title: "A human when you want one.",
+                    body: "Named support on call, so there's always a person behind the agent.",
+                },
+                {
+                    title: "Identity kept separate.",
+                    body: "The traveller profile stays walled off from account login, so personal detail follows the executive, not the company system.",
+                },
             ]}
-            persona="Executives and their assistants."
-            bestFor="Any size with a leadership team that travels, scales with seniority, not headcount."
             accentTag="White-Glove Service"
             simulation={<ExecutiveTravelSimulation />}
         />

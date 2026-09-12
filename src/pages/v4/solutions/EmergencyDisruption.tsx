@@ -41,14 +41,22 @@ export default function EmergencyDisruptionPage() {
         <UseCasePageTemplate
             slug="emergency-disruption"
             title="Emergency & Disruption"
-            perks="Fast rebooking. Travelers located. One thread for the response."
-            benefits={[
-                "Proactive rebooking.",
-                "Live traveler location on the map.",
-                "Duty of care from the same console.",
-                "Everyone affected is seen in context.",
+            headline="When plans break, one thread holds."
+            subline="Proactive rebooking, live traveller location, and the whole response in one place."
+            blocks={[
+                {
+                    title: "Rebooking before you ask.",
+                    body: "Miraee watches for disruption and offers a rebooked option, often before the airline announces it.",
+                },
+                {
+                    title: "Everyone located, in real time.",
+                    body: "Live traveller location on the map, so the team always knows who's affected and where.",
+                },
+                {
+                    title: "One console for the response.",
+                    body: "Duty of care runs from the same screen, so travel leads, admins and CHROs act on the same picture.",
+                },
             ]}
-            persona="Travel leads, admins and CHROs."
             accentTag="Duty of Care"
             simulation={<EmergencyDisruptionSimulation />}
         />

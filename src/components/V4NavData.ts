@@ -85,7 +85,7 @@ export const V4_NAV = [
                 heading: "By use case",
                 items: [
                     { label: "Business travel", to: "/v4/solutions/business-travel" },
-                    { label: "Meetings & events", to: "/v4/solutions/meetings-events" },
+                    { label: "MICE & bleisure", to: "/v4/solutions/meetings-events" },
                     { label: "Executive travel", to: "/v4/solutions/executive-travel" },
                     { label: "Global mobility", to: "/v4/solutions/global-mobility" },
                     { label: "Emergency & disruption", to: "/v4/solutions/emergency-disruption" },

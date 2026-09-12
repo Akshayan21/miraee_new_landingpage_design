@@ -40,14 +40,22 @@ export default function GlobalMobilityPage() {
         <UseCasePageTemplate
             slug="global-mobility"
             title="Global Mobility"
-            perks="Cross-border trips. Local rules handled. Distributed teams covered."
-            benefits={[
-                "Entity-level policy, currency and data residency per office.",
-                "Grade-based rules inherit across entities.",
-                "HRIS keeps cost centres and managers current.",
+            headline="One platform, every border."
+            subline="Cross-border travel for distributed teams, with local rules, currency and data residency handled per office."
+            blocks={[
+                {
+                    title: "Policy that fits each entity.",
+                    body: "Entity-level policy, currency and data residency, set per office rather than forced into one mould.",
+                },
+                {
+                    title: "Rules that inherit themselves.",
+                    body: "Grade-based policy carries across entities automatically, so seniority sets the rules, not manual setup.",
+                },
+                {
+                    title: "People data always current.",
+                    body: "HRIS keeps cost centres and managers up to date without anyone maintaining them by hand.",
+                },
             ]}
-            persona="Global teams, HR and admins."
-            bestFor="Multi-entity companies with offices in more than one country."
             accentTag="Cross-Border Entity"
             simulation={<GlobalMobilitySimulation />}
         />

@@ -48,15 +48,22 @@ export default function BusinessTravelPage() {
         <UseCasePageTemplate
             slug="business-travel"
             title="Business Travel"
-            perks="Everyday trips. Described and booked easily. Policy compliant."
-            benefits={[
-                "Per diem rules apply at search.",
-                "Overview of total trips and spend.",
-                "Savings rate and rewards.",
-                "Autonomous expense reconciliation.",
+            headline="The everyday trip, made effortless."
+            subline="Describe where you need to be and Miraee books it in policy, no forms, no report, no back-and-forth."
+            blocks={[
+                {
+                    title: "Booked from a sentence.",
+                    body: "Describe the trip and Miraee plans it, priced and in policy from the first result.",
+                },
+                {
+                    title: "Spend that tracks itself.",
+                    body: "An overview of total trips and spend, with savings rate and rewards always in view.",
+                },
+                {
+                    title: "Expenses that close themselves.",
+                    body: "Per diem rules apply at search and reconciliation happens automatically, nothing to file.",
+                },
             ]}
-            persona="Any employee of the company."
-            bestFor="Startups to enterprise, anyone with recurring travel."
             accentTag="Everyday Trips"
             simulation={<BusinessTravelSimulation />}
         />
