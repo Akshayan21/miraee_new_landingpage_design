@@ -8,6 +8,9 @@
   --m-surface: var(--section-surface);
   --m-soft: var(--section-tint);
   --m-maroon: var(--section-dark);
+  /* Dark-section background only — kept separate from --m-maroon so
+     changing it never touches the maroon ink color used for headings/text. */
+  --m-dark-bg: #110E09;
   --m-ink: var(--section-ink);
   --m-orange-brand: var(--section-brand);
   --m-orange: var(--section-brand-strong);

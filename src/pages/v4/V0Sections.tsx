@@ -4,14 +4,11 @@ import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useSpr
 import type { MotionValue } from "framer-motion"
 import { EO, FadeUp, SectionWrapper, StaggerWords, ScrambleText, TiltCard } from "../../animations"
 import { useWindowWidth } from "../../hooks/useWindowSize"
-import employeeAvatar from "../../assets/miraee-role-employee.png"
-import financeAvatar from "../../assets/Finance .jpg"
-import managerAvatar from "../../assets/Manager Image.jpg"
-import adminAvatar from "../../assets/Admin.jpg"
 import planStepPhoto from "../../assets/plan.webp"
 import bookStepPhoto from "../../assets/book.jpg"
 import expenseStepPhoto from "../../assets/expense11.jpg"
 import changeStepPhoto from "../../assets/manage.jpg"
+import faviconImg from "../../assets/favicon-180.png"
 
 // Verbatim ports of the V0 homepage sections the site-architecture doc calls
 // for by name — layout and animation, not just the copy. Source is
@@ -169,10 +166,10 @@ export function KineticBand({ line1, line2, bg = T.bg, ink = T.ink }: { line1: s
 
 // ─── HOW IT WORKS ────────────────────────────────────────────────────────────
 const STEPS = [
-    { num: "01", title: "Plan", body: "Describe the trip in plain language. Miraee builds an in-policy itinerary in seconds.", accent: T.orange, bg: T.bg, tag: "Plain language" },
-    { num: "02", title: "Book", body: "Flights, hotels and cars from Mondee wholesale inventory: real savings, one tap.", accent: T.accent, bg: T.bg2, tag: "Wholesale inventory" },
-    { num: "03", title: "Expense", body: "Receipts, reports and reconciliation handled automatically. No forms, no chasing.", accent: T.orange, bg: T.surface2, tag: "Zero forms" },
-    { num: "04", title: "Change", body: "Plans shift, the agent rebooks itself: within policy, before you even ask.", accent: T.accent, bg: T.bg, tag: "Self-rebooking" },
+    { num: "01", title: "Travelers", body: "Give your team a voice, text, and avatar-driven assistant that is calendar-aware and completely hands-free. It handles corporate trips, remembers your preferences, and automatically rebooks you during flight delays.", accent: T.orange, bg: T.bg, tag: "A personal executive assistant" },
+    { num: "02", title: "Finance", body: "Expense reports are filed by the time the plane lands. Receipts are automatically captured, GL-coded, policy-checked, and reconciled without manual forms.", accent: T.accent, bg: T.bg2, tag: "Zero-touch expenses" },
+    { num: "03", title: "Procurement", body: "Stop paying retail-plus fares. We stack four distinct contract sources on every single search: Tabhi wholesale rates, your own negotiated rates, our direct supplier deals, and third-party content. The best bookable fare always wins.", accent: T.orange, bg: T.surface2, tag: "Stacked savings" },
+    { num: "04", title: "HR", body: "Every traveler is located accurately by their itinerary. We provide travel alerts, weather updates, and disruption monitoring per PNR, notifying managers only when it truly matters.", accent: T.accent, bg: T.bg, tag: "Proactive duty of care" },
 ]
 
 // One real photo per step, framed behind the chat-card mock — kept as a
@@ -439,12 +436,12 @@ export function HowItWorks() {
         <section id="how-it-works" style={{ position: "relative" }}>
             <div style={{ background: T.bg2, padding: isMobile ? "80px 20px 16px" : isTablet ? "80px 40px 16px" : "80px 64px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
                 <div>
-                    <SectionLabel>How it works</SectionLabel>
+                    <SectionLabel>Built for everyone</SectionLabel>
                     <h2 style={{ fontFamily: F, fontSize: isMobile ? "1.1rem" : "1.2rem", fontWeight: 500, color: T.muted, margin: 0, letterSpacing: "-0.01em" }}>
-                        One agent, the whole journey: plan, book, expense, change.
+                        One platform. A different win for every seat.
                     </h2>
                 </div>
-                <span style={{ fontSize: 13, fontFamily: F, color: T.muted }}>Voice, chat or avatar · It remembers your preferences.</span>
+                <span style={{ fontSize: 13, fontFamily: F, color: T.muted }}>Travelers, finance, procurement and HR.</span>
             </div>
             {/* Scroll track: STEPS.length viewport-heights of runway behind one
                 pinned stage. `scrollYProgress` (0→1 across that whole runway)
@@ -464,6 +461,162 @@ export function HowItWorks() {
                 </div>
             </div>
         </section>
+    )
+}
+
+// ─── AGENT JOURNEY — single-container tabbed "How It Works" ─────────────────
+// Distinct from HowItWorks() above (V0's sticky Travelers/Finance/Procurement/
+// HR deck, mislabeled "Built for everyone" onscreen). This is the plan/book/
+// expense/change journey, styled after the reference screenshot: one big
+// rounded card, a pill switcher top-left, copy and a framed screenshot that
+// crossfade together as the active pill changes. Auto-advances so "text
+// shifting from tab to tab" reads even to a visitor who never clicks.
+const JOURNEY_STEPS = [
+    {
+        num: "01", title: "Plan", tag: "Just Command", body: "Describe the trip in plain language. Miraee builds an in-policy itinerary in seconds.", photo: planStepPhoto,
+        stat: "Itinerary in <10s", accent: "#E55602",
+        icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M12 20V4M5 11l7-7 7 7" /></svg>,
+    },
+    {
+        num: "02", title: "Book", tag: "Wholesale inventory", body: "Flights, hotels and cars from Mondee wholesale inventory: real savings, one tap.", photo: bookStepPhoto,
+        stat: "20-30% wholesale savings", accent: "#450E14",
+        icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 5 5L20 7" /></svg>,
+    },
+    {
+        num: "03", title: "Expense", tag: "Zero forms", body: "Receipts, reports and reconciliation handled automatically. No forms, no chasing.", photo: expenseStepPhoto,
+        stat: "0 forms filed", accent: "#E55602",
+        icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z" /><path d="M9 8h6M9 12h6" /></svg>,
+    },
+    {
+        num: "04", title: "Change", tag: "Self-rebooking", body: "Plans shift, the agent rebooks itself: within policy, before you even ask.", photo: changeStepPhoto,
+        stat: "Rebooked before you ask", accent: "#450E14",
+        icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5" /></svg>,
+    },
+]
+const JOURNEY_INTERVAL = 5000
+
+export function AgentJourney() {
+    const w = useWindowWidth()
+    const isMobile = w < 640
+    const isTablet = w >= 640 && w < 1024
+    const [active, setActive] = useState(0)
+    const [elapsed, setElapsed] = useState(0)
+    const reduced = useReducedMotion()
+    const sectionRef = useRef<HTMLDivElement>(null)
+    const inView = useInView(sectionRef, { once: true, margin: "-10% 0px" })
+
+    // Progress ticks every 60ms; a tab change (manual or auto) resets it. Paused
+    // entirely under reduced-motion so the copy doesn't shift on its own.
+    useEffect(() => {
+        if (reduced || !inView) return
+        const tick = setInterval(() => {
+            setElapsed(e => {
+                if (e + 60 >= JOURNEY_INTERVAL) {
+                    setActive(a => (a + 1) % JOURNEY_STEPS.length)
+                    return 0
+                }
+                return e + 60
+            })
+        }, 60)
+        return () => clearInterval(tick)
+    }, [reduced, inView])
+
+    function selectTab(i: number) {
+        setActive(i)
+        setElapsed(0)
+    }
+
+    const step = JOURNEY_STEPS[active]
+
+    return (
+        <SectionWrapper>
+            <section ref={sectionRef} style={{ background: T.bg, padding: isMobile ? "72px 20px" : isTablet ? "88px 40px" : "100px 64px" }}>
+                <div style={{ maxWidth: 1160, margin: "0 auto" }}>
+                    <div style={{ marginBottom: isMobile ? 24 : 32 }}>
+                        <SectionLabel>How it works</SectionLabel>
+                        <h2 style={{ fontFamily: F, fontSize: isMobile ? "clamp(1.7rem,7vw,2.2rem)" : "clamp(1.7rem,2.6vw,2.4rem)", fontWeight: 800, lineHeight: 1.2, letterSpacing: "-0.03em", color: T.ink, margin: 0, maxWidth: 640 }}>
+                            One agent, the whole journey:<br />
+                            <span style={{ color: T.muted, fontWeight: 600 }}>plan, book, expense, change.</span>
+                        </h2>
+                    </div>
+
+                    {/* Single rounded container: pill switcher + progress rail top-left,
+                        copy/screenshot pair crossfading below — same shape as the
+                        reference (Travel/Spend/Events over a two-column panel). */}
+                    <div style={{ background: T.surface2, borderRadius: 32, padding: isMobile ? 24 : isTablet ? 32 : 40, overflow: "hidden" }}>
+                        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: isMobile ? 24 : 32 }}>
+                            <div style={{ display: "inline-flex", gap: 4, padding: 4, borderRadius: 999, background: T.card, border: "1px solid " + T.border }}>
+                                {JOURNEY_STEPS.map((s, i) => {
+                                    const isActive = i === active
+                                    return (
+                                        <button key={s.num} type="button" onClick={() => selectTab(i)} aria-current={isActive}
+                                            style={{ position: "relative", display: "inline-flex", alignItems: "center", gap: 8, padding: isMobile ? "8px 14px" : "9px 20px", borderRadius: 999, border: "none", outline: "none", background: isActive ? T.ink : "transparent", color: isActive ? T.cream : T.muted, fontFamily: F, fontSize: isMobile ? 12.5 : 13.5, fontWeight: 700, letterSpacing: "-0.01em", cursor: "pointer", transition: "background 0.35s ease, color 0.35s ease", whiteSpace: "nowrap" }}>
+                                            <span style={{ display: "inline-flex", opacity: isActive ? 1 : 0.6 }}>{s.icon}</span>
+                                            {s.title}
+                                        </button>
+                                    )
+                                })}
+                            </div>
+                            <span style={{ fontSize: 13, fontFamily: F, color: T.muted, whiteSpace: "nowrap" }}>Voice, chat or avatar · It remembers your preferences.</span>
+                        </div>
+
+                        {/* Segmented progress rail: one bar per step, current one fills over
+                            JOURNEY_INTERVAL — makes the auto-advance legible at a glance. */}
+                        <div style={{ display: "flex", gap: 6, marginBottom: isMobile ? 24 : 32, maxWidth: 360 }}>
+                            {JOURNEY_STEPS.map((s, i) => (
+                                <span key={s.num} style={{ flex: 1, height: 3, borderRadius: 3, background: T.border, overflow: "hidden" }}>
+                                    <span style={{ display: "block", height: "100%", borderRadius: 3, background: T.orange, width: i < active ? "100%" : i === active ? (!reduced && inView ? `${(elapsed / JOURNEY_INTERVAL) * 100}%` : "100%") : "0%", transition: i === active ? "width 60ms linear" : "width 0.3s ease" }} />
+                                </span>
+                            ))}
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: isMobile || isTablet ? "1fr" : "minmax(0,0.85fr) minmax(0,1.15fr)", gap: isMobile ? 28 : 40, alignItems: "start" }}>
+                            <AnimatePresence mode="wait">
+                                <motion.div key={"text-" + step.num}
+                                    initial={reduced ? undefined : { opacity: 0, y: 14 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={reduced ? undefined : { opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.4, ease: EO }}>
+                                    <p style={{ fontSize: 11.5, fontFamily: F, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: T.orange, margin: "0 0 14px" }}>{step.num} · {step.tag}</p>
+                                    <p style={{ fontSize: isMobile ? 17 : 19, fontFamily: FB, fontWeight: 500, lineHeight: 1.6, color: T.ink, margin: 0, maxWidth: 420 }}>{step.body}</p>
+                                </motion.div>
+                            </AnimatePresence>
+
+                            <div style={{ position: "relative" }}>
+                                {/* Ambient glow behind the frame, tinted to the active step's
+                                    accent so the crossfade reads as one image changing color,
+                                    not a flat swap. */}
+                                <motion.div aria-hidden="true"
+                                    animate={{ background: `radial-gradient(60% 60% at 50% 40%, ${step.accent}33 0%, transparent 70%)` }}
+                                    transition={{ duration: 0.6, ease: EO }}
+                                    style={{ position: "absolute", inset: -24, borderRadius: 32, filter: "blur(20px)", zIndex: 0 }} />
+                                <AnimatePresence mode="wait">
+                                    <motion.div key={"img-" + step.num}
+                                        initial={reduced ? undefined : { opacity: 0, scale: 0.97 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={reduced ? undefined : { opacity: 0, scale: 1.02 }}
+                                        transition={{ duration: 0.45, ease: EO }}
+                                        style={{ position: "relative", zIndex: 1, borderRadius: 20, overflow: "hidden", boxShadow: "0 30px 60px -20px rgba(69,14,20,0.28)", aspectRatio: isMobile ? "4 / 3" : "16 / 10", background: T.card }}>
+                                        <img src={step.photo} alt={`${step.title} step preview`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                                        {/* Floating stat chip, same card language as the hero's
+                                            "Booking confirmed" callout, ties this crossfade back
+                                            to a concrete number per step instead of just a photo. */}
+                                        <motion.div
+                                            initial={reduced ? undefined : { opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.4, delay: 0.15, ease: EO }}
+                                            style={{ position: "absolute", left: 16, bottom: 16, display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.92)", backdropFilter: "blur(6px)", border: "1px solid rgba(255,255,255,0.6)", borderRadius: 12, padding: "10px 14px", boxShadow: "0 10px 24px rgba(0,0,0,0.18)" }}>
+                                            <span style={{ width: 22, height: 22, borderRadius: 7, background: step.accent, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{step.icon}</span>
+                                            <span style={{ fontSize: 12.5, fontFamily: F, fontWeight: 700, color: T.ink, whiteSpace: "nowrap" }}>{step.stat}</span>
+                                        </motion.div>
+                                    </motion.div>
+                                </AnimatePresence>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </SectionWrapper>
     )
 }
 
@@ -670,43 +823,6 @@ const CASE_STATS = [
     { stat: "1", label: "Platform for business and personal travel alike", accent: T.orange },
 ]
 
-// A 2x2 role grid — colour-tinted card, copy on the left, a real person's
-// photo bleeding to the card's own edges on the right. Same reference
-// pattern as a well-known expense-management competitor's "who this is
-// for" section, adapted to Miraee's four seats instead of one persona per
-// finance function.
-const ROLE_GRID = [
-    { photo: employeeAvatar, title: "Employees", body: "Ask once. Get a complete, in-policy trip booked before you sit back down — no forms, no chasing receipts.", bg: T.surface2 },
-    { photo: financeAvatar, title: "Finance teams", body: "See spend the moment it's booked, not when the invoice lands weeks later. Reconciliation runs itself.", bg: T.cream },
-    { photo: managerAvatar, title: "Managers", body: "Routine trips self-book inside policy. What actually reaches your queue needs a real decision.", bg: T.cream },
-    { photo: adminAvatar, title: "Admins", body: "Set the policy once; it's applied at search on every trip. One dashboard for the whole program.", bg: T.surface2 },
-]
-
-function CaseVoices() {
-    const w = useWindowWidth()
-    const isMobile = w < 640
-    return (
-        <div style={{ marginTop: 64 }}>
-            <span style={{ display: "block", fontSize: 10.5, fontFamily: F, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: T.muted, marginBottom: 20, opacity: 0.7 }}>Built for every seat</span>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 16 }}>
-                {ROLE_GRID.map((r, i) => (
-                    <FadeUp key={r.title} delay={i * 0.08}>
-                        <div style={{ display: "flex", minHeight: 220, borderRadius: 20, overflow: "hidden", background: r.bg }}>
-                            <div style={{ flex: "1 1 55%", padding: isMobile ? 24 : 32, display: "flex", flexDirection: "column", justifyContent: "center", gap: 10 }}>
-                                <h3 style={{ fontFamily: F, fontSize: 18, fontWeight: 800, color: T.ink, margin: 0, letterSpacing: "-0.01em" }}>{r.title}</h3>
-                                <p style={{ fontFamily: FB, fontSize: 14, lineHeight: 1.6, color: T.muted, margin: 0 }}>{r.body}</p>
-                            </div>
-                            <div style={{ flex: "0 0 40%", position: "relative" }}>
-                                <img src={r.photo} alt="" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
-                            </div>
-                        </div>
-                    </FadeUp>
-                ))}
-            </div>
-        </div>
-    )
-}
-
 export function BusinessCase({ children }: { children?: ReactNode }) {
     const w = useWindowWidth()
     const isMobile = w < 640
@@ -730,7 +846,6 @@ export function BusinessCase({ children }: { children?: ReactNode }) {
                             </FadeUp>
                         ))}
                     </div>
-                    <CaseVoices />
                     {children}
                 </div>
             </section>
@@ -1019,6 +1134,168 @@ export function Capabilities() {
                     </div>
                 </div>
             </div>
+        </SectionWrapper>
+    )
+}
+
+// ─── PROBLEM / VALUE FRAMING ─────────────────────────────────────────────────
+// Sits right after the hero. The diagram is the point: five disconnected
+// tools scattered at odd angles (the "wrestling with five systems" problem),
+// resolving into one straight, connected Miraee thread on the right.
+const DISCONNECTED_SYSTEMS: { label: string; rotate: number; top: number; left: number; icon: ReactNode; bg: string }[] = [
+    {
+        label: "Booking tool", rotate: -6, top: 0, left: 6, bg: T.card,
+        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" /></svg>,
+    },
+    {
+        label: "Policy engine", rotate: 8, top: 58, left: 54, bg: T.cream,
+        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d="M12 3 4 6v6c0 4.5 3 7.7 8 9 5-1.3 8-4.5 8-9V6l-8-3Z" /></svg>,
+    },
+    {
+        label: "Expense forms", rotate: 4, top: 148, left: 0, bg: T.surface2,
+        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z" /><path d="M9 8h6M9 12h6" /></svg>,
+    },
+    {
+        label: "Approval chain", rotate: -9, top: 192, left: 58, bg: T.card,
+        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="8" height="8" rx="2" /><rect x="13" y="13" width="8" height="8" rx="2" /><path d="M11 7h4a2 2 0 0 1 2 2v4" strokeDasharray="3 3" /></svg>,
+    },
+    {
+        label: "Support line", rotate: 6, top: 258, left: 22, bg: T.cream,
+        icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d="M4 13v-1a8 8 0 0 1 16 0v1" /><rect x="2" y="13" width="5" height="7" rx="1.5" /><rect x="17" y="13" width="5" height="7" rx="1.5" /></svg>,
+    },
+]
+
+const UNIFIED_STEPS = ["Plan", "Book", "Expense", "Change"]
+
+export function ProblemFraming() {
+    const w = useWindowWidth()
+    const isMobile = w < 640
+    const isTablet = w >= 640 && w < 1024
+    const stacked = isMobile || isTablet
+    const diagramRef = useRef<HTMLDivElement>(null)
+    const diagramInView = useInView(diagramRef, { once: true, margin: "-15% 0px" })
+
+    return (
+        <SectionWrapper>
+            <section style={{ background: T.bg, padding: isMobile ? "80px 20px" : isTablet ? "80px 40px" : "120px 64px" }}>
+                <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", flexDirection: "column", gap: isMobile ? 56 : 72 }}>
+                    <div ref={diagramRef} style={{ display: "grid", gridTemplateColumns: stacked ? "1fr" : "1fr 1fr", alignItems: "start", gap: stacked ? 56 : 40, order: 2 }}>
+                        {/* Today: five separate app "windows" as a loose, uneven stack —
+                            each one its own layer, none sharing a frame. Replaces the broken-
+                            path idea with a literal stack-of-tools metaphor that pays off
+                            against the single flat panel on the right. */}
+                        <div>
+                            <p style={{ fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: T.muted, margin: "0 0 24px" }}>Today · five separate systems</p>
+                            <div style={{ position: "relative", height: isMobile ? 340 : 400 }}>
+                                {DISCONNECTED_SYSTEMS.map((sys, i) => {
+                                    const n = DISCONNECTED_SYSTEMS.length
+                                    const spread = isMobile ? 20 : 34
+                                    const x = (i - (n - 1) / 2) * spread
+                                    const y = i * (isMobile ? 46 : 58)
+                                    const rotate = (i - (n - 1) / 2) * 3.5
+                                    const depth = i / (n - 1)
+                                    return (
+                                        <motion.div key={sys.label}
+                                            initial={{ opacity: 0, y: y - 40, rotate: 0, scale: 0.9 }}
+                                            animate={diagramInView ? { opacity: 0.5 + depth * 0.5, y, x, rotate, scale: 0.94 + depth * 0.06 } : {}}
+                                            whileHover={{ scale: 1, opacity: 1, rotate: 0, y: y - 4, zIndex: n + 1, transition: { duration: 0.25, ease: EO } }}
+                                            transition={{ duration: 0.55, delay: i * 0.1, ease: EO }}
+                                            style={{
+                                                position: "absolute", top: 0, left: "50%", marginLeft: -110, width: 220, zIndex: i,
+                                                display: "flex", alignItems: "center", gap: 12,
+                                                background: sys.bg, border: "1px solid " + T.border, borderRadius: 16, padding: "16px 18px",
+                                                boxShadow: `0 ${10 + i * 4}px ${20 + i * 6}px rgba(40,30,26,${0.06 + i * 0.014})`,
+                                                filter: "saturate(0.7)",
+                                            }}>
+                                            <span style={{ color: T.muted, opacity: 0.8, flexShrink: 0 }}>{sys.icon}</span>
+                                            <span style={{ fontSize: 14, fontFamily: F, fontWeight: 700, color: T.muted, whiteSpace: "nowrap" }}>{sys.label}</span>
+                                        </motion.div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+
+                        {/* With Miraee: the same five, collapsed into one flat panel —
+                            no layers, no stack, one surface. */}
+                        <div style={{ position: "relative" }}>
+                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+                                <p style={{ fontSize: 11, fontFamily: F, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: T.orange, margin: 0 }}>With Miraee · one workspace</p>
+                                <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 10.5, fontFamily: F, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: T.muted, opacity: 0.75 }}>
+                                    <motion.span aria-hidden="true"
+                                        animate={{ opacity: [1, 0.3, 1], scale: [1, 1.3, 1] }}
+                                        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                                        style={{ width: 6, height: 6, borderRadius: "50%", background: T.orange, display: "inline-block" }} />
+                                    Always on
+                                </span>
+                            </div>
+                            {/* Ambient glow behind the panel — the one warm, alive surface
+                                against the flat, desaturated stack on the left. */}
+                            <motion.div aria-hidden="true"
+                                animate={{ opacity: [0.5, 0.85, 0.5] }}
+                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                                style={{ position: "absolute", inset: "24px -30px 0", background: `radial-gradient(ellipse at 30% 20%, color-mix(in srgb, ${T.orange} 20%, transparent), transparent 65%)`, filter: "blur(30px)", pointerEvents: "none", zIndex: 0 }} />
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.92, y: 20 }}
+                                animate={diagramInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+                                transition={{ duration: 0.6, delay: 0.45, ease: EO }}
+                                style={{ position: "relative", zIndex: 1, background: T.card, borderRadius: 20, padding: 28, boxShadow: "0 30px 70px rgba(69,14,20,0.14), 0 0 0 1px " + T.border + ", 0 0 0 1px rgba(229,86,2,0.06) inset" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 22, paddingBottom: 20, borderBottom: "1px solid " + T.border }}>
+                                    <span style={{ position: "relative", flexShrink: 0, width: 34, height: 34 }}>
+                                        <span aria-hidden="true" style={{ position: "absolute", inset: -6, borderRadius: 14, background: T.orange, opacity: 0.16, filter: "blur(6px)" }} />
+                                        <img src={faviconImg} alt="" style={{ position: "relative", width: 34, height: 34, borderRadius: 10, display: "block" }} />
+                                    </span>
+                                    <span style={{ fontSize: 15.5, fontFamily: F, fontWeight: 700, color: T.ink, letterSpacing: "-0.01em" }}>One agent, everything handled</span>
+                                </div>
+                                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 6 }}>
+                                    {UNIFIED_STEPS.map((step, i) => (
+                                        <div key={step} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                            <motion.span
+                                                initial={{ opacity: 0, y: 8 }}
+                                                animate={diagramInView ? { opacity: 1, y: 0 } : {}}
+                                                transition={{ duration: 0.4, delay: 0.7 + i * 0.1, ease: EO }}
+                                                style={{ display: "inline-flex", alignItems: "center", gap: 8, background: T.bg, border: "1px solid " + T.border, borderRadius: 10, padding: "9px 14px" }}>
+                                                <span style={{ width: 18, height: 18, borderRadius: "50%", background: T.orange, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontFamily: F, fontWeight: 800, flexShrink: 0 }}>{i + 1}</span>
+                                                <span style={{ fontSize: 13.5, fontFamily: F, fontWeight: 700, color: T.ink }}>{step}</span>
+                                            </motion.span>
+                                            {i < UNIFIED_STEPS.length - 1 && (
+                                                <motion.svg initial={{ opacity: 0 }} animate={diagramInView ? { opacity: 0.4 } : {}} transition={{ duration: 0.4, delay: 0.8 + i * 0.1 }}
+                                                    width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+                                                    <path d="M1 5h8M6 1.5 9.5 5 6 8.5" stroke={T.muted} strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+                                                </motion.svg>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                                <p style={{ fontSize: 13, fontFamily: FB, color: T.muted, margin: "22px 0 0", paddingTop: 18, borderTop: "1px solid " + T.border }}>
+                                    One agent. One thread. Nothing handed off between tools.
+                                </p>
+                            </motion.div>
+                        </div>
+                    </div>
+
+                    <div style={{ position: "relative", order: 1 }}>
+                        <SectionLabel>The problem</SectionLabel>
+                        {/* Giant ghost numeral — same "faint oversized digit" motif as the
+                            step panels below, tying the five scattered tools in the diagram
+                            to a number instead of leaving the heading a bare statement. */}
+                        <span aria-hidden="true" style={{ position: "absolute", top: isMobile ? -16 : -56, right: isMobile ? -8 : "18%", fontFamily: F, fontWeight: 900, fontSize: isMobile ? "6rem" : "13rem", lineHeight: 1, color: T.ink, opacity: 0.045, userSelect: "none", pointerEvents: "none" }}>5</span>
+                        <div style={{ position: "relative", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.1fr 1fr", gap: isMobile ? 28 : 56, alignItems: "start" }}>
+                            <h2 style={{ fontFamily: F, fontSize: isMobile ? "clamp(1.8rem,8vw,2.4rem)" : "clamp(2rem,3.6vw,3rem)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: T.ink, margin: 0 }}>
+                                <StaggerWords text="Corporate travel should not be" /><br />
+                                <span style={{ color: T.orange }}><StaggerWords text="a second job." delay={0.15} /></span>
+                            </h2>
+                            <div style={{ display: "flex", flexDirection: "column", gap: 20, paddingTop: isMobile ? 0 : 8, borderTop: isMobile ? "none" : "1px solid " + T.border }}>
+                                <p style={{ fontSize: 16, fontFamily: FB, lineHeight: 1.7, color: T.muted, margin: 0, paddingTop: isMobile ? 0 : 20 }}>
+                                    Today, booking a business trip means wrestling with <strong style={{ color: T.ink, fontWeight: 700 }}>five disconnected systems</strong>, navigating complex policies, and spending hours filing expense reports. Travelers are left stranded during disruptions, and finance teams lose countless hours chasing missing receipts.
+                                </p>
+                                <p style={{ fontSize: 16, fontFamily: FB, lineHeight: 1.7, color: T.ink, margin: 0, fontWeight: 600, borderLeft: "2.5px solid " + T.orange, paddingLeft: 18 }}>
+                                    Miraee changes who does the work. We replace search-and-click frustration with agentic AI that manages the entire trip end-to-end.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </SectionWrapper>
     )
 }

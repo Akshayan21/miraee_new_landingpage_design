@@ -9,6 +9,7 @@ export default function V4SolutionTravelLeads() {
         <RoleShowcasePage
             roleSlug="travel-leads"
             roleTitle="Travel Leads"
+            ctaText="Explore Travel Lead Solution"
             shift="You used to process bookings. Now you run a program."
             before="Processing bookings one by one, chasing travelers for status, and running MICE and group trips through separate tools and spreadsheets."
             afterHeading="Now you run a program."

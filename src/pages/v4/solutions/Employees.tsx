@@ -9,6 +9,7 @@ export default function V4SolutionEmployees() {
         <RoleShowcasePage
             roleSlug="employees"
             roleTitle="Employees"
+            ctaText="Explore Employee Solution"
             shift="Used to assemble a trip. Now they describe one."
             before="Assembling a trip across tabs, then saving receipts and filing an expense report after getting home."
             afterHeading="Now they describe one."

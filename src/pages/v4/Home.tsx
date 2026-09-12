@@ -2,8 +2,8 @@ import { Link } from "react-router-dom"
 import { MotionConfig } from "framer-motion"
 import { V4Nav, V4Footer, Reveal } from "../../components/V4Kit"
 import { usePageMeta } from "../../hooks/usePageMeta"
-import { StatStrip, HowItWorks, KineticBand, BusinessCase, Experiences, CtaRoutes, PlatformSolution } from "./V0Sections"
-import { Magnetic, ScrollProgress, GrainOverlay, CustomCursor } from "../../animations"
+import { StatStrip, HowItWorks, AgentJourney, KineticBand, BusinessCase, Experiences, CtaRoutes, ProblemFraming } from "./V0Sections"
+import { Magnetic, ScrollProgress, GrainOverlay } from "../../animations"
 import { IntroCover } from "./V0Intro"
 import { useIntroActive } from "./useIntroActive"
 import travelerPhoto from "../../assets/miraee-traveler-hero.png"
@@ -47,9 +47,10 @@ export default function V4Home() {
             by default. The component itself is untouched at
             ../../animations/smoothScroll.tsx — re-add <SmoothScroll /> if native
             scroll ever needs to be replaced with eased scroll again.
-            CustomCursor is desktop-only by its own width check; both this and
-            GrainOverlay bail under prefers-reduced-motion. */}
-        <CustomCursor />
+            CustomCursor (orange dot/ring cursor follower) removed on request —
+            was unmounted here; the component itself is untouched at
+            ../../animations/customCursor.tsx if it's ever wanted back.
+            GrainOverlay bails under prefers-reduced-motion. */}
         <GrainOverlay />
         <IntroCover active={intro.active} phase={intro.phase} />
         <div className="v4-site" inert={intro.active || undefined}>
@@ -74,12 +75,13 @@ export default function V4Home() {
                                             cursor stay, from the same V0 hero-effects request. H1 copy
                                             is unchanged on request even as the layout goes two-column. */}
                                         <h1>
-                                            A private travel assistant
+                                            The Travel &amp; Expense Platform
                                             <br />
-                                            <em>for every employee.</em>
+                                            That Actually Does the Work.
                                         </h1>
+                                        <p className="v4-hero__lede">Meet Miraee. State your intent, and our AI agents search, book, pay, coordinate, recover, and file your expenses. Effortless for travelers, strictly controlled for finance, and rewarding for everyone.</p>
                                         <div className="v4-hero__actions">
-                                            <Magnetic><Link className="v4-btn v4-btn--solid" to="/book-a-demo">Book a demo</Link></Magnetic>
+                                            <Magnetic><Link className="v4-btn v4-btn--solid" to="/book-a-demo">Request a Demo</Link></Magnetic>
                                             <Magnetic><a className="v4-btn v4-btn--ghost" href="#how-it-works">See how it works</a></Magnetic>
                                         </div>
                                     </Reveal>
@@ -117,14 +119,20 @@ export default function V4Home() {
                     </section>
                 </div>
 
-                {/* V0's "200+ deep agents, working as one" split-screen panel. */}
-                <PlatformSolution />
+                {/* Problem/value framing — sits right after the hero. */}
+                <ProblemFraming />
 
                 {/* Platform section — all V0 data points, V0's velocity-skewed marquee. */}
                 <StatStrip />
 
-                {/* How it works — V0's sticky full-viewport Plan/Book/Expense/Change panels. */}
+                {/* "Built for everyone" — V0's sticky full-viewport Travelers/Finance/
+                    Procurement/HR panels. Component name is legacy (HowItWorks), the
+                    on-page label is "Built for everyone". */}
                 <HowItWorks />
+
+                {/* How it works — single-container tabbed Plan/Book/Expense/Change,
+                    sits directly below "Built for everyone" per the content brief. */}
+                <AgentJourney />
 
                 <KineticBand line1="LOVED BY EMPLOYEES" line2="TRUSTED BY FINANCE" bg="var(--m-soft)" ink="var(--m-maroon)" />
 
@@ -142,11 +150,9 @@ export default function V4Home() {
                 <section className="v4-cta" style={{ position: "relative", overflow: "hidden" }}>
                     <CtaRoutes />
                     <div className="v4-shell" style={{ position: "relative", zIndex: 1 }}>
-                        <h2>Give every employee an AI travel agent.</h2>
-                        <p>Effortless for travelers. Controlled for finance. Rewarding for everyone.</p>
+                        <h2>Stop forcing your employees to act as their own travel agents.</h2>
                         <div className="v4-cta__actions">
-                            <Link className="v4-btn v4-btn--solid" to="/book-a-demo">Book a demo</Link>
-                            <Link className="v4-btn v4-btn--ghost" to="/v4/platform">Explore the platform</Link>
+                            <Link className="v4-btn v4-btn--solid" to="/book-a-demo">Discover Miraee Today</Link>
                         </div>
                     </div>
                 </section>

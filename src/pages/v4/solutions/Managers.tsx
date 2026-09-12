@@ -9,6 +9,7 @@ export default function V4SolutionManagers() {
         <RoleShowcasePage
             roleSlug="managers"
             roleTitle="Managers"
+            ctaText="Explore Manager Solution"
             shift="You used to chase approvals. Now only exceptions reach you."
             before="Chasing sign-offs across chat and email, approving trips with no real context, and piecing together the team's progress and spends from scattered updates."
             afterHeading="Now only exceptions reach you."
