@@ -1,34 +1,50 @@
 import RoleShowcasePage from "./RoleShowcasePage"
 import travellerPhoto from "../../../assets/traveller.jpg"
 
-// Solutions: Employees Page
-// Content strictly from Miraee Website Content - V4 & User Instructions
+// Solutions: Employees Page ("Solutions for Employees")
+// Content strictly from Miraee Website Content - V4 & User Instructions.
+// This page has no "used to X, now Y" transformation narrative (shift left
+// empty, which hides the With Miraee/Old Way switcher entirely — see
+// RoleShowcasePage) and no capability chips; it's a single hands-free-
+// assistant story told across two headed pillar groups instead.
 
 export default function V4SolutionEmployees() {
     return (
         <RoleShowcasePage
             roleSlug="employees"
             roleTitle="Employees"
-            ctaText="Explore Employee Solution"
-            shift="Used to assemble a trip. Now they describe one."
-            before="Assembling a trip across tabs, then saving receipts and filing an expense report after getting home."
-            afterHeading="Now they describe one."
-            body="Book from a sentence, checked against policy as you go. The Receipt Scanner matches receipts to trips automatically, so there's no report to file. Your briefing carries currency, safety, visa and emergency numbers; Rewards tracks points to your next milestone."
-            controls={["My Trips", "Receipt Scanner", "Rewards"]}
+            ctaText="Explore the Traveler solution"
+            shift=""
+            afterHeading="Meet your hands-free travel assistant."
+            body="Voice, text or avatar. Your preferences, past trips and policy tier are known before you make your first request."
+            controls={[]}
             roleImage={travellerPhoto}
-            detailsHeading="Navigate the whole trip in one platform:"
-            details={[
+            detailGroups={[
                 {
-                    title: "A trip from a sentence.",
-                    body: "Describe it and it's booked in policy, the statistics strip keeps total trips, savings rate and duration in view.",
+                    heading: "How it works for you",
+                    items: [
+                        {
+                            title: "Planning and booking.",
+                            body: "Say \"plan a trip to Tokyo.\" Miraee checks your calendar, reads your policy tier, and books flight and hotel while tracking your visa validity, all in one fluid motion.",
+                        },
+                        {
+                            title: "Disruption, handled.",
+                            body: "A delay hits. Miraee pings you with a rebooked option and an exchange summary before the airline even announces it at the gate.",
+                        },
+                    ],
                 },
                 {
-                    title: "No report to file.",
-                    body: "The Receipt scanner matches receipts to trips with AI confidence and in-policy scoring, so expenses close themselves.",
-                },
-                {
-                    title: "Everything for the road, in hand.",
-                    body: "Trip Briefing carries currency, safety, visa and emergency numbers, while Rewards tracks points to your next milestone.",
+                    heading: "What makes it easy",
+                    items: [
+                        {
+                            title: "Multi-modal access.",
+                            body: "Carry the same continuous conversation across phone, desktop and web by text, voice or the human-like avatar.",
+                        },
+                        {
+                            title: "Strict personal separation.",
+                            body: "Corporate travel and personal trips, one place. Personal trips book on your own card at exclusive fares, completely walled off from company visibility.",
+                        },
+                    ],
                 },
             ]}
         />

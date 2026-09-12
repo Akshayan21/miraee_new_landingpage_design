@@ -14,7 +14,7 @@ import "./V4.css"
 // pages in V4, so duplicating empty shells here would give the same missing
 // content two homes.
 
-const TRUST = ["23 companies", "3 AI platforms", "500+ airlines", "2M+ hotels", "125M+ travelers reached"]
+const TRUST = ["14+ years operating history", "$5B in sales", "125M+ global users", "50M daily searches", "500+ airlines", "2M+ hotels"]
 
 const PLATFORMS = [
     { name: "Mondee", logo: mondeeLogo, desc: "The agentic AI travel marketplace" },
@@ -50,6 +50,15 @@ export default function V4Company() {
                 lede="Miraee is the employee travel platform of the Tabhi group, built on the supply, payments and engineering the group already runs."
                 image={{ src: companyPhoto, alt: "The Miraee team walking through the office, mid-conversation" }} />
 
+            <section className="v4-section" id="foundation" aria-labelledby="foundation-title">
+                <div className="v4-shell">
+                    <Reveal>
+                        <h2 className="v4-h2" id="foundation-title">Our Foundation: The Tabhi Group</h2>
+                        <p className="v4-lede" style={{ marginTop: 16 }}>Miraee is a Tabhi group company. We built it because we watched businesses run a single trip across five disconnected systems. By putting Tabhi's B2B travel marketplace behind agentic AI, Miraee brings institutional distribution power straight to your travel program.</p>
+                    </Reveal>
+                </div>
+            </section>
+
             <section className="v4-section v4-section--tint" id="scale" aria-labelledby="scale-title">
                 <div className="v4-shell">
                     <Reveal>
@@ -79,10 +88,10 @@ export default function V4Company() {
                         <h2 className="v4-h2" id="tabhi-title">23 companies. Three platforms. One vision.</h2>
                     </Reveal>
                     <Reveal delay={0.1}>
-                        <div className="m-edrows" role="table" aria-label="The Tabhi group platforms" style={{ marginTop: 28 }}>
+                        <div className="v4-steps" style={{ marginTop: 28 }}>
                             {PLATFORMS.map((platform) => (
-                                <div className="m-edrow" role="row" key={platform.name} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                                    <div style={{ display: "flex", alignItems: "center" }}>
+                                <div className="v4-step" key={platform.name} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                                    <div style={{ display: "flex", alignItems: "flex-start", height: 28 }}>
                                         <img
                                             src={platform.logo}
                                             alt={platform.name}
@@ -91,11 +100,12 @@ export default function V4Company() {
                                                 width: "auto",
                                                 maxWidth: 170,
                                                 objectFit: "contain",
+                                                objectPosition: "left",
                                                 display: "block",
                                             }}
                                         />
                                     </div>
-                                    <p className="m-edrow__desc">{platform.desc}</p>
+                                    <p>{platform.desc}</p>
                                 </div>
                             ))}
                         </div>
@@ -111,6 +121,26 @@ export default function V4Company() {
                     <Reveal delay={0.1}>
                         <div style={{ marginTop: 28 }}>
                             <EditorialRows headers={["What", "What it means", "Proof"]} rows={ADVANTAGE} caption="The group advantage" />
+                        </div>
+                    </Reveal>
+                </div>
+            </section>
+
+            <section className="v4-section v4-section--tint" id="footprint" aria-labelledby="footprint-title">
+                <div className="v4-shell">
+                    <Reveal>
+                        <h2 className="v4-h2" id="footprint-title">Global Footprint &amp; AI Research</h2>
+                    </Reveal>
+                    <Reveal delay={0.1}>
+                        <div className="v4-guardrails" style={{ marginTop: 28 }}>
+                            <div className="v4-guardrail">
+                                <h3>Locations</h3>
+                                <p>Headquartered in Austin, Texas, operating in 12+ countries, with a Global Capability Center in Hyderabad, India.</p>
+                            </div>
+                            <div className="v4-guardrail">
+                                <h3>AI research</h3>
+                                <p>Deep AI research centers across Austin, IIT Madras and IIIT Hyderabad power the 200+ deep agents in the Tabhi agent swarm.</p>
+                            </div>
                         </div>
                     </Reveal>
                 </div>

@@ -3,14 +3,18 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Reveal } from "../../../components/V4Kit"
 import "./UseCasesShowcase.css"
 
+interface UseCaseBlock {
+    title: string
+    body: string
+}
+
 interface UseCaseItem {
     id: string
     number: string
     title: string
-    perks: string
-    benefits: string[]
-    persona: string
-    bestFor?: string
+    headline: string
+    subline: string
+    blocks: UseCaseBlock[]
     accentTag: string
 }
 
@@ -19,72 +23,65 @@ const USE_CASES_DATA: UseCaseItem[] = [
         id: "use-business",
         number: "01",
         title: "Business Travel",
-        perks: "Everyday trips. Described and booked easily. Policy compliant.",
-        benefits: [
-            "Per diem rules apply at search.",
-            "Overview of total trips and spend.",
-            "Savings rate and rewards.",
-            "Autonomous expense reconciliation.",
+        headline: "The everyday trip, made effortless.",
+        subline: "Describe where you need to be and Miraee books it in policy, no forms, no report, no back-and-forth.",
+        blocks: [
+            { title: "Booked from a sentence.", body: "Describe the trip and Miraee plans it, priced and in policy from the first result." },
+            { title: "Spend that tracks itself.", body: "An overview of total trips and spend, with savings rate and rewards always in view." },
+            { title: "Expenses that close themselves.", body: "Per diem rules apply at search and reconciliation happens automatically, nothing to file." },
         ],
-        persona: "Any employee of the company.",
-        bestFor: "Startups to enterprise, anyone with recurring travel.",
         accentTag: "Everyday Trips",
     },
     {
         id: "use-events",
         number: "02",
-        title: "Meetings & Events",
-        perks: "Group trips, one plan. Venues and attendees together. Costs stay in view.",
-        benefits: [
-            "MICE and group booking built in.",
-            "Venue sourcing and attendee management on the same platform.",
-            "Group spend rolls into the same budgets, compliance and audit trail.",
+        title: "MICE & Bleisure",
+        headline: "Beyond standard business travel.",
+        subline: "From complex team offsites to after-hours experiences, Miraee handles every dimension of travel.",
+        blocks: [
+            { title: "MICE (Meetings, Incentives, Conferences, Exhibitions).", body: "Plan offsites and customer events once, and the system books everything directly from the plan." },
+            { title: "After 5pm / hyperlocal experiences.", body: "Unlock restaurants, events, and hyperlocal experiences after hours via our Abhee platform." },
+            { title: "Bleisure & personal travel.", body: "Employees can use the same personal EA for personal leisure trips. Personal travel is booked at exclusive fares on personal cards, completely walled off from company visibility." },
         ],
-        persona: "Event organisers or Managers.",
-        bestFor: "Mid-market to enterprise running regular offsites, summits or client events.",
         accentTag: "Group Coordination",
     },
     {
         id: "use-executive",
         number: "03",
         title: "Executive Travel",
-        perks: "White-glove trips. Preferences remembered. A human on call.",
-        benefits: [
-            "Agent learns preferences over time.",
-            "Named human support.",
-            "Traveler profile kept separate from account login.",
-            "Trips routed with full context.",
+        headline: "White-glove travel, quietly handled.",
+        subline: "Preferences remembered, trips routed with full context, and a named human on call when it matters.",
+        blocks: [
+            { title: "An assistant that learns you.", body: "Miraee remembers preferred airlines, seats, hotels and timing, and applies them from the first result." },
+            { title: "A human when you want one.", body: "Named support on call, so there's always a person behind the agent." },
+            { title: "Identity kept separate.", body: "The traveller profile stays walled off from account login, so personal detail follows the executive, not the company system." },
         ],
-        persona: "Executives and their assistants.",
-        bestFor: "Any size with a leadership team that travels, scales with seniority, not headcount.",
         accentTag: "White-Glove Service",
     },
     {
         id: "use-mobility",
         number: "04",
         title: "Global Mobility",
-        perks: "Cross-border trips. Local rules handled. Distributed teams covered.",
-        benefits: [
-            "Entity-level policy, currency and data residency per office.",
-            "Grade-based rules inherit across entities.",
-            "HRIS keeps cost centres and managers current.",
+        headline: "One platform, every border.",
+        subline: "Cross-border travel for distributed teams, with local rules, currency and data residency handled per office.",
+        blocks: [
+            { title: "Policy that fits each entity.", body: "Entity-level policy, currency and data residency, set per office rather than forced into one mould." },
+            { title: "Rules that inherit themselves.", body: "Grade-based policy carries across entities automatically, so seniority sets the rules, not manual setup." },
+            { title: "People data always current.", body: "HRIS keeps cost centres and managers up to date without anyone maintaining them by hand." },
         ],
-        persona: "Global teams, HR and admins.",
-        bestFor: "Multi-entity companies with offices in more than one country.",
         accentTag: "Cross-Border Entity",
     },
     {
         id: "use-disruption",
         number: "05",
         title: "Emergency & Disruption",
-        perks: "Fast rebooking. Travelers located. One thread for the response.",
-        benefits: [
-            "Proactive rebooking.",
-            "Live traveler location on the map.",
-            "Duty of care from the same console.",
-            "Everyone affected is seen in context.",
+        headline: "When plans break, one thread holds.",
+        subline: "Proactive rebooking, live traveller location, and the whole response in one place.",
+        blocks: [
+            { title: "Rebooking before you ask.", body: "Miraee watches for disruption and offers a rebooked option, often before the airline announces it." },
+            { title: "Everyone located, in real time.", body: "Live traveller location on the map, so the team always knows who's affected and where." },
+            { title: "One console for the response.", body: "Duty of care runs from the same screen, so travel leads, admins and CHROs act on the same picture." },
         ],
-        persona: "Travel leads, admins and CHROs.",
         accentTag: "Duty of Care",
     },
 ]
@@ -175,26 +172,15 @@ export default function UseCasesShowcase() {
                                     <span className="v4-uc-tag">{current.accentTag}</span>
                                 </div>
 
-                                <h3 className="v4-uc-title">{current.title}</h3>
+                                <h3 className="v4-uc-title">{current.headline}</h3>
+                                <p className="v4-role-lede">{current.subline}</p>
 
-                                {/* Perks Quote Box */}
-                                <div className="v4-uc-perks-box">
-                                    <div className="v4-uc-perks-label">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                                        </svg>
-                                        <span>Perks</span>
-                                    </div>
-                                    <p className="v4-uc-perks-text">{current.perks}</p>
-                                </div>
-
-                                {/* Miraee Benefits Section */}
+                                {/* Use case blocks */}
                                 <div className="v4-uc-benefits-wrap">
-                                    <h4 className="v4-uc-section-label">Miraee benefits</h4>
                                     <ul className="v4-uc-benefits-list">
-                                        {current.benefits.map((benefit, i) => (
+                                        {current.blocks.map((block, i) => (
                                             <motion.li
-                                                key={benefit}
+                                                key={block.title}
                                                 initial={{ opacity: 0, x: -10 }}
                                                 animate={{ opacity: 1, x: 0 }}
                                                 transition={{ delay: i * 0.06 + 0.1, duration: 0.25 }}>
@@ -203,24 +189,10 @@ export default function UseCasesShowcase() {
                                                         <polyline points="20 6 9 17 4 12" />
                                                     </svg>
                                                 </span>
-                                                <span>{benefit}</span>
+                                                <span><strong>{block.title}</strong> {block.body}</span>
                                             </motion.li>
                                         ))}
                                     </ul>
-                                </div>
-
-                                {/* Bottom Metadata: Persona Specific & Best For */}
-                                <div className="v4-uc-meta-grid">
-                                    <div className="v4-uc-meta-card">
-                                        <div className="v4-uc-meta-card-label">Persona specific</div>
-                                        <div className="v4-uc-meta-card-value">{current.persona}</div>
-                                    </div>
-                                    {current.bestFor && (
-                                        <div className="v4-uc-meta-card">
-                                            <div className="v4-uc-meta-card-label">Best for</div>
-                                            <div className="v4-uc-meta-card-value">{current.bestFor}</div>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
 
@@ -268,7 +240,7 @@ export default function UseCasesShowcase() {
                                     <span className="v4-uc-mini-num">{item.number}</span>
                                     <span className="v4-uc-mini-title">{item.title}</span>
                                 </div>
-                                <p className="v4-uc-mini-perk">{item.perks}</p>
+                                <p className="v4-uc-mini-perk">{item.subline}</p>
                             </button>
                         )
                     })}

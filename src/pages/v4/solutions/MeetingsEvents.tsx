@@ -44,15 +44,23 @@ export default function MeetingsEventsPage() {
     return (
         <UseCasePageTemplate
             slug="meetings-events"
-            title="Meetings & Events"
-            perks="Group trips, one plan. Venues and attendees together. Costs stay in view."
-            benefits={[
-                "MICE and group booking built in.",
-                "Venue sourcing and attendee management on the same platform.",
-                "Group spend rolls into the same budgets, compliance and audit trail.",
+            title="MICE & Bleisure"
+            headline="Beyond standard business travel."
+            subline="From complex team offsites to after-hours experiences, Miraee handles every dimension of travel."
+            blocks={[
+                {
+                    title: "MICE (Meetings, Incentives, Conferences, Exhibitions).",
+                    body: "Plan offsites and customer events once, and the system books everything directly from the plan.",
+                },
+                {
+                    title: "After 5pm / hyperlocal experiences.",
+                    body: "Unlock restaurants, events, and hyperlocal experiences after hours via our Abhee platform.",
+                },
+                {
+                    title: "Bleisure & personal travel.",
+                    body: "Employees can use the same personal EA for personal leisure trips. Personal travel is booked at exclusive fares on personal cards, completely walled off from company visibility.",
+                },
             ]}
-            persona="Event organisers or Managers."
-            bestFor="Mid-market to enterprise running regular offsites, summits or client events."
             accentTag="Group Coordination"
             simulation={<MeetingsEventsSimulation />}
         />

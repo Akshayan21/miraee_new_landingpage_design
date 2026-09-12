@@ -1,4 +1,4 @@
-import { Fragment } from "react"
+import { Fragment, type ReactNode } from "react"
 import { V4Page, V4Hero, V4Cta, Reveal } from "../../components/V4Kit"
 import { SecurityV1 } from "./RefSections"
 import technologyPhoto from "../../assets/security-hero.jpg"
@@ -40,13 +40,44 @@ function AgenticContrast({ panels }: { panels: { tag: string; title: string; cop
     )
 }
 
-const AGENT_ROWS: string[][] = [
-    ["Booking agent", "Turns a sentence into a trip, in policy from the first result"],
-    ["Policy agent", "Applies per diem, grade and rules at search, before you see options"],
-    ["Negotiation agent", "Works wholesale and direct supply to land the best available rate"],
-    ["Rebooking agent", "Watches for disruption and rebooks in the same thread"],
-    ["Expense agent", "Matches receipts to trips and reconciles automatically"],
-    ["Support agent", "Answers questions and pulls in a human when it matters"],
+const AGENT_ICON_BOOKING = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3.5" y="4.5" width="17" height="16" rx="2.5" /><path d="M8 3v3M16 3v3M3.5 10h17" /><path d="m9 15 2 2 4-4.5" />
+    </svg>
+)
+const AGENT_ICON_POLICY = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3 4.5 6v6c0 4.5 3.2 7.7 7.5 9 4.3-1.3 7.5-4.5 7.5-9V6L12 3Z" />
+    </svg>
+)
+const AGENT_ICON_NEGOTIATION = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 8.5 3.5 12l3.5 3.5M17 8.5 20.5 12 17 15.5M14 6.5 10 17.5" />
+    </svg>
+)
+const AGENT_ICON_REBOOKING = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3.5 12a8.5 8.5 0 0 1 14.6-5.9M20.5 12a8.5 8.5 0 0 1-14.6 5.9" /><path d="M17.5 3.5v3h-3M6.5 20.5v-3h3" />
+    </svg>
+)
+const AGENT_ICON_EXPENSE = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z" /><path d="M9 8h6M9 12h6" />
+    </svg>
+)
+const AGENT_ICON_SUPPORT = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 13v-1a8 8 0 0 1 16 0v1" /><rect x="2" y="13" width="5" height="7" rx="1.5" /><rect x="17" y="13" width="5" height="7" rx="1.5" />
+    </svg>
+)
+
+const AGENT_ROWS: { name: string; desc: string; icon: ReactNode; accent: "orange" | "maroon" }[] = [
+    { name: "Booking agent", desc: "Turns a sentence into a trip, in policy from the first result", icon: AGENT_ICON_BOOKING, accent: "orange" },
+    { name: "Policy agent", desc: "Applies per diem, grade and rules at search, before you see options", icon: AGENT_ICON_POLICY, accent: "maroon" },
+    { name: "Negotiation agent", desc: "Works wholesale and direct supply to land the best available rate", icon: AGENT_ICON_NEGOTIATION, accent: "orange" },
+    { name: "Rebooking agent", desc: "Watches for disruption and rebooks in the same thread", icon: AGENT_ICON_REBOOKING, accent: "maroon" },
+    { name: "Expense agent", desc: "Matches receipts to trips and reconciles automatically", icon: AGENT_ICON_EXPENSE, accent: "orange" },
+    { name: "Support agent", desc: "Answers questions and pulls in a human when it matters", icon: AGENT_ICON_SUPPORT, accent: "maroon" },
 ]
 
 const GUARDRAIL_ICONS = [
@@ -121,21 +152,18 @@ export default function V4Technology() {
                     </Reveal>
                     <Reveal delay={0.1}>
                         <div className="v4-agents" style={{ marginTop: 30 }}>
-                            {AGENT_ROWS.map(([name, desc], i) => (
-                                <div className="v4-agent" key={name}>
-                                    <span className="v4-agent__num">{String(i + 1).padStart(2, "0")}</span>
-                                    <h3>{name}</h3>
-                                    <p>{desc}</p>
+                            {AGENT_ROWS.map((agent, i) => (
+                                <div className={`v4-agent v4-agent--${agent.accent}`} key={agent.name}>
+                                    <span className="v4-agent__num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                                    <span className="v4-agent__icon" aria-hidden="true">{agent.icon}</span>
+                                    <h3>{agent.name}</h3>
+                                    <p>{agent.desc}</p>
                                 </div>
                             ))}
                         </div>
                     </Reveal>
                 </div>
             </section>
-
-            {/* Governance keeps V1's "Fast for people. Safe for the business."
-                treatment verbatim; the guardrail table follows it. */}
-            <SecurityV1 />
 
             <section className="v4-section v4-section--tight-top" id="guardrails" aria-labelledby="guardrails-title">
                 <div className="v4-shell">
@@ -154,6 +182,12 @@ export default function V4Technology() {
                     </Reveal>
                 </div>
             </section>
+
+            {/* Enterprise Foundations — keeps V1's "Fast for people. Safe for
+                the business." treatment verbatim. Sits after Guardrails (its
+                trust marks are the receipts for the guarantees just made),
+                not before. */}
+            <SecurityV1 />
 
             <V4Cta title="See the agents work." body="Twenty minutes with your policy and your routes. Watch what runs without a human, and where one steps in." />
         </V4Page>

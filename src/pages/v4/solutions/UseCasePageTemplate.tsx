@@ -1,24 +1,27 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { motion } from "framer-motion"
 import { V4Page, Reveal } from "../../../components/V4Kit"
 import "./UseCasesShowcase.css"
 import "../V4.css"
 
+export interface UseCaseBlock {
+    title: string
+    body: string
+}
+
 export interface UseCaseConfig {
     slug: string
     title: string
-    perks: string
-    benefits: string[]
-    persona: string
-    bestFor?: string
+    headline: string
+    subline: string
+    blocks: UseCaseBlock[]
     accentTag: string
     simulation: React.ReactNode
 }
 
 const ALL_USE_CASES = [
     { slug: "business-travel", title: "Business Travel", path: "/v4/solutions/business-travel" },
-    { slug: "meetings-events", title: "Meetings & Events", path: "/v4/solutions/meetings-events" },
+    { slug: "meetings-events", title: "MICE & Bleisure", path: "/v4/solutions/meetings-events" },
     { slug: "executive-travel", title: "Executive Travel", path: "/v4/solutions/executive-travel" },
     { slug: "global-mobility", title: "Global Mobility", path: "/v4/solutions/global-mobility" },
     { slug: "emergency-disruption", title: "Emergency & Disruption", path: "/v4/solutions/emergency-disruption" },
@@ -27,10 +30,9 @@ const ALL_USE_CASES = [
 export default function UseCasePageTemplate({
     slug,
     title,
-    perks,
-    benefits,
-    persona,
-    bestFor,
+    headline,
+    subline,
+    blocks,
     accentTag,
     simulation,
 }: UseCaseConfig) {
@@ -39,7 +41,7 @@ export default function UseCasePageTemplate({
     return (
         <V4Page
             title={`${title} | Use Cases | Miraee`}
-            description={`${perks} Every kind of trip your company takes. All at one platform, one ledger, one policy engine.`}>
+            description={subline}>
 
             {/* Tight header with exact same styling as RoleShowcasePage to eliminate excess gap */}
             <section className="v4-section" style={{ paddingTop: "clamp(90px, 10vw, 112px)", paddingBottom: "clamp(64px, 8vw, 100px)" }}>
@@ -47,16 +49,14 @@ export default function UseCasePageTemplate({
                     <header className="v4-role-header-content">
                         <Reveal>
                             <span className="v4-role-eyebrow">BY USE CASE</span>
-                            <h1 className="v4-role-title">{title}</h1>
-                            <p className="v4-role-lede">
-                                Every kind of trip your company takes. All at one platform, one ledger, one policy engine.
-                            </p>
+                            <h1 className="v4-role-title">{headline}</h1>
+                            <p className="v4-role-lede">{subline}</p>
                         </Reveal>
                     </header>
 
                     {/* Creative Animated Showcase Card */}
                     <div className="v4-uc-stage" style={{ marginTop: 24 }}>
-                        {/* Left Column: Context, Perks, Benefits & Metadata */}
+                        {/* Left Column: Context + CTA */}
                         <div className="v4-uc-stage-content">
                             <div className="v4-uc-meta-top">
                                 <span className="v4-uc-badge">BY USE CASE</span>
@@ -66,52 +66,6 @@ export default function UseCasePageTemplate({
                             <h2 className="v4-uc-title" style={{ fontSize: "clamp(1.8rem, 3.2vw, 2.5rem)" }}>
                                 {title}
                             </h2>
-
-                            {/* Perks Highlight Quote Box */}
-                            <div className="v4-uc-perks-box">
-                                <div className="v4-uc-perks-label">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                                    </svg>
-                                    <span>Perks</span>
-                                </div>
-                                <p className="v4-uc-perks-text">{perks}</p>
-                            </div>
-
-                            {/* Miraee Benefits Section */}
-                            <div className="v4-uc-benefits-wrap">
-                                <h3 className="v4-uc-section-label">Miraee benefits</h3>
-                                <ul className="v4-uc-benefits-list">
-                                    {benefits.map((benefit, i) => (
-                                        <motion.li
-                                            key={benefit}
-                                            initial={{ opacity: 0, x: -10 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: i * 0.06 + 0.1, duration: 0.25 }}>
-                                            <span className="v4-uc-check-icon">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                                                    <polyline points="20 6 9 17 4 12" />
-                                                </svg>
-                                            </span>
-                                            <span>{benefit}</span>
-                                        </motion.li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            {/* Metadata Grid: Persona Specific & Best For */}
-                            <div className="v4-uc-meta-grid">
-                                <div className="v4-uc-meta-card">
-                                    <div className="v4-uc-meta-card-label">Persona specific</div>
-                                    <div className="v4-uc-meta-card-value">{persona}</div>
-                                </div>
-                                {bestFor && (
-                                    <div className="v4-uc-meta-card">
-                                        <div className="v4-uc-meta-card-label">Best for</div>
-                                        <div className="v4-uc-meta-card-value">{bestFor}</div>
-                                    </div>
-                                )}
-                            </div>
 
                             {/* Action CTA */}
                             <div style={{ marginTop: 28 }}>
@@ -144,6 +98,21 @@ export default function UseCasePageTemplate({
                             </div>
                         </div>
                     </div>
+
+                    {/* Use case blocks */}
+                    {blocks && blocks.length > 0 && (
+                        <div className="v4-navan-pillars-wrap">
+                            <div className="v4-navan-pillars-grid">
+                                {blocks.map((b, i) => (
+                                    <Reveal className="v4-navan-pillar-card" key={b.title} delay={i * 0.08}>
+                                        <span className="v4-navan-pillar-num">0{i + 1}</span>
+                                        <h3 className="v4-navan-pillar-heading">{b.title}</h3>
+                                        <p className="v4-navan-pillar-desc">{b.body}</p>
+                                    </Reveal>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Quick navigation to other use cases */}
                     <div style={{ marginTop: 48, paddingTop: 32, borderTop: "1px solid var(--m-line)" }}>
