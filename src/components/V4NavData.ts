@@ -37,14 +37,7 @@ export const V4_NAV = [
             {
                 heading: "Platform",
                 feature: { label: "Platform Overview", to: "/v4/platform", desc: "One AI-native platform for employee travel" },
-                items: [
-                    { label: "Plan", to: "/v4/platform#plan", desc: "Describe the trip. Get an in-policy itinerary." },
-                    { label: "Book", to: "/v4/platform#book", desc: "Flight, hotel, rail and car booked as one trip." },
-                    { label: "Expense", to: "/v4/platform#expense", desc: "Receipts captured and coded. No forms to file." },
-                    { label: "Change", to: "/v4/platform#change", desc: "Disruption handled inside the limits you set." },
-                    { label: "Continuous support", to: "/v4/platform#support", desc: "A real person, in the same thread, 24/7." },
-                    { label: "Personal travel", to: "/v4/platform#personal", desc: "The same agent. Separate spend." },
-                ],
+                items: [],
             },
             {
                 heading: "How it works",
@@ -52,7 +45,7 @@ export const V4_NAV = [
                     { label: "AI Assistant for Every Employee", to: "/v4/ai-assistant" },
                     { label: "Integrations", to: "/v4/integrations" },
                     { label: "Security & Trust", to: "/v4/technology#governance" },
-                    { label: "Implementation / Onboarding", to: "/v4/implementation" },
+                    { label: "Implementation & Onboarding", to: "/v4/implementation" },
                 ],
             },
         ],

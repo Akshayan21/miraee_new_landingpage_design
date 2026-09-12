@@ -3,7 +3,6 @@ import { motion } from "framer-motion"
 import { V4Page, V4Cta, Reveal, Faq } from "../../components/V4Kit"
 import { PlatformHeroV1, TwoViewsV1, OutcomesV1, SavingsV3, IntegrationsV1, MondeeAdvantageV2, TMCGenerationsV2 } from "./RefSections"
 import { Capabilities } from "./V0Sections"
-import personalizationGif from "../../assets/CHAT MASTER.gif"
 import supplyImage from "../../assets/supply_image.png"
 import ledgerImage from "../../assets/Booking_image.png"
 import avatarImg from "../../assets/Avatar.png"
@@ -13,16 +12,192 @@ import enterpriseImage from "../../assets/Entreprices control.png"
 import "../SubpagesV2.css"
 import "./V4.css"
 
-const PERSONALIZATION_KNOWS = ["Who the traveler is", "Company travel policy", "Seat preferences", "Airline & hotel preferences", "Loyalty programs", "Previous behavior", "Office & location context", "Preferred timings"]
+// "Capability Grid" — four cards, straight after the hero. Reuses the
+// .v4-adaptive-card visual language (icon chip, title, body) already defined
+// for the platform-depth cards further down the page, just laid out 4-up via
+// .v4-capgrid instead of .v4-adaptive-grid's 3-up.
+const CAPGRID_ICON_GLOBAL = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.5 3.8 5.6 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.6-3.8-9s1.3-6.5 3.8-9Z" />
+    </svg>
+)
+const CAPGRID_ICON_AGENTIC = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />
+    </svg>
+)
+const CAPGRID_ICON_TAO = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3 3 7.5 12 12l9-4.5L12 3Z" /><path d="M3 16.5 12 21l9-4.5M3 12l9 4.5 9-4.5" />
+    </svg>
+)
+const CAPGRID_ICON_MICE = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3.5" y="5" width="17" height="15" rx="2.5" /><path d="M3.5 9.5h17M8 3v4M16 3v4" />
+        <path d="M15.5 13.2a2.6 2.6 0 1 1-2.7 2.7 2.1 2.1 0 1 0 2.7-2.7Z" />
+    </svg>
+)
+const CAPABILITY_GRID: { icon: ReactNode; title: string; body: string; accent: "orange" | "maroon" }[] = [
+    { icon: CAPGRID_ICON_GLOBAL, title: "Global Content", body: "Access to 2M+ hotels, 500+ airlines with NDC, and worldwide rail.", accent: "orange" },
+    { icon: CAPGRID_ICON_AGENTIC, title: "Agentic Fulfillment", body: "Zero forms. Agents manage booking, coordinating, paying, and expense.", accent: "maroon" },
+    { icon: CAPGRID_ICON_TAO, title: "TAO Complex Bookings", body: "Agent-assisted fulfillment for what standard portals cannot handle, including rail, deposit hotels, and complex group itineraries.", accent: "orange" },
+    { icon: CAPGRID_ICON_MICE, title: "MICE & After 5pm", body: "Plan offsites and customer events once; unlock hyperlocal experiences after hours via our Abhee platform.", accent: "maroon" },
+]
 
-// Replaces the hand-built cycling-card mock (V3's PersonalizationLoop) with
-// an actual looping screen recording — real product, not a simulation of one.
-function PersonalizationLoop() {
+function CapabilityGrid() {
     return (
-        <div className="v4-personalization-loop">
-            <img className="v4-personalization-loop__video" src={personalizationGif}
-                alt="Miraee personalizing a trip request from context it already holds" />
-        </div>
+        <section className="v4-section v4-section--tight-bottom" id="capability-grid" aria-labelledby="capability-grid-title">
+            <div className="v4-shell">
+                <Reveal>
+                    <span className="v4-eyebrow">What Miraee covers</span>
+                    <h2 className="v4-h2" id="capability-grid-title">Every capability, one platform.</h2>
+                </Reveal>
+                <div className="v4-capgrid">
+                    {CAPABILITY_GRID.map((c, i) => (
+                        <Reveal className={`v4-capcard v4-capcard--${c.accent}`} key={c.title} delay={i * 0.06}>
+                            <span className="v4-capcard__num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                            <span className="v4-capcard__icon" aria-hidden="true">{c.icon}</span>
+                            <h3>{c.title}</h3>
+                            <p>{c.body}</p>
+                        </Reveal>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )
+}
+
+// "Deep-Dive Blocks" Block 1 — 24x7 Support (AI + Human). Header (icon +
+// eyebrow + heading) sits inline instead of stacked with dead space below
+// it; the AI-concierge → human-agent handoff renders as a full-width
+// horizontal flow strip, so the panel's own width does the work instead of
+// two narrow chips floating in the right half.
+const SUPPORT_ICON = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 13v-1a8 8 0 0 1 16 0v1" /><rect x="2" y="13" width="5" height="7" rx="1.5" /><rect x="17" y="13" width="5" height="7" rx="1.5" />
+        <path d="M12 21a4 4 0 0 0 4-4" />
+    </svg>
+)
+const SUPPORT_ICON_AI = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="8" width="16" height="12" rx="3" /><path d="M12 8V4M9 4h6" /><circle cx="9" cy="14" r="1.4" fill="currentColor" stroke="none" /><circle cx="15" cy="14" r="1.4" fill="currentColor" stroke="none" />
+    </svg>
+)
+const SUPPORT_ICON_HUMAN = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="8" r="3.4" /><path d="M4.5 20c0-4.1 3.4-7.5 7.5-7.5s7.5 3.4 7.5 7.5" />
+    </svg>
+)
+
+function Support247() {
+    return (
+        <section className="v4-section v4-section--tint v4-section--tight-top v4-section--tight-bottom" id="support-247" aria-labelledby="support-247-title">
+            <div className="v4-shell">
+                <div className="v4-support-block">
+                    <span className="v4-support-block__watermark" aria-hidden="true">{SUPPORT_ICON}</span>
+                    <Reveal>
+                        <div className="v4-support-head">
+                            <span className="v4-support-block__icon" aria-hidden="true">{SUPPORT_ICON}</span>
+                            <div>
+                                <span className="v4-eyebrow">Always-on support</span>
+                                <h3 id="support-247-title">24x7 Support (AI + Human)</h3>
+                            </div>
+                        </div>
+                        <p>Our AI concierge (TACO) handles standard changes and refunds instantly. When complex exceptions arise, a human agent seamlessly takes over in the exact same thread.</p>
+                    </Reveal>
+                    <Reveal delay={0.1}>
+                        <div className="v4-support-flow">
+                            <div className="v4-support-node v4-support-node--ai">
+                                <span className="v4-support-node__badge" aria-hidden="true">{SUPPORT_ICON_AI}</span>
+                                <div><b>TACO concierge</b><span>Standard changes and refunds, instantly</span></div>
+                            </div>
+                            <span className="v4-support-flow__connector" aria-hidden="true">
+                                <b>Escalates</b>
+                                <svg viewBox="0 0 40 14" fill="none"><path d="M0 7h32M26 1.5 33.5 7 26 12.5" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            </span>
+                            <div className="v4-support-node v4-support-node--human">
+                                <span className="v4-support-node__badge" aria-hidden="true">{SUPPORT_ICON_HUMAN}</span>
+                                <div><b>Human agent</b><span>Same thread, for the complex exceptions</span></div>
+                            </div>
+                        </div>
+                    </Reveal>
+                </div>
+            </div>
+        </section>
+    )
+}
+
+// "Deep-Dive Blocks" Block 2 — Complete Personalization. Same panel device as
+// Support247 (Block 1): top accent bar, gradient wash, ghost watermark,
+// inline icon+eyebrow+heading header. The four things the EA remembers are
+// rendered as icon-led fact cards — a real glyph per fact instead of a bare
+// number — so the row reads as evidence of "it has a memory", not a plain list.
+const PERSONALIZATION_ICON = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
+        <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
+    </svg>
+)
+const FACT_ICON_SEAT = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 4v10a2 2 0 0 0 2 2h8" /><path d="M6 14H4.5A1.5 1.5 0 0 0 3 15.5v.5" /><path d="M16 16v4M6 16v4" /><path d="M16 9h2a2 2 0 0 1 2 2v3" />
+    </svg>
+)
+const FACT_ICON_HOTEL = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 21V9l9-5 9 5v12" /><path d="M9 21v-6h6v6M3 21h18" />
+    </svg>
+)
+const FACT_ICON_STATUS = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="8" r="5" /><path d="m8.2 12.6-1.4 6.9 5.2-2.8 5.2 2.8-1.4-6.9" />
+    </svg>
+)
+const FACT_ICON_BUFFER = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" />
+    </svg>
+)
+const PERSONALIZATION_KNOWS_SHORT: { label: string; icon: ReactNode; accent: "orange" | "maroon" }[] = [
+    { label: "Seat preferences", icon: FACT_ICON_SEAT, accent: "orange" },
+    { label: "Preferred hotel brands", icon: FACT_ICON_HOTEL, accent: "maroon" },
+    { label: "Airline status", icon: FACT_ICON_STATUS, accent: "orange" },
+    { label: "Arrival buffers", icon: FACT_ICON_BUFFER, accent: "maroon" },
+]
+
+function CompletePersonalization() {
+    return (
+        <section className="v4-section v4-section--tint v4-section--tight-top v4-section--tight-bottom" id="complete-personalization" aria-labelledby="complete-personalization-title">
+            <div className="v4-shell">
+                <div className="v4-support-block">
+                    <span className="v4-support-block__watermark" aria-hidden="true">{PERSONALIZATION_ICON}</span>
+                    <Reveal>
+                        <div className="v4-support-head">
+                            <span className="v4-support-block__icon" aria-hidden="true">{PERSONALIZATION_ICON}</span>
+                            <div>
+                                <span className="v4-eyebrow">Deep dive · Personalization</span>
+                                <h3 id="complete-personalization-title">Complete Personalization</h3>
+                            </div>
+                        </div>
+                        <p>Your EA has a memory. It knows your seat preferences, preferred hotel brands, airline status, and necessary arrival buffers. It provides tailored recommendations, not endless lists of irrelevant options.</p>
+                    </Reveal>
+                    <Reveal delay={0.1}>
+                        <div className="v4-fact-grid">
+                            {PERSONALIZATION_KNOWS_SHORT.map((k, i) => (
+                                <motion.div className={`v4-fact-card v4-fact-card--${k.accent}`} key={k.label}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.4, delay: i * 0.06 }}>
+                                    <span className="v4-fact-card__icon" aria-hidden="true">{k.icon}</span>
+                                    <span>{k.label}</span>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </Reveal>
+                </div>
+            </div>
+        </section>
     )
 }
 
@@ -190,30 +365,11 @@ export default function V4Platform() {
                 src/components/V11Hero.tsx, used by src/pages/Product.tsx). */}
             <PlatformHeroV1 />
 
-            {/* V3's PersonalizationLoop, ported exactly (layout + animation) —
-                see ProductV3.tsx `PersonalizationLoop` for the source. */}
-            <section className="v4-section v4-section--tint" id="personalization" aria-labelledby="personalization-title">
-                <div className="v4-shell v4-personalization-grid">
-                    <Reveal>
-                        <span className="v4-eyebrow">Built on context</span>
-                        <h2 className="v4-h2" id="personalization-title">One sentence works because Miraee already knows.</h2>
-                        <p className="v4-lede">No profile to fill out, no policy to look up. Every trip request lands on top of everything Miraee already holds about the traveler, the company, and the trip in progress.</p>
-                        <div className="v4-context-grid">
-                            {PERSONALIZATION_KNOWS.map((item, index) => (
-                                <div className="v4-context-chip" key={item}>
-                                    <span>{String(index + 1).padStart(2, "0")}</span>
-                                    <p>{item}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </Reveal>
-                    <Reveal delay={0.1}>
-                        <div className="v4-personalization-media">
-                            <PersonalizationLoop />
-                        </div>
-                    </Reveal>
-                </div>
-            </section>
+            {/* Capability Grid + 24/7 Support — new content from the V5 content
+                doc, sitting as the second section, directly after the hero. */}
+            <CapabilityGrid />
+            <Support247 />
+            <CompletePersonalization />
 
             <OutcomesV1 />
 

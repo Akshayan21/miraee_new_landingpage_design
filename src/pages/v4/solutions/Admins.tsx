@@ -11,6 +11,7 @@ export default function V4SolutionAdmins() {
         <RoleShowcasePage
             roleSlug="admins"
             roleTitle="Admins"
+            ctaText="Explore Admin Solution"
             shift="You used to police every trip. Now you set the rule once."
             before="Checking each trip against policy by hand, fielding one-off booking requests, hunting down onboarding gaps and exceptions, and reconciling spend across tools that never quite agree."
             afterHeading="Now you set the rule once."
@@ -26,7 +27,7 @@ export default function V4SolutionAdmins() {
                 },
                 {
                     title: "The whole program at a glance.",
-                    body: "Onboarding gaps, budget, adoption, compliance and exceptions sit on one Overview, with duty of care on the Live Map,  no report-gathering.",
+                    body: "Onboarding gaps, budget, adoption, compliance and exceptions sit on one Overview, with duty of care on the Live Map, no report-gathering.",
                 },
                 {
                     title: "Proof it's working.",

@@ -9,6 +9,7 @@ export default function V4SolutionChros() {
         <RoleShowcasePage
             roleSlug="chros"
             roleTitle="CHROs"
+            ctaText="Explore CHRO Solution"
             shift="You used to enforce policy. Now you support people."
             before="Enforcing policy top-down, reacting late when a traveler hit trouble, and stitching together who was travel-ready or where people were from scattered updates and separate systems."
             afterHeading="Now you support people."

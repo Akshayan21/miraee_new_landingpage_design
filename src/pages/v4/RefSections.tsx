@@ -49,10 +49,10 @@ export function PlatformHeroV1() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: heroEase }}>
                     <span className="v4r-phero__kicker">The Platform</span>
-                    <h1>One system.<br /><em>The entire journey.</em></h1>
-                    <p>Six capabilities running on one continuous context. Miraee does not pass your trip between tools. It carries it.</p>
+                    <h1>Welcome to the<br /><em>Agentic Era of Travel.</em></h1>
+                    <p>We have moved beyond the digital "search-and-click" era. Miraee offers a swarm of AI agents that execute the entire travel lifecycle end-to-end, with a human always in the loop.</p>
                     <div className="v4r-phero__actions">
-                        <Link className="v4-btn v4-btn--solid" to="/book-a-demo">Book a demo</Link>
+                        <Link className="v4-btn v4-btn--solid" to="/book-a-demo">Watch the Platform Demo</Link>
                         <a className="v4-btn v4-btn--ghost" href="#capabilities">Jump to a capability ↓</a>
                     </div>
                     <div className="v4r-phero__proof">

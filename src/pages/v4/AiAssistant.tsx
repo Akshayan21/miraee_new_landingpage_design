@@ -49,7 +49,7 @@ export default function V4AiAssistant() {
 
                     <Reveal delay={0.15}>
                         <div className="v4-note" style={{ marginTop: 28 }}>
-                            <b>7</b>
+                            <b>6</b>
                             <div>
                                 <h3>Two layers, one system.</h3>
                                 <p>
